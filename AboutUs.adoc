@@ -35,7 +35,7 @@ Responsibilities: Documentation
 '''
 
 === Shreyas
-image::Shreyas.jpg[width="150", align="left"]
+image::Shreyas.jpeg[width="150", align="left"]
 
 
 Role: Developer +
@@ -44,9 +44,9 @@ Responsibilities: Code Quality
 '''
 
 === Ong Wee Keong
-image::WeeKeong.jpg[width="150", align="left"]
+image::WeeKeong.jpeg[width="150", align="left"]
 
 Role: Developer +
-Responsibilities: Intellij Git and SourceTree expert
+Responsibilities: Intellij, Git and SourceTree expert
 
 '''
