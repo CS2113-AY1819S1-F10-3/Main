@@ -1,7 +1,7 @@
 = About Us
 :site-section: AboutUs
 :relfileprefix: team/
-:imagesDir: images
+:imagesDir: Images
 
 
 AddressBook - Level 3 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
