@@ -7,7 +7,7 @@ https://www.codacy.com/app/se-edu/addressbook-level3?utm_source=github.com&utm_m
 
 Source code was built on top of https://github.com/se-edu/
 
-image::docs/images/Ui.png[]
+image::docs/images/Ui.png[UI Mockup]
 
 * This is a CLI (Command Line Interface) Police Database application *written in OOP fashion*. It has a simple GUI (Graphical User Interface) that can be seen above.
 * It is a Java written program targeted for both *police officers* and *headquarters personnel*.
