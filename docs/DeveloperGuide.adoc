@@ -70,24 +70,24 @@ Use case ends.
 
 *Extensions*
 
-•	3a. The given password is invalid
-o	3a1. System shows an error message
+* 3a. The given password is invalid
+** 3a1. System shows an error message
 +
 Use case resumes at step 2.
 
-•	4a. Person already exists in the list
-o	4a1. System shows an error message
+* 4a. Person already exists in the list
+** 4a1. System shows an error message
 +
 Use case ends.
 
-•	4b. Person’s details are entered with invalid formats.
-o	4b1. System shows an error message
+* 4b. Person’s details are entered with invalid formats.
+** 4b1. System shows an error message
 +
 Use case resumes at step 1.
 
-•	*a. At any time, User cancels add action.
-o	*a1. System requests for confirmation to cancel
-o	*a2. User confirms cancellation
+* *a. At any time, User cancels add action.
+* *a1. System requests for confirmation to cancel
+* *a2. User confirms cancellation
 +
 Use case ends.
 
@@ -107,23 +107,23 @@ Use case ends.
 
 *Extensions*
 
-•	2a. The list is empty.
+* 2a. The list is empty.
 +
 Use case ends.
 
-•	3a. The given index is invalid.
-o	3a1. System shows an error message.
+* 3a. The given index is invalid.
+** 3a1. System shows an error message.
 +
 Use case resumes at step 2.
 
-•	5a. The entered password is invalid.
-o	3a1. System shows an error message.
+* 5a. The entered password is invalid.
+** 5a1. System shows an error message.
 +
 Use case resumes at step 2.
 
-•	*a. At any time, User chooses to cancel the delete action.
-o	*a1. System requests confirmation to cancel
-o	*a2. User confirms the cancellation.
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
 +
 Use case ends.
 
@@ -144,24 +144,24 @@ Use case ends.
 
 *Extensions*
 
-•	1a. The list is empty.
-o	1a1. System shows an error essage
+* 1a. The list is empty.
+** 1a1. System shows an error essage
 +
 Use case ends.
 
-•	3a. The entered password is invalid
-o	3a1. System shows an error message
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
 +
 Use case resumes in step 2.
 
-•	6a. The person’s details are entered with invalid format.
-o	6a1. System shows an error message.
+* 6a. The person’s details are entered with invalid format.
+** 6a1. System shows an error message.
 +
 Use case resumes at step 5.
 
-•	*a. At any time, User chooses to cancel the delete action.
-o	*a1. System requests confirmation to cancel
-o	*a2. User confirms the cancellation.
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
 +
 Use case ends
 	
@@ -181,29 +181,29 @@ Use case ends.
 
 *Extensions*
 
-•	1a. The list is empty.
-o	1a1. System shows an error essage
+* 1a. The list is empty.
+** 1a1. System shows an error essage
 +
 Use case ends.
 
-•	3a. The entered password is invalid
-o	3a1. System shows an error message
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
 +
 Use case resumes in step 2.
 
-•	5a. The person’s details are entered with invalid format.
-o	5a1. System shows an error message.
+* 5a. The person’s details are entered with invalid format.
+** 5a1. System shows an error message.
 +
 Use case resumes at step 4.
 
-•	6a. Person does not exist in the list
-o	6a1. System informs User that person is not in the list
+* 6a. Person does not exist in the list
+** 6a1. System informs User that person is not in the list
 +
 Use case ends.
 
-•	*a. At any time, User chooses to cancel the delete action.
-o	*a1. System requests confirmation to cancel
-o	*a2. User confirms the cancellation.
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
 +
 Use case ends
 
@@ -220,29 +220,29 @@ Use case ends.
 
 *Extensions*
 
-•	1a. The list is empty.
-o	1a1. System shows an error essage
+* 1a. The list is empty.
+** 1a1. System shows an error essage
 +
 Use case ends.
 
-•	3a. The entered password is invalid
-o	3a1. System shows an error message
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
 +
 Use case resumes in step 2.
 
-•	5a. The person’s details are entered with invalid format.
-o	5a1. System shows an error message.
+* 5a. The person’s details are entered with invalid format.
+** 5a1. System shows an error message.
 +
 Use case resumes at step 4.
 
-•	6a. Person does not exist in the list
-o	6a1. System informs User that person is not in the list
+* 6a. Person does not exist in the list
+** 6a1. System informs User that person is not in the list
 +
 Use case ends.
 
-•	*a. At any time, User chooses to cancel the delete action.
-o	*a1. System requests confirmation to cancel
-o	*a2. User confirms the cancellation.
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
 +
 Use case ends
 
