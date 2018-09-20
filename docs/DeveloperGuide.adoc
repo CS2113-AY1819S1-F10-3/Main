@@ -24,7 +24,7 @@
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Run the `seedu.addressbook.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
+. Run the `F10-3.EX-SI-03.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
 . Run all the tests (right-click the `test` folder, and click `Run 'All Tests'`) and ensure that they pass
 . Open the `StorageFile` file and check for any code errors
 .. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
@@ -43,15 +43,20 @@ image::mainClassDiagram.png[]
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
+PO- Police Officer
+AD- Ambulance Driver
+TD- Fire Truck Driver
+
 [width="100%",cols="22%,<23%,<25%,<30%",options="header",]
 |===========================================================================================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-|`* * *` |user |add a new person |
-|`* * *` |user |delete a person |remove entries that I no longer need
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-|`* *` |user |hide <<private-contact-detail, private contact details>> by default |minimize chance of someone else seeing them by accident
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |PO |request backup efficiently and quickly |get help in dangerous situations like capturing an escaped criminal, saving a person’s life
+|`* * *` |PO |know if accused is dangerous |know the steps I should take to handle the accused
+|`* * *` |AD |know the severity of the accident |prepare myself and my men
+|`* * *` |TD |know the severity of the fire |prepare myself and my men
+|`* *` |PO |update HQ |let HQ know if I’m free or engaged
+|`* *` |PO |know next actions to be taken |respond effectively to any type of situation
+|`*` |PO |know the serial number and battery level |to return it to HQ and charge it when necessary
 |===========================================================================================================================================
 
 [appendix]
@@ -88,6 +93,16 @@ Use case resumes at step 2.
 . Should be able to hold up to 1000 persons.
 . Should come with automated unit tests and open source code.
 . Should favor DOS style commands over Unix-style commands.
+. Business/domain rules:
+.. Device should accept any more input after 9 characters when PO is inputting NRIC
+.. Device will constantly remind PO to charge if battery level goes below a certain level.
+. Accessibility: Different levels of access for POs and HQPs and drivers (ambulance,fire truck).
+. Performance requirements: The system should respond within two seconds.
+. Security requirements: The system should be password locked.
+. Data requirements:
+.. Data should be constant, not volatile.
+.. Data should be recoverable from last save point
+
 
 [appendix]
 == Glossary
