@@ -32,7 +32,7 @@
 
 == Design
 
-image::mainClassDiagram.png[]
+image::mainClassDiagram1.png[]
 
 == Testing
 
@@ -64,14 +64,49 @@ TD- Fire Truck Driver
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+=== Use case: Add person
+
+
+. User requests to add person to the list
+. System prompts User to enter his password
+. User enters his password
+. System adds person to the list and informs User that person has been successfully added.
+Use case ends.
+
+*Extensions*
+
+* 3a. The given password is invalid
+** 3a1. System shows an error message
++
+Use case resumes at step 2.
+
+* 4a. Person already exists in the list
+** 4a1. System shows an error message
++
+Use case ends.
+
+* 4b. Person’s details are entered with invalid formats.
+** 4b1. System shows an error message
++
+Use case resumes at step 1.
+
+* *a. At any time, User cancels add action.
+* *a1. System requests for confirmation to cancel
+* *a2. User confirms cancellation
++
+Use case ends.
+
+
 === Use case: Delete person
 
 *MSS*
 
 . User requests to list persons
-. AddressBook shows a list of persons
+. System shows a list of persons
 . User requests to delete a specific person in the list
-. AddressBook deletes the person.
+. System prompts user to enter his password
+. User enters password
+. System deletes the person.
 +
 Use case ends.
 
@@ -82,9 +117,140 @@ Use case ends.
 Use case ends.
 
 * 3a. The given index is invalid.
-** 3a1. AddressBook shows an error message.
+** 3a1. System shows an error message.
 +
 Use case resumes at step 2.
+
+* 5a. The entered password is invalid.
+** 5a1. System shows an error message.
++
+Use case resumes at step 2.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends.
+
+
+
+=== Use case: Edit person
+
+*MSS*
+
+. User requests to edit persons
+. System prompts User to enter his password
+. User enters his password
+. System shows a list of persons
+. User requests to update a specific person in the list
+. System edits the person’s respective details.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The list is empty.
+** 1a1. System shows an error essage
++
+Use case ends.
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+Use case resumes in step 2.
+
+* 6a. The person’s details are entered with invalid format.
+** 6a1. System shows an error message.
++
+Use case resumes at step 5.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends
+	
+
+=== Use case: Find person
+
+*MSS*
+
+. User requests to find person
+. System prompts User to enter his password
+. User enters his password
+. System prompts User to key in index of person
+. User enters NRIC of person
+. System displays details of person, if found on the list.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The list is empty.
+** 1a1. System shows an error essage
++
+Use case ends.
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+Use case resumes in step 2.
+
+* 5a. The person’s details are entered with invalid format.
+** 5a1. System shows an error message.
++
+Use case resumes at step 4.
+
+* 6a. Person does not exist in the list
+** 6a1. System informs User that person is not in the list
++
+Use case ends.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends
+
+=== Use case: Undo
+
+*MSS*
+
+. User enters command to undo
+. System prompts User to enter his password
+. User enters his password
+. System reverts the list to before the final change made 
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The list is empty.
+** 1a1. System shows an error essage
++
+Use case ends.
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+Use case resumes in step 2.
+
+* 5a. The person’s details are entered with invalid format.
+** 5a1. System shows an error message.
++
+Use case resumes at step 4.
+
+* 6a. Person does not exist in the list
+** 6a1. System informs User that person is not in the list
++
+Use case ends.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends
+
 
 [appendix]
 == Non Functional Requirements
