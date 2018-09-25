@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Represents a Person's identification number(NRIC or FIN) in the address book.
+ * Represents a Person's identification number(NRIC or FIN) in the EX-SI-53.
  * Guarantees: immutable; is valid as declared in {@link #isValidNRIC(String)}
  */
 

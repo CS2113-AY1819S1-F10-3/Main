@@ -7,33 +7,33 @@ import java.util.Set;
 import seedu.addressbook.data.tag.Tag;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Person in the system.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Person implements ReadOnlyPerson {
 
     private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
+    private NRIC nric;
+    private Status status;
+    private PostalCode postalCode;
 
-    private final Set<Tag> tags = new HashSet<>();
+    private final Set<Offense> PastOffense = new HashSet<>();
     /**
      * Assumption: Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, NRIC nric, PostalCode postalCode, Status status ,Set<Offense> PastOffense) {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.tags.addAll(tags);
+        this.nric = nric;
+        this.postalCode = postalCode;
+        this.status = status;
+        this.PastOffense.addAll(PastOffense);
     }
 
     /**
      * Copy constructor.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+        this(source.getName(), source.getNRIC(), source.getPostalCode(), source.getStatus(), source.getPastOffense());
     }
 
     @Override
@@ -42,31 +42,29 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Phone getPhone() {
-        return phone;
+    public NRIC getNRIC() {
+        return nric;
     }
 
     @Override
-    public Email getEmail() {
-        return email;
+    public PostalCode getPostalCode() {
+        return postalCode;
     }
 
     @Override
-    public Address getAddress() {
-        return address;
+    public Status getStatus() {
+        return status;
     }
 
     @Override
-    public Set<Tag> getTags() {
-        return new HashSet<>(tags);
-    }
+    public Set<Offense> getPastOffense() {return PastOffense;}
 
     /**
      * Replaces this person's tags with the tags in {@code replacement}.
      */
-    public void setTags(Set<Tag> replacement) {
-        tags.clear();
-        tags.addAll(replacement);
+    public void setPastOffense(Set<Offense> replacement) {
+        PastOffense.clear();
+        PastOffense.addAll(replacement);
     }
 
     @Override
@@ -79,7 +77,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, nric, postalCode, status, PastOffense);
     }
 
     @Override
