@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <AddressBook>
     <persons>
-        <name>John Doe</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@gmail.com</email>
-        <address isPrivate="false">John street, block 123, #01-01</address>
+        <name>Betsy Crowe</name>
+        <nric isPrivate="false">g1534567a</nric>
+        <postalCode isPrivate="false">520246</postalCode>
+        <status isPrivate="false">excon</status>
+        <tagged>drugs</tagged>
+        <tagged>theft</tagged>
     </persons>
     <persons>
-        <name>Betsy Crowe</name>
-        <phone isPrivate="true">1234567</phone>
-        <email isPrivate="false">betsycrowe@gmail.com</email>
-        <address isPrivate="true">Newgate Prison</address>
-        <tagged>friend</tagged>
-        <tagged>criminal</tagged>
+        <name>John Doe</name>
+        <nric isPrivate="false">s1234567a</nric>
+        <postalCode isPrivate="false">510246</postalCode>
+        <status isPrivate="false">excon</status>
+        <tagged>drugs</tagged>
+        <tagged>theft</tagged>
     </persons>
 </AddressBook>

@@ -31,7 +31,7 @@ public interface ReadOnlyPatrolResource {
     /**
      * Formats a patrol resource as text, showing all details.
      */
-    default String getAsTextHidePrivate() {
+    default String getAsTextShowAll() {
         final StringBuilder builder = new StringBuilder();
         builder.append(" Patrol ID: ").append(getPatrolID());
         builder.append(" State: ").append(getState());

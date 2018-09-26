@@ -11,10 +11,10 @@ import java.util.Arrays;
 
 public class Status {
 
-    public static final String EXAMPLE = "wanted/excon/clear (xc is ex-convict or ex-offender)";
+    public static final String EXAMPLE = "wanted";
     public static final String MESSAGE_NAME_CONSTRAINTS = "Status should be one of the 3: wanted/xc/clear";
 
-    private static final String WANTED_KEYWORD = "wanted";
+    public static final String WANTED_KEYWORD = "wanted";
     private static final String EXCONVICT_KEYWORD = "excon";
     private static final String CLEAR_KEYWORD = "clear";
 
@@ -35,9 +35,12 @@ public class Status {
         this.currentStatus = status;
     }
 
+    public String getCurrentStatus() {return currentStatus;}
+
     /**
-     * Returns true if a given string is a valid NRIC.
+     * Returns true if a given string is a valid Status.
      */
+
     public static boolean isValidStatus(String test) {
         return Arrays.asList(STATUS_VALIDATION).contains(test);
     }

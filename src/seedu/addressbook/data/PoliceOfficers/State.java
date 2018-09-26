@@ -25,6 +25,8 @@ public class State {
         this.currentState = state;
     }
 
+    public String getCurrentState() {return currentState;}
+
     public boolean isValidState(String test) {return test == FREE || test == ENGAGED;}
 
     @Override

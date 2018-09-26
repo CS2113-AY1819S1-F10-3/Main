@@ -17,7 +17,7 @@ public class PatrolResource {
     public PatrolResource(PatrolID patrolID, State state, Case currentCase) {
         this.patrolID = patrolID;
         this.state = state;
-        this.currentCase = (state.currentState == state.FREE) ? new Case() : currentCase;
+        this.currentCase = (state.getCurrentState() == state.FREE) ? new Case() : currentCase;
     }
 
     public PatrolResource(ReadOnlyPatrolResource source) {

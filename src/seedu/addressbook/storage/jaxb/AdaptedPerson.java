@@ -8,10 +8,7 @@ import seedu.addressbook.data.tag.Tag;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * JAXB-friendly adapted person data holder class.
@@ -30,9 +27,13 @@ public class AdaptedPerson {
     @XmlElement(required = true)
     private AdaptedContactDetail nric;
     @XmlElement(required = true)
+    private AdaptedContactDetail dateOfBirth;
+    @XmlElement(required = true)
     private AdaptedContactDetail postalCode;
     @XmlElement(required = true)
     private AdaptedContactDetail status;
+    @XmlElement(required = true)
+    private AdaptedContactDetail wantedFor;
 
     @XmlElement
     private List<AdaptedTag> tagged = new ArrayList<>();
@@ -52,14 +53,19 @@ public class AdaptedPerson {
         name = source.getName().fullName;
 
         nric = new AdaptedContactDetail();
+        nric.value = source.getNRIC().getIdentificationNumber();
 
-        nric.value = source.getNRIC().identificationNumber;
+        dateOfBirth = new AdaptedContactDetail();
+        dateOfBirth.value = source.getDateOfBirth().getDOB();
 
         postalCode = new AdaptedContactDetail();
-        postalCode.value = source.getPostalCode().postalCode;
+        postalCode.value = source.getPostalCode().getPostalCode();
 
         status = new AdaptedContactDetail();
-        status.value = source.getStatus().currentStatus;
+        status.value = source.getStatus().getCurrentStatus();
+
+        wantedFor = new AdaptedContactDetail();
+        wantedFor.value = source.getWantedFor().getOffense();
 
         tagged = new ArrayList<>();
         for (Offense tag : source.getPastOffense()) {
@@ -82,8 +88,8 @@ public class AdaptedPerson {
             }
         }
         // second call only happens if nric/postalCode/status are all not null
-        return Utils.isAnyNull(name, nric, postalCode, status)
-                || Utils.isAnyNull(nric.value, postalCode.value, status.value);
+        return Utils.isAnyNull(name, nric, dateOfBirth, postalCode, status, wantedFor)
+                || Utils.isAnyNull(nric.value, dateOfBirth.value, postalCode.value, status.value, wantedFor.value);
     }
 
     /**
@@ -98,8 +104,10 @@ public class AdaptedPerson {
         }
         final Name name = new Name(this.name);
         final NRIC nric = new NRIC(this.nric.value);
+        final DateOfBirth dateOfBirth = new DateOfBirth(this.dateOfBirth.value);
         final PostalCode postalCode = new PostalCode(this.postalCode.value);
         final Status status = new Status(this.status.value);
-        return new Person(name, nric, postalCode, status, tags);
+        final Offense wantedFor = new Offense(this.wantedFor.value);
+        return new Person(name, nric, dateOfBirth, postalCode, status, wantedFor, tags);
     }
 }

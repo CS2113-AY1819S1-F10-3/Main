@@ -31,6 +31,10 @@ public class NRIC {
         this.identificationNumber = nric;
     }
 
+    public String getIdentificationNumber() {
+        return identificationNumber;
+    }
+
     /**
      * Returns true if a given string is a valid NRIC.
      */

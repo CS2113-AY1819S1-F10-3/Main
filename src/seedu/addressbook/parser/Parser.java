@@ -22,8 +22,10 @@ public class Parser {
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
                     + " n/(?<nric>[^/]+)"
+                    + " d/(?<dateOfBirth>[^/]+)"
                     + " p/(?<postalCode>[^/]+)"
                     + " s/(?<status>[^/]+)"
+                    + " w/(?<wantedFor>[^/]+)"
                     + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
 
 
@@ -72,8 +74,9 @@ public class Parser {
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
 
-            case ViewCommand.COMMAND_WORD:
+            /**case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
+             */
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
@@ -103,8 +106,10 @@ public class Parser {
             return new AddCommand(
                     matcher.group("name"),
                     matcher.group("nric"),
+                    matcher.group("dateOfBirth"),
                     matcher.group("postalCode"),
                     matcher.group("status"),
+                    matcher.group("wantedFor"),
 
                     getTagsFromArgs(matcher.group("pastOffenseArguments"))
             );
@@ -160,10 +165,10 @@ public class Parser {
 
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
-            return new ViewCommand(targetIndex);
+            return new ViewAllCommand(targetIndex);
         } catch (ParseException | NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ViewCommand.MESSAGE_USAGE));
+                    ViewAllCommand.MESSAGE_USAGE));
         }
     }
 

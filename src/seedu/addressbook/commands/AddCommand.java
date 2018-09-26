@@ -15,9 +15,9 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Adds a person to the system. "
-            + "Parameters: NAME n/NRIC p/POSTALCODE s/STATUS  [o/PASTOFFENSES]...\n\t"
+            + "Parameters: NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR [o/PASTOFFENSES]...\n\t"
             + "Example: " + COMMAND_WORD
-            + " John Doe n/s1234567a p/510246 s/excon o/theft o/drugs";
+            + " John Doe n/s1234567a d/1996 p/510246 s/excon w/none o/theft o/drugs";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -31,8 +31,10 @@ public class AddCommand extends Command {
      */
     public AddCommand(String name,
                       String nric,
+                      String dateOfBirth,
                       String postalCode,
                       String status,
+                      String wantedFor,
                       Set<String> pastOffenses) throws IllegalValueException {
         final Set<Offense> pastOffenseSet = new HashSet<>();
         for (String offenseName : pastOffenses) {
@@ -41,8 +43,10 @@ public class AddCommand extends Command {
         this.toAdd = new Person(
                 new Name(name),
                 new NRIC(nric),
+                new DateOfBirth(dateOfBirth),
                 new PostalCode(postalCode),
                 new Status(status),
+                new Offense(wantedFor),
                 pastOffenseSet
         );
     }

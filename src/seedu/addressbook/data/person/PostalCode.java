@@ -31,6 +31,10 @@ public class PostalCode {
         this.postalCode = pc;
     }
 
+    public String getPostalCode(){
+        return postalCode;
+    }
+
     /**
      * Returns true if a given string is a valid NRIC.
      */

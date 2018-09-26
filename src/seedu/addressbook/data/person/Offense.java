@@ -7,10 +7,21 @@ public class Offense {
     public static final String EXAMPLE = "theft";
     public static final String MESSAGE_OFFENSE_CONSTRAINTS = "Offense should be in lower case and must be inside the list";
 
-    private static final String[] OFFENSE_LIST = {"theft","drugs","riot"};
+    private static final String[] OFFENSE_LIST = {"none","theft","drugs","riot","theft1","theft2","theft3","theft4"};
 
     public final String offense;
 
+    public String getOffense() {
+        return offense;
+    }
+
+    /**
+     * Default 'offense' when person is not wanted
+     *
+     */
+    public Offense(){
+        this.offense = "none";
+    }
     /**
      * Validates given tag name.
      *

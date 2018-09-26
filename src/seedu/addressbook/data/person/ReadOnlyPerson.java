@@ -1,5 +1,6 @@
 package seedu.addressbook.data.person;
 
+import java.util.Date;
 import java.util.Set;
 
 import seedu.addressbook.data.tag.Tag;
@@ -12,8 +13,10 @@ public interface ReadOnlyPerson {
 
     Name getName();
     NRIC getNRIC();
+    DateOfBirth getDateOfBirth();
     PostalCode getPostalCode();
     Status getStatus();
+    Offense getWantedFor();
 
     /**
      * The returned {@code Set} is a deep copy of the internal {@code Set},
@@ -29,8 +32,10 @@ public interface ReadOnlyPerson {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getNRIC().equals(this.getNRIC())
+                && other.getDateOfBirth().equals((this.getDateOfBirth()))
                 && other.getPostalCode().equals(this.getPostalCode())
-                && other.getStatus().equals(this.getStatus()));
+                && other.getStatus().equals(this.getStatus())
+                && other.getWantedFor().equals(this.getWantedFor()));
     }
 
     /**
@@ -38,15 +43,18 @@ public interface ReadOnlyPerson {
      */
     default String getAsTextShowAll() {
         final StringBuilder builder = new StringBuilder();
-        final String detailIsPrivate = "(private) ";
         builder.append(getName())
                 .append(" NRIC: ");
         builder.append(getNRIC())
-                .append(" Email: ");
-        builder.append(getPostalCode())
+                .append(" DateOfBirth: ");
+        builder.append(getDateOfBirth())
                 .append(" Postal Code: ");
         builder.append(getPostalCode())
-                .append(" Past Offenses: ");
+                .append(" Status: ");
+        builder.append(getStatus())
+                .append(" Wanted For: ");
+        builder.append(getWantedFor())
+                .append(" Past Offences:");
         for (Offense offense : getPastOffense()) {
             builder.append(offense);
         }
@@ -56,16 +64,25 @@ public interface ReadOnlyPerson {
     /**
      * Formats a person as text, showing only non-private contact details.
      */
+    /**
     default String getAsTextHidePrivate() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName());
-        builder.append(" NRIC: ").append(getNRIC());
-        builder.append(" Postal Code: ").append(getPostalCode());
-        builder.append(" Status: ").append(getStatus());
-        builder.append(" Past Offenses: ");
+        builder.append(getName())
+                .append(" NRIC: ");
+        builder.append(getNRIC())
+                .append(" DateOfBirth: ");
+        builder.append(getDateOfBirth())
+                .append(" Postal Code");
+        builder.append(getPostalCode())
+                .append(" Status: ");
+        builder.append(getStatus())
+                .append(" Wanted For: ");
+        builder.append(getWantedFor())
+                .append(" Past Offences:");
         for (Offense offense : getPastOffense()) {
             builder.append(offense);
         }
         return builder.toString();
     }
+     */
 }

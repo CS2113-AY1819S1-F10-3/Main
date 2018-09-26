@@ -39,6 +39,6 @@ public class Case {
 
     }
 
-    public static boolean isValidCase() //to be confirmed
+    public static boolean isValidCase(); //to be confirmed
 
 }
