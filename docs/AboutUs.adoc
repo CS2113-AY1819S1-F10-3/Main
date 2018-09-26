@@ -1,7 +1,7 @@
 = About Us
 :site-section: AboutUs
 :relfileprefix: team/
-:imagesDir: Images
+:imagesDir: images/profiles
 
 
 EX-SI-53 was developed by F10-3 +
