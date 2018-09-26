@@ -1,14 +1,17 @@
 package seedu.addressbook.inbox;
 
 import java.util.Date;
+import java.security.Timestamp;
 
 public class Msg {
-    public static String newMsg;
-    public static Priority priority;
-    public static double x, y;
-    public static int eta;
-    public static boolean isRead = false;
-    public enum Priority {
+    private String newMsg;
+    private Priority priority;
+    private double x, y;
+    private int eta;
+    private String comment;
+    public boolean isRead = false;
+    private Timestamp time;
+    private enum Priority {
         HIGH,   // For messages that require HPQ intervention
         MED,    // For messages that only require PO back-up
         LOW     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
@@ -50,5 +53,17 @@ public class Msg {
     }
     public int getEta(){
         return this.eta;
+    }
+
+    public void setTime(Timestamp time){
+        this.time = time;
+    }
+
+    public Timestamp getTime(){
+        return this.time;
+    }
+
+    public void setComments(String comment){
+        this.comment = comment;
     }
 }
