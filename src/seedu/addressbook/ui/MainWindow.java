@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.PasswordCommand;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
@@ -40,7 +41,6 @@ public class MainWindow {
     @FXML
     private TextField commandInput;
 
-
     @FXML
     void onCommand(ActionEvent event) {
         try {
@@ -50,8 +50,16 @@ public class MainWindow {
                 exitApp();
                 return;
             }
-            displayResult(result);
-            clearCommandInput();
+            if(isCorrectPassword(result)){
+                display(MESSAGE_CORRECT_PASSWORD);
+                displayResult(result);
+                clearCommandInput();
+            }
+            else if (!isCorrectPassword(result)){
+                display(MESSAGE_INCORRECT_PASSWORD);
+                clearCommandInput();
+                return;
+            }
         } catch (Exception e) {
             display(e.getMessage());
             throw new RuntimeException(e);
@@ -62,10 +70,15 @@ public class MainWindow {
         mainApp.stop();
     }
 
-    /** Returns true of the result given is the result of an exit command */
+    /** Returns true if the result given is the result of an exit command */
     private boolean isExitCommand(CommandResult result) {
         return result.feedbackToUser.equals(ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
+
+    private boolean isCorrectPassword(CommandResult result) {
+        return result.feedbackToUser.equals(PasswordCommand.MESSAGE_CORRECT_PASSWORD);
+    }
+
 
     /** Clears the command input box */
     private void clearCommandInput() {
@@ -89,7 +102,7 @@ public class MainWindow {
 
     public void displayWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
-        display(MESSAGE_WELCOME, version, MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE, storageFileInfo);
+        display(MESSAGE_WELCOME, MESSAGE_ENTER_PASSWORD, version, MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE, storageFileInfo);
     }
 
     /**
