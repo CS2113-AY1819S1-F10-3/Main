@@ -24,7 +24,7 @@
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Run the `seedu.addressbook.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
+. Run the `F10-3.EX-SI-03.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
 . Run all the tests (right-click the `test` folder, and click `Run 'All Tests'`) and ensure that they pass
 . Open the `StorageFile` file and check for any code errors
 .. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
@@ -32,7 +32,7 @@
 
 == Design
 
-image::mainClassDiagram.png[]
+image::mainClassDiagram1.png[]
 
 == Testing
 
@@ -43,15 +43,20 @@ image::mainClassDiagram.png[]
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
+PO- Police Officer
+AD- Ambulance Driver
+TD- Fire Truck Driver
+
 [width="100%",cols="22%,<23%,<25%,<30%",options="header",]
 |===========================================================================================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-|`* * *` |user |add a new person |
-|`* * *` |user |delete a person |remove entries that I no longer need
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-|`* *` |user |hide <<private-contact-detail, private contact details>> by default |minimize chance of someone else seeing them by accident
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |PO |request backup efficiently and quickly |get help in dangerous situations like capturing an escaped criminal, saving a person’s life
+|`* * *` |PO |know if accused is dangerous |know the steps I should take to handle the accused
+|`* * *` |AD |know the severity of the accident |prepare myself and my men
+|`* * *` |TD |know the severity of the fire |prepare myself and my men
+|`* *` |PO |update HQ |let HQ know if I’m free or engaged
+|`* *` |PO |know next actions to be taken |respond effectively to any type of situation
+|`*` |PO |know the serial number and battery level |to return it to HQ and charge it when necessary
 |===========================================================================================================================================
 
 [appendix]
@@ -59,14 +64,49 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+=== Use case: Add person
+
+
+. User requests to add person to the list
+. System prompts User to enter his password
+. User enters his password
+. System adds person to the list and informs User that person has been successfully added.
+Use case ends.
+
+*Extensions*
+
+* 3a. The given password is invalid
+** 3a1. System shows an error message
++
+Use case resumes at step 2.
+
+* 4a. Person already exists in the list
+** 4a1. System shows an error message
++
+Use case ends.
+
+* 4b. Person’s details are entered with invalid formats.
+** 4b1. System shows an error message
++
+Use case resumes at step 1.
+
+* *a. At any time, User cancels add action.
+* *a1. System requests for confirmation to cancel
+* *a2. User confirms cancellation
++
+Use case ends.
+
+
 === Use case: Delete person
 
 *MSS*
 
 . User requests to list persons
-. AddressBook shows a list of persons
+. System shows a list of persons
 . User requests to delete a specific person in the list
-. AddressBook deletes the person.
+. System prompts user to enter his password
+. User enters password
+. System deletes the person.
 +
 Use case ends.
 
@@ -77,9 +117,140 @@ Use case ends.
 Use case ends.
 
 * 3a. The given index is invalid.
-** 3a1. AddressBook shows an error message.
+** 3a1. System shows an error message.
 +
 Use case resumes at step 2.
+
+* 5a. The entered password is invalid.
+** 5a1. System shows an error message.
++
+Use case resumes at step 2.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends.
+
+
+
+=== Use case: Edit person
+
+*MSS*
+
+. User requests to edit persons
+. System prompts User to enter his password
+. User enters his password
+. System shows a list of persons
+. User requests to update a specific person in the list
+. System edits the person’s respective details.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The list is empty.
+** 1a1. System shows an error essage
++
+Use case ends.
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+Use case resumes in step 2.
+
+* 6a. The person’s details are entered with invalid format.
+** 6a1. System shows an error message.
++
+Use case resumes at step 5.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends
+	
+
+=== Use case: Find person
+
+*MSS*
+
+. User requests to find person
+. System prompts User to enter his password
+. User enters his password
+. System prompts User to key in index of person
+. User enters NRIC of person
+. System displays details of person, if found on the list.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The list is empty.
+** 1a1. System shows an error essage
++
+Use case ends.
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+Use case resumes in step 2.
+
+* 5a. The person’s details are entered with invalid format.
+** 5a1. System shows an error message.
++
+Use case resumes at step 4.
+
+* 6a. Person does not exist in the list
+** 6a1. System informs User that person is not in the list
++
+Use case ends.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends
+
+=== Use case: Undo
+
+*MSS*
+
+. User enters command to undo
+. System prompts User to enter his password
+. User enters his password
+. System reverts the list to before the final change made 
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The list is empty.
+** 1a1. System shows an error essage
++
+Use case ends.
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+Use case resumes in step 2.
+
+* 5a. The person’s details are entered with invalid format.
+** 5a1. System shows an error message.
++
+Use case resumes at step 4.
+
+* 6a. Person does not exist in the list
+** 6a1. System informs User that person is not in the list
++
+Use case ends.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends
+
 
 [appendix]
 == Non Functional Requirements
@@ -88,6 +259,16 @@ Use case resumes at step 2.
 . Should be able to hold up to 1000 persons.
 . Should come with automated unit tests and open source code.
 . Should favor DOS style commands over Unix-style commands.
+. Business/domain rules:
+.. Device should accept any more input after 9 characters when PO is inputting NRIC
+.. Device will constantly remind PO to charge if battery level goes below a certain level.
+. Accessibility: Different levels of access for POs and HQPs and drivers (ambulance,fire truck).
+. Performance requirements: The system should respond within two seconds.
+. Security requirements: The system should be password locked.
+. Data requirements:
+.. Data should be constant, not volatile.
+.. Data should be recoverable from last save point
+
 
 [appendix]
 == Glossary
