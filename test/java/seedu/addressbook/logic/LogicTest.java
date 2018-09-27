@@ -141,17 +141,17 @@ public class LogicTest {
         assertCommandBehavior(
                 "add []\\[;] n/s1234567a d/1980 p/123456 s/clear w/none", Name.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name s123457a d/1980 p/123456 s/clear w/none", NRIC.MESSAGE_NAME_CONSTRAINTS);
+                "add Valid Name n/s123457a d/1980 p/123456 s/clear w/none", NRIC.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
                 "add Valid Name n/s1234567a d/188 p/123456 s/clear w/none", DateOfBirth.MESSAGE_DATE_OF_BIRTH_CONSTRAINTS);
         assertCommandBehavior(
                 "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name n/s1234567a 1980 p/123456 s/not a convict w/none", Status.MESSAGE_NAME_CONSTRAINTS);
+                "add Valid Name n/s1234567a d/1980 p/123456 s/not a convict w/none", Status.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name n/s1234567a 1980 p/123456 s/wanted w/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
+                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name n/s1234567a 1980 p/123456 s/excon w/none o/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
+                "add Valid Name n/s1234567a d/1980 p/123456 s/excon w/none o/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
 
     }
 
@@ -212,7 +212,7 @@ public class LogicTest {
 
     @Test
     public void execute_view_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         assertCommandBehavior("view ", expectedMessage);
         assertCommandBehavior("view arg not number", expectedMessage);
     }
@@ -310,13 +310,13 @@ public class LogicTest {
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("viewall 1",
-                            String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextShowAll()),
+                            String.format(ViewAllCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextShowAll()),
                             expectedAB,
                             false,
                             lastShownList);
 
         assertCommandBehavior("viewall 2",
-                            String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p2.getAsTextShowAll()),
+                            String.format(ViewAllCommand.MESSAGE_VIEW_PERSON_DETAILS, p2.getAsTextShowAll()),
                             expectedAB,
                             false,
                             lastShownList);

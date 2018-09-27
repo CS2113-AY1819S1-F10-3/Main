@@ -15,7 +15,7 @@ public class Status {
     public static final String MESSAGE_NAME_CONSTRAINTS = "Status should be one of the 3: wanted/xc/clear";
 
     public static final String WANTED_KEYWORD = "wanted";
-    private static final String EXCONVICT_KEYWORD = "excon";
+    private static final String EXCONVICT_KEYWORD = "xc"; //ex-convict
     private static final String CLEAR_KEYWORD = "clear";
 
     private static final String[] STATUS_VALIDATION = {WANTED_KEYWORD,EXCONVICT_KEYWORD,CLEAR_KEYWORD};
@@ -42,6 +42,7 @@ public class Status {
      */
 
     public static boolean isValidStatus(String test) {
+
         return Arrays.asList(STATUS_VALIDATION).contains(test);
     }
 

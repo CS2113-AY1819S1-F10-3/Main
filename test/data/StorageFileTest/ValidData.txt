@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <AddressBook>
     <persons>
-        <name>Betsy Crowe</name>
-        <nric isPrivate="false">g1534567a</nric>
-        <postalCode isPrivate="false">520246</postalCode>
-        <status isPrivate="false">excon</status>
-        <tagged>drugs</tagged>
-        <tagged>theft</tagged>
-    </persons>
-    <persons>
         <name>John Doe</name>
         <nric isPrivate="false">s1234567a</nric>
-        <postalCode isPrivate="false">510246</postalCode>
-        <status isPrivate="false">excon</status>
-        <tagged>drugs</tagged>
+        <dateOfBirth isPrivate="false">1998</dateOfBirth>
+        <postalCode isPrivate="false">510244</postalCode>
+        <status isPrivate="false">clear</status>
+        <wantedFor isPrivate="false">none</wantedFor>
+    </persons>
+    <persons>
+        <name>Betsy Crowe</name>
+        <nric isPrivate="false">g7654321b</nric>
+        <dateOfBirth isPrivate="false">2000</dateOfBirth>
+        <postalCode isPrivate="false">123456</postalCode>
+        <status isPrivate="false">wanted</status>
+        <wantedFor isPrivate="false">drugs</wantedFor>
+        <tagged>riot</tagged>
         <tagged>theft</tagged>
     </persons>
 </AddressBook>

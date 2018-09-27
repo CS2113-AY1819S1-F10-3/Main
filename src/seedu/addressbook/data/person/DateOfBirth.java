@@ -24,7 +24,7 @@ public class DateOfBirth {
      *
      * @throws IllegalValueException if given DoB string is invalid.
      */
- 
+
     public DateOfBirth(String dob) throws IllegalValueException{
         dob = dob.trim();
         if (!isValidDateOfBirth(dob)){

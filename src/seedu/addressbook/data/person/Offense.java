@@ -8,7 +8,7 @@ public class Offense {
     public static final String MESSAGE_OFFENSE_CONSTRAINTS = "Offense should be in lower case and must be inside the list";
 
     private static final String[] OFFENSE_LIST = {"none","theft","drugs","riot","theft1","theft2","theft3","theft4"};
-
+    public static final String NULL_OFFENSE = "none";
     public final String offense;
 
     public String getOffense() {

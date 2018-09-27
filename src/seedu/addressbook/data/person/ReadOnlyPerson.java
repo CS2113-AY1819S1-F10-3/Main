@@ -47,7 +47,7 @@ public interface ReadOnlyPerson {
                 .append(" NRIC: ");
         builder.append(getNRIC())
                 .append(" DateOfBirth: ");
-        builder.append(getDateOfBirth())
+        builder.append(getDateOfBirth().getDOB())
                 .append(" Postal Code: ");
         builder.append(getPostalCode())
                 .append(" Status: ");

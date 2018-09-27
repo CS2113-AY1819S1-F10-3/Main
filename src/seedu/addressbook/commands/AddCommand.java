@@ -17,7 +17,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Adds a person to the system. "
             + "Parameters: NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR [o/PASTOFFENSES]...\n\t"
             + "Example: " + COMMAND_WORD
-            + " John Doe n/s1234567a d/1996 p/510246 s/excon w/none o/theft o/drugs";
+            + " John Doe n/s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
