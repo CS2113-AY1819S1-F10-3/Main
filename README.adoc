@@ -1,41 +1,42 @@
-= AddressBook (Level 3)
+= EX-SI-53 Police Record Database
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:imagesDir: docs/images]
 
 https://travis-ci.org/se-edu/addressbook-level3[image:https://travis-ci.org/se-edu/addressbook-level3.svg?branch=master[Build Status]]
 https://www.codacy.com/app/se-edu/addressbook-level3?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level3&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/d4a0954383444a8db8cb26e5f5b7302c[Codacy Badge]]
 
-image::Ui.png[]
+Source code was built on top of https://github.com/se-edu/
 
-* This is a CLI (Command Line Interface) Address Book application *written in OOP fashion*. It has a very basic GUI.
-* It is a Java sample application intended for students learning Software Engineering while using Java as
-the main programming language.
-* It provides a *reasonably well-written* code example that is *significantly bigger* than what students
-usually write in data structure modules.
+image::Ui.png[UI Mockup]
 
-*What's different from level 2*
+* This is a CLI (Command Line Interface) Police Database application *written in OOP fashion*. It has a simple GUI (Graphical User Interface) that can be seen above.
+* It is a Java written program targeted for both *police officers* and *headquarters personnel*.
+** For *police officers*, they are able to screen for a person's criminal record based on NRIC (National Registration Identity Card) and call for backup when needed to headquarters (HQ).
+** For *headquarters personnel*, they are able to add and remove criminals from the database. In addition, personnel are also able to dispatch for backup for each personnel.
 
-* A simple GUI added to replace the Text UI.
-* A `Logic` class added together with a `LogicTest` class.
-* Appendices added to <<DeveloperGuide#, Developer Guide>>
+For those police officers on duty, have you ever faced difficulty of screening someone with ease? +
+
+With this product, you now can just type someone's NRIC and their record will appear to check their criminal status. Old methods of calling HQ to check on someone's status will no longer be used.
+
+HQ personnel also have less administrative workload to deal with. Now, they focus on more important decisions such as sending backup/firefighters in cases of emergency.
 
 *Useful Links*
 
-* <<UserGuide#, User Guide>>
-* <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
+* link:docs/UserGuide.adoc[User Guide]
+* link:docs/DeveloperGuide.adoc[Developer Guide]
 
 == Contributors
 
-The full list of contributors for se-edu can be found https://se-edu.github.io/Team.html[here].
+The full list of contributors for EX-SI-53 can be found link:docs/AboutUs.adoc[here]
 
 == Acknowledgements
+
+Listening to users and their pain points allowed us to develop this application that solved the problems faced by police officers and headquarter personnel.
 
 Some parts of this sample application was inspired by the excellent
 http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by Marco Jakob
 
 == Contact Us
 
-* *Bug reports, Suggestions* : Post in our https://github.com/se-edu/addressbook-level3/issues[issue tracker]
-if you noticed bugs or have suggestions on how to improve.
+* Regarding any bugs, please email to alexandermatthew12@gmail.com, with the subject headline of *EX-SI-53* issue.
 * *Contributing* : We welcome pull requests. Follow the process described https://github.com/oss-generic/process[here]
