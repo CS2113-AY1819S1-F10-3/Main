@@ -84,6 +84,12 @@ public class Parser {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
 
+            case PasswordCommand.COMMAND_WORD:
+                return new PasswordCommand();
+
+            case LockCommand.COMMAND_WORD:
+                return new LockCommand();
+
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
                 return new HelpCommand();
