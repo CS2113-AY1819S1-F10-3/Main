@@ -12,11 +12,11 @@ public class Case {
     public static final String EXAMPLE_CASE = "PO3, robbery, GPS coordinates, timestamp";
     public static final String MESSAGE_CASE_CONSTRAINTS = "Case must have: PatrolID, message, GPS, timestamp";
 
-    public static final PatrolID attendingPO;
+    public static PatrolID attendingPO;
     public String caseMessage;
     public static Location gpsCoordinates;
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    public static final String caseDateTime;
+    public static String caseDateTime;
 
     private String SPACE = ", ";
     public String value;
@@ -24,7 +24,7 @@ public class Case {
     public Case(){
         this.attendingPO = null;
         this.caseMessage  = "none";
-        this.gpsCoordinates = null
+        this.gpsCoordinates = null;
         this.caseDateTime = null;
     }
     public Case(PatrolID patrolIDNo, String message, /*GPS*/ Date dateTime){
