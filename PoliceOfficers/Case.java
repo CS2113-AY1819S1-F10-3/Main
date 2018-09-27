@@ -14,7 +14,7 @@ public class Case {
 
     public static final PatrolID attendingPO;
     public String caseMessage;
-    //public GPS coordinates;
+    public static Location gpsCoordinates;
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     public static final String caseDateTime;
 
@@ -24,13 +24,11 @@ public class Case {
     public Case(){
         this.attendingPO = null;
         this.caseMessage  = "none";
-        //this.GPS = null
+        this.gpsCoordinates = null
         this.caseDateTime = null;
     }
-    public Case(PatrolID patrolIDNo, String message, /*GPS*/ Date dateTime) throws IllegalValueException{
-        if (!isValidCase){
-            throw new IllegalValueException(MESSAGE_CASE_CONSTRAINTS);
-        }
+    public Case(PatrolID patrolIDNo, String message, /*GPS*/ Date dateTime){
+
         this.attendingPO = patrolIDNo;
         this.caseMessage = message;
         //this.GPSCoordinates = GPS;
@@ -39,6 +37,5 @@ public class Case {
 
     }
 
-    public static boolean isValidCase(); //to be confirmed
 
 }

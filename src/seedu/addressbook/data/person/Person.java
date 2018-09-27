@@ -34,7 +34,8 @@ public class Person implements ReadOnlyPerson {
         this.postalCode = postalCode;
         this.status = status;
         this.wantedFor = wantedFor;
-        if ((this.status.getCurrentStatus().equals(this.status.WANTED_KEYWORD)) && (this.wantedFor.getOffense().equals(this.wantedFor.NULL_OFFENSE))){
+        if ((this.status.getCurrentStatus().equals(this.status.WANTED_KEYWORD)) && ((this.wantedFor.getOffense().equals(this.wantedFor.NULL_OFFENSE)) ||
+                this.wantedFor == null)){
             throw new IllegalValueException(WANTED_FOR_WARNING);
         }
 
@@ -47,7 +48,6 @@ public class Person implements ReadOnlyPerson {
 
             this.wantedFor = wantedFor;
         }
-        System.out.print(" but why ");
         this.PastOffense.addAll(PastOffense);
     }
 
