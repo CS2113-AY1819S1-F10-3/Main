@@ -2,9 +2,12 @@ package seedu.addressbook.commands;
 
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
-import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.person.*;
+import seedu.addressbook.data.tag.Tag;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
@@ -51,7 +54,7 @@ public abstract class Command {
      */
     public void setData(AddressBook addressBook, List<? extends ReadOnlyPerson> relevantPersons) {
         this.addressBook = addressBook;
-        this.relevantPersons = relevantPersons;
+        this.relevantPersons = (relevantPersons.isEmpty()) ? addressBook.getAllPersons().immutableListView() : relevantPersons;
     }
 
     /**
@@ -61,6 +64,15 @@ public abstract class Command {
      */
     protected ReadOnlyPerson getTargetPerson() throws IndexOutOfBoundsException {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
+    }
+
+    protected ReadOnlyPerson getTargetPerson(String name) throws UniquePersonList.PersonNotFoundException {
+        for (ReadOnlyPerson person: relevantPersons) {
+            if (person.getName().toString().equals(name)) {
+                return person;
+            }
+        }
+        throw new UniquePersonList.PersonNotFoundException();
     }
 
     public int getTargetIndex() {
