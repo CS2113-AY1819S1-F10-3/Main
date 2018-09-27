@@ -1,6 +1,7 @@
 package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
+import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.*;
@@ -156,11 +157,13 @@ public class Parser {
      */
     private Command prepareDelete(String args) {
         try {
-//            final int targetIndex = parseArgsAsDisplayedIndex(args);
-//            return new DeleteCommand(targetIndex);
             final String name = parseArgsAsName(args);
+            if (Utils.isStringInteger(name)) {
+                final int targetIndex = parseArgsAsDisplayedIndex(args);
+                return new DeleteCommand(targetIndex);
+            }
+
             return new DeleteCommand(name);
-            //| NumberFormatException e
         } catch (ParseException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
