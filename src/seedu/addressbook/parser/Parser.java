@@ -26,6 +26,7 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    public static final Pattern PERSON_NAME_FORMAT = Pattern.compile("(?<name>[^/]+)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -149,9 +150,12 @@ public class Parser {
      */
     private Command prepareDelete(String args) {
         try {
-            final int targetIndex = parseArgsAsDisplayedIndex(args);
-            return new DeleteCommand(targetIndex);
-        } catch (ParseException | NumberFormatException e) {
+//            final int targetIndex = parseArgsAsDisplayedIndex(args);
+//            return new DeleteCommand(targetIndex);
+            final String name = parseArgsAsName(args);
+            return new DeleteCommand(name);
+            //| NumberFormatException e
+        } catch (ParseException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
@@ -206,6 +210,13 @@ public class Parser {
         return Integer.parseInt(matcher.group("targetIndex"));
     }
 
+    private String parseArgsAsName(String args) throws ParseException {
+        final Matcher matcher = PERSON_NAME_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new ParseException("Could not find name to parse");
+        }
+        return matcher.group(0);
+    }
 
     /**
      * Parses arguments in the context of the find person command.
