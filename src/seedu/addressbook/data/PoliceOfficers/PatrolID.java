@@ -11,26 +11,25 @@ public class PatrolID {
     public static final String EXAMPLE = "PO1";
     public static final String MESSAGE_ID_CONSTRAINTS = "Patrol ID has to be a number excluding 0, and must not be an existing ID";
     public static final String PATROL_ID_PREFIX = "PO";
-    public static final int CONSTRAINT = 0;
+    //public static final int CONSTRAINT = 0;
 
     public final int ID;
     public final String patrolID;
 
-    public PatrolID (int identification) throws IllegalValueException{
-        if (!isValidID(identification)){
-            throw new IllegalValueException(MESSAGE_ID_CONSTRAINTS);
-        }
+    public PatrolID (int identification){
+
         this.ID = identification;
         this.patrolID = PATROL_ID_PREFIX + Integer.toString(identification);
     }
 
+    public String getPatrolID() {return patrolID;}
     /**
      * Validates given ID.
      *
      * @throws IllegalValueException if given ID is invalid.
      */
 
-    public static boolean isValidID(int test) {return test > CONSTRAINT; }
+    //public static boolean isValidID(int test) {return test > CONSTRAINT; }
 
     @Override
     public String toString() {

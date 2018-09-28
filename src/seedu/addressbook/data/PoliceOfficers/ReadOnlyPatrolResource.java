@@ -1,6 +1,5 @@
 package seedu.addressbook.data.PoliceOfficers;
 
-
 /**
  * A read-only immutable interface for a Patrol Resource  in the system.
  * Implementations should guarantee: details are present and not null, field values are validated.

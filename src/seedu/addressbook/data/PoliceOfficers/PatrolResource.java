@@ -1,11 +1,13 @@
 package seedu.addressbook.data.PoliceOfficers;
 
 
+import java.util.Objects;
+
 /**
  * Represents a Patrol Resource in the system.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class PatrolResource {
+public class PatrolResource implements ReadOnlyPatrolResource {
     public PatrolID patrolID;
     public State state;
     public Case currentCase;
@@ -27,29 +29,32 @@ public class PatrolResource {
     public Case RA(){
         //would generate timestamp and GPS
         //sent to HQP 'inbox'
+        return new Case(); //dummy line
     }
 
     public Case RB(){
         //would generate timestamp and GPS
         //sent to HQP 'inbox'
+        return new Case();
     }
 
     public Case RF(){
         //would generate timestamp and GPS
         //sent to HQP 'inbox'
+        return new Case();
     }
 
-    @Override
+    //@Override
     public PatrolID getPatrolID() {
         return patrolID;
     }
 
-    @Override
+    //@Override
     public State getState() {
         return state;
     }
 
-    @Override
+    //@Override
     public Case getCurrentCase() {
         return currentCase;
     }
