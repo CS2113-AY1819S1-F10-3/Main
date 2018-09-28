@@ -64,7 +64,7 @@ public class AddCommand extends Command {
         try {
             addressBook.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (UniquePersonList.DuplicatePersonException dpe) {
+        } catch (UniquePersonList.DuplicateNricException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
         }
     }

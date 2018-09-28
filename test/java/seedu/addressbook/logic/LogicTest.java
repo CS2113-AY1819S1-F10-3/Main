@@ -197,11 +197,11 @@ public class LogicTest {
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        AddressBook expectedAB = helper.generateAddressBook(false, true);
+        AddressBook expectedAB = helper.generateAddressBook(false, false);
         List<? extends ReadOnlyPerson> expectedList = expectedAB.getAllPersons().immutableListView();
 
         // prepare address book state
-        helper.addToAddressBook(addressBook, false, true);
+        helper.addToAddressBook(addressBook, false, false);
 
         assertCommandBehavior("list",
                               Command.getMessageForPersonListShownSummary(expectedList),
@@ -477,7 +477,7 @@ public class LogicTest {
             NRIC nric = new NRIC("f1234567j");
             DateOfBirth dateOfBirth = new DateOfBirth("2001");
             PostalCode postalCode = new PostalCode("444444");
-            Status status = new Status("excon");
+            Status status = new Status("xc");
             Offense wantedFor = new Offense();
             Offense tag1 = new Offense("drugs");
             Offense tag2 = new Offense("riot");
@@ -499,7 +499,7 @@ public class LogicTest {
                     new NRIC("g999999" + Math.abs(seed) + "t"),
                     new DateOfBirth(Integer.toString(seed + Integer.parseInt("1901"))),
                     new PostalCode("77777" + seed),
-                    new Status("excon"),
+                    new Status("xc"),
                     new Offense(),
                     new HashSet<>(Arrays.asList(new Offense("theft" + Math.abs(seed)), new Offense("theft" + Math.abs(seed + 1))))
             );
