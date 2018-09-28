@@ -1,5 +1,7 @@
 package seedu.addressbook.inbox;
 
+import seedu.addressbook.Location;
+
 import java.sql.Timestamp;
 
 /** Msg has the following attributes:
@@ -11,7 +13,7 @@ import java.sql.Timestamp;
 public class Msg {
     private String newMsg;
     private Priority priority;
-    private double x, y;
+    private Location location;
     private int eta = -1;
     private String comment;
     protected boolean isRead;
@@ -44,18 +46,27 @@ public class Msg {
         return this.newMsg;
     }
 
-    public void setLocation(double x, double y){
-        this.x = x;
-        this.y = y;
+    public void setLocation(Location place){
+        location.setLongitude(place.getLongitude());
+        location.setLatitude(place.getLatitude());
         isLocationAvailable = true;
     }
 
+    public Location getLocation(){
+        return location;
+    }
+    public void setLongitude(double x){
+        location.setLongitude(x);
+    }
+    public void setLatitude(double y){
+        location.setLatitude(y);
+    }
     public double getLongitude(){
-        return this.x;
+        return location.getLongitude();
     }
 
     public double getLatitude(){
-        return this.y;
+        return location.getLatitude();
     }
     public void setEta(int eta){
         this.eta = eta;
@@ -76,7 +87,6 @@ public class Msg {
     }
 
     public void setTime(Timestamp time){
-        //
         this.time = time;
     }
 

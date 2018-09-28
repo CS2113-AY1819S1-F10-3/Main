@@ -31,6 +31,7 @@ public class WriteNotification {
 
         FileWriter write = new FileWriter (path, isAppend);
         PrintWriter myPrinter = new PrintWriter(write);
+        myPrinter.println("> START OF MESSAGE <");
         myPrinter.println("Read status:" + message.isRead);
         myPrinter.println("Priority:" + message.getPriority());
         myPrinter.println("Timestamp:" + message.getTime());
@@ -42,7 +43,7 @@ public class WriteNotification {
             myPrinter.println("Location:" + message.getLatitude() + "," + message.getLongitude());
         }
         else myPrinter.println('-');
-        myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
+        //myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
         myPrinter.close();
     }
 
