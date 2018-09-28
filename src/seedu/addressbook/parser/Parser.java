@@ -1,6 +1,7 @@
 package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
+import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.*;
@@ -28,6 +29,7 @@ public class Parser {
                     + " w/(?<wantedFor>[^/]+)"
                     + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
 
+    public static final Pattern PERSON_NAME_FORMAT = Pattern.compile("(?<name>[^/]+)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -84,8 +86,11 @@ public class Parser {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
 
-            case PasswordCommand.COMMAND_WORD:
-                return new PasswordCommand();
+            case HQPPasswordCommand.COMMAND_WORD:
+                return new HQPPasswordCommand();
+
+            case POPasswordCommand.COMMAND_WORD:
+                return new POPasswordCommand();
 
             case LockCommand.COMMAND_WORD:
                 return new LockCommand();
@@ -154,9 +159,14 @@ public class Parser {
      */
     private Command prepareDelete(String args) {
         try {
-            final int targetIndex = parseArgsAsDisplayedIndex(args);
-            return new DeleteCommand(targetIndex);
-        } catch (ParseException | NumberFormatException e) {
+            final String name = parseArgsAsName(args);
+            if (Utils.isStringInteger(name)) {
+                final int targetIndex = parseArgsAsDisplayedIndex(args);
+                return new DeleteCommand(targetIndex);
+            }
+
+            return new DeleteCommand(name);
+        } catch (ParseException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
@@ -211,6 +221,13 @@ public class Parser {
         return Integer.parseInt(matcher.group("targetIndex"));
     }
 
+    private String parseArgsAsName(String args) throws ParseException {
+        final Matcher matcher = PERSON_NAME_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new ParseException("Could not find name to parse");
+        }
+        return matcher.group(0);
+    }
 
     /**
      * Parses arguments in the context of the find person command.
