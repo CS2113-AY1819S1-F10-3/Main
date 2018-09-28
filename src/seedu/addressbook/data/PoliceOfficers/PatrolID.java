@@ -4,7 +4,7 @@ import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
  * Represents a Patrol resource's ID in EX-SI-53.
- * Guarantees: immutable; is valid as declared in {@link #isValidID(int)}
+ * Guarantees: immutable
  */
 
 public class PatrolID {

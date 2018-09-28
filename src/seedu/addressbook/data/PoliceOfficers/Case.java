@@ -2,10 +2,10 @@ package seedu.addressbook.data.PoliceOfficers;
 
 import seedu.addressbook.Location;
 
-import seedu.addressbook.Location;
+
 
 import java.sql.Timestamp;
-
+import java.text.SimpleDateFormat;
 
 
 public class Case {
@@ -17,6 +17,8 @@ public class Case {
     public String caseMessage;
     public static Location gpsCoordinates;
     public static Timestamp caseTimeStamp;
+    public static String caseTimeStampFormatted;
+    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd.MM.yyyy.HH.mm.ss");
 
 
     private String SPACE = ", ";
@@ -33,9 +35,9 @@ public class Case {
         this.attendingPO = patrolIDNo;
         this.caseMessage = message;
         this.gpsCoordinates = location;
-        this.caseTimeStamp = dateTime;
+        this.caseTimeStampFormatted = timestampFormatter.format(dateTime);
         this.value = patrolIDNo.patrolID + SPACE + caseMessage + SPACE + Double.toString(location.getLongitude()) + SPACE +
-                Double.toString(location.getLatitude()) + SPACE + dateTime;
+                Double.toString(location.getLatitude()) + SPACE + timestampFormatter.format(dateTime);
 
     }
 
@@ -49,7 +51,9 @@ public class Case {
 
     public Timestamp getCaseTimeStamp() {return caseTimeStamp;}
 
-    /*public static void main(String[] args) {
+    public String getCaseTimeStampFormatted() {return caseTimeStampFormatted;}
+
+    public static void main(String[] args) {
         Location location = new Location(-6.206968,106.751365);
         Location origin = new Location(-6.189482, 106.733902);
         PatrolID id = new PatrolID(5);
@@ -59,6 +63,6 @@ public class Case {
         System.out.print(c.PrintCase());
 
 
-    }*/
+    }
 
 }
