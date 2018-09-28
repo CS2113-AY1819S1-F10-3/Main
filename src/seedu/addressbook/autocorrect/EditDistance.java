@@ -1,16 +1,20 @@
 package seedu.addressbook.autocorrect;
 
+/**
+ * Returns the edit distance needed to convert one string to the other.
+ */
 public class EditDistance {
+
     /**
-     * Returns the edit distance needed to convert inputString to storedString
-     * If returns 0, the strings are same
-     * If returns 1, that means either a character is added, removed or replaced and so on
+     * If returns 0, the strings are same.
+     * If returns 1, that means either a character is added, removed or replaced and so on.
      *
-     * @param inputString The string input by the user
-     * @param storedString The string contained in the Dictionary
-     * @return The minimum number of operations required to transform inputString into storedString
+     * @param inputString The string input by the user.
+     * @param storedString The string contained in the Dictionary.
+     * @return The minimum number of operations required to transform inputString into storedString.
      */
     public static int computeDistance(String inputString, String storedString) {
+
         int length1 = inputString.length();
         int length2 = storedString.length();
 
