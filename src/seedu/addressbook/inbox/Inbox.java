@@ -1,5 +1,10 @@
 package seedu.addressbook.inbox;
 
+import org.javatuples.Triplet;
+
+import java.sql.Timestamp;
+import java.util.HashMap;
+
 public class Inbox {
     // all messages will be stored here, notifications will appear based on severity and timestamp.
     public static final String MESSAGE_STORAGE_FILEPATH = "notifications.txt";
@@ -11,6 +16,9 @@ public class Inbox {
     private Msg message;
     WriteNotification myMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH);
 
+    protected HashMap<Triplet<Boolean, Priority, Timestamp>, String> notificationsToPrint = new HashMap<Triplet
+            <Boolean, Inbox.Priority, Timestamp>, String>();
+
     public enum Priority{
         HIGH,   // For messages that require HPQ intervention
         MED,    // For messages that only require PO back-up
@@ -18,7 +26,7 @@ public class Inbox {
     }
 
     public Inbox(){ // A data structure must be created to store the messages from the message storage file.
-
+        Inbox inbox = new Inbox();
     }
 
 
