@@ -19,19 +19,23 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
+    private String nameToSearch = "";
 
     public DeleteCommand(int targetVisibleIndex) {
         super(targetVisibleIndex);
+    }
+
+    public DeleteCommand(String name) {
+        this.nameToSearch = name;
     }
 
 
     @Override
     public CommandResult execute() {
         try {
-            final ReadOnlyPerson target = getTargetPerson();
+            final ReadOnlyPerson target = (nameToSearch.isEmpty()) ? getTargetPerson() : getTargetPerson(nameToSearch);
             addressBook.removePerson(target);
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, target));
-
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (PersonNotFoundException pnfe) {
