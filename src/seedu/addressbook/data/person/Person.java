@@ -1,39 +1,63 @@
 package seedu.addressbook.data.person;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.tag.Tag;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Person in the system.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Person implements ReadOnlyPerson {
 
     private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
+    private NRIC nric;
+    private DateOfBirth dateOfBirth;
+    private PostalCode postalCode;
+    private Status status;
+    private Offense wantedFor;
 
-    private final Set<Tag> tags = new HashSet<>();
+    public static String WANTED_FOR_WARNING = "State the offence if person's status is wanted";
+
+    private final Set<Offense> PastOffense = new HashSet<>();
+
+
     /**
      * Assumption: Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, NRIC nric, DateOfBirth dateOfBirth, PostalCode postalCode, Status status ,
+                  Offense wantedFor, Set<Offense> PastOffense) throws IllegalValueException {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.tags.addAll(tags);
+        this.nric = nric;
+        this.dateOfBirth = dateOfBirth;
+        this.postalCode = postalCode;
+        this.status = status;
+        this.wantedFor = wantedFor;
+        if ((this.status.getCurrentStatus().equals(this.status.WANTED_KEYWORD)) && ((this.wantedFor.getOffense().equals(this.wantedFor.NULL_OFFENSE)) ||
+                this.wantedFor == null)){
+            throw new IllegalValueException(WANTED_FOR_WARNING);
+        }
+
+        else if (!(this.status.getCurrentStatus().equals(this.status.WANTED_KEYWORD))){
+            this.wantedFor = new Offense();
+
+        }
+
+        else{
+
+            this.wantedFor = wantedFor;
+        }
+        this.PastOffense.addAll(PastOffense);
     }
 
     /**
      * Copy constructor.
      */
-    public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+    public Person(ReadOnlyPerson source) throws IllegalValueException {
+        this(source.getName(), source.getNRIC(),
+                source.getDateOfBirth(), source.getPostalCode(), source.getStatus(),
+                source.getWantedFor(), source.getPastOffense());
     }
 
     @Override
@@ -42,31 +66,37 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Phone getPhone() {
-        return phone;
+    public NRIC getNRIC() {
+        return nric;
     }
 
     @Override
-    public Email getEmail() {
-        return email;
+    public DateOfBirth getDateOfBirth() {return dateOfBirth;}
+
+    @Override
+    public PostalCode getPostalCode() {
+        return postalCode;
     }
 
     @Override
-    public Address getAddress() {
-        return address;
+    public Status getStatus() {
+        return status;
     }
 
     @Override
-    public Set<Tag> getTags() {
-        return new HashSet<>(tags);
+    public Offense getWantedFor() {
+        return wantedFor;
     }
+
+    @Override
+    public Set<Offense> getPastOffense() {return PastOffense;}
 
     /**
      * Replaces this person's tags with the tags in {@code replacement}.
      */
-    public void setTags(Set<Tag> replacement) {
-        tags.clear();
-        tags.addAll(replacement);
+    public void setPastOffense(Set<Offense> replacement) {
+        PastOffense.clear();
+        PastOffense.addAll(replacement);
     }
 
     @Override
@@ -79,7 +109,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, nric, dateOfBirth, postalCode, status, wantedFor, PastOffense);
     }
 
     @Override
