@@ -25,7 +25,7 @@ public class Msg {
         LOW     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
     }
 
-    public Msg(){
+    public Msg(){   // Create overloading constructors.
         isLocationAvailable = false;
         isRead = false;
     }

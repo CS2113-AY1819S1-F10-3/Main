@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Inbox/>> START OF MESSAGE <
+> START OF MESSAGE <
 Read status:false
 Priority:HIGH
 Timestamp:2018-10-04 15:06:25.299
@@ -34,6 +33,38 @@ Location:-6.206968,106.751365
 Read status:false
 Priority:HIGH
 Timestamp:2018-10-04 15:38:03.65
+Message:Backup requested
+-
+Location:-6.206968,106.751365
+> END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 16:04:13.287
+Message:Backup requested
+-
+Location:-6.206968,106.751365
+> END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 16:04:17.549
+Message:Backup requested
+-
+Location:-6.206968,106.751365
+> END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 16:04:43.17
+Message:Backup requested
+-
+Location:-6.206968,106.751365
+> END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 16:05:10.314
 Message:Backup requested
 -
 Location:-6.206968,106.751365
