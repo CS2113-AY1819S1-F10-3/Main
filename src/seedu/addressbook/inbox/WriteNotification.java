@@ -28,19 +28,22 @@ public class WriteNotification {
      */
 
     public void writeToFile(Msg message) throws IOException{
+
         FileWriter write = new FileWriter (path, isAppend);
         PrintWriter myPrinter = new PrintWriter(write);
-        myPrinter.println(message.isRead);
-        myPrinter.println(message.getPriority());
-        myPrinter.println(message.getTime());
-        myPrinter.println(message.getMsg());
+        myPrinter.println("> START OF MESSAGE <");
+        myPrinter.println("Read status:" + message.isRead);
+        myPrinter.println("Priority:" + message.getPriority());
+        myPrinter.println("Timestamp:" + message.getTime());
+        myPrinter.println("Message:" + message.getMsg());
         if(message.hasEta())
-            myPrinter.println(message.getEta());
+            myPrinter.println("ETA:" + message.getEta());
+        else myPrinter.println('-');
         if(message.isLocationAvailable) {
-            myPrinter.println(message.getLatitude());
-            myPrinter.println(message.getLongitude());
+            myPrinter.println("Location:" + message.getLatitude() + "," + message.getLongitude());
         }
-        myPrinter.println("---");   // Notate the end of 1 message entry with "---"
+        else myPrinter.println('-');
+        //myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
         myPrinter.close();
     }
 

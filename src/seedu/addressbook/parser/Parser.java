@@ -87,8 +87,11 @@ public class Parser {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
 
-            case PasswordCommand.COMMAND_WORD:
-                return new PasswordCommand();
+            case HQPPasswordCommand.COMMAND_WORD:
+                return new HQPPasswordCommand();
+
+            case POPasswordCommand.COMMAND_WORD:
+                return new POPasswordCommand();
 
             case LockCommand.COMMAND_WORD:
                 return new LockCommand();

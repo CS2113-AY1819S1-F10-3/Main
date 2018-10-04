@@ -2,7 +2,6 @@ package seedu.addressbook;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +25,12 @@ public class Location {
         this.latitude = latitude;
     }
 
+    public void setLongitude(double x){
+        this.longitude = x;
+    }
+    public void setLatitude(double y){
+        this.latitude = y;
+    }
     public double getLongitude() {
         return longitude;
     }
