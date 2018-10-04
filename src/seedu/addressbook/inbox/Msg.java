@@ -46,8 +46,7 @@ public class Msg {
     }
 
     public void setLocation(Location place){
-        location.setLongitude(place.getLongitude());
-        location.setLatitude(place.getLatitude());
+        this.location = place;
         isLocationAvailable = true;
     }
 

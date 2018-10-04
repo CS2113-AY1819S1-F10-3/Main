@@ -22,3 +22,19 @@ Message:Backup requested
 -
 -
 > END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 15:37:56.323
+Message:Backup requested
+-
+Location:-6.206968,106.751365
+> END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 15:38:03.65
+Message:Backup requested
+-
+Location:-6.206968,106.751365
+> END OF MESSAGE <
