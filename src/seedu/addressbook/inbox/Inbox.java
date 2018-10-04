@@ -17,7 +17,7 @@ public class Inbox {
     public static int unreadMsgs = 0;
     private Msg message;
     private static ReadNotification nw = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
-    WriteNotification myMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
+    static WriteNotification myMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
 
     protected HashMap<Triplet<Boolean, Msg.Priority, Timestamp>, Triplet<String, Integer, Location>> notificationsToPrint = new HashMap<>();
 
@@ -35,8 +35,22 @@ public class Inbox {
      * @return messages to be printed out on the main window.
      */
 
-    /*public String printMsg(){
+    public int checkUnreadMessages(HashMap notificationsToPrint){
+
+        return unreadMsgs;
+    }
+
+    public void printMsg(){
         //for (String s : messages)
-        return
+    }
+
+    /*public static void main(String[] args) throws IOException {
+        Msg newMsg = new Msg();
+        newMsg.addMsg("Backup requested");
+    //    newMsg.setLongitude(6.189482);
+    //    newMsg.setLatitude(106.733902);
+        newMsg.setPriority(Msg.Priority.HIGH);
+        newMsg.setTime();
+        myMessages.writeToFile(newMsg);
     }*/
 }

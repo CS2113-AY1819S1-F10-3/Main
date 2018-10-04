@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Inbox/>
+<Inbox/>> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 15:06:25.299
+Message:Backup requested
+-
+-
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 15:09:10.673
+Message:Backup requested
+-
+-
+> END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:2018-10-04 15:12:45.753
+Message:Backup requested
+-
+-
+> END OF MESSAGE <

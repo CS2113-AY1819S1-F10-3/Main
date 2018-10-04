@@ -26,7 +26,6 @@ public class Msg {
     }
 
     public Msg(){
-        Msg message = new Msg();
         isLocationAvailable = false;
         isRead = false;
     }
