@@ -80,7 +80,7 @@ public class MainWindow {
             }
 
             else if (isInvalidPasswordCommand(result)){
-                displayResult(logic.execute("akshay")); //EDIT THIS
+                displayResult(logic.execute("akshay")); //TODO EDIT THIS
                 clearCommandInput();
             }
 
