@@ -66,9 +66,9 @@ public abstract class Command {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
 
-    protected ReadOnlyPerson getTargetPerson(Name name) throws UniquePersonList.PersonNotFoundException {
+    protected ReadOnlyPerson getTargetPerson(String name) throws UniquePersonList.PersonNotFoundException {
         for (ReadOnlyPerson person: relevantPersons) {
-            if (person.getName().toString().equalsIgnoreCase(name.toString())) {
+            if (person.getName().toString().equals(name)) {
                 return person;
             }
         }

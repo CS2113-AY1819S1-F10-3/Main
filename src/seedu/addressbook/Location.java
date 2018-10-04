@@ -80,13 +80,6 @@ public class Location {
         return etaList;
     }
 
-    /**
-     * Returns ETA for this location from multiple locations
-     *
-     * @param locations Arraylist is of Locations objects
-     * @return ArrayList of Pair of Number of seconds of ETA and text description of ETA
-     */
-
     public ArrayList<Pair<Integer, String>> getEtaFromMultipleLocations(ArrayList<Location> locations) {
         ArrayList<Pair<Integer, String>> etaList = new ArrayList<>();
 
@@ -107,7 +100,7 @@ public class Location {
         return etaList;
     }
 
-    public String getGooglemMapsURL() {
+    public String getLocationURL() {
         return GOOGLE_MAPS_BASE_URL + this.getLatitude() + "," + this.getLongitude();
     }
 
