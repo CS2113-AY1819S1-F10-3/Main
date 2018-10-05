@@ -201,6 +201,7 @@ public class LogicTest {
         List<? extends ReadOnlyPerson> expectedList = expectedAB.getAllPersons().immutableListView();
 
         // prepare address book state
+        
         helper.addToAddressBook(addressBook, false, false);
         assertCommandBehavior("list",
                               Command.getMessageForPersonListShownSummary(expectedList),
