@@ -32,7 +32,7 @@
 
 == Design
 
-image::mainClassDiagram1.png[]
+image::mainClassDiagram.png[]
 
 == Testing
 
