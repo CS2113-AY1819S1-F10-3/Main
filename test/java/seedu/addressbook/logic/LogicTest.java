@@ -339,6 +339,28 @@ public class LogicTest {
 //    }
 
     @Test
+    public void execute_delete_byName() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+
+        Person p1 = helper.generatePersonWithName("Harun");
+        Person p2 = helper.generatePersonWithName("Putra");
+
+        List<Person> twoPersons = helper.generatePersonList(p1, p2);
+        AddressBook expectedAB = helper.generateAddressBook(twoPersons);
+        expectedAB.removePerson(p1);
+
+        helper.addToAddressBook(addressBook, twoPersons);
+        logic.setLastShownList(twoPersons);
+
+
+        assertCommandBehavior("delete Harun",
+                String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, p1),
+                expectedAB,
+                false,
+                twoPersons);
+    }
+
+    @Test
     public void execute_delete_invalidIndex() throws Exception {
         assertInvalidIndexBehaviorForCommand("delete");
     }
@@ -388,6 +410,12 @@ public class LogicTest {
                                 expectedAB,
                                 false,
                                 threePersons);
+    }
+
+    @Test
+    public void execute_edit_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertCommandBehavior("edit ", expectedMessage);
     }
 
     @Test
