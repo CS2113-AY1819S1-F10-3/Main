@@ -17,17 +17,18 @@ public class Inbox {
     public static int unreadMsgs = 0;
     private Msg message;
     private static ReadNotification nw = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
-    WriteNotification myMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
+    static WriteNotification myMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
 
-    protected HashMap<Triplet<Boolean, Msg.Priority, Timestamp>, Triplet<String, Integer, Location>> notificationsToPrint = new HashMap<>();
+    protected static HashMap<Triplet<Boolean, Msg.Priority, Timestamp>, Triplet<String, Integer, Location>> notificationsToPrint = new HashMap<>();
 
 
     public Inbox(){
         Inbox inbox = new Inbox();
     }
 
-    public void loadMessages() throws IOException {
+    public static void loadMsgs() throws IOException {
         notificationsToPrint = nw.ReadFromFile();
+        unreadMsgs = nw.getUnreadMsgs();
     }
 
     /** Prints out all unread notifications ordered by priority, then timestamp (earlier first).
@@ -35,8 +36,27 @@ public class Inbox {
      * @return messages to be printed out on the main window.
      */
 
-    /*public String printMsg(){
-        //for (String s : messages)
-        return
-    }*/
+    public int checkNumUnreadMessages(HashMap notificationsToPrint){
+
+        return unreadMsgs;
+    }
+
+    public static void printMsg(){
+        if(unreadMsgs > 0)
+            System.out.println("You have " + unreadMsgs + " unread message" + ((unreadMsgs == 1) ? "." : "s."));
+        else System.out.println(unreadMsgs);
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        /*Msg newMsg = new Msg();
+        Location location = new Location(-6.206968,106.751365);
+        newMsg.addMsg("Backup requested");
+        newMsg.setLocation(location);
+        newMsg.setPriority(Msg.Priority.HIGH);
+        newMsg.setTime();
+        myMessages.writeToFile(newMsg);*/
+        loadMsgs();
+        printMsg();
+    }
 }

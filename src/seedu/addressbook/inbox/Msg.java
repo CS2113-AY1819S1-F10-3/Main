@@ -25,8 +25,7 @@ public class Msg {
         LOW     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
     }
 
-    public Msg(){
-        Msg message = new Msg();
+    public Msg(){   // Create overloading constructors.
         isLocationAvailable = false;
         isRead = false;
     }
@@ -47,8 +46,7 @@ public class Msg {
     }
 
     public void setLocation(Location place){
-        location.setLongitude(place.getLongitude());
-        location.setLatitude(place.getLatitude());
+        this.location = place;
         isLocationAvailable = true;
     }
 
