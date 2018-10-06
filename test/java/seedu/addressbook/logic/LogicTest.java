@@ -594,12 +594,23 @@ public class LogicTest {
         }
 
         /**
+         * Generates a random NRIC
+         */
+        String generateRandomNric() {
+            int min = 1111111;
+            int max = 9999999;
+            Random r = new Random();
+            return "S"+Integer.toString(r.nextInt((max - min) + 1) + min)+"A";
+        }
+
+        /**
          * Generates a Person object with given name. Other fields will have some dummy values.
          */
          Person generatePersonWithName(String name) throws Exception {
+            String randomNric = generateRandomNric();
             return new Person(
                     new Name(name),
-                    new NRIC("S1234567A"),
+                    new NRIC(randomNric),
                     new DateOfBirth("2005"),
                     new PostalCode("123456"),
                     new Status("xc"),
