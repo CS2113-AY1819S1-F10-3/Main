@@ -2,10 +2,10 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-10-04T10:03:04.186957500Z</date>
-  <millis>1538647384186</millis>
-  <nanos>957500</nanos>
-  <sequence>1</sequence>
+  <date>2018-10-06T19:46:21.036331700Z</date>
+  <millis>1538855181036</millis>
+  <nanos>331700</nanos>
+  <sequence>2</sequence>
   <logger>seedu.addressbook.parser.Parser</logger>
   <level>INFO</level>
   <class>seedu.addressbook.parser.Parser</class>
