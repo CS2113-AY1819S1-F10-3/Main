@@ -43,7 +43,7 @@ public class WriteNotification {
             myPrinter.println("Location:" + message.getLatitude() + "," + message.getLongitude());
         }
         else myPrinter.println('-');
-        //myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
+        myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
         myPrinter.close();
     }
 
