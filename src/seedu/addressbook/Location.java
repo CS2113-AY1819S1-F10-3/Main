@@ -98,7 +98,7 @@ public class Location {
             HttpResponse response = httpRestClient.requestGetResponse(getMapsDistanceURL(locations));
 
             if (response != null) {
-                String jsonString = IOUtils.toString(response.getEntity().getContent());
+                String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
                 JSONObject jsonData = new JSONObject(jsonString);
 
                 etaList = getEtaListFromJsonObject(jsonData);
