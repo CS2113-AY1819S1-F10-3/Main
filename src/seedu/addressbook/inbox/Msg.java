@@ -19,6 +19,8 @@ public class Msg {
     protected boolean isRead;
     protected boolean isLocationAvailable;
     private Timestamp time;
+    public static final boolean MESSAGE_IS_READ = true;
+    public static final boolean MESSAGE_IS_UNREAD = false;
     public enum Priority {
         HIGH,   // For messages that require HPQ intervention
         MED,    // For messages that only require PO back-up
@@ -27,7 +29,34 @@ public class Msg {
 
     public Msg(){   // Create overloading constructors.
         isLocationAvailable = false;
-        isRead = false;
+        isRead = MESSAGE_IS_UNREAD;
+    }
+
+    public Msg(Priority urgency, String message){
+        isLocationAvailable = false;
+        isRead = MESSAGE_IS_UNREAD;
+        priority = urgency;
+        time = new Timestamp(System.currentTimeMillis());
+        newMsg = message;
+    }
+
+    public Msg(Priority urgency, String message, Location myLocale){ // Constructor for request backup message
+        isLocationAvailable = true;
+        isRead = MESSAGE_IS_UNREAD;
+        priority = urgency;
+        time = new Timestamp(System.currentTimeMillis());
+        newMsg = message;
+        location = myLocale;
+    }
+
+    public Msg(Priority urgency, String message, Location requesterLocale, int myEta){ // Constructor for request backup message
+        isLocationAvailable = true;                                                    // An ack message should be sent to PO requesting
+        isRead = MESSAGE_IS_UNREAD;                                                    // backup, stating ETA of backup deployed.
+        priority = urgency;
+        time = new Timestamp(System.currentTimeMillis());
+        newMsg = message;
+        location = requesterLocale;
+        eta = myEta;
     }
 
     public void addMsg(String msg){
@@ -90,9 +119,5 @@ public class Msg {
 
     public Timestamp getTime(){
         return this.time;
-    }
-
-    public void setComments(String comment){
-        this.comment = comment;
     }
 }
