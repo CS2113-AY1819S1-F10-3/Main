@@ -3,6 +3,7 @@
 
 # Default data file
 addressbook.txt
+notification.txt
 
 # Package Files #
 *.jar
