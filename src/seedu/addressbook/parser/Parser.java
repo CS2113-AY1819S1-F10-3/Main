@@ -26,10 +26,12 @@ public class Parser {
 
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
-                    + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
-                    + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
-                    + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
-                    + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
+                    + " n/(?<nric>[^/]+)"
+                    + " d/(?<dateOfBirth>[^/]+)"
+                    + " p/(?<postalCode>[^/]+)"
+                    + " s/(?<status>[^/]+)"
+                    + " w/(?<wantedFor>[^/]+)"
+                    + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
 
     public static final Pattern PERSON_NAME_FORMAT = Pattern.compile("(?<name>[^/]+)");
 
@@ -102,9 +104,6 @@ public class Parser {
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
 
-            case ViewCommand.COMMAND_WORD:
-                return prepareView(arguments);
-
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
 
@@ -135,17 +134,13 @@ public class Parser {
         try {
             return new AddCommand(
                     matcher.group("name"),
+                    matcher.group("nric"),
+                    matcher.group("dateOfBirth"),
+                    matcher.group("postalCode"),
+                    matcher.group("status"),
+                    matcher.group("wantedFor"),
 
-                    matcher.group("phone"),
-                    isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
-
-                    matcher.group("email"),
-                    isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
-
-                    matcher.group("address"),
-                    isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
-
-                    getTagsFromArgs(matcher.group("tagArguments"))
+                    getTagsFromArgs(matcher.group("pastOffenseArguments"))
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -169,7 +164,7 @@ public class Parser {
             return Collections.emptySet();
         }
         // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
+        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" o/", "").split(" o/"));
         return new HashSet<>(tagStrings);
     }
 
@@ -241,11 +236,11 @@ public class Parser {
     private Command prepareView(String args) {
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
-            return new ViewCommand(targetIndex);
+            return new ViewAllCommand(targetIndex);
         } catch (ParseException | NumberFormatException e) {
             logr.log(Level.WARNING, "Invalid view command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ViewCommand.MESSAGE_USAGE));
+                    ViewAllCommand.MESSAGE_USAGE));
         }
     }
 

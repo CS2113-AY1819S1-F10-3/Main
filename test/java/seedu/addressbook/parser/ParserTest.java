@@ -8,6 +8,7 @@ import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.person.*;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -90,17 +91,17 @@ public class ParserTest {
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
-    @Test
+    /*@Test
     public void viewCommand_noArgs() {
         final String[] inputs = { "view", "view " };
-        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
 
     @Test
     public void viewCommand_argsIsNotSingleNumber() {
         final String[] inputs = { "view notAnumber ", "view 8*wh12", "view 1 2 3 4 5" };
-        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
     
@@ -108,9 +109,10 @@ public class ParserTest {
     public void viewCommand_numericArg_indexParsedCorrectly() {
         final int testIndex = 2;
         final String input = "view " + testIndex;
-        final ViewCommand result = parseAndAssertCommandType(input, ViewCommand.class);
+        final ViewAllCommand result = parseAndAssertCommandType(input, ViewAllCommand.class);
         assertEquals(result.getTargetIndex(), testIndex);
     }
+    */
 
     @Test
     public void viewAllCommand_noArgs() {
@@ -184,12 +186,21 @@ public class ParserTest {
                 "add",
                 "add ",
                 "add wrong args format",
-                // no phone prefix
-                String.format("add $s $s e/$s a/$s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE),
-                // no email prefix
-                String.format("add $s p/$s $s a/$s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE),
-                // no address prefix
-                String.format("add $s p/$s e/$s $s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE)
+                // no nric prefix
+                String.format("add $s $s d/$s p/$s s/$s w/$s", Name.EXAMPLE, NRIC.EXAMPLE, DateOfBirth.EXAMPLE, PostalCode.EXAMPLE,
+                        Status.EXAMPLE, Offense.EXAMPLE),
+                // no dateOfBirth prefix
+                String.format("add $s n/$s $s p/$s s/$s w/$s", Name.EXAMPLE, NRIC.EXAMPLE, DateOfBirth.EXAMPLE, PostalCode.EXAMPLE,
+                        Status.EXAMPLE, Offense.EXAMPLE),
+                // no postalCode prefix
+                String.format("add $s n/$s d/$s $s s/$s w/$s", Name.EXAMPLE, NRIC.EXAMPLE, DateOfBirth.EXAMPLE, PostalCode.EXAMPLE,
+                        Status.EXAMPLE, Offense.EXAMPLE),
+                // no status prefix
+                String.format("add $s n/$s d/$s p/$s /$s w/$s", Name.EXAMPLE, NRIC.EXAMPLE, DateOfBirth.EXAMPLE, PostalCode.EXAMPLE,
+                        Status.EXAMPLE, Offense.EXAMPLE),
+                // no offense(for wantedFor) prefix
+                String.format("add $s n/$s d/$s p/$s s/$s /$s", Name.EXAMPLE, NRIC.EXAMPLE, DateOfBirth.EXAMPLE, PostalCode.EXAMPLE,
+                        Status.EXAMPLE, Offense.EXAMPLE)
         };
         final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
@@ -199,25 +210,36 @@ public class ParserTest {
     public void addCommand_invalidPersonDataInArgs() {
         final String invalidName = "[]\\[;]";
         final String validName = Name.EXAMPLE;
-        final String invalidPhoneArg = "p/not__numbers";
-        final String validPhoneArg = "p/" + Phone.EXAMPLE;
-        final String invalidEmailArg = "e/notAnEmail123";
-        final String validEmailArg = "e/" + Email.EXAMPLE;
-        final String invalidTagArg = "t/invalid_-[.tag";
+        final String invalidNricArg = "n/not__numbers";
+        final String validNricArg = "n/" + NRIC.EXAMPLE;
+        final String invalidDateOfBirthArg = "d/1000";
+        final String validDateOfBirthArg = "d/" + DateOfBirth.EXAMPLE;
+        final String invalidPostalCodeArg = "p/11234565";
+        final String validPostalCode = "p/" + PostalCode.EXAMPLE;
+        final String invalidStatusArg = "s/not a convict";
+        final String validStatusArg = "s/" + Status.EXAMPLE;
+        final String invalidWantedForArg = "w/no offence";
+        final String validWantedForArg = "w/" + Offense.EXAMPLE;
+        final String invalidTagArg = "o/invalid_-[.tag";
 
         // address can be any string, so no invalid address
-        final String addCommandFormatString = "add $s $s $s a/" + Address.EXAMPLE;
+        final String addCommandFormatString = "add $s $s $s $s $s $s";
 
         // test each incorrect person data field argument individually
         final String[] inputs = {
                 // invalid name
-                String.format(addCommandFormatString, invalidName, validPhoneArg, validEmailArg),
-                // invalid phone
-                String.format(addCommandFormatString, validName, invalidPhoneArg, validEmailArg),
-                // invalid email
-                String.format(addCommandFormatString, validName, validPhoneArg, invalidEmailArg),
-                // invalid tag
-                String.format(addCommandFormatString, validName, validPhoneArg, validEmailArg) + " " + invalidTagArg
+                String.format(addCommandFormatString, invalidName, validNricArg, validDateOfBirthArg, validPostalCode, validStatusArg, validWantedForArg),
+                // invalid nric
+                String.format(addCommandFormatString, validName, invalidNricArg, validDateOfBirthArg, validPostalCode, validStatusArg, validWantedForArg),
+                // invalid dateOfBirth
+                String.format(addCommandFormatString, validName, validNricArg, invalidDateOfBirthArg, validPostalCode, validStatusArg, validWantedForArg),
+                // invalid postalCode
+                String.format(addCommandFormatString, validName, validNricArg, validDateOfBirthArg, invalidPostalCodeArg, validStatusArg, validWantedForArg),
+                // invalid status
+                String.format(addCommandFormatString, validName, validNricArg, validDateOfBirthArg, validPostalCode, invalidStatusArg, validWantedForArg),
+                // invalid wantedFor
+                String.format(addCommandFormatString, validName, validNricArg, validDateOfBirthArg, validPostalCode, validStatusArg, invalidWantedForArg),
+                String.format(addCommandFormatString, validName, validNricArg, validDateOfBirthArg, validPostalCode, validStatusArg, validWantedForArg) + " " + invalidTagArg
         };
         for (String input : inputs) {
             parseAndAssertCommandType(input, IncorrectCommand.class);
@@ -236,9 +258,9 @@ public class ParserTest {
     public void addCommand_duplicateTags_merged() throws IllegalValueException {
         final Person testPerson = generateTestPerson();
         String input = convertPersonToAddCommandString(testPerson);
-        for (Tag tag : testPerson.getTags()) {
+        for (Offense tag : testPerson.getPastOffense()) {
             // create duplicates by doubling each tag
-            input += " t/" + tag.tagName;
+            input += " o/" + tag.getOffense();
         }
 
         final AddCommand result = parseAndAssertCommandType(input, AddCommand.class);
@@ -249,10 +271,12 @@ public class ParserTest {
         try {
             return new Person(
                 new Name(Name.EXAMPLE),
-                new Phone(Phone.EXAMPLE, true),
-                new Email(Email.EXAMPLE, false),
-                new Address(Address.EXAMPLE, true),
-                new HashSet<>(Arrays.asList(new Tag("tag1"), new Tag("tag2"), new Tag("tag3")))
+                new NRIC(NRIC.EXAMPLE),
+                new DateOfBirth(DateOfBirth.EXAMPLE),
+                new PostalCode(PostalCode.EXAMPLE),
+                new Status(Status.EXAMPLE),
+                new Offense(Offense.EXAMPLE),
+                new HashSet<>(Arrays.asList(new Offense("theft"), new Offense("drugs"), new Offense("riot")))
             );
         } catch (IllegalValueException ive) {
             throw new RuntimeException("test person data should be valid by definition");
@@ -262,11 +286,13 @@ public class ParserTest {
     private static String convertPersonToAddCommandString(ReadOnlyPerson person) {
         String addCommand = "add "
                 + person.getName().fullName
-                + (person.getPhone().isPrivate() ? " pp/" : " p/") + person.getPhone().value
-                + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
-                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value;
-        for (Tag tag : person.getTags()) {
-            addCommand += " t/" + tag.tagName;
+                + " n/" + person.getNRIC().getIdentificationNumber()
+                + " d/" + person.getDateOfBirth().getDOB()
+                + " p/" + person.getPostalCode().getPostalCode()
+                + " s/" + person.getStatus().getCurrentStatus()
+                + " w/" + person.getWantedFor().getOffense();
+        for (Offense tag : person.getPastOffense()) {
+            addCommand += " o/" + tag.getOffense();
         }
         return addCommand;
     }
