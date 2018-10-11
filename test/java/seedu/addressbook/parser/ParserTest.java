@@ -91,12 +91,12 @@ public class ParserTest {
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
-    /**@Test
+    /*@Test
     public void viewCommand_noArgs() {
         final String[] inputs = { "view", "view " };
         final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
-    }*/
+    }
 
     @Test
     public void viewCommand_argsIsNotSingleNumber() {
@@ -112,6 +112,7 @@ public class ParserTest {
         final ViewAllCommand result = parseAndAssertCommandType(input, ViewAllCommand.class);
         assertEquals(result.getTargetIndex(), testIndex);
     }
+    */
 
     @Test
     public void viewAllCommand_noArgs() {

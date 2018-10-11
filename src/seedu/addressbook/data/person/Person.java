@@ -1,9 +1,12 @@
 package seedu.addressbook.data.person;
 
+import java.sql.Time;
 import java.util.*;
 
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.tag.Tag;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * Represents a Person in the system.
@@ -18,9 +21,12 @@ public class Person implements ReadOnlyPerson {
     private Status status;
     private Offense wantedFor;
 
+    private final Set<Offense> PastOffense = new HashSet<>();
+
     public static String WANTED_FOR_WARNING = "State the offence if person's status is wanted";
 
-    private final Set<Offense> PastOffense = new HashSet<>();
+    private Set<Timestamp> screeningHistory;
+
 
 
     /**
@@ -90,6 +96,9 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public Set<Offense> getPastOffense() {return PastOffense;}
+
+    @Override
+    public Set<Timestamp> getScreeningHistory() {return screeningHistory;}
 
     /**
      * Replaces this person's tags with the tags in {@code replacement}.

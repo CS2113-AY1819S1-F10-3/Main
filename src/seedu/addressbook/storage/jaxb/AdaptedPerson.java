@@ -55,7 +55,7 @@ public class AdaptedPerson {
         nric = new AdaptedContactDetail();
         nric.value = source.getNRIC().getIdentificationNumber();
 
-        dateOfBirth = new AdaptedContactDetail();
+        dateOfBirth = new AdaptedContactDetail();dateOfBirth = new AdaptedContactDetail();
         dateOfBirth.value = source.getDateOfBirth().getDOB();
 
         postalCode = new AdaptedContactDetail();

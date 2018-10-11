@@ -201,26 +201,27 @@ public class LogicTest {
         List<? extends ReadOnlyPerson> expectedList = expectedAB.getAllPersons().immutableListView();
 
         // prepare address book state
-        helper.addToAddressBook(addressBook, false, false);
 
+        helper.addToAddressBook(addressBook, false, false);
         assertCommandBehavior("list",
                               Command.getMessageForPersonListShownSummary(expectedList),
                               expectedAB,
                               true,
                               expectedList);
     }
-
+    /*
     @Test
     public void execute_view_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         assertCommandBehavior("view ", expectedMessage);
         assertCommandBehavior("view arg not number", expectedMessage);
     }
+    */
 
-    @Test
+    /*@Test
     public void execute_view_invalidIndex() throws Exception {
         assertInvalidIndexBehaviorForCommand("view");
-    }
+    }*/
 
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
@@ -241,7 +242,7 @@ public class LogicTest {
     }
 
     //@Test
-   /**
+   /*
     public void execute_view_onlyShowsNonPrivate() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
@@ -266,7 +267,8 @@ public class LogicTest {
                               lastShownList);
     }
 */
-    @Test
+   /*
+   @Test
     public void execute_tryToViewMissingPerson_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1);
@@ -285,6 +287,7 @@ public class LogicTest {
                               false,
                               lastShownList);
     }
+    */
 
     @Test
     public void execute_viewAll_invalidArgsFormat() throws Exception {
@@ -342,12 +345,34 @@ public class LogicTest {
                                 lastShownList);
     }
 
-//    @Test
-//    public void execute_delete_invalidArgsFormat() throws Exception {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-//        assertCommandBehavior("delete ", expectedMessage);
-//        assertCommandBehavior("delete arg not number", expectedMessage);
-//    }
+    /*@Test
+    public void execute_delete_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+        assertCommandBehavior("delete ", expectedMessage);
+        assertCommandBehavior("delete arg not number", expectedMessage);
+    }*/
+
+    @Test
+    public void execute_delete_byName() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+
+        Person p1 = helper.generatePersonWithName("Harun");
+        Person p2 = helper.generatePersonWithName("Putra");
+
+        List<Person> twoPersons = helper.generatePersonList(p1, p2);
+        AddressBook expectedAB = helper.generateAddressBook(twoPersons);
+        expectedAB.removePerson(p1);
+
+        helper.addToAddressBook(addressBook, twoPersons);
+        logic.setLastShownList(twoPersons);
+
+
+        assertCommandBehavior("delete Harun",
+                String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, p1),
+                expectedAB,
+                false,
+                twoPersons);
+    }
 
     @Test
     public void execute_delete_invalidIndex() throws Exception {
@@ -399,6 +424,12 @@ public class LogicTest {
                                 expectedAB,
                                 false,
                                 threePersons);
+    }
+
+    @Test
+    public void execute_edit_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertCommandBehavior("edit ", expectedMessage);
     }
 
     @Test
@@ -475,7 +506,7 @@ public class LogicTest {
         Person adam() throws Exception {
             Name name = new Name("Adam Brown");
             NRIC nric = new NRIC("f1234567j");
-            DateOfBirth dateOfBirth = new DateOfBirth("2001");
+            DateOfBirth dateOfBirth = new DateOfBirth("1900");
             PostalCode postalCode = new PostalCode("444444");
             Status status = new Status("xc");
             Offense wantedFor = new Offense();
@@ -513,10 +544,10 @@ public class LogicTest {
 
             cmd.add(p.getName().toString());
             cmd.add("n/" + p.getNRIC());
-            cmd.add("d/" + p.getDateOfBirth());
+            cmd.add("d/" + p.getDateOfBirth().getDOB());
             cmd.add("p/" + p.getPostalCode());
             cmd.add("s/" + p.getStatus());
-            cmd.add("w/" + p.getWantedFor());
+            cmd.add("w/" + p.getWantedFor().getOffense());
 
             Set<Offense> tags = p.getPastOffense();
             for(Offense t: tags){
@@ -591,15 +622,26 @@ public class LogicTest {
         }
 
         /**
+         * Generates a random NRIC
+         */
+        String generateRandomNric() {
+            int min = 1111111;
+            int max = 9999999;
+            Random r = new Random();
+            return "S"+Integer.toString(r.nextInt((max - min) + 1) + min)+"A";
+        }
+
+        /**
          * Generates a Person object with given name. Other fields will have some dummy values.
          */
          Person generatePersonWithName(String name) throws Exception {
+            String randomNric = generateRandomNric();
             return new Person(
                     new Name(name),
-                    new NRIC("S1234567A"),
+                    new NRIC(randomNric),
                     new DateOfBirth("2005"),
                     new PostalCode("123456"),
-                    new Status("excon"),
+                    new Status("xc"),
                     new Offense(),
                     Collections.singleton(new Offense("riot"))
             );

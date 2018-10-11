@@ -59,6 +59,17 @@ public class AddressBook {
     }
 
     /**
+     * Edits the equivalent person from the address book with new data fields.
+     *
+     * @throws PersonNotFoundException if no such Person could be found.
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public void editPerson(ReadOnlyPerson toDelete, Person toAdd) throws PersonNotFoundException, DuplicatePersonException {
+        removePerson(toDelete);
+        addPerson(toAdd);
+    }
+
+    /**
      * Clears all persons from the address book.
      */
     public void clear() {

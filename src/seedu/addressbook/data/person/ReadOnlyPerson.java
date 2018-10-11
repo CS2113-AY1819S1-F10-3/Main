@@ -1,5 +1,7 @@
 package seedu.addressbook.data.person;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,19 +25,19 @@ public interface ReadOnlyPerson {
      * changes on the returned list will not affect the person's internal tags.
      */
     Set<Offense> getPastOffense();
-
+    Set<Timestamp> getScreeningHistory();
     /**
      * Returns true if the values inside this object is same as those of the other (Note: interfaces cannot override .equals)
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getName().equals(this.getName()) // state checks here onwards
-                && other.getNRIC().equals(this.getNRIC())
-                && other.getDateOfBirth().equals((this.getDateOfBirth()))
-                && other.getPostalCode().equals(this.getPostalCode())
-                && other.getStatus().equals(this.getStatus())
-                && other.getWantedFor().equals(this.getWantedFor()));
+                && other.getName().fullName.equals(this.getName().fullName) // state checks here onwards
+                && other.getNRIC().getIdentificationNumber().equals(this.getNRIC().getIdentificationNumber())
+                && other.getDateOfBirth().getDOB().equals((this.getDateOfBirth().getDOB()))
+                && other.getPostalCode().getPostalCode().equals(this.getPostalCode().getPostalCode())
+                && other.getStatus().getCurrentStatus().equals(this.getStatus().getCurrentStatus())
+                && other.getWantedFor().getOffense().equals(this.getWantedFor().getOffense()));
     }
 
     /**
