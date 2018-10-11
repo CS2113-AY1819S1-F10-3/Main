@@ -1,4 +1,4 @@
-= EX-SI-53 Police Record Database
+= Police Record System
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:imagesDir: docs/images]
 
