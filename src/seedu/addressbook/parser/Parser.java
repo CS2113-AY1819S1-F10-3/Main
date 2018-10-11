@@ -83,7 +83,6 @@ public class Parser {
         logr.info("Parsed the user input and matching commands.");
 
         switch (commandWord) {
-
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(arguments);
 
@@ -107,6 +106,9 @@ public class Parser {
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
+
+            case RequestHelp.COMMAND_WORD:
+                return prepareRequest(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -310,6 +312,27 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+
+    /**
+     * Parses arguments in context of request help command.
+     *
+     * @param args full command args string
+     * @return the prepared request command
+     */
+    private Command prepareRequest(String args) {
+        String[] argParts = args.split(" ", 2);
+        if (argParts.length < 2) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    RequestHelp.MESSAGE_USAGE));
+        }
+
+        String caseName = argParts[0];
+        String message = argParts[1];
+
+        // TODO: try catch
+        return new RequestHelp(caseName, message);
+
     }
 
 
