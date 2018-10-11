@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import seedu.addressbook.commands.ExitCommand;
-import seedu.addressbook.commands.HQPPasswordCommand;
-import seedu.addressbook.commands.POPasswordCommand;
 import seedu.addressbook.commands.LockCommand;
 import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.commands.DeleteCommand;
@@ -17,6 +15,9 @@ import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,13 @@ public class MainWindow {
         this.mainApp = mainApp;
     }
 
+    public boolean isHQP = false;
+    public boolean isPO = false;
+    public boolean isLocked(){
+        return !(isHQP || isPO);
+    }
+    public int wrongPasswordCounter=5;
+
     @FXML
     private TextArea outputConsole;
 
@@ -51,61 +59,85 @@ public class MainWindow {
     void onCommand(ActionEvent event) {
         try {
             String userCommandText = commandInput.getText();
-            CommandResult result = logic.execute(userCommandText);
-            if(isExitCommand(result)){
-                exitApp();
-            }
-            else if(isLockCommand(result) && isUnlocked()){
-                isHQP = false;
-                isPO = false;
-                wrongPasswordCounter = 6;
-                clearOutputConsole();
-                display(LockCommand.MESSAGE_LOCK);
-                clearCommandInput();
-            }
-            else if(isHQP && !isPOPasswordCommand(result)){
-                displayResult(result);
-                clearCommandInput();
-            }
-            else if(isPO && !isHQPPasswordCommand(result)){
-                if(isUnauthorizedPOCommand(result)){
-                    clearOutputConsole();
-                    display(MESSAGE_UNAUTHORIZED + userCommandText);
-                    clearCommandInput();
+            if(isLocked()) {
+                File originalFile = new File("passwordStorage.txt");
+                BufferedReader br = new BufferedReader(new FileReader(originalFile));
+
+                int hashedEnteredPassword= userCommandText.hashCode();
+
+                String line = null;
+                int numberOfPasswords = 2;
+
+                while (numberOfPasswords > 0) {
+                    line = br.readLine();
+                    String storedCurrPassword = line.substring(line.lastIndexOf(" ") + 1, line.length());
+                    String user = line.substring(0,line.lastIndexOf(" "));
+
+                    if (user.equals("hqp") && storedCurrPassword.equals(Integer.toString(hashedEnteredPassword))) {
+                        isHQP=true;
+                        clearCommandInput();
+                        clearOutputConsole();
+                        display("Welcome Headquarters Personnel.", "Please enter a command: ");
+                        break;
+                    }
+                    else if (user.equals("po") && storedCurrPassword.equals(Integer.toString(hashedEnteredPassword))) {
+                        isPO=true;
+                        clearCommandInput();
+                        clearOutputConsole();
+                        display("Welcome Police Officer.",
+                                    "You are not authorized to ADD, DELETE, CLEAR nor EDIT.",
+                                    "Please enter a command: ");
+                        break;
+                    }
+                    numberOfPasswords--;
                 }
-                else {
+                if(isLocked()){
+                    if(wrongPasswordCounter>1) {
+                        clearCommandInput();
+                        clearOutputConsole();
+                        display("Password is incorrect. Please try again.");
+                        display("You have " + wrongPasswordCounter + " attempts left. \n");
+                        display(MESSAGE_ENTER_PASSWORD);
+                        wrongPasswordCounter--;
+                    }
+                    else if(wrongPasswordCounter==1){
+                        clearCommandInput();
+                        clearOutputConsole();
+                        display("Password is incorrect. Please try again.");
+                        display("You have " + wrongPasswordCounter + " attempt left. \n");
+                        display("System will shut down if password is incorrect.");
+                        display(MESSAGE_ENTER_PASSWORD);
+                        wrongPasswordCounter--;
+                    }
+                    else if(wrongPasswordCounter==0){
+                        clearCommandInput();
+                        clearOutputConsole();
+                        display("Password is incorrect. System is shutting down.");
+                        mainApp.stop();
+                    }
+                }
+
+            }
+            else if(isPO && isUnauthorizedPOCommand(userCommandText)){
+                clearCommandInput();
+                clearOutputConsole();
+                display("You are unauthorized to " + userCommandText , "Please try a different command.");
+                //TODO maybe change output message
+            }
+            else{
+                CommandResult result = logic.execute(userCommandText);
+                if (isExitCommand(result)) {
+                    exitApp();
+                }
+                else if (isLockCommand(result)) {
+                    isHQP=false;
+                    isPO=false;
+                    wrongPasswordCounter=5;
                     displayResult(result);
                     clearCommandInput();
-                }
-            }
-
-            else if (isInvalidPasswordCommand(result)){
-                displayResult(logic.execute("akshay")); //EDIT THIS
-                clearCommandInput();
-            }
-
-            else if(isHQPPasswordCommand(result) && !isUnlocked()){
-                isHQP = true;
-                clearOutputConsole();
-                display(HQPPasswordCommand.MESSAGE_CORRECT_PASSWORD);
-                clearCommandInput();
-            }
-            else if(isPOPasswordCommand(result) && !isUnlocked()){
-                isPO = true;
-                clearOutputConsole();
-                display(POPasswordCommand.MESSAGE_CORRECT_PASSWORD);
-                clearCommandInput();
-            }
-            else if(!isUnlocked()){
-                wrongPasswordCounter--;
-                clearOutputConsole();
-                display(MESSAGE_INCORRECT_PASSWORD,"You have " + wrongPasswordCounter + "" + " attempts left");
-                clearCommandInput();
-                if(wrongPasswordCounter==1) {
-                    display("System will shut down if password is incorrect");
-                }
-                if(wrongPasswordCounter==0){
-                    exitApp();
+                } else {
+                    displayResult(result);
+                    clearCommandInput();
                 }
             }
         } catch (Exception e) {
@@ -119,12 +151,8 @@ public class MainWindow {
         mainApp.stop();
     }
 
-    private boolean isHQP = false;
-    private boolean isPO = false;
-    private int wrongPasswordCounter = 6;
-
-    private boolean isUnlocked() {
-        return (isPO || isHQP) ;
+    private boolean isUnauthorizedPOCommand(String input){
+        return (input.contains("add") || input.contains("delete") || input.contains("clear") || input.contains("edit"));
     }
 
     /** Returns true if the result given is the result of an exit command */
@@ -132,41 +160,9 @@ public class MainWindow {
         return result.feedbackToUser.equals(ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
 
-    private boolean isHQPPasswordCommand(CommandResult result) {
-        return result.feedbackToUser.equals(HQPPasswordCommand.MESSAGE_CORRECT_PASSWORD);
-    }
-
-    private boolean isPOPasswordCommand(CommandResult result) {
-        return result.feedbackToUser.equals(POPasswordCommand.MESSAGE_CORRECT_PASSWORD);
-    }
-
     private boolean isLockCommand(CommandResult result) {
         return result.feedbackToUser.equals(LockCommand.MESSAGE_LOCK);
     }
-
-    private boolean isAddCommand(CommandResult result) {
-        return (result.feedbackToUser.equals(AddCommand.MESSAGE_SUCCESS)
-                || result.feedbackToUser.equals(AddCommand.MESSAGE_DUPLICATE_PERSON));
-    }
-
-    private boolean isDeleteCommand(CommandResult result) {
-        return (result.feedbackToUser.equals(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS)
-                || result.feedbackToUser.equals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX)
-                || result.feedbackToUser.equals(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK));
-    }
-
-    private boolean isClearCommand(CommandResult result) {
-        return result.feedbackToUser.equals(ClearCommand.MESSAGE_SUCCESS);
-    }
-
-    private boolean isUnauthorizedPOCommand(CommandResult result) {
-        return (isAddCommand(result) || isClearCommand(result) || isDeleteCommand(result));
-    }
-
-    private boolean isInvalidPasswordCommand(CommandResult result) {
-        return ((isHQP && isPOPasswordCommand(result)) || (isPO && isHQPPasswordCommand(result)));
-    }
-
 
     /** Clears the command input box */
     private void clearCommandInput() {
@@ -190,7 +186,7 @@ public class MainWindow {
 
     public void displayWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
-        display(MESSAGE_WELCOME, version, MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE, storageFileInfo, "\n", MESSAGE_ENTER_PASSWORD, "\n");
+        display(MESSAGE_WELCOME, version, storageFileInfo + '\n', MESSAGE_ENTER_PASSWORD);
     }
 
     /**

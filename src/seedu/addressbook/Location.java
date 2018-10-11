@@ -2,7 +2,6 @@ package seedu.addressbook;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,9 +12,7 @@ import java.util.ArrayList;
 
 public class Location {
     public static final String GOOGLE_MAPS_API_KEY = "AIzaSyBC7___BJc9QTTTzvZ9BHl2_7kx2FgrP8c";
-
     public static final String DISTANCE_MATRIX_BASE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
-
     public static final String GOOGLE_MAPS_BASE_URL = "https://www.google.com/maps/place/";
 
     private double longitude;
@@ -29,9 +26,15 @@ public class Location {
     public double getLongitude() {
         return longitude;
     }
-
     public double getLatitude() {
         return latitude;
+    }
+
+    public void setLongitude(double longitude){
+        this.longitude = longitude;
+    }
+    public void setLatitude(double latitude){
+        this.latitude = latitude;
     }
 
     /**
@@ -54,9 +57,9 @@ public class Location {
     }
 
     /**
-     *
-     * @param jsonData
-     * @return
+     * Returns List of Pairs of Estimated Time of Arrival (ETA) from JSON ETA data
+     * @param jsonData from Google Maps URL
+     * @return ArrayList of Pair<ETA in seconds, ETA in natural text>
      */
     private ArrayList<Pair<Integer, String>> getEtaListFromJsonObject(JSONObject jsonData) {
         ArrayList<Pair<Integer, String>> etaList = new ArrayList<>();
@@ -88,7 +91,7 @@ public class Location {
             HttpResponse response = httpRestClient.requestGetResponse(getMapsDistanceURL(locations));
 
             if (response != null) {
-                String jsonString = IOUtils.toString(response.getEntity().getContent());
+                String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
                 JSONObject jsonData = new JSONObject(jsonString);
 
                 etaList = getEtaListFromJsonObject(jsonData);

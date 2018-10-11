@@ -1,6 +1,7 @@
 package seedu.addressbook.commands;
 
 import seedu.addressbook.common.Messages;
+import seedu.addressbook.data.person.Name;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 
@@ -25,7 +26,7 @@ public class DeleteCommand extends Command {
         super(targetVisibleIndex);
     }
 
-    public DeleteCommand(String name) {
+    public DeleteCommand(Name name) {
         this.nameToSearch = name;
     }
 

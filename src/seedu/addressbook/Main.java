@@ -14,7 +14,11 @@ import seedu.addressbook.ui.Stoppable;
 public class Main extends Application implements Stoppable{
 
     /** Version info of the program. */
+
     public static final String VERSION = "EX-SI-53 - Version 1.0";
+
+    public static final String VERSION = "Police Records - Version 1.0";
+
 
     private Gui gui;
 
