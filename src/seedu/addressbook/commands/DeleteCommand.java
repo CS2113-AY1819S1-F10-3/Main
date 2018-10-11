@@ -28,7 +28,7 @@ public class DeleteCommand extends Command {
 
     public DeleteCommand(Name name) {
 
-        this.nameToSearch = name;
+
 
         this.toDelete = name;
 

@@ -25,7 +25,7 @@ public class HelpCommand extends Command {
 
     public static final String MESSAGE_PO_USAGES = FindCommand.MESSAGE_USAGE //TODO implement this to PO
             + "\n" + ListCommand.MESSAGE_USAGE
-            + "\n" + ViewCommand.MESSAGE_USAGE
+            //+ "\n" + ViewCommand.MESSAGE_USAGE
             + "\n" + ViewAllCommand.MESSAGE_USAGE
             + "\n" + HelpCommand.MESSAGE_USAGE
             + "\n" + LockCommand.MESSAGE_USAGE

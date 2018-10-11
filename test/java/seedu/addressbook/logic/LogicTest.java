@@ -435,11 +435,7 @@ public class LogicTest {
 //    }
 
 
-    @Test
-    public void execute_edit_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
-        assertCommandBehavior("edit ", expectedMessage);
-    }
+    
 
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
