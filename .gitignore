@@ -2,8 +2,10 @@
 *.class
 
 # Default data file
-addressbook.txt
 notification.txt
+policeRecords.txt
+
+# Logger files
 
 # Package Files #
 *.jar
