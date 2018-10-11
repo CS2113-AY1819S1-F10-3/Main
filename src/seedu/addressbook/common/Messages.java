@@ -14,8 +14,6 @@ public class Messages {
     public static final String MESSAGE_WELCOME = "Welcome to your system.";
     public static final String MESSAGE_USING_STORAGE_FILE = "Using storage file : %1$s";
     public static final String MESSAGE_ENTER_PASSWORD = "Please enter password. ";
-
-    public static final String MESSAGE_INCORRECT_PASSWORD = "Incorrect password. Please try again. ";
-    public static final String MESSAGE_UNAUTHORIZED = "You are not authorized to ";
-
+    public static final String MESSAGE_ENTER_PASSWORD = "Please enter password: ";
+    public static final String MESSAGE_BATTERY_PERCENTAGE = "Battery level left: %d";
 }
