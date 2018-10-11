@@ -1,6 +1,8 @@
 package seedu.addressbook.inbox;
 
-import java.security.Timestamp;
+import seedu.addressbook.Location;
+
+import java.sql.Timestamp;
 
 /** Msg has the following attributes:
  *  @params Priority, timestamp, message, location (x,y coordinates) and ETA.
@@ -11,20 +13,21 @@ import java.security.Timestamp;
 public class Msg {
     private String newMsg;
     private Priority priority;
-    private double x, y;
+    private Location location;
     private int eta = -1;
     private String comment;
-    public boolean isRead = false;
-    public boolean isLocationAvailable = false;
+    protected boolean isRead;
+    protected boolean isLocationAvailable;
     private Timestamp time;
-    private enum Priority {
+    public enum Priority {
         HIGH,   // For messages that require HPQ intervention
         MED,    // For messages that only require PO back-up
         LOW     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
     }
 
-    public Msg(){
-        Msg message = new Msg();
+    public Msg(){   // Create overloading constructors.
+        isLocationAvailable = false;
+        isRead = false;
     }
 
     public void addMsg(String msg){
@@ -42,18 +45,26 @@ public class Msg {
         return this.newMsg;
     }
 
-    public void setLocation(double x, double y, double min){
-        this.x = x;
-        this.y = y;
+    public void setLocation(Location place){
+        this.location = place;
         isLocationAvailable = true;
     }
 
+    public Location getLocation(){
+        return location;
+    }
+    public void setLongitude(double x){
+        location.setLongitude(x);
+    }
+    public void setLatitude(double y){
+        location.setLatitude(y);
+    }
     public double getLongitude(){
-        return this.x;
+        return location.getLongitude();
     }
 
     public double getLatitude(){
-        return this.y;
+        return location.getLatitude();
     }
     public void setEta(int eta){
         this.eta = eta;
@@ -67,6 +78,10 @@ public class Msg {
             return false;
         else
             return true;
+    }
+
+    public void setTime(){
+        time = new Timestamp(System.currentTimeMillis()); // Set to current time if no timestamp passed.
     }
 
     public void setTime(Timestamp time){

@@ -3,8 +3,11 @@ package seedu.addressbook.parser;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.Name;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +17,7 @@ import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
  * Parses user input.
  */
 public class Parser {
+    private final static Logger logr = Logger.getLogger( Parser.class.getName() );
 
     public static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
 
@@ -45,6 +49,23 @@ public class Parser {
      */
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    private static void setupLogger() {
+        LogManager.getLogManager().reset();
+        logr.setLevel(Level.ALL);
+
+        ConsoleHandler ch = new ConsoleHandler();
+        ch.setLevel(Level.INFO);
+        logr.addHandler(ch);
+
+        try {
+            FileHandler fh = new FileHandler("parserLog.log");
+            fh.setLevel(Level.FINE);
+            logr.addHandler(fh);
+        } catch (IOException ioe) {
+            logr.log(Level.SEVERE, "File logger not working.", ioe);
+        }
+    }
+
     /**
      * Parses user input into command for execution.
      *
@@ -52,6 +73,7 @@ public class Parser {
      * @return the command based on the user input
      */
     public Command parseCommand(String userInput) {
+        setupLogger();
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -59,6 +81,9 @@ public class Parser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+
+        logr.info("Parsed the user input and matching commands.");
+
         switch (commandWord) {
 
             case AddCommand.COMMAND_WORD:
@@ -66,6 +91,9 @@ public class Parser {
 
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
+
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
@@ -81,12 +109,6 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
-
-            case HQPPasswordCommand.COMMAND_WORD:
-                return new HQPPasswordCommand();
-
-            case POPasswordCommand.COMMAND_WORD:
-                return new POPasswordCommand();
 
             case LockCommand.COMMAND_WORD:
                 return new LockCommand();
@@ -161,9 +183,47 @@ public class Parser {
                 return new DeleteCommand(targetIndex);
             }
 
-            return new DeleteCommand(name);
+            return new DeleteCommand(new Name(name));
         } catch (ParseException e) {
+            logr.log(Level.WARNING, "Invalid delete command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException ive) {
+            logr.log(Level.WARNING, "Invalid name/id inputted.", ive);
+            return new IncorrectCommand(ive.getMessage());
+        }
+    }
+
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    // TODO: Refactor prepareEdit and prepareAdd
+    private Command prepareEdit(String args) {
+        final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new EditCommand(
+                    matcher.group("name"),
+
+                    matcher.group("phone"),
+                    isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
+
+                    matcher.group("email"),
+                    isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
+
+                    matcher.group("address"),
+                    isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
+
+                    getTagsFromArgs(matcher.group("tagArguments"))
+            );
+        } catch (IllegalValueException ive) {
+            logr.log(Level.WARNING, "Invalid edit command format.", ive);
+            return new IncorrectCommand(ive.getMessage());
         }
     }
 
@@ -174,11 +234,11 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareView(String args) {
-
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
             return new ViewAllCommand(targetIndex);
         } catch (ParseException | NumberFormatException e) {
+            logr.log(Level.WARNING, "Invalid view command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ViewAllCommand.MESSAGE_USAGE));
         }
@@ -212,6 +272,7 @@ public class Parser {
     private int parseArgsAsDisplayedIndex(String args) throws ParseException, NumberFormatException {
         final Matcher matcher = PERSON_INDEX_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
+            logr.warning("Index number does not exist in argument");
             throw new ParseException("Could not find index number to parse");
         }
         return Integer.parseInt(matcher.group("targetIndex"));
@@ -220,6 +281,7 @@ public class Parser {
     private String parseArgsAsName(String args) throws ParseException {
         final Matcher matcher = PERSON_NAME_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
+            logr.warning("Name does not exist in argument");
             throw new ParseException("Could not find name to parse");
         }
         return matcher.group(0);
@@ -234,6 +296,7 @@ public class Parser {
     private Command prepareFind(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
+            logr.warning("Argument for finding NRIC is invalid");
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     FindCommand.MESSAGE_USAGE));
         }

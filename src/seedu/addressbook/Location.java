@@ -2,7 +2,6 @@ package seedu.addressbook;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +25,12 @@ public class Location {
         this.latitude = latitude;
     }
 
+    public void setLongitude(double x){
+        this.longitude = x;
+    }
+    public void setLatitude(double y){
+        this.latitude = y;
+    }
     public double getLongitude() {
         return longitude;
     }
@@ -80,6 +85,13 @@ public class Location {
         return etaList;
     }
 
+    /**
+     * Returns ETA for this location from multiple locations
+     *
+     * @param locations Arraylist is of Locations objects
+     * @return ArrayList of Pair of Number of seconds of ETA and text description of ETA
+     */
+
     public ArrayList<Pair<Integer, String>> getEtaFromMultipleLocations(ArrayList<Location> locations) {
         ArrayList<Pair<Integer, String>> etaList = new ArrayList<>();
 
@@ -100,7 +112,7 @@ public class Location {
         return etaList;
     }
 
-    public String getLocationURL() {
+    public String getGooglemMapsURL() {
         return GOOGLE_MAPS_BASE_URL + this.getLatitude() + "," + this.getLongitude();
     }
 
