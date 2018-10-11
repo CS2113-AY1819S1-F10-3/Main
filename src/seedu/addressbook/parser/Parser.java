@@ -67,27 +67,6 @@ public class Parser {
         }
     }
 
-    String prediction;
-
-    public String checkDistance(String commandInput) {
-        Dictionary A = new Dictionary();
-        EditDistance B = new EditDistance();
-        ArrayList<String> commandList = A.getCommands();
-        int distance, check = 0;
-        for(String command : commandList) {
-            distance = B.computeDistance(commandInput, command);
-            if(distance <= 1) {
-                prediction = command;
-                check = 1;
-                break;
-            }
-        }
-        if(check == 0) {
-            prediction = "none";
-        }
-        return prediction;
-    }
-
     /**
      * Parses user input into command for execution.
      *
@@ -98,10 +77,7 @@ public class Parser {
         setupLogger();
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
 
-        if (!matcher.matches()) {
-            String arr[] = userInput.split(" ", 2);
-            String commandWordInput = arr[0];
-            String result = checkDistance(commandWordInput);
+        /*if (!matcher.matches()) {
             switch (result) {
                 case AddCommand.COMMAND_WORD:
                     return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -137,11 +113,11 @@ public class Parser {
                 default:
                     return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
             }
-        }
-
-        /*if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }*/
+
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
