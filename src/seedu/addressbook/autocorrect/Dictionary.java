@@ -17,7 +17,6 @@ public class Dictionary {
         commands.add("find");
         commands.add("help");
         commands.add("list");
-        commands.add("lost");
         commands.add("viewall");
         commands.add("view");
     }
