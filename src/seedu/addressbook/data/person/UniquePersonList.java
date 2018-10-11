@@ -22,6 +22,12 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
 
+    public static class DuplicateNricException extends DuplicateDataException {
+        protected DuplicateNricException() {
+            super("Operation would result in duplicate NRIC");
+        }
+    }
+
     /**
      * Signals that an operation targeting a specified person in the list would fail because
      * there is no such matching person in the list.
@@ -34,6 +40,16 @@ public class UniquePersonList implements Iterable<Person> {
      * Constructs empty person list.
      */
     public UniquePersonList() {}
+
+
+    public boolean containNric(Person toCheck) {
+        for ( Person person : internalList){
+            if (person.getNRIC().getIdentificationNumber().equals(toCheck.getNRIC().getIdentificationNumber())){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Constructs a person list with the given persons.
@@ -82,14 +98,16 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.contains(toCheck);
     }
 
+
+
     /**
      * Adds a person to the list.
      *
      * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(Person toAdd) throws DuplicatePersonException {
-        if (contains(toAdd)) {
-            throw new DuplicatePersonException();
+    public void add(Person toAdd) throws DuplicateNricException {
+        if (contains(toAdd) || containNric(toAdd)) {
+            throw new DuplicateNricException();
         }
         internalList.add(toAdd);
     }
