@@ -60,9 +60,9 @@ public class MainWindow {
     private String loginEntered = null;
 
     private static Timestamp currentDAT = new Timestamp(System.currentTimeMillis());
-    SimpleDateFormat timeStampFormatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
-    String outputDAT = timeStampFormatter.format(currentDAT);
-    String outputDATHrs = outputDAT + "hrs";
+    private SimpleDateFormat timeStampFormatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
+    private String outputDAT = timeStampFormatter.format(currentDAT);
+    private String outputDATHrs = outputDAT + "hrs";
 
     @FXML
     private TextArea outputConsole;
@@ -80,7 +80,6 @@ public class MainWindow {
 
             File tempFile = new File("tempfile.txt");
             PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
-
             if(userCommandText.equals("exit")){
                 mainApp.stop();
             }
@@ -126,7 +125,6 @@ public class MainWindow {
                 }
                 pw.close();
                 br.close();
-
             }
             else if(isHQP && userCommandText.equals("update password")){
                 clearCommandInput();
@@ -179,9 +177,9 @@ public class MainWindow {
                 else{
                     passwordValidityChecker(userCommandText);
                     existingPassword(userCommandText);
-                    if(!isInvalidNewPassword()){ //TODO problem updating password
+                    if(!isInvalidNewPassword()) { //TODO problem updating password
                         int storedNewPassword = userCommandText.hashCode();
-                        if(isLoginHQP) {
+                        if (isLoginHQP) {
                             line = br.readLine();
                             line = line.substring(0, line.lastIndexOf(" ") + 1) + Integer.toString(storedNewPassword);
                             pw.println(line); //TODO loop this
@@ -192,8 +190,7 @@ public class MainWindow {
                             display("You have updated HQP password to : " + userCommandText);
                             isUpdatingPassword = false;
                             isLoginHQP = false;
-                        }
-                        else if (isLoginPO) {
+                        } else if (isLoginPO) {
                             line = br.readLine(); //TODO loop this 2
                             pw.println(line);
                             pw.flush();
@@ -204,10 +201,10 @@ public class MainWindow {
                             display("You have updated PO password to : " + userCommandText);
                             isUpdatingPassword = false;
                             isLoginHQP = false;
-
                         }
                         pw.close();
                         br.close();
+
                         if (!originalFile.delete()) {
                             display("Could not delete file");
                             return;
@@ -215,6 +212,7 @@ public class MainWindow {
                         if (!tempFile.renameTo(originalFile)) {
                             display("Could not rename file");
                         }
+
                     }
                 }
             }
@@ -230,6 +228,8 @@ public class MainWindow {
                 displayResult(result);
                 clearCommandInput();
             }
+            pw.close();
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
             display(e.getMessage());
@@ -296,7 +296,7 @@ public class MainWindow {
     }
 
     private boolean isUnauthorizedPOCommand(String input){
-        return (input.contains("add") || input.contains("delete") || input.contains("clear") || input.contains("edit") || input.equals("update password"));
+        return (input.contains("add ") || input.contains("delete") || input.contains("clear") || input.contains("edit") || input.equals("update password"));
     }
 
     /** Returns true if the result given is the result of an exit command */
@@ -330,7 +330,7 @@ public class MainWindow {
 
     public void displayWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
-        display(MESSAGE_WELCOME, version, MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE, storageFileInfo,outputDATHrs + "\n" , MESSAGE_ENTER_PASSWORD);
+        display(MESSAGE_WELCOME, version, storageFileInfo, outputDATHrs + "\n" , MESSAGE_ENTER_PASSWORD);
     }
 
     /**
