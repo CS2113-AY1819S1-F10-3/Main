@@ -77,14 +77,16 @@ public class MainWindow {
                         isHQP=true;
                         clearCommandInput();
                         clearOutputConsole();
-                        display("Welcome Headquarters Personnel.");
+                        display("Welcome Headquarters Personnel.", "Please enter a command: ");
                         break;
                     }
                     else if (user.equals("po") && storedCurrPassword.equals(Integer.toString(hashedEnteredPassword))) {
                         isPO=true;
                         clearCommandInput();
                         clearOutputConsole();
-                        display("Welcome Police Officer.", "You are not authorized to ADD, DELETE, CLEAR nor EDIT.");
+                        display("Welcome Police Officer.",
+                                    "You are not authorized to ADD, DELETE, CLEAR nor EDIT.",
+                                    "Please enter a command: ");
                         break;
                     }
                     numberOfPasswords--;
@@ -184,7 +186,7 @@ public class MainWindow {
 
     public void displayWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
-        display(MESSAGE_WELCOME, version, MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE, storageFileInfo, "\n" , MESSAGE_ENTER_PASSWORD);
+        display(MESSAGE_WELCOME, version, storageFileInfo + '\n', MESSAGE_ENTER_PASSWORD);
     }
 
     /**
