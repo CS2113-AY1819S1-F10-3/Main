@@ -8,6 +8,9 @@ import seedu.addressbook.data.tag.Tag;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Edits existing person in addressbook.
+ */
 public class EditCommand extends Command {
     private final Person afterEdited;
 
