@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Putra Danish
-image::Putra.png[width="150", align="left"]
+image::iamputradanish.png[width="150", align="left"]
 
 Role: Team Lead +
 Responsibilities: Deadlines
@@ -19,7 +19,7 @@ Responsibilities: Deadlines
 '''
 
 === Matthew Alexander
-image::Matthew.png[width="150", align="left"]
+image::andyrobert3.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Integration
@@ -27,7 +27,7 @@ Responsibilities: Integration
 '''
 
 === Muhammad Harun
-image::Harun.png[width="150", align="left"]
+image::muhdharun.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Documentation
@@ -35,7 +35,7 @@ Responsibilities: Documentation
 '''
 
 === Shreyas
-image::Shreyas.png[width="150", align="left"]
+image::shreyaskp.png[width="150", align="left"]
 
 
 Role: Developer +
@@ -44,7 +44,7 @@ Responsibilities: Code Quality
 '''
 
 === Ong Wee Keong
-image::WeeKeong.png[width="150", align="left"]
+image::ongweekeong.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Intellij, Git and SourceTree expert
