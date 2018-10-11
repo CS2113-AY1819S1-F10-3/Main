@@ -92,6 +92,9 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
+
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
@@ -185,6 +188,8 @@ public class Parser {
             logr.log(Level.WARNING, "Invalid delete command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 
+
+            
         } catch (IllegalValueException ive) {
             logr.log(Level.WARNING, "Invalid name/id inputted.", ive);
             return new IncorrectCommand(ive.getMessage());
@@ -232,7 +237,6 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareView(String args) {
-
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
             return new ViewAllCommand(targetIndex);

@@ -8,9 +8,12 @@ import seedu.addressbook.data.tag.Tag;
 import java.util.HashSet;
 import java.util.Set;
 
+
 /**
  * Edits existing person in police records.
  */
+
+
 public class EditCommand extends Command {
     private final Person afterEdited;
 
@@ -25,6 +28,8 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Police Records";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the addressbook";
+
 
     // TODO: Matthew clean code, refactor edit and add command constructor
     public EditCommand(String name,
@@ -37,6 +42,7 @@ public class EditCommand extends Command {
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
         }
+<<<<<<< HEAD
         //TODO: Matthew to edit the edit class
 //        this.afterEdited = new Person(
 //                new Name(name),
@@ -45,6 +51,15 @@ public class EditCommand extends Command {
 //                new Address(address, isAddressPrivate),
 //                tagSet
 //        );
+=======
+        this.afterEdited = new Person(
+                new Name(name),
+                new Phone(phone, isPhonePrivate),
+                new Email(email, isEmailPrivate),
+                new Address(address, isAddressPrivate),
+                tagSet
+        );
+>>>>>>> 1cfbbffac0bc5ebe95580f61abd58f41b37711a3
 
     }
 
