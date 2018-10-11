@@ -107,14 +107,16 @@ public class MainWindow {
                         isHQP=true;
                         clearCommandInput();
                         clearOutputConsole();
-                        display("Welcome Headquarters Personnel.");
+                        display("Welcome Headquarters Personnel.", "Please enter a command: ");
                         break;
                     }
                     else if (user.equals("po") && storedCurrPassword.equals(Integer.toString(hashedEnteredPassword))) {
                         isPO=true;
                         clearCommandInput();
                         clearOutputConsole();
-                        display("Welcome Police Officer.", "You are not authorized to ADD, DELETE, CLEAR, EDIT nor UPDATE PASSWORD.");
+                        display("Welcome Police Officer.",
+                                    "You are not authorized to ADD, DELETE, CLEAR nor EDIT.",
+                                    "Please enter a command: ");
                         break;
                     }
                     numberOfPasswords--;

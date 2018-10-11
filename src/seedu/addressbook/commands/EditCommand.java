@@ -8,6 +8,9 @@ import seedu.addressbook.data.tag.Tag;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Edits existing person in police records.
+ */
 public class EditCommand extends Command {
     private final Person afterEdited;
 
@@ -21,7 +24,7 @@ public class EditCommand extends Command {
             + " John Doe p/987654321 e/johndoe@gmail.com a/311, Clementi Ave 3, #02-25 t/enemies t/paysOnTime";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the addressbook";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Police Records";
 
     // TODO: Matthew clean code, refactor edit and add command constructor
     public EditCommand(String name,
