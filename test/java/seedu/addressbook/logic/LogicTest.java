@@ -435,7 +435,7 @@ public class LogicTest {
 //    }
 
 
-    
+
 
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {

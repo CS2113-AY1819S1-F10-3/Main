@@ -1,5 +1,7 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.NRIC;
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
@@ -14,45 +16,50 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n\t"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n\t"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds person with specified NRIC \n\t"
+            + "Parameters: NRIC ...\n\t"
+            + "Example: " + COMMAND_WORD + " S1234567A";
 
-    private final Set<String> keywords;
+    private final Set<String> nricToFind;
+    private String nricKeyword;
 
-    public FindCommand(Set<String> keywords) {
-        this.keywords = keywords;
+    public FindCommand(Set<String> nricToFind)
+    {
+        for (String nric:nricToFind){
+            this.nricKeyword = nric;
+        }
+        this.nricToFind = nricToFind;
     }
 
-    /**
-     * Returns copy of keywords in this command.
-     */
-    public Set<String> getKeywords() {
-        return new HashSet<>(keywords);
-    }
+//    /**
+//     * Returns copy of the nric in this command.
+//     */
+//    public Set<NRIC> getNricToFind() {
+//        return new HashSet<>(nricToFind);
+//    }
 
     @Override
     public CommandResult execute() {
-        final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
+        final List<ReadOnlyPerson> personsFound = getPersonsWithNric(nricKeyword);
         return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
     }
 
     /**
      * Retrieve all persons in the address book whose names contain some of the specified keywords.
      *
-     * @param keywords for searching
+     * @param nric for searching
      * @return list of persons found
      */
-    private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
-        final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
+    private List<ReadOnlyPerson> getPersonsWithNric(String nric) {
+        final List<ReadOnlyPerson> matchedPerson = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
-                matchedPersons.add(person);
+            if (person.getNRIC().getIdentificationNumber().equals(nricKeyword)) {
+                matchedPerson.add(person);
+                person.getScreeningHistory().add(new Timestamp(System.currentTimeMillis()));
             }
         }
-        return matchedPersons;
+        return matchedPerson;
     }
 
 }

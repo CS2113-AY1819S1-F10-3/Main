@@ -1,13 +1,19 @@
 package seedu.addressbook.data.person;
 
+import org.apache.commons.io.filefilter.OrFileFilter;
 import seedu.addressbook.data.exception.IllegalValueException;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Offense {
     public static final String EXAMPLE = "theft";
     public static final String MESSAGE_OFFENSE_CONSTRAINTS = "Offense should be in lower case and must be inside the list";
 
     private static final String[] OFFENSE_LIST = {"none","theft","drugs","riot","theft1","theft2","theft3","theft4"};
+//    private static HashMap<String, Integer> OFFENSE_LIST = new HashMap<>();
+//    static{
+//        OFFENSE_LIST.put("theft",1);
+//    }
     public static final String NULL_OFFENSE = "none";
     public final String offense;
 
