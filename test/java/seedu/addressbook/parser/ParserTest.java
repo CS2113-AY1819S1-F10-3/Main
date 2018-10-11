@@ -91,7 +91,7 @@ public class ParserTest {
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
-    /**@Test
+    /*@Test
     public void viewCommand_noArgs() {
         final String[] inputs = { "view", "view " };
         final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);

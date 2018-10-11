@@ -209,19 +209,19 @@ public class LogicTest {
                               true,
                               expectedList);
     }
-    /**
+    /*
     @Test
     public void execute_view_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         assertCommandBehavior("view ", expectedMessage);
         assertCommandBehavior("view arg not number", expectedMessage);
     }
-    **/
+    */
 
-    /**@Test
+    /*@Test
     public void execute_view_invalidIndex() throws Exception {
         assertInvalidIndexBehaviorForCommand("view");
-    }**/
+    }*/
 
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
@@ -242,7 +242,7 @@ public class LogicTest {
     }
 
     //@Test
-   /**
+   /*
     public void execute_view_onlyShowsNonPrivate() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
@@ -267,7 +267,7 @@ public class LogicTest {
                               lastShownList);
     }
 */
-   /**
+   /*
    @Test
     public void execute_tryToViewMissingPerson_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -287,7 +287,7 @@ public class LogicTest {
                               false,
                               lastShownList);
     }
-    **/
+    */
 
     @Test
     public void execute_viewAll_invalidArgsFormat() throws Exception {
