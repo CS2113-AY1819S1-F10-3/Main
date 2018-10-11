@@ -1,5 +1,8 @@
 package seedu.addressbook.parser;
 
+import com.oracle.tools.packager.Log;
+import seedu.addressbook.autocorrect.Dictionary;
+import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
@@ -75,6 +78,45 @@ public class Parser {
     public Command parseCommand(String userInput) {
         setupLogger();
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+
+        /*if (!matcher.matches()) {
+            switch (result) {
+                case AddCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+                case DeleteCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+
+                case EditCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+                case ClearCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearCommand.MESSAGE_USAGE));
+
+                case FindCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+
+                case ListCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+
+                case ViewCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+
+                case ViewAllCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE));
+
+                case ExitCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExitCommand.MESSAGE_USAGE));
+
+                case LockCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
+
+                case HelpCommand.COMMAND_WORD: // Fallthrough
+                default:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            }
+        }*/
+
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
@@ -311,4 +353,7 @@ public class Parser {
     }
 
 
+    public static void main(String args[]) {
+
+    }
 }
