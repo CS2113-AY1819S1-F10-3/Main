@@ -22,7 +22,6 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
     private final Set<String> keywords;
-    private final String nricToFind;
 
     public FindCommand(Set<String> keywords) {
         this.keywords = keywords;
