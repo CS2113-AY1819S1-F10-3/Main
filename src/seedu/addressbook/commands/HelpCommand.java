@@ -19,7 +19,7 @@ public class HelpCommand extends Command {
             + "\n" + EditCommand.MESSAGE_USAGE
             + "\n" + FindCommand.MESSAGE_USAGE
             + "\n" + ListCommand.MESSAGE_USAGE
-            + "\n" + ViewCommand.MESSAGE_USAGE
+            //+ "\n" + ViewCommand.MESSAGE_USAGE
             + "\n" + ViewAllCommand.MESSAGE_USAGE
             + "\n" + UpdatePasswordCommand.MESSAGE_USAGE
             + "\n" + HelpCommand.MESSAGE_USAGE
@@ -28,7 +28,7 @@ public class HelpCommand extends Command {
 
     public static final String MESSAGE_PO_USAGES = FindCommand.MESSAGE_USAGE
             + "\n" + ListCommand.MESSAGE_USAGE
-            + "\n" + ViewCommand.MESSAGE_USAGE
+            //+ "\n" + ViewCommand.MESSAGE_USAGE
             + "\n" + ViewAllCommand.MESSAGE_USAGE
             + "\n" + HelpCommand.MESSAGE_USAGE
             + "\n" + LockCommand.MESSAGE_USAGE

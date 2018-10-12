@@ -10,8 +10,11 @@ import seedu.addressbook.commands.LockCommand;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.autocorrect.EditDistance;
+import seedu.addressbook.autocorrect.Dictionary;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.sql.Timestamp;
@@ -36,6 +39,27 @@ public class MainWindow {
 
     public void setMainApp(Stoppable mainApp){
         this.mainApp = mainApp;
+    }
+
+
+    public String checkDistance(String commandInput) {
+        Dictionary A = new Dictionary();
+        EditDistance B = new EditDistance();
+        String prediction = "none";
+        ArrayList<String> commandList = A.getCommands();
+        int distance, check = 0;
+        for(String command : commandList) {
+            distance = B.computeDistance(commandInput, command);
+            if(distance == 1) {
+                prediction = command;
+                check = 1;
+                break;
+            }
+        }
+        if(check == 0) {
+            prediction = "none";
+        }
+        return prediction;
     }
 
     private static boolean isHQP = false;
@@ -224,9 +248,19 @@ public class MainWindow {
                 //TODO maybe change output message
             }
             else{
-                CommandResult result = logic.execute(userCommandText);
-                displayResult(result);
-                clearCommandInput();
+                String arr[] = userCommandText.split(" ", 2);
+                String commandWordInput = arr[0];
+                String output = checkDistance(commandWordInput);
+                if(!(output.equals("none"))) {
+                    clearCommandInput();
+                    clearOutputConsole();
+                    display("Did you mean to use " + output +"?", "Please try changing the command.");
+                }
+                else{
+                    CommandResult result = logic.execute(userCommandText);
+                    displayResult(result);
+                    clearCommandInput();
+                }
             }
             pw.close();
             br.close();

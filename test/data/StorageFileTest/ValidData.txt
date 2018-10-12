@@ -2,16 +2,20 @@
 <AddressBook>
     <persons>
         <name>John Doe</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@gmail.com</email>
-        <address isPrivate="false">John street, block 123, #01-01</address>
+        <nric isPrivate="false">s1234567a</nric>
+        <dateOfBirth isPrivate="false">1998</dateOfBirth>
+        <postalCode isPrivate="false">510244</postalCode>
+        <status isPrivate="false">clear</status>
+        <wantedFor isPrivate="false">none</wantedFor>
     </persons>
     <persons>
         <name>Betsy Crowe</name>
-        <phone isPrivate="true">1234567</phone>
-        <email isPrivate="false">betsycrowe@gmail.com</email>
-        <address isPrivate="true">Newgate Prison</address>
-        <tagged>friend</tagged>
-        <tagged>criminal</tagged>
+        <nric isPrivate="false">g7654321b</nric>
+        <dateOfBirth isPrivate="false">2000</dateOfBirth>
+        <postalCode isPrivate="false">123456</postalCode>
+        <status isPrivate="false">wanted</status>
+        <wantedFor isPrivate="false">drugs</wantedFor>
+        <tagged>riot</tagged>
+        <tagged>theft</tagged>
     </persons>
 </AddressBook>
