@@ -32,7 +32,7 @@ The full list of contributors for Police Records System can be found link:docs/A
 
 == Acknowledgements
 
-The original source of the code is https://github.com/nusCS2113-AY1819S1/addressbook-level3/[Addressbook level 3] project created by the seedu initiative.
+The original source of the code is https://github.com/nusCS2113-AY1819S1/addressbook-level3/[AddressBook-Level-4] project created by the SE-EDU initiative.
 
 Listening to users and their pain points allowed us to develop this application that solved the problems faced by police officers and headquarter personnel.
 
