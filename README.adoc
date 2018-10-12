@@ -1,4 +1,4 @@
-= Police Record System
+= Police Records System
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:imagesDir: docs/images]
 
@@ -32,6 +32,8 @@ The full list of contributors for Police Records System can be found link:docs/A
 
 == Acknowledgements
 
+The original source of the code is https://github.com/nusCS2113-AY1819S1/addressbook-level3 project created by the seedu initiative.
+
 Listening to users and their pain points allowed us to develop this application that solved the problems faced by police officers and headquarter personnel.
 
 Some parts of this sample application was inspired by the excellent
@@ -39,5 +41,5 @@ http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by Marco Jako
 
 == Contact Us
 
-* Regarding any bugs, please email to alexandermatthew12@gmail.com, with the subject headline of *EX-SI-53* issue.
+* Regarding any bugs, please email to alexandermatthew12@gmail.com, with the subject headline of *Police Records System* issue.
 * *Contributing* : We welcome pull requests. Follow the process described https://github.com/oss-generic/process[here]
