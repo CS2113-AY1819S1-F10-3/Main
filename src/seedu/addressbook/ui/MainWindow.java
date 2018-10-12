@@ -41,6 +41,7 @@ public class MainWindow {
         this.mainApp = mainApp;
     }
 
+
     public String checkDistance(String commandInput) {
         Dictionary A = new Dictionary();
         EditDistance B = new EditDistance();
@@ -61,11 +62,16 @@ public class MainWindow {
         return prediction;
     }
 
-    private boolean isHQP = false;
-    private boolean isPO = false;
+    private static boolean isHQP = false;
+    private static boolean isPO = false;
+
+    public boolean isHQPUser() {
+        return isHQP;
+    }
+
     private boolean isLocked(){
         return !(isHQP || isPO);
-    }
+    } //TODO change booleans to be static
     private boolean isUpdatingPassword=false;
     private boolean isLogin(){
         return (isLoginHQP || isLoginPO);
@@ -146,13 +152,11 @@ public class MainWindow {
                 if(isLocked()){
                     wrongPasswordShutDown();
                 }
-                pw.close();
-                br.close();
             }
             else if(isHQP && userCommandText.equals("update password")){
                 clearCommandInput();
                 clearOutputConsole();
-                display("Please enter current password : ");
+                display("Please enter current password to change: ");
                 isUpdatingPassword=true;
                 wrongPasswordCounter=5;
             }
@@ -187,9 +191,6 @@ public class MainWindow {
                         }
                         numberOfPasswords--;
                     }
-                    pw.close();
-                    br.close();
-
                     if(!isLogin()){
                         wrongPasswordShutDown();
                         if (shutDown){
@@ -200,7 +201,7 @@ public class MainWindow {
                 else{
                     passwordValidityChecker(userCommandText);
                     existingPassword(userCommandText);
-                    if(!isInvalidNewPassword()) { //TODO problem updating password
+                    if(!isInvalidNewPassword()) {
                         int storedNewPassword = userCommandText.hashCode();
                         if (isLoginHQP) {
                             line = br.readLine();
@@ -253,7 +254,7 @@ public class MainWindow {
                 if(!(output.equals("none"))) {
                     clearCommandInput();
                     clearOutputConsole();
-                    display("Did you mean to use " + output +".", "Please try changing the command.");
+                    display("Did you mean to use " + output +"?", "Please try changing the command.");
                 }
                 else{
                     CommandResult result = logic.execute(userCommandText);
@@ -329,7 +330,7 @@ public class MainWindow {
     }
 
     private boolean isUnauthorizedPOCommand(String input){
-        return (input.contains("add ") || input.contains("delete") || input.contains("clear") || input.contains("edit") || input.equals("update password"));
+        return (input.contains("add") || input.contains("delete") || input.contains("clear") || input.contains("edit") || input.equals("update password"));
     }
 
     /** Returns true if the result given is the result of an exit command */
