@@ -17,4 +17,5 @@ addons:
     packages:
       - oracle-java9-installer
 after_success:
-- ./gradlew cobertura coveralls
+    - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
+    - bash <(curl -s https://codecov.io/bash)
