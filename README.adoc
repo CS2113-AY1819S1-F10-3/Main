@@ -28,7 +28,7 @@ HQ personnel also have less administrative workload to deal with. Now, they focu
 
 == Contributors
 
-The full list of contributors for EX-SI-53 can be found link:docs/AboutUs.adoc[here]
+The full list of contributors for Police Records System can be found link:docs/AboutUs.adoc[here]
 
 == Acknowledgements
 
