@@ -21,13 +21,11 @@ public class Person implements ReadOnlyPerson {
     private Status status;
     private Offense wantedFor;
 
-    private final Set<Offense> PastOffense = new HashSet<>();
+    private Set<Offense> PastOffense = new HashSet<>();
 
     public static String WANTED_FOR_WARNING = "State the offence if person's status is wanted";
 
-    private Set<Timestamp> screeningHistory;
-
-
+    private Set<String> screeningHistory = new HashSet<>();
 
     /**
      * Assumption: Every field must be present and not null.
@@ -55,6 +53,7 @@ public class Person implements ReadOnlyPerson {
             this.wantedFor = wantedFor;
         }
         this.PastOffense.addAll(PastOffense);
+
     }
 
     /**
@@ -98,7 +97,7 @@ public class Person implements ReadOnlyPerson {
     public Set<Offense> getPastOffense() {return PastOffense;}
 
     @Override
-    public Set<Timestamp> getScreeningHistory() {return screeningHistory;}
+    public Set<String> getScreeningHistory() {return screeningHistory;}
 
     /**
      * Replaces this person's tags with the tags in {@code replacement}.

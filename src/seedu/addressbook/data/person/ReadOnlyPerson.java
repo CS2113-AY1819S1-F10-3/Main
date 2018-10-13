@@ -25,7 +25,7 @@ public interface ReadOnlyPerson {
      * changes on the returned list will not affect the person's internal tags.
      */
     Set<Offense> getPastOffense();
-    Set<Timestamp> getScreeningHistory();
+    Set<String> getScreeningHistory();
     /**
      * Returns true if the values inside this object is same as those of the other (Note: interfaces cannot override .equals)
      */
@@ -63,28 +63,5 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
-    /**
-     * Formats a person as text, showing only non-private contact details.
-     */
-    /**
-    default String getAsTextHidePrivate() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" NRIC: ");
-        builder.append(getNRIC())
-                .append(" DateOfBirth: ");
-        builder.append(getDateOfBirth())
-                .append(" Postal Code");
-        builder.append(getPostalCode())
-                .append(" Status: ");
-        builder.append(getStatus())
-                .append(" Wanted For: ");
-        builder.append(getWantedFor())
-                .append(" Past Offences:");
-        for (Offense offense : getPastOffense()) {
-            builder.append(offense);
-        }
-        return builder.toString();
-    }
-     */
+
 }

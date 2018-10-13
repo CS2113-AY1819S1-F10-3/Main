@@ -6,6 +6,7 @@ import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.NRIC;
 import seedu.addressbook.data.person.Name;
 
 import java.io.IOException;
@@ -37,6 +38,7 @@ public class Parser {
                     + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
 
     public static final Pattern PERSON_NAME_FORMAT = Pattern.compile("(?<name>[^/]+)");
+    public static final Pattern PERSON_NRIC_FORMAT = Pattern.compile("(?<nric>[^/]+)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -339,17 +341,25 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareFind(String args) {
-        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
-            logr.warning("Argument for finding NRIC is invalid");
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    FindCommand.MESSAGE_USAGE));
-        }
 
-        // keywords delimited by whitespace
-        final String[] keywords = matcher.group("keywords").split("\\s+");
-        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
-        return new FindCommand(keywordSet);
+        args = args.trim();
+        try{
+            NRIC keyPerson = new NRIC(args);
+            return new FindCommand(args);
+        }
+        catch (IllegalValueException invalidNric){
+            logr.warning("NRIC argument is invalid");
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,FindCommand.MESSAGE_USAGE));
+        }
+//
+//        final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args);
+//        if (!matcher.matches()) {
+//            logr.warning("Argument for finding NRIC is invalid");
+//            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+//                    FindCommand.MESSAGE_USAGE));
+//        }
+
+        //return new FindCommand(args);
     }
 
 

@@ -440,68 +440,69 @@ public class LogicTest {
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
-        assertCommandBehavior("find ", expectedMessage);
+        assertCommandBehavior("find S1234567A", expectedMessage);
     }
 
     @Test
-    public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
+    public void execute_find_onlyMatchesFullNric() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-        Person pTarget2 = helper.generatePersonWithName("bla KEY bla bceofeia");
-        Person p1 = helper.generatePersonWithName("KE Y");
-        Person p2 = helper.generatePersonWithName("KEYKEYKEY sduauo");
+        Person pTarget1 = helper.generatePersonWithNric("s1234567a");
+        Person pTarget2 = helper.generatePersonWithNric("s1234567b");
+        Person p1 = helper.generatePersonWithNric("s1234567c");
+        Person p2 = helper.generatePersonWithNric("s1234567d");
 
         List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
+        List<Person> expectedList = helper.generatePersonList(pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
 
-        assertCommandBehavior("find KEY",
+        assertCommandBehavior("find s1234567b",
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
                                 true,
                                 expectedList);
     }
 
-    @Test
-    public void execute_find_isCaseSensitive() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-        Person pTarget2 = helper.generatePersonWithName("bla KEY bla bceofeia");
-        Person p1 = helper.generatePersonWithName("key key");
-        Person p2 = helper.generatePersonWithName("KEy sduauo");
+//    @Test
+//    public void execute_find_isCaseSensitive() throws Exception {
+//        TestDataHelper helper = new TestDataHelper();
+//        Person pTarget1 = helper.generatePersonWithNric("s1234567b");
+//        Person pTarget2 = helper.generatePersonWithNric("s1234567c");
+//        Person p1 = helper.generatePersonWithNric("s1234567d");
+//        Person p2 = helper.generatePersonWithNric("s1234567e");
+//
+//        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
+//        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+//        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
+//        helper.addToAddressBook(addressBook, fourPersons);
+//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+//        assertCommandBehavior("find S1234567B",
+//                                Command.getMessageForPersonListShownSummary(expectedList),
+//                                expectedAB,
+//                                true,
+//                                expectedList);
+//
+//    }
 
-        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
-        helper.addToAddressBook(addressBook, fourPersons);
-
-        assertCommandBehavior("find KEY",
-                                Command.getMessageForPersonListShownSummary(expectedList),
-                                expectedAB,
-                                true,
-                                expectedList);
-    }
-
-    @Test
-    public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-        Person pTarget2 = helper.generatePersonWithName("bla rAnDoM bla bceofeia");
-        Person p1 = helper.generatePersonWithName("key key");
-        Person p2 = helper.generatePersonWithName("KEy sduauo");
-
-        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
-        helper.addToAddressBook(addressBook, fourPersons);
-
-        assertCommandBehavior("find KEY rAnDoM",
-                                Command.getMessageForPersonListShownSummary(expectedList),
-                                expectedAB,
-                                true,
-                                expectedList);
-    }
+//    @Test
+//    public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
+//        TestDataHelper helper = new TestDataHelper();
+//        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
+//        Person pTarget2 = helper.generatePersonWithName("bla rAnDoM bla bceofeia");
+//        Person p1 = helper.generatePersonWithName("key key");
+//        Person p2 = helper.generatePersonWithName("KEy sduauo");
+//
+//        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
+//        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+//        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
+//        helper.addToAddressBook(addressBook, fourPersons);
+//
+//        assertCommandBehavior("find KEY rAnDoM",
+//                                Command.getMessageForPersonListShownSummary(expectedList),
+//                                expectedAB,
+//                                true,
+//                                expectedList);
+//    }
 
     /**
      * A utility class to generate test data.
@@ -633,7 +634,23 @@ public class LogicTest {
             int min = 1111111;
             int max = 9999999;
             Random r = new Random();
-            return "S"+Integer.toString(r.nextInt((max - min) + 1) + min)+"A";
+            return "s"+Integer.toString(r.nextInt((max - min) + 1) + min)+"a";
+        }
+
+        /**
+         * Generates a Person object with given nric. Other fields will have some dummy values.
+         */
+
+        Person generatePersonWithNric(String nric) throws Exception {
+            return new Person(
+                    new Name("Bob"),
+                    new NRIC(nric),
+                    new DateOfBirth("2005"),
+                    new PostalCode("123456"),
+                    new Status("xc"),
+                    new Offense(),
+                    Collections.singleton(new Offense("riot"))
+            );
         }
 
         /**
