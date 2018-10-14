@@ -1,6 +1,8 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.Offense;
 import seedu.addressbook.inbox.Inbox;
 import seedu.addressbook.inbox.Msg;
 import seedu.addressbook.inbox.WriteNotification;
@@ -19,22 +21,26 @@ public class RequestHelp extends Command {
             + " Help needed on Jane Street";
 
 
+    public static String MESSAGE_REQUEST_SUCCESS = "Request for backup is successful.";
+
+    private Msg requestHelpMessage;
+    private WriteNotification writeNotification;
+
+    public RequestHelp(String caseName, String messageString) throws IllegalValueException {
+        writeNotification = new WriteNotification("requestList.txt", true);
+        requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString);
+    }
 
 
-
-
-    public static String MESSAGE_REQUEST_SUCCESS = "Backup request success!";
-
-
-    public RequestHelp(String caseName, String messageString) {
-        WriteNotification writeNotification = new WriteNotification("requestList.txt", true);
-
+    @Override
+    public CommandResult execute() {
         try {
-            Msg requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString); // TODO:
             writeNotification.writeToFile(requestHelpMessage);
-        } catch(IOException ioe) {
-            ioe.printStackTrace();
+            return new CommandResult(String.format(MESSAGE_REQUEST_SUCCESS));
+        } catch (IOException ioe) {
+            return new CommandResult(Messages.MESSAGE_SAVE_ERROR);
         }
     }
+
 
 }

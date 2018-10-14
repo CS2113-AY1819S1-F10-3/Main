@@ -27,3 +27,8 @@ publish.sh
 .gradle/
 build/
 
+parserLog.log.1
+addressbook.txt
+addressbook.txt
+parserLog.log.1.lck
+requestList.txt

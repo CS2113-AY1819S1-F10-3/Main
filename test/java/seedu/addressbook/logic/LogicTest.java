@@ -290,6 +290,21 @@ public class LogicTest {
     */
 
     @Test
+    public void execute_request_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelp.MESSAGE_USAGE);
+        assertCommandBehavior("request ", expectedMessage);
+        assertCommandBehavior("request gun", expectedMessage);
+    }
+
+    @Test
+    public void execute_request_invalidOffense() throws Exception {
+        String expectedMessage = String.format(Offense.MESSAGE_OFFENSE_INVALID);
+        assertCommandBehavior("request bobo help", expectedMessage);
+        assertCommandBehavior("request lala help", expectedMessage);
+    }
+
+
+    @Test
     public void execute_viewAll_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         assertCommandBehavior("viewall ", expectedMessage);

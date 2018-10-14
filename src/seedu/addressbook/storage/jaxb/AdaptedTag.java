@@ -26,7 +26,7 @@ public class AdaptedTag {
      * @param source future changes to this will not affect the created AdaptedTag
      */
     public AdaptedTag(Offense source) {
-        offenseName = source.offense;
+        offenseName = source.getOffense();
     }
 
     /**

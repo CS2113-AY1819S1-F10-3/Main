@@ -1,12 +1,13 @@
 package seedu.addressbook.parser;
 
-import com.oracle.tools.packager.Log;
+//import com.oracle.tools.packager.Log;
 import seedu.addressbook.autocorrect.Dictionary;
 import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Name;
+import seedu.addressbook.data.person.Offense;
 
 import java.io.IOException;
 import java.util.*;
@@ -361,18 +362,22 @@ public class Parser {
      * @return the prepared request command
      */
     private Command prepareRequest(String args) {
-        String[] argParts = args.split(" ", 2);
+        String caseName, message;
+        String[] argParts = args.trim().split(" ", 2);
+
         if (argParts.length < 2) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     RequestHelp.MESSAGE_USAGE));
         }
 
-        String caseName = argParts[0];
-        String message = argParts[1];
+        caseName = argParts[0];
+        message = argParts[1];
 
-        // TODO: try catch
-        return new RequestHelp(caseName, message);
-
+        try {
+            return new RequestHelp(caseName, message);
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(Offense.MESSAGE_OFFENSE_INVALID);
+        }
     }
 
 
