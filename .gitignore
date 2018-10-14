@@ -4,6 +4,7 @@
 # Default data file
 notification.txt
 policeRecords.txt
+addressbook.txt
 
 # Logger files
 

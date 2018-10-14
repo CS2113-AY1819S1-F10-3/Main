@@ -1,47 +1,7 @@
 > START OF MESSAGE <
 Read status:false
 Priority:HIGH
-Timestamp:2018-10-04 15:09:10.673
-Message:Backup requested
--
--
-> END OF MESSAGE <
-> START OF MESSAGE <
-Read status:false
-Priority:HIGH
-Timestamp:2018-10-05 10:28:47.248
-Message:Backup requested
--
-Location:-6.206968,106.751365
-> END OF MESSAGE <
-> START OF MESSAGE <
-Read status:false
-Priority:HIGH
-Timestamp:2018-10-05 10:43:02.9
-Message:Backup requested
--
-Location:-6.206968,106.751365
-> END OF MESSAGE <
-> START OF MESSAGE <
-Read status:false
-Priority:HIGH
-Timestamp:2018-10-05 10:44:28.957
-Message:Backup requested
--
-Location:-6.206968,106.751365
-> END OF MESSAGE <
-> START OF MESSAGE <
-Read status:false
-Priority:HIGH
-Timestamp:2018-10-05 10:48:07.034
-Message:Backup requested
--
-Location:-6.206968,106.751365
-> END OF MESSAGE <
-> START OF MESSAGE <
-Read status:false
-Priority:HIGH
-Timestamp:2018-10-05 15:12:10.894
+Timestamp:2018-10-14 22:45:41.426
 Message:Backup requested
 -
 Location:-6.206968,106.751365
