@@ -1,15 +1,27 @@
 package seedu.addressbook.data;
 
+import seedu.addressbook.data.person.NRIC;
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 
+import java.io.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 /**
  * Represents the entire address book. Contains the data of the address book.
  */
 public class AddressBook {
+
+    public static final String SCREENING_DATABASE = "ScreeningHistory.txt";
+    public static Timestamp screeningTimeStamp;
+    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
+    private String tempNric;
+    private String tempTimestamp;
 
     private final UniquePersonList allPersons;
 
@@ -42,12 +54,66 @@ public class AddressBook {
         allPersons.add(toAdd);
     }
 
+    public void addPersontoDbAndUpdate(ReadOnlyPerson toAdd) {
+        tempNric = toAdd.getNRIC().getIdentificationNumber();
+        screeningTimeStamp = new Timestamp(System.currentTimeMillis());
+        tempTimestamp = timestampFormatter.format(screeningTimeStamp);
+    }
+
+    public List<String> readDatabase(String nric) throws IOException {
+        List<String> data = new ArrayList<>();
+        String line;
+        BufferedReader br = new BufferedReader(new FileReader(SCREENING_DATABASE));
+        line = br.readLine();
+        while (line != null){
+            String[] parts = line.split(" ");
+            if (parts[0].equals(nric)){
+                data = new ArrayList<String>(Arrays.asList(parts));
+                data.remove(0);
+                break;
+            }
+        }
+        return data;
+    }
+
+    public void updateDatabase() throws IOException {
+        String line;
+        BufferedReader br = new BufferedReader(new FileReader(SCREENING_DATABASE));
+        FileWriter write = new FileWriter(SCREENING_DATABASE,true);
+        PrintWriter myPrinter = new PrintWriter(write);
+        line = br.readLine();
+        if (line != null){
+            while (line !=  null){
+                String[] parts = line.split(" ");
+                if (parts[0].equals(tempNric)){
+                    String temp = line;
+                    temp += " " + tempTimestamp + " ";
+                    String finalLine = line.replaceAll(line,temp);
+                    myPrinter.println("");
+                    myPrinter.print(finalLine);
+                }
+                line = br.readLine();
+                continue;
+            }
+        }
+        else{
+            myPrinter.println("");
+            myPrinter.print(tempNric + " ");
+            myPrinter.print(tempTimestamp + " ");
+
+            myPrinter.close();
+        }
+        myPrinter.close();
+        br.close();
+    }
+
     /**
      * Checks if an equivalent person exists in the address book.
      */
     public boolean containsPerson(ReadOnlyPerson key) {
         return allPersons.contains(key);
     }
+
 
     /**
      * Removes the equivalent person from the address book.
@@ -81,6 +147,10 @@ public class AddressBook {
      */
     public UniquePersonList getAllPersons() {
         return new UniquePersonList(allPersons);
+    }
+
+    public UniquePersonList getAllPersonsDirect() {
+        return allPersons;
     }
 
     @Override

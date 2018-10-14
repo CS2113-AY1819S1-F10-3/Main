@@ -25,7 +25,7 @@ public interface ReadOnlyPerson {
      * changes on the returned list will not affect the person's internal tags.
      */
     Set<Offense> getPastOffense();
-    Set<String> getScreeningHistory();
+
     /**
      * Returns true if the values inside this object is same as those of the other (Note: interfaces cannot override .equals)
      */
@@ -62,6 +62,7 @@ public interface ReadOnlyPerson {
         }
         return builder.toString();
     }
+
 
 
 }

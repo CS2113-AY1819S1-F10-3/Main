@@ -71,6 +71,7 @@ public class AdaptedPerson {
         for (Offense tag : source.getPastOffense()) {
             tagged.add(new AdaptedTag(tag));
         }
+
     }
 
     /**
@@ -99,9 +100,12 @@ public class AdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final Set<Offense> tags = new HashSet<>();
+
         for (AdaptedTag tag : tagged) {
             tags.add(tag.toModelType());
         }
+        Set<String> screeningHistory = new HashSet<>();
+
         final Name name = new Name(this.name);
         final NRIC nric = new NRIC(this.nric.value);
         final DateOfBirth dateOfBirth = new DateOfBirth(this.dateOfBirth.value);

@@ -40,6 +40,17 @@ public abstract class Command {
     }
 
     /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of persons.
+     *
+     * @param timestampsDisplayed used to generate summary
+     * @return summary message for timestamps displayed
+     */
+
+    public static String getMessageForScreeningHistoryShownSummary(List<String> timestampsDisplayed) {
+        return String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, timestampsDisplayed.size());
+    }
+
+    /**
      * Executes the command and returns the result.
      */
     public CommandResult execute(){
@@ -74,6 +85,16 @@ public abstract class Command {
         }
         throw new UniquePersonList.PersonNotFoundException();
     }
+
+    protected ReadOnlyPerson getTargetPersonWithNric(NRIC nric) throws UniquePersonList.PersonNotFoundException {
+        for (ReadOnlyPerson person: relevantPersons) {
+            if (person.getNRIC().getIdentificationNumber().equals(nric.getIdentificationNumber())) {
+                return person;
+            }
+        }
+        throw new UniquePersonList.PersonNotFoundException();
+    }
+
 
     public int getTargetIndex() {
         return targetIndex;

@@ -5,6 +5,7 @@ import seedu.addressbook.data.person.NRIC;
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -15,9 +16,6 @@ import java.util.*;
  * Keyword matching is case sensitive.
  */
 public class FindCommand extends Command {
-
-    public static Timestamp screeningTimeStamp;
-    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public static final String COMMAND_WORD = "find";
 
@@ -44,6 +42,14 @@ public class FindCommand extends Command {
         return nricKeyword;
     }
 
+    private ReadOnlyPerson updateScreeningHistory(ReadOnlyPerson person){
+        person.updateScreeningHistory();
+        ReadOnlyPerson duplicatePerson = person;
+        new DeleteCommand(person.getNRIC());
+        new AddCommand((Person)duplicatePerson);
+        return duplicatePerson;
+    }
+
     @Override
     public CommandResult execute() {
         final List<ReadOnlyPerson> personsFound = getPersonsWithNric(nricKeyword);
@@ -56,14 +62,17 @@ public class FindCommand extends Command {
      * @param nric for searching
      * @return list of persons found
      */
-    private List<ReadOnlyPerson> getPersonsWithNric(String nric) {
+    private List<ReadOnlyPerson> getPersonsWithNric(String nric){
         final List<ReadOnlyPerson> matchedPerson = new ArrayList<>();
-        for (ReadOnlyPerson person : addressBook.getAllPersons()) {
+        for (ReadOnlyPerson person : addressBook.getAllPersonsDirect()) {
             if (person.getNRIC().getIdentificationNumber().equals(nric)) {
                 matchedPerson.add(person);
-                Timestamp screenedTime = new Timestamp(System.currentTimeMillis());
-                String formattedTimeStamp = timestampFormatter.format(screenedTime);
-                person.getScreeningHistory().add(formattedTimeStamp);
+                addressBook.addPersontoDbAndUpdate(person);
+                try {
+                    addressBook.updateDatabase();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return matchedPerson;
