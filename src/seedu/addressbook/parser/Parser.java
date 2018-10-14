@@ -1,5 +1,8 @@
 package seedu.addressbook.parser;
 
+import com.oracle.tools.packager.Log;
+import seedu.addressbook.autocorrect.Dictionary;
+import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
@@ -26,10 +29,12 @@ public class Parser {
 
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
-                    + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
-                    + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
-                    + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
-                    + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
+                    + " n/(?<nric>[^/]+)"
+                    + " d/(?<dateOfBirth>[^/]+)"
+                    + " p/(?<postalCode>[^/]+)"
+                    + " s/(?<status>[^/]+)"
+                    + " w/(?<wantedFor>[^/]+)"
+                    + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
 
     public static final Pattern PERSON_NAME_FORMAT = Pattern.compile("(?<name>[^/]+)");
 
@@ -73,6 +78,45 @@ public class Parser {
     public Command parseCommand(String userInput) {
         setupLogger();
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+
+        /*if (!matcher.matches()) {
+            switch (result) {
+                case AddCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+                case DeleteCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+
+                case EditCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+                case ClearCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearCommand.MESSAGE_USAGE));
+
+                case FindCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+
+                case ListCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+
+                case ViewCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+
+                case ViewAllCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE));
+
+                case ExitCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExitCommand.MESSAGE_USAGE));
+
+                case LockCommand.COMMAND_WORD:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
+
+                case HelpCommand.COMMAND_WORD: // Fallthrough
+                default:
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            }
+        }*/
+
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
@@ -90,8 +134,8 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
-            case EditCommand.COMMAND_WORD:
-                return prepareEdit(arguments);
+//            case EditCommand.COMMAND_WORD:
+//                return prepareEdit(arguments);
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
@@ -101,9 +145,6 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
-
-            case ViewCommand.COMMAND_WORD:
-                return prepareView(arguments);
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
@@ -135,17 +176,13 @@ public class Parser {
         try {
             return new AddCommand(
                     matcher.group("name"),
+                    matcher.group("nric"),
+                    matcher.group("dateOfBirth"),
+                    matcher.group("postalCode"),
+                    matcher.group("status"),
+                    matcher.group("wantedFor"),
 
-                    matcher.group("phone"),
-                    isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
-
-                    matcher.group("email"),
-                    isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
-
-                    matcher.group("address"),
-                    isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
-
-                    getTagsFromArgs(matcher.group("tagArguments"))
+                    getTagsFromArgs(matcher.group("pastOffenseArguments"))
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -169,7 +206,7 @@ public class Parser {
             return Collections.emptySet();
         }
         // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
+        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" o/", "").split(" o/"));
         return new HashSet<>(tagStrings);
     }
 
@@ -180,7 +217,7 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareDelete(String args) {
+    private Command prepareDelete(String args){
         try {
             final String name = parseArgsAsName(args);
             if (Utils.isStringInteger(name)) {
@@ -192,6 +229,9 @@ public class Parser {
         } catch (ParseException e) {
             logr.log(Level.WARNING, "Invalid delete command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+
+
+
         } catch (IllegalValueException ive) {
             logr.log(Level.WARNING, "Invalid name/id inputted.", ive);
             return new IncorrectCommand(ive.getMessage());
@@ -205,32 +245,32 @@ public class Parser {
      * @return the prepared command
      */
     // TODO: Refactor prepareEdit and prepareAdd
-    private Command prepareEdit(String args) {
-        final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
-        // Validate arg string format
-        if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-        }
-        try {
-            return new EditCommand(
-                    matcher.group("name"),
-
-                    matcher.group("phone"),
-                    isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
-
-                    matcher.group("email"),
-                    isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
-
-                    matcher.group("address"),
-                    isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
-
-                    getTagsFromArgs(matcher.group("tagArguments"))
-            );
-        } catch (IllegalValueException ive) {
-            logr.log(Level.WARNING, "Invalid edit command format.", ive);
-            return new IncorrectCommand(ive.getMessage());
-        }
-    }
+//    private Command prepareEdit(String args) {
+//        final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
+//        // Validate arg string format
+//        if (!matcher.matches()) {
+//            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+//        }
+//        try {
+//            return new EditCommand(
+//                    matcher.group("name"),
+//
+//                    matcher.group("phone"),
+//                    isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
+//
+//                    matcher.group("email"),
+//                    isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
+//
+//                    matcher.group("address"),
+//                    isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
+//
+//                    getTagsFromArgs(matcher.group("tagArguments"))
+//            );
+//        } catch (IllegalValueException ive) {
+//            logr.log(Level.WARNING, "Invalid edit command format.", ive);
+//            return new IncorrectCommand(ive.getMessage());
+//        }
+//    }
 
     /**
      * Parses arguments in the context of the view command.
@@ -241,11 +281,11 @@ public class Parser {
     private Command prepareView(String args) {
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
-            return new ViewCommand(targetIndex);
+            return new ViewAllCommand(targetIndex);
         } catch (ParseException | NumberFormatException e) {
             logr.log(Level.WARNING, "Invalid view command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ViewCommand.MESSAGE_USAGE));
+                    ViewAllCommand.MESSAGE_USAGE));
         }
     }
 
@@ -313,4 +353,7 @@ public class Parser {
     }
 
 
+    public static void main(String args[]) {
+
+    }
 }

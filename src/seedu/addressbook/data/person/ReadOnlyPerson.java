@@ -1,5 +1,8 @@
 package seedu.addressbook.data.person;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 import seedu.addressbook.data.tag.Tag;
@@ -11,26 +14,30 @@ import seedu.addressbook.data.tag.Tag;
 public interface ReadOnlyPerson {
 
     Name getName();
-    Phone getPhone();
-    Email getEmail();
-    Address getAddress();
+    NRIC getNRIC();
+    DateOfBirth getDateOfBirth();
+    PostalCode getPostalCode();
+    Status getStatus();
+    Offense getWantedFor();
 
     /**
      * The returned {@code Set} is a deep copy of the internal {@code Set},
      * changes on the returned list will not affect the person's internal tags.
      */
-    Set<Tag> getTags();
-
+    Set<Offense> getPastOffense();
+    Set<Timestamp> getScreeningHistory();
     /**
      * Returns true if the values inside this object is same as those of the other (Note: interfaces cannot override .equals)
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getName().equals(this.getName()) // state checks here onwards
-                && other.getPhone().equals(this.getPhone())
-                && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getName().fullName.equals(this.getName().fullName) // state checks here onwards
+                && other.getNRIC().getIdentificationNumber().equals(this.getNRIC().getIdentificationNumber())
+                && other.getDateOfBirth().getDOB().equals((this.getDateOfBirth().getDOB()))
+                && other.getPostalCode().getPostalCode().equals(this.getPostalCode().getPostalCode())
+                && other.getStatus().getCurrentStatus().equals(this.getStatus().getCurrentStatus())
+                && other.getWantedFor().getOffense().equals(this.getWantedFor().getOffense()));
     }
 
     /**
@@ -38,26 +45,20 @@ public interface ReadOnlyPerson {
      */
     default String getAsTextShowAll() {
         final StringBuilder builder = new StringBuilder();
-        final String detailIsPrivate = "(private) ";
         builder.append(getName())
-                .append(" Phone: ");
-        if (getPhone().isPrivate()) {
-            builder.append(detailIsPrivate);
-        }
-        builder.append(getPhone())
-                .append(" Email: ");
-        if (getEmail().isPrivate()) {
-            builder.append(detailIsPrivate);
-        }
-        builder.append(getEmail())
-                .append(" Address: ");
-        if (getAddress().isPrivate()) {
-            builder.append(detailIsPrivate);
-        }
-        builder.append(getAddress())
-                .append(" Tags: ");
-        for (Tag tag : getTags()) {
-            builder.append(tag);
+                .append(" NRIC: ");
+        builder.append(getNRIC())
+                .append(" DateOfBirth: ");
+        builder.append(getDateOfBirth().getDOB())
+                .append(" Postal Code: ");
+        builder.append(getPostalCode())
+                .append(" Status: ");
+        builder.append(getStatus())
+                .append(" Wanted For: ");
+        builder.append(getWantedFor())
+                .append(" Past Offences:");
+        for (Offense offense : getPastOffense()) {
+            builder.append(offense);
         }
         return builder.toString();
     }
@@ -65,22 +66,25 @@ public interface ReadOnlyPerson {
     /**
      * Formats a person as text, showing only non-private contact details.
      */
+    /**
     default String getAsTextHidePrivate() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName());
-        if (!getPhone().isPrivate()) {
-            builder.append(" Phone: ").append(getPhone());
-        }
-        if (!getEmail().isPrivate()) {
-            builder.append(" Email: ").append(getEmail());
-        }
-        if (!getAddress().isPrivate()) {
-            builder.append(" Address: ").append(getAddress());
-        }
-        builder.append(" Tags: ");
-        for (Tag tag : getTags()) {
-            builder.append(tag);
+        builder.append(getName())
+                .append(" NRIC: ");
+        builder.append(getNRIC())
+                .append(" DateOfBirth: ");
+        builder.append(getDateOfBirth())
+                .append(" Postal Code");
+        builder.append(getPostalCode())
+                .append(" Status: ");
+        builder.append(getStatus())
+                .append(" Wanted For: ");
+        builder.append(getWantedFor())
+                .append(" Past Offences:");
+        for (Offense offense : getPastOffense()) {
+            builder.append(offense);
         }
         return builder.toString();
     }
+     */
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public class PostalCode {
 
     public static final String EXAMPLE = "510123";
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Must be 6 digits long";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Postal Code must be 6 digits long";
     public static final String NAME_VALIDATION_REGEX = "[0-9]{6}";
 
     public final String postalCode;
@@ -29,6 +29,10 @@ public class PostalCode {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         this.postalCode = pc;
+    }
+
+    public String getPostalCode(){
+        return postalCode;
     }
 
     /**

@@ -112,9 +112,9 @@ public class LogicTest {
     @Test
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        addressBook.addPerson(helper.generatePerson(1, true));
-        addressBook.addPerson(helper.generatePerson(2, true));
-        addressBook.addPerson(helper.generatePerson(3, true));
+        addressBook.addPerson(helper.generatePerson(1));
+        addressBook.addPerson(helper.generatePerson(2));
+        addressBook.addPerson(helper.generatePerson(3));
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, AddressBook.empty(), false, Collections.emptyList());
     }
@@ -123,25 +123,35 @@ public class LogicTest {
     public void execute_add_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
         assertCommandBehavior(
-                "add wrong args wrong args", expectedMessage);
+                "add wrong args wrong args wrong args", expectedMessage);
         assertCommandBehavior(
-                "add Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address", expectedMessage);
+                "add Valid Name s1234567a d/1980 p/123456 s/clear w/none", expectedMessage);
         assertCommandBehavior(
-                "add Valid Name p/12345 valid@email.butNoPrefix a/valid, address", expectedMessage);
+                "add Valid Name n/s1234567a 1980 p/123456 s/clear w/none", expectedMessage);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
+                "add Valid Name n/s1234567a d/1980 123456 s/clear w/none", expectedMessage);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/123456 clear w/none", expectedMessage);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 123456 s/clear none", expectedMessage);
     }
 
     @Test
     public void execute_add_invalidPersonData() throws Exception {
         assertCommandBehavior(
-                "add []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
+                "add []\\[;] n/s1234567a d/1980 p/123456 s/clear w/none", Name.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address", Phone.MESSAGE_PHONE_CONSTRAINTS);
+                "add Valid Name n/s123457a d/1980 p/123456 s/clear w/none", NRIC.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/notAnEmail a/valid, address", Email.MESSAGE_EMAIL_CONSTRAINTS);
+                "add Valid Name n/s1234567a d/188 p/123456 s/clear w/none", DateOfBirth.MESSAGE_DATE_OF_BIRTH_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
+                "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/123456 s/not a convict w/none", Status.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/123456 s/excon w/none o/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
 
     }
 
@@ -187,30 +197,31 @@ public class LogicTest {
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        AddressBook expectedAB = helper.generateAddressBook(false, true);
+        AddressBook expectedAB = helper.generateAddressBook(false, false);
         List<? extends ReadOnlyPerson> expectedList = expectedAB.getAllPersons().immutableListView();
 
         // prepare address book state
-        helper.addToAddressBook(addressBook, false, true);
 
+        helper.addToAddressBook(addressBook, false, false);
         assertCommandBehavior("list",
                               Command.getMessageForPersonListShownSummary(expectedList),
                               expectedAB,
                               true,
                               expectedList);
     }
-
+    /*
     @Test
     public void execute_view_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         assertCommandBehavior("view ", expectedMessage);
         assertCommandBehavior("view arg not number", expectedMessage);
     }
+    */
 
-    @Test
+    /*@Test
     public void execute_view_invalidIndex() throws Exception {
         assertInvalidIndexBehaviorForCommand("view");
-    }
+    }*/
 
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
@@ -230,12 +241,13 @@ public class LogicTest {
 
     }
 
-    @Test
+    //@Test
+   /*
     public void execute_view_onlyShowsNonPrivate() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, true);
-        Person p2 = helper.generatePerson(2, false);
+        Person p1 = helper.generatePerson(1);
+        Person p2 = helper.generatePerson(2);
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
         AddressBook expectedAB = helper.generateAddressBook(lastShownList);
         helper.addToAddressBook(addressBook, lastShownList);
@@ -254,12 +266,13 @@ public class LogicTest {
                               false,
                               lastShownList);
     }
-
-    @Test
+*/
+   /*
+   @Test
     public void execute_tryToViewMissingPerson_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, false);
-        Person p2 = helper.generatePerson(2, false);
+        Person p1 = helper.generatePerson(1);
+        Person p2 = helper.generatePerson(2);
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
 
         AddressBook expectedAB = new AddressBook();
@@ -274,6 +287,7 @@ public class LogicTest {
                               false,
                               lastShownList);
     }
+    */
 
     @Test
     public void execute_viewAll_invalidArgsFormat() throws Exception {
@@ -290,8 +304,8 @@ public class LogicTest {
     @Test
     public void execute_viewAll_alsoShowsPrivate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, true);
-        Person p2 = helper.generatePerson(2, false);
+        Person p1 = helper.generatePerson(1);
+        Person p2 = helper.generatePerson(2);
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
         AddressBook expectedAB = helper.generateAddressBook(lastShownList);
         helper.addToAddressBook(addressBook, lastShownList);
@@ -299,13 +313,13 @@ public class LogicTest {
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("viewall 1",
-                            String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextShowAll()),
+                            String.format(ViewAllCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextShowAll()),
                             expectedAB,
                             false,
                             lastShownList);
 
         assertCommandBehavior("viewall 2",
-                            String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p2.getAsTextShowAll()),
+                            String.format(ViewAllCommand.MESSAGE_VIEW_PERSON_DETAILS, p2.getAsTextShowAll()),
                             expectedAB,
                             false,
                             lastShownList);
@@ -314,8 +328,8 @@ public class LogicTest {
     @Test
     public void execute_tryToViewAllPersonMissingInAddressBook_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, false);
-        Person p2 = helper.generatePerson(2, false);
+        Person p1 = helper.generatePerson(1);
+        Person p2 = helper.generatePerson(2);
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
 
         AddressBook expectedAB = new AddressBook();
@@ -331,12 +345,12 @@ public class LogicTest {
                                 lastShownList);
     }
 
-//    @Test
-//    public void execute_delete_invalidArgsFormat() throws Exception {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-//        assertCommandBehavior("delete ", expectedMessage);
-//        assertCommandBehavior("delete arg not number", expectedMessage);
-//    }
+    /*@Test
+    public void execute_delete_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+        assertCommandBehavior("delete ", expectedMessage);
+        assertCommandBehavior("delete arg not number", expectedMessage);
+    }*/
 
     @Test
     public void execute_delete_byName() throws Exception {
@@ -368,9 +382,9 @@ public class LogicTest {
     @Test
     public void execute_delete_removesCorrectPerson() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, false);
-        Person p2 = helper.generatePerson(2, true);
-        Person p3 = helper.generatePerson(3, true);
+        Person p1 = helper.generatePerson(1);
+        Person p2 = helper.generatePerson(2);
+        Person p3 = helper.generatePerson(3);
 
         List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
 
@@ -392,9 +406,9 @@ public class LogicTest {
     public void execute_delete_missingInAddressBook() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, false);
-        Person p2 = helper.generatePerson(2, true);
-        Person p3 = helper.generatePerson(3, true);
+        Person p1 = helper.generatePerson(1);
+        Person p2 = helper.generatePerson(2);
+        Person p3 = helper.generatePerson(3);
 
         List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
 
@@ -412,11 +426,16 @@ public class LogicTest {
                                 threePersons);
     }
 
+
+
 //    @Test
 //    public void execute_edit_invalidArgsFormat() throws Exception {
 //        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 //        assertCommandBehavior("edit ", expectedMessage);
 //    }
+
+
+
 
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
@@ -491,13 +510,15 @@ public class LogicTest {
 
         Person adam() throws Exception {
             Name name = new Name("Adam Brown");
-            Phone privatePhone = new Phone("111111", true);
-            Email email = new Email("adam@gmail.com", false);
-            Address privateAddress = new Address("111, alpha street", true);
-            Tag tag1 = new Tag("tag1");
-            Tag tag2 = new Tag("tag2");
-            Set<Tag> tags = new HashSet<>(Arrays.asList(tag1, tag2));
-            return new Person(name, privatePhone, email, privateAddress, tags);
+            NRIC nric = new NRIC("f1234567j");
+            DateOfBirth dateOfBirth = new DateOfBirth("1900");
+            PostalCode postalCode = new PostalCode("444444");
+            Status status = new Status("xc");
+            Offense wantedFor = new Offense();
+            Offense tag1 = new Offense("drugs");
+            Offense tag2 = new Offense("riot");
+            Set<Offense> tags = new HashSet<>(Arrays.asList(tag1, tag2));
+            return new Person(name, nric, dateOfBirth, postalCode, status, wantedFor, tags);
         }
 
         /**
@@ -506,15 +527,17 @@ public class LogicTest {
          * Each unique seed will generate a unique Person object.
          *
          * @param seed used to generate the person data field values
-         * @param isAllFieldsPrivate determines if private-able fields (phone, email, address) will be private
+         *
          */
-        Person generatePerson(int seed, boolean isAllFieldsPrivate) throws Exception {
+        Person generatePerson(int seed) throws Exception {
             return new Person(
                     new Name("Person " + seed),
-                    new Phone("" + Math.abs(seed), isAllFieldsPrivate),
-                    new Email(seed + "@email", isAllFieldsPrivate),
-                    new Address("House of " + seed, isAllFieldsPrivate),
-                    new HashSet<>(Arrays.asList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1))))
+                    new NRIC("g999999" + Math.abs(seed) + "t"),
+                    new DateOfBirth(Integer.toString(seed + Integer.parseInt("1901"))),
+                    new PostalCode("77777" + seed),
+                    new Status("xc"),
+                    new Offense(),
+                    new HashSet<>(Arrays.asList(new Offense("theft" + Math.abs(seed)), new Offense("theft" + Math.abs(seed + 1))))
             );
         }
 
@@ -525,13 +548,15 @@ public class LogicTest {
             cmd.add("add");
 
             cmd.add(p.getName().toString());
-            cmd.add((p.getPhone().isPrivate() ? "pp/" : "p/") + p.getPhone());
-            cmd.add((p.getEmail().isPrivate() ? "pe/" : "e/") + p.getEmail());
-            cmd.add((p.getAddress().isPrivate() ? "pa/" : "a/") + p.getAddress());
+            cmd.add("n/" + p.getNRIC());
+            cmd.add("d/" + p.getDateOfBirth().getDOB());
+            cmd.add("p/" + p.getPostalCode());
+            cmd.add("s/" + p.getStatus());
+            cmd.add("w/" + p.getWantedFor().getOffense());
 
-            Set<Tag> tags = p.getTags();
-            for(Tag t: tags){
-                cmd.add("t/" + t.tagName);
+            Set<Offense> tags = p.getPastOffense();
+            for(Offense t: tags){
+                cmd.add("o/" + t.getOffense());
             }
 
             return cmd.toString();
@@ -596,21 +621,34 @@ public class LogicTest {
             List<Person> persons = new ArrayList<>();
             int i = 1;
             for(Boolean p: isPrivateStatuses){
-                persons.add(generatePerson(i++, p));
+                persons.add(generatePerson(i++));
             }
             return persons;
+        }
+
+        /**
+         * Generates a random NRIC
+         */
+        String generateRandomNric() {
+            int min = 1111111;
+            int max = 9999999;
+            Random r = new Random();
+            return "S"+Integer.toString(r.nextInt((max - min) + 1) + min)+"A";
         }
 
         /**
          * Generates a Person object with given name. Other fields will have some dummy values.
          */
          Person generatePersonWithName(String name) throws Exception {
+            String randomNric = generateRandomNric();
             return new Person(
                     new Name(name),
-                    new Phone("1", false),
-                    new Email("1@email", false),
-                    new Address("House of 1", false),
-                    Collections.singleton(new Tag("tag"))
+                    new NRIC(randomNric),
+                    new DateOfBirth("2005"),
+                    new PostalCode("123456"),
+                    new Status("xc"),
+                    new Offense(),
+                    Collections.singleton(new Offense("riot"))
             );
         }
     }

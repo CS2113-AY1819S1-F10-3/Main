@@ -8,10 +8,7 @@ import seedu.addressbook.data.tag.Tag;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * JAXB-friendly adapted person data holder class.
@@ -28,11 +25,15 @@ public class AdaptedPerson {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private AdaptedContactDetail phone;
+    private AdaptedContactDetail nric;
     @XmlElement(required = true)
-    private AdaptedContactDetail email;
+    private AdaptedContactDetail dateOfBirth;
     @XmlElement(required = true)
-    private AdaptedContactDetail address;
+    private AdaptedContactDetail postalCode;
+    @XmlElement(required = true)
+    private AdaptedContactDetail status;
+    @XmlElement(required = true)
+    private AdaptedContactDetail wantedFor;
 
     @XmlElement
     private List<AdaptedTag> tagged = new ArrayList<>();
@@ -51,20 +52,23 @@ public class AdaptedPerson {
     public AdaptedPerson(ReadOnlyPerson source) {
         name = source.getName().fullName;
 
-        phone = new AdaptedContactDetail();
-        phone.isPrivate = source.getPhone().isPrivate();
-        phone.value = source.getPhone().value;
+        nric = new AdaptedContactDetail();
+        nric.value = source.getNRIC().getIdentificationNumber();
 
-        email = new AdaptedContactDetail();
-        email.isPrivate = source.getEmail().isPrivate();
-        email.value = source.getEmail().value;
+        dateOfBirth = new AdaptedContactDetail();dateOfBirth = new AdaptedContactDetail();
+        dateOfBirth.value = source.getDateOfBirth().getDOB();
 
-        address = new AdaptedContactDetail();
-        address.isPrivate = source.getAddress().isPrivate();
-        address.value = source.getAddress().value;
+        postalCode = new AdaptedContactDetail();
+        postalCode.value = source.getPostalCode().getPostalCode();
+
+        status = new AdaptedContactDetail();
+        status.value = source.getStatus().getCurrentStatus();
+
+        wantedFor = new AdaptedContactDetail();
+        wantedFor.value = source.getWantedFor().getOffense();
 
         tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
+        for (Offense tag : source.getPastOffense()) {
             tagged.add(new AdaptedTag(tag));
         }
     }
@@ -83,9 +87,9 @@ public class AdaptedPerson {
                 return true;
             }
         }
-        // second call only happens if phone/email/address are all not null
-        return Utils.isAnyNull(name, phone, email, address)
-                || Utils.isAnyNull(phone.value, email.value, address.value);
+        // second call only happens if nric/postalCode/status are all not null
+        return Utils.isAnyNull(name, nric, dateOfBirth, postalCode, status, wantedFor)
+                || Utils.isAnyNull(nric.value, dateOfBirth.value, postalCode.value, status.value, wantedFor.value);
     }
 
     /**
@@ -94,14 +98,16 @@ public class AdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Person toModelType() throws IllegalValueException {
-        final Set<Tag> tags = new HashSet<>();
+        final Set<Offense> tags = new HashSet<>();
         for (AdaptedTag tag : tagged) {
             tags.add(tag.toModelType());
         }
         final Name name = new Name(this.name);
-        final Phone phone = new Phone(this.phone.value, this.phone.isPrivate);
-        final Email email = new Email(this.email.value, this.email.isPrivate);
-        final Address address = new Address(this.address.value, this.address.isPrivate);
-        return new Person(name, phone, email, address, tags);
+        final NRIC nric = new NRIC(this.nric.value);
+        final DateOfBirth dateOfBirth = new DateOfBirth(this.dateOfBirth.value);
+        final PostalCode postalCode = new PostalCode(this.postalCode.value);
+        final Status status = new Status(this.status.value);
+        final Offense wantedFor = new Offense(this.wantedFor.value);
+        return new Person(name, nric, dateOfBirth, postalCode, status, wantedFor, tags);
     }
 }
