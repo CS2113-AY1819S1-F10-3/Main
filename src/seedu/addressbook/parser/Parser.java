@@ -1,12 +1,13 @@
 package seedu.addressbook.parser;
 
-import com.oracle.tools.packager.Log;
+//import com.oracle.tools.packager.Log;
 import seedu.addressbook.autocorrect.Dictionary;
 import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Name;
+import seedu.addressbook.data.person.Offense;
 
 import java.io.IOException;
 import java.util.*;
@@ -127,7 +128,6 @@ public class Parser {
         logr.info("Parsed the user input and matching commands.");
 
         switch (commandWord) {
-
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(arguments);
 
@@ -148,6 +148,9 @@ public class Parser {
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
+
+            case RequestHelp.COMMAND_WORD:
+                return prepareRequest(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -350,6 +353,31 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+
+    /**
+     * Parses arguments in context of request help command.
+     *
+     * @param args full command args string
+     * @return the prepared request command
+     */
+    private Command prepareRequest(String args) {
+        String caseName, message;
+        String[] argParts = args.trim().split(" ", 2);
+
+        if (argParts.length < 2) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    RequestHelp.MESSAGE_USAGE));
+        }
+
+        caseName = argParts[0];
+        message = argParts[1];
+
+        try {
+            return new RequestHelp(caseName, message);
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(Offense.MESSAGE_OFFENSE_INVALID);
+        }
     }
 
 

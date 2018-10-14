@@ -21,10 +21,22 @@ public class Msg {
     private Timestamp time;
     public static final boolean MESSAGE_IS_READ = true;
     public static final boolean MESSAGE_IS_UNREAD = false;
+
     public enum Priority {
-        HIGH,   // For messages that require HPQ intervention
-        MED,    // For messages that only require PO back-up
-        LOW     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
+        HIGH(3),   // For messages that require HPQ intervention
+        MED(2),    // For messages that only require PO back-up
+        LOW(1);     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
+
+        private int priority;
+
+        Priority (int priority) {
+            this.priority = priority;
+        }
+
+        public int getPriority() {
+            return priority;
+        }
+
     }
 
     public Msg(){   // Create overloading constructors.
