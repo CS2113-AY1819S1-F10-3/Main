@@ -101,30 +101,32 @@ Use case ends.
 
 *MSS*
 
-. User requests to list persons
-. System shows a list of persons
-. User requests to delete a specific person in the list
 . System prompts user to enter his password
 . User enters password
-. System deletes the person.
+. User keys in NRIC of person to delete
+. System deletes the person. 
 +
 Use case ends.
 
 *Extensions*
 
-* 2a. The list is empty.
+* 2a. The entered password is invalid.
+** 2a1. System shows an error message.
++
+Use case resumes at step 1.
+
+* 3a. The list is empty.
+** 3a1. System shows an error message
 +
 Use case ends.
 
-* 3a. The given index is invalid.
-** 3a1. System shows an error message.
+* 3b. The given NRIC is invalid.
+** 3b1. System shows an error message.
 +
-Use case resumes at step 2.
+Use case ends.
 
-* 5a. The entered password is invalid.
-** 5a1. System shows an error message.
-+
-Use case resumes at step 2.
+* 3c. The person with given NRIC does not exists.
+** 3c1. System shows an error message.
 
 * *a. At any time, User chooses to cancel the delete action.
 ** *a1. System requests confirmation to cancel
@@ -178,7 +180,7 @@ Use case ends
 . User requests to find person
 . System prompts User to enter his password
 . User enters his password
-. System prompts User to key in index of person
+. System prompts User to key in NRIC to find
 . User enters NRIC of person
 . System displays details of person, if found on the list.
 +
@@ -186,20 +188,20 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The list is empty.
-** 1a1. System shows an error essage
-+
-Use case ends.
-
 * 3a. The entered password is invalid
 ** 3a1. System shows an error message
 +
 Use case resumes in step 2.
 
-* 5a. The person’s details are entered with invalid format.
+* 5a. The person’s NRIC are entered with invalid format.
 ** 5a1. System shows an error message.
 +
 Use case resumes at step 4.
+
+* 5b. The list of persons is empty.
+** 5b1. System shows an error essage
++
+Use case ends.
 
 * 6a. Person does not exist in the list
 ** 6a1. System informs User that person is not in the list
@@ -211,6 +213,48 @@ Use case ends.
 ** *a2. User confirms the cancellation.
 +
 Use case ends
+
+=== Use case: Check
+
+*MSS*
+
+. User requests to check person's screening history
+. System prompts User to enter his password
+. User enters his password
+. System prompts User to key in NRIC to check
+. User enters NRIC of person
+. System displays past screening timestamps of person, if found on the list.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+Use case resumes in step 2.
+
+* 5a. The person’s NRIC are entered with invalid format.
+** 5a1. System shows an error message.
++
+Use case resumes at step 4.
+
+* 5b. The list of persons is empty.
+** 5b1. System shows an error essage
++
+Use case ends.
+
+* 6a. Person does not exist in the list
+** 6a1. System informs User that person is not in the list
++
+Use case ends.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel
+** *a2. User confirms the cancellation.
++
+Use case ends
+
 
 === Use case: Undo
 

@@ -377,7 +377,7 @@ public class MainWindow {
     /**
      * Displays the given messages on the output display area, after formatting appropriately.
      */
-    private void display(String... messages) {
+    public void display(String... messages) {
         outputConsole.setText(outputConsole.getText() + new Formatter().format(messages));
     }
 

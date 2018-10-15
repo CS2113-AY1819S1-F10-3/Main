@@ -42,14 +42,6 @@ public class FindCommand extends Command {
         return nricKeyword;
     }
 
-    private ReadOnlyPerson updateScreeningHistory(ReadOnlyPerson person){
-        person.updateScreeningHistory();
-        ReadOnlyPerson duplicatePerson = person;
-        new DeleteCommand(person.getNRIC());
-        new AddCommand((Person)duplicatePerson);
-        return duplicatePerson;
-    }
-
     @Override
     public CommandResult execute() {
         final List<ReadOnlyPerson> personsFound = getPersonsWithNric(nricKeyword);

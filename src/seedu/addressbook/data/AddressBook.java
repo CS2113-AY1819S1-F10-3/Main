@@ -19,9 +19,10 @@ public class AddressBook {
 
     public static final String SCREENING_DATABASE = "ScreeningHistory.txt";
     public static Timestamp screeningTimeStamp;
-    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
+    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
     private String tempNric;
     private String tempTimestamp;
+    private int counter = 0;
 
     private final UniquePersonList allPersons;
 
@@ -68,9 +69,7 @@ public class AddressBook {
         while (line != null){
             String[] parts = line.split(" ");
             if (parts[0].equals(nric)){
-                data = new ArrayList<String>(Arrays.asList(parts));
-                data.remove(0);
-                break;
+                data.add(parts[1]);
             }
         }
         return data;
@@ -81,30 +80,33 @@ public class AddressBook {
         BufferedReader br = new BufferedReader(new FileReader(SCREENING_DATABASE));
         FileWriter write = new FileWriter(SCREENING_DATABASE,true);
         PrintWriter myPrinter = new PrintWriter(write);
-        line = br.readLine();
-        if (line != null){
-            while (line !=  null){
+        try {
+            while ((line = br.readLine()) !=  null){
                 String[] parts = line.split(" ");
                 if (parts[0].equals(tempNric)){
-                    String temp = line;
-                    temp += " " + tempTimestamp + " ";
-                    String finalLine = line.replaceAll(line,temp);
-                    myPrinter.println("");
-                    myPrinter.print(finalLine);
+                    myPrinter.println(tempNric + " " + tempTimestamp);
+                    myPrinter.close();
+                    br.close();
+                    return;
                 }
                 line = br.readLine();
                 continue;
             }
+            myPrinter.println(tempNric + " " + tempTimestamp);
+            myPrinter.close();
+            br.close();
         }
-        else{
-            myPrinter.println("");
-            myPrinter.print(tempNric + " ");
-            myPrinter.print(tempTimestamp + " ");
+        catch (Exception e){
+            myPrinter.print(tempNric + " " + tempTimestamp);
 
             myPrinter.close();
+            br.close();
         }
-        myPrinter.close();
-        br.close();
+
+
+
+
+
     }
 
     /**

@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import seedu.addressbook.ui.Formatter;
+import seedu.addressbook.ui.MainWindow;
+
 import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
 /**
@@ -47,6 +50,10 @@ public abstract class Command {
      */
 
     public static String getMessageForScreeningHistoryShownSummary(List<String> timestampsDisplayed) {
+//        MainWindow mainwindow = new MainWindow();
+//
+//        Formatter formatter = new Formatter();
+//        formatter.formatForTstamps(timestampsDisplayed);
         return String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, timestampsDisplayed.size());
     }
 
