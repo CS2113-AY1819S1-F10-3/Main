@@ -38,7 +38,7 @@ public class AddressBook {
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addPerson(Person toAdd) throws DuplicatePersonException {
+    public void addPerson(Person toAdd) throws UniquePersonList.DuplicateNricException {
         allPersons.add(toAdd);
     }
 
@@ -64,10 +64,10 @@ public class AddressBook {
      * @throws PersonNotFoundException if no such Person could be found.
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void editPerson(ReadOnlyPerson toDelete, Person toAdd) throws PersonNotFoundException, DuplicatePersonException {
-        removePerson(toDelete);
-        addPerson(toAdd);
-    }
+//    public void editPerson(ReadOnlyPerson toDelete, Person toAdd) throws PersonNotFoundException, DuplicatePersonException {
+//        removePerson(toDelete);
+//        addPerson(toAdd);
+//    }
 
     /**
      * Clears all persons from the address book.

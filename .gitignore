@@ -3,6 +3,8 @@
 
 # Default data file
 policeRecords.txt
+notification.txt
+passwordStorage.txt
 
 # Logger files
 parserLog.log
