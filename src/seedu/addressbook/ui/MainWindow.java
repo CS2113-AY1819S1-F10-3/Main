@@ -253,7 +253,7 @@ public class MainWindow {
                 if(!(output.equals("none"))) {
                     clearCommandInput();
                     clearOutputConsole();
-                    display("Did you mean to use " + output +".", "Please try changing the command.");
+                    display("Did you mean to use " + output +"?", "Please try changing the command.");
                 }
                 else{
                     CommandResult result = logic.execute(userCommandText);
