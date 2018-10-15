@@ -10,7 +10,9 @@ import java.sql.Timestamp;
  */
 
 
-public class Msg {
+public class Msg implements Comparable <Msg> {
+    protected String myId;
+    protected String backUpId;
     private String newMsg;
     private Priority priority;
     private Location location;
@@ -21,10 +23,19 @@ public class Msg {
     private Timestamp time;
     public static final boolean MESSAGE_IS_READ = true;
     public static final boolean MESSAGE_IS_UNREAD = false;
+
     public enum Priority {
-        HIGH,   // For messages that require HPQ intervention
-        MED,    // For messages that only require PO back-up
-        LOW     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
+        HIGH(2),   // For messages that require HPQ intervention
+        MED(1),    // For messages that only require PO back-up
+        LOW(0);     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
+
+        private int severity;
+        Priority(int urgency){
+            this.severity = urgency;
+        }
+        int priorityToInt(){
+            return severity;
+        }
     }
 
     public Msg(){   // Create overloading constructors.
@@ -120,4 +131,42 @@ public class Msg {
     public Timestamp getTime(){
         return this.time;
     }
+
+    @Override
+    public int compareTo(Msg other) {
+        int otherInt = other.isRead? 1 : 0;
+        int myInt = this.isRead? 1 : 0;
+        int compare = Integer.compare(myInt, otherInt);
+        if(compare == 0){ // If same read status, compare priorities.
+            compare = compareByPriority(other);
+            if(compare == 0){ // If priority is the same, compare by timestamp.
+                compare = compareByTimestamp(other);
+            }
+            return compare;
+        }
+        else{
+            return compare;
+        }
+    }
+
+    public int compareByPriority(Msg other){
+        return Integer.compare(other.getPriority().priorityToInt(), this.getPriority().priorityToInt());
+    }
+
+    public int compareByTimestamp(Msg other){
+        return this.getTime().compareTo(other.getTime());
+    }
+
+    /*public static Comparator<Msg> PriorityComparator = new Comparator<Msg>(){
+        @Override
+        public int compare(Msg m1, Msg m2){
+            return m2.getPriority().priorityToInt() - (m1.getPriority().priorityToInt());
+        }
+    };
+    public static Comparator<Msg> TimestampComparator = new Comparator<Msg>() {
+        @Override
+        public int compare(Msg m1, Msg m2) {
+            return m1.getTime().compareTo(m2.getTime());
+        }
+    };*/
 }
