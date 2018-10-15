@@ -251,6 +251,61 @@ Use case ends.
 +
 Use case ends
 
+=== Use case: Load messages
+
+*MSS*
+
+. User requests to display messages in inbox
+. System prints the number of unread messages, total messages and list of messages
++
+Use case ends.
+
+*Extensions*
+
+* 1a. There are no messages.
+** 1a1. System informs user that there are no messages available
++
+Use case ends.
+
+* 1b. There are no unread messages.
+** 1b1. System informs user that there are no unread messages and prints the last 5 messages stored.
++
+Use case ends.
+
+=== Use case: Reply messages
+
+*MSS*
+
+. User enters the message number he wishes to reply to.
+. System displays the list of possible responses to message.
+. User enters the number of the response he chooses.
+. System updates message read status to 'read' and sends response message to recipient.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User enters an invalid message number.
+** 1a1. System shows an error message.
++
+Use case ends.
+
+* 1b. There are no unread messages.
+** 1b1. System informs user that there are no messages to respond to.
++
+Use case ends.
+
+* 3a. User enters an invalid response number.
+** 3a1. System shows an error message.
++
+Use case resumes at step 2.
+
+* *a. At anytime, user chooses to cancel response to message.
+** *a1. System requests for user confirmation for cancellation.
+** *a2. User confirms the cancellation.
++
+Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
