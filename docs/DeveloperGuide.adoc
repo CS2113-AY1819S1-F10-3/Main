@@ -64,6 +64,93 @@ TD- Fire Truck Driver
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+=== Use case: Enter Headquarter Personnel password
+
+. System prompts User to enter his password
+. User enters Headquarter Personnel password
+. Only Headquarter Personnel commands are set to accessible, System displays message "Welcome Headquarter Personnel" and System prompts User for a command
+
+Use case ends.
+
+*Extensions*
+
+* 2a. User enters invalid password
+** 2a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
++
+Use case resumes at step 1.
+
+* 2a1a. The number of attempts reaches zero
+** 2a1b. System shuts down
++
+Use case ends.
+
+=== Use case: Enter Police Officer password
+
+. System prompts User to enter his password
+. User enters Police Officer password
+. Only Police Officer commands are set to accessible, System displays message "Welcome Police Officer" and System prompts User for a command
+
+Use case ends.
+
+*Extensions*
+
+* 2a. User enters invalid password
+** 2a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
++
+Use case resumes at step 1.
+
+* 2a1a. The number of attempts reaches zero
+** 2a1b. System shuts down
++
+Use case ends.
+
+=== Use case: Lock System
+
+. User locks the System at any point 
+. System sets all commands to inaccessible, displays System lock message and prompts User for password
+
+Use case ends.
+
+=== Use case: Update any password
+
+. User requests to update password
+. System prompts User for current password to change
+. User enters existing password
+. System prompts User to enter new password 
+. User enters new alphanumeric password
+. System prompts User to enter new password again
+. User enters same new alphanumeric password
+. System updates password to change to the new alphanumeric password and displays update password success message 
+
+Use case ends.
+
+*Extensions*
+
+* 3a. User enters invalid password
+** 3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
++
+Use case resumes at step 2.
+
+* 3a1a. The number of attempts reaches zero
+** 3a1b. System shuts down
++
+Use case ends.
+
+* 5a or 7a. User enters new password without a number
+* 5b or 7b. System shows error message to include at least one number and prompts User to enter new alphanumeric password again
+
+Use case resumes at step 5.
+
+* 5a or 7a. User enters new password without a letter
+* 5b or 7b. System shows error message to include at least one letter and prompts User to enter new alphanumeric password again
+
+Use case resumes at step 5. 
+
+* 5a or 7a. User enters new password without a letter nor a number
+* 5b or 7b. System shows error message for invalid new password
+
+Use case resumes at step 5. 
+
 === Use case: Add person
 
 
