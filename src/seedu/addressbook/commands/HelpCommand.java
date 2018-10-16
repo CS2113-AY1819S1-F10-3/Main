@@ -1,7 +1,7 @@
 package seedu.addressbook.commands;
 
 
-import seedu.addressbook.ui.MainWindow;
+import seedu.addressbook.password.Password;
 
 /**
  * Shows help instructions.
@@ -34,8 +34,8 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        MainWindow mainwindow = new MainWindow();
-        boolean isHQPFlag = mainwindow.isHQPUser();
+        Password password = new Password();
+        boolean isHQPFlag = password.isHQPUser();
 
         if(isHQPFlag) {
             return new CommandResult(MESSAGE_ALL_USAGES);

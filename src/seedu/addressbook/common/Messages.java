@@ -12,6 +12,6 @@ public class Messages {
     public static final String MESSAGE_TIMESTAMPS_LISTED_OVERVIEW = "%1$d time(s) screened";
     public static final String MESSAGE_WELCOME = "Welcome to your system.";
     public static final String MESSAGE_USING_STORAGE_FILE = "Using storage file : %1$s";
-    public static final String MESSAGE_ENTER_PASSWORD = "Please enter password: ";
     public static final String MESSAGE_BATTERY_PERCENTAGE = "Battery level left: %d";
+    public static final String MESSAGE_ERROR = "An error has occured.";
 }
