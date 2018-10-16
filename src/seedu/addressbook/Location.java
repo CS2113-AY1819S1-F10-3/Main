@@ -8,21 +8,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import seedu.addressbook.common.HttpRestClient;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class Location {
-    public static final String GOOGLE_MAPS_API_KEY = "AIzaSyBC7___BJc9QTTTzvZ9BHl2_7kx2FgrP8c";
     public static final String DISTANCE_MATRIX_BASE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     public static final String GOOGLE_MAPS_BASE_URL = "https://www.google.com/maps/place/";
 
+    private String GOOGLE_MAPS_API_KEY;
     private double longitude;
     private double latitude;
 
     public Location(double latitude, double longitude) {
         this.longitude = longitude;
         this.latitude = latitude;
+        GOOGLE_MAPS_API_KEY = getGoogleMapsApiKey();
     }
 
     public double getLongitude() {
@@ -37,6 +41,18 @@ public class Location {
     }
     public void setLatitude(double latitude){
         this.latitude = latitude;
+    }
+
+    public String getGoogleMapsApiKey()  {
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("env"));
+            return bufferedReader.readLine();
+        } catch(IOException ioe) {
+            ioe.getMessage();
+        }
+
+        return null;
     }
 
     private ArrayList<Pair<Integer, String>> sortEta(ArrayList<Pair<Integer, String>> etaList) {
