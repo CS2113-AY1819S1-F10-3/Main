@@ -21,13 +21,14 @@ public class Person implements ReadOnlyPerson {
     private Status status;
     private Offense wantedFor;
 
-    private final Set<Offense> PastOffense = new HashSet<>();
+    private Set<Offense> PastOffense = new HashSet<>();
 
     public static String WANTED_FOR_WARNING = "State the offence if person's status is wanted";
 
-    private Set<Timestamp> screeningHistory;
 
 
+    public static Timestamp screeningTimeStamp;
+    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     /**
      * Assumption: Every field must be present and not null.
@@ -66,6 +67,8 @@ public class Person implements ReadOnlyPerson {
                 source.getWantedFor(), source.getPastOffense());
     }
 
+
+
     @Override
     public Name getName() {
         return name;
@@ -96,9 +99,6 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public Set<Offense> getPastOffense() {return PastOffense;}
-
-    @Override
-    public Set<Timestamp> getScreeningHistory() {return screeningHistory;}
 
     /**
      * Replaces this person's tags with the tags in {@code replacement}.
