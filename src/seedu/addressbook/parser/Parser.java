@@ -376,8 +376,4 @@ public class Parser {
         //return new FindCommand(args);
     }
 
-
-    public static void main(String args[]) {
-
-    }
 }

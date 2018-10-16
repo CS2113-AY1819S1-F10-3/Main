@@ -64,35 +64,115 @@ TD- Fire Truck Driver
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+=== Use case: Enter Headquarter Personnel password
+
+. System prompts User to enter his password
+. User enters Headquarter Personnel password
+. Only Headquarter Personnel commands are set to accessible, System displays message "Welcome Headquarter Personnel" and System prompts User for a command
+
+Use case ends.
+
+*Extensions*
+
+* 2a. User enters invalid password
+** 2a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
++
+Use case resumes at step 1.
+
+* 2a1a. The number of attempts reaches zero
+** 2a1b. System shuts down
++
+Use case ends.
+
+=== Use case: Enter Police Officer password
+
+. System prompts User to enter his password
+. User enters Police Officer password
+. Only Police Officer commands are set to accessible, System displays message "Welcome Police Officer" and System prompts User for a command
+
+Use case ends.
+
+*Extensions*
+
+* 2a. User enters invalid password
+** 2a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
++
+Use case resumes at step 1.
+
+* 2a1a. The number of attempts reaches zero
+** 2a1b. System shuts down
++
+Use case ends.
+
+=== Use case: Lock System
+
+. User locks the System at any point 
+. System sets all commands to inaccessible, displays System lock message and prompts User for password
+
+Use case ends.
+
+=== Use case: Update any password
+
+. User requests to update password
+. System prompts User for current password to change
+. User enters existing password
+. System prompts User to enter new password 
+. User enters new alphanumeric password
+. System prompts User to enter new password again
+. User enters same new alphanumeric password
+. System updates password to change to the new alphanumeric password and displays update password success message 
+
+Use case ends.
+
+*Extensions*
+
+* 3a. User enters invalid password
+** 3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
++
+Use case resumes at step 2.
+
+* 3a1a. The number of attempts reaches zero
+** 3a1b. System shuts down
++
+Use case ends.
+
+* 5a or 7a. User enters new password without a number
+* 5b or 7b. System shows error message to include at least one number and prompts User to enter new alphanumeric password again
+
+Use case resumes at step 5.
+
+* 5a or 7a. User enters new password without a letter
+* 5b or 7b. System shows error message to include at least one letter and prompts User to enter new alphanumeric password again
+
+Use case resumes at step 5. 
+
+* 5a or 7a. User enters new password without a letter nor a number
+* 5b or 7b. System shows error message for invalid new password
+
+Use case resumes at step 5. 
+
 === Use case: Add person
 
 
-. User requests to add person to the list
-. System prompts User to enter his password
-. User enters his password
+. User requests to add person to the list.
 . System adds person to the list and informs User that person has been successfully added.
 Use case ends.
 
 *Extensions*
 
-* 3a. The given password is invalid
-** 3a1. System shows an error message
-+
-Use case resumes at step 2.
-
-* 4a. Person already exists in the list
-** 4a1. System shows an error message
+* 2a. Person already exists in the list.
+** 2a1. System shows an error message.
 +
 Use case ends.
 
-* 4b. Person’s details are entered with invalid formats.
-** 4b1. System shows an error message
+* 2b. Person’s details are entered with invalid formats.
+** 2b1. System shows an error message.
 +
 Use case resumes at step 1.
 
 * *a. At any time, User cancels add action.
-* *a1. System requests for confirmation to cancel
-* *a2. User confirms cancellation
+* *a1. System requests for confirmation to cancel.
+* *a2. User confirms cancellation.
 +
 Use case ends.
 
@@ -105,6 +185,12 @@ Use case ends.
 . User enters password
 . User keys in NRIC of person to delete
 . System deletes the person. 
+
+. User requests to list persons.
+. System shows a list of persons.
+. User requests to delete a specific person in the list.
+. System deletes the person.
+
 +
 Use case ends.
 
@@ -118,6 +204,7 @@ Use case resumes at step 1.
 * 3a. The list is empty.
 ** 3a1. System shows an error message
 +
+
 Use case ends.
 
 * 3b. The given NRIC is invalid.
@@ -128,23 +215,23 @@ Use case ends.
 * 3c. The person with given NRIC does not exists.
 ** 3c1. System shows an error message.
 
+Use case resumes at step 3.
+
 * *a. At any time, User chooses to cancel the delete action.
-** *a1. System requests confirmation to cancel
+** *a1. System requests confirmation to cancel.
 ** *a2. User confirms the cancellation.
 +
 Use case ends.
 
 
-
 === Use case: Edit person
+
 
 *MSS*
 
-. User requests to edit persons
-. System prompts User to enter his password
-. User enters his password
-. System shows a list of persons
-. User requests to update a specific person in the list
+. User requests to edit persons.
+. System shows a list of persons.
+. User requests to update a specific person in the list.
 . System edits the person’s respective details.
 +
 Use case ends.
@@ -152,41 +239,43 @@ Use case ends.
 *Extensions*
 
 * 1a. The list is empty.
-** 1a1. System shows an error essage
+** 1a1. System shows an error message.
 +
 Use case ends.
 
-* 3a. The entered password is invalid
-** 3a1. System shows an error message
+* 4a. The person’s details are entered with invalid format.
+** 4a1. System shows an error message.
 +
-Use case resumes in step 2.
-
-* 6a. The person’s details are entered with invalid format.
-** 6a1. System shows an error message.
-+
-Use case resumes at step 5.
+Use case resumes at step 3.
 
 * *a. At any time, User chooses to cancel the delete action.
-** *a1. System requests confirmation to cancel
+** *a1. System requests confirmation to cancel.
 ** *a2. User confirms the cancellation.
 +
-Use case ends
+Use case ends.
 	
 
 === Use case: Find person
 
+
 *MSS*
+
 
 . User requests to find person
 . System prompts User to enter his password
 . User enters his password
 . System prompts User to key in NRIC to find
 . User enters NRIC of person
+
+. User requests to find person.
+. System prompts User to key in NRIC of person.
+. User enters NRIC of person.
 . System displays details of person, if found on the list.
 +
 Use case ends.
 
 *Extensions*
+
 
 * 3a. The entered password is invalid
 ** 3a1. System shows an error message
@@ -231,13 +320,38 @@ Use case ends.
 
 * 3a. The entered password is invalid
 ** 3a1. System shows an error message
+
+* 1a. The list is empty.
+** 1a1. System shows an error message.
 +
-Use case resumes in step 2.
+Use case ends.
+
+* 3a. The person’s details are entered with invalid format.
+** 3a1. System shows an error message.
+
++
+Use case resumes at step 3.
 
 * 5a. The person’s NRIC are entered with invalid format.
 ** 5a1. System shows an error message.
+
+* 4a. Person does not exist in the list.
+** 4a1. System informs User that person is not in the list.
 +
-Use case resumes at step 4.
+Use case ends.
+
+* *a. At any time, User chooses to cancel the delete action.
+** *a1. System requests confirmation to cancel.
+** *a2. User confirms the cancellation.
++
+Use case ends.
+
+
+=== Use case: Autoprediction
+
+
+*MSS*
+
 
 * 5b. The list of persons is empty.
 ** 5b1. System shows an error essage
@@ -246,46 +360,18 @@ Use case ends.
 
 * 6a. Person does not exist in the list
 ** 6a1. System informs User that person is not in the list
-+
-Use case ends.
 
-* *a. At any time, User chooses to cancel the delete action.
-** *a1. System requests confirmation to cancel
-** *a2. User confirms the cancellation.
-+
-Use case ends
-
-
-=== Use case: Undo
-
-*MSS*
-
-. User enters command to undo
-. System prompts User to enter his password
-. User enters his password
-. System reverts the list to before the final change made 
+. User enters invalid input
+. System tries to predict what the user would have wanted to type
+. System displays the valid use of input, if found
 +
 Use case ends.
 
 *Extensions*
 
-* 1a. The list is empty.
-** 1a1. System shows an error essage
-+
-Use case ends.
+* 3a. The invalid input is an invalid command.
+** 3a1. System also displays the valid usage of the command.
 
-* 3a. The entered password is invalid
-** 3a1. System shows an error message
-+
-Use case resumes in step 2.
-
-* 5a. The person’s details are entered with invalid format.
-** 5a1. System shows an error message.
-+
-Use case resumes at step 4.
-
-* 6a. Person does not exist in the list
-** 6a1. System informs User that person is not in the list
 +
 Use case ends.
 
@@ -293,7 +379,67 @@ Use case ends.
 ** *a1. System requests confirmation to cancel
 ** *a2. User confirms the cancellation.
 +
-Use case ends
+Use case ends.
+
+
+
+=== Use case: Undo
+
+=== Use case: Load messages
+
+
+*MSS*
+
+. User requests to display messages in inbox
+. System prints the number of unread messages, total messages and list of messages
++
+Use case ends.
+
+*Extensions*
+
+* 1a. There are no messages.
+** 1a1. System informs user that there are no messages available
++
+Use case ends.
+
+* 1b. There are no unread messages.
+** 1b1. System informs user that there are no unread messages and prints the last 5 messages stored.
++
+Use case ends.
+
+=== Use case: Reply messages
+
+*MSS*
+
+. User enters the message number he wishes to reply to.
+. System displays the list of possible responses to message.
+. User enters the number of the response he chooses.
+. System updates message read status to 'read' and sends response message to recipient.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User enters an invalid message number.
+** 1a1. System shows an error message.
++
+Use case ends.
+
+* 1b. There are no unread messages.
+** 1b1. System informs user that there are no messages to respond to.
++
+Use case ends.
+
+* 3a. User enters an invalid response number.
+** 3a1. System shows an error message.
++
+Use case resumes at step 2.
+
+* *a. At anytime, user chooses to cancel response to message.
+** *a1. System requests for user confirmation for cancellation.
+** *a2. User confirms the cancellation.
++
+Use case ends.
 
 
 [appendix]
