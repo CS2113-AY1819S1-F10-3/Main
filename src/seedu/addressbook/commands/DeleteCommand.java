@@ -1,9 +1,7 @@
 package seedu.addressbook.commands;
 
-import com.sun.xml.txw2.NamespaceResolver;
 import seedu.addressbook.common.Messages;
-import seedu.addressbook.data.person.NRIC;
-import seedu.addressbook.data.person.Name;
+import seedu.addressbook.data.person.NRIC;;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 
@@ -29,18 +27,14 @@ public class DeleteCommand extends Command {
     }
 
     public DeleteCommand(NRIC nric) {
-
-
-
         this.toDelete = nric;
-
     }
 
 
     @Override
     public CommandResult execute() {
         try {
-            final ReadOnlyPerson target = (toDelete == null) ? getTargetPerson() : getTargetPersonWithNric(toDelete);
+            final ReadOnlyPerson target = (toDelete == null) ? getTargetPerson() : getTargetPerson(toDelete);
             addressBook.removePerson(target);
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, target));
         } catch (IndexOutOfBoundsException ie) {

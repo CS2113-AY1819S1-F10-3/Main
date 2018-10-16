@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Offense {
     public static final String EXAMPLE = "theft";
-    public static final String MESSAGE_OFFENSE_INVALID = "Offense should be in lower case and must be inside the list";
+    public static final String MESSAGE_OFFENSE_INVALID = "Offense must be inside the list";
     public static final String NULL_OFFENSE = "none";
 
     private static HashMap<String, Msg.Priority> OFFENSE_LIST = new HashMap<>();

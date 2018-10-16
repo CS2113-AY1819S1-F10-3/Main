@@ -1,79 +1,63 @@
 package seedu.addressbook.commands;
 
-import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.tag.Tag;
 
-import java.util.HashSet;
 import java.util.Set;
 
 
 /**
  * Edits existing person in police records.
  */
-
-
 public class EditCommand extends Command {
-    //TODO: Matthew fix commented out lines
-    //private final Person afterEdited;
+    private String nric;
+    private String postalCode;
+    private String status;
+    private String wantedFor;
+    private Set<String> offenses;
 
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
             + "Edits the person identified by the NRIC number.\n\t"
             + "Contact details can be marked private by prepending 'p' to the prefix.\n\t"
-            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS  [t/TAG]...\n\t"
+            + "Parameters: n/NRIC p/POSTALCODE s/STATUS w/WANTEDFOR [o/PASTOFFENSES]...\n\t"
             + "Example: " + COMMAND_WORD
-            + " John Doe p/987654321 e/johndoe@gmail.com a/311, Clementi Ave 3, #02-25 t/enemies t/paysOnTime";
+            + " n/s1234567a p/510247 s/wanted w/murder o/manslaughter";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Police Records";
-    //public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the addressbook";
+    //public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Police Records";
+
+    public EditCommand(String nric,
+                       String postalCode,
+                       String status,
+                       String wantedFor,
+                       Set<String> offenses) {
+
+        this.nric = nric;
+        this.postalCode = postalCode;
+        this.status = status;
+        this.wantedFor = wantedFor;
+        this.offenses = offenses;
+    }
+
+    @Override
+    public CommandResult execute() throws IllegalValueException {
+        FindCommand findCommand = new FindCommand(nric);
+        findCommand.setData(addressBook, addressBook.getAllPersons().immutableListView());
+        ReadOnlyPerson toEdit = findCommand.getPersonWithNric().get(0);
+
+        offenses.addAll(toEdit.getStringOffenses());
+
+        DeleteCommand deleteCommand = new DeleteCommand(new NRIC(nric));
+
+        AddCommand addCommand = new AddCommand(toEdit.getName().toString(),
+                toEdit.getNRIC().getIdentificationNumber(),
+                toEdit.getDateOfBirth().getDOB(),
+                postalCode, status,
+                wantedFor, offenses);
 
 
-    // TODO: Matthew clean code, refactor edit and add command constructor
-//    public EditCommand(String name,
-//                       String phone, boolean isPhonePrivate,
-//                       String email, boolean isEmailPrivate,
-//                       String address, boolean isAddressPrivate,
-//                       Set<String> tags) throws IllegalValueException {
-//
-//        final Set<Tag> tagSet = new HashSet<>();
-//        for (String tagName : tags) {
-//            tagSet.add(new Tag(tagName));
-//        }
-
-        //TODO: Matthew to edit the edit class
-//        this.afterEdited = new Person(
-//                new Name(name),
-//                new Phone(phone, isPhonePrivate),
-//                new Email(email, isEmailPrivate),
-//                new Address(address, isAddressPrivate),
-//                tagSet
-//        );
-
-//        this.afterEdited = new Person(
-//                new Name(name),
-//                new Phone(phone, isPhonePrivate),
-//                new Email(email, isEmailPrivate),
-//                new Address(address, isAddressPrivate),
-//                tagSet
-//        );
-
-
-//    }
-//
-//    @Override
-//    public CommandResult execute() {
-//        try {
-//            final ReadOnlyPerson target = getTargetPerson(afterEdited.getName());
-//            addressBook.editPerson(target, afterEdited);
-//            return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, afterEdited.getName().toString()));
-//        } catch (UniquePersonList.PersonNotFoundException nfe) {
-//            return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
-//        } catch (UniquePersonList.DuplicatePersonException dpe) {
-//            return new CommandResult(MESSAGE_DUPLICATE_PERSON);
-//        }
-//    }
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, toEdit.getNRIC().getIdentificationNumber()));
+    }
 }

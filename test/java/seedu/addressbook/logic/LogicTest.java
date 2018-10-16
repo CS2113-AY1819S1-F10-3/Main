@@ -10,7 +10,6 @@ import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.*;
@@ -430,11 +429,11 @@ public class LogicTest {
 
 
 
-//    @Test
-//    public void execute_edit_invalidArgsFormat() throws Exception {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
-//        assertCommandBehavior("edit ", expectedMessage);
-//    }
+    @Test
+    public void execute_edit_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertCommandBehavior("edit ", expectedMessage);
+    }
 
 
 
@@ -557,7 +556,7 @@ public class LogicTest {
             cmd.add("s/" + p.getStatus());
             cmd.add("w/" + p.getWantedFor().getOffense());
 
-            Set<Offense> tags = p.getPastOffense();
+            Set<Offense> tags = p.getPastOffenses();
             for(Offense t: tags){
                 cmd.add("o/" + t.getOffense());
             }

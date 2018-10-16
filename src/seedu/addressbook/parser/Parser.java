@@ -1,13 +1,8 @@
 package seedu.addressbook.parser;
 
-//import com.oracle.tools.packager.Log;
-import seedu.addressbook.autocorrect.Dictionary;
-import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.commands.*;
-import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.NRIC;
-import seedu.addressbook.data.person.Name;
 import seedu.addressbook.data.person.Offense;
 
 import java.io.IOException;
@@ -33,6 +28,13 @@ public class Parser {
             Pattern.compile("(?<name>[^/]+)"
                     + " n/(?<nric>[^/]+)"
                     + " d/(?<dateOfBirth>[^/]+)"
+                    + " p/(?<postalCode>[^/]+)"
+                    + " s/(?<status>[^/]+)"
+                    + " w/(?<wantedFor>[^/]+)"
+                    + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
+
+    public static final Pattern EDIT_DATA_ARGS_FORMAT =
+            Pattern.compile("n/(?<nric>[^/]+)"
                     + " p/(?<postalCode>[^/]+)"
                     + " s/(?<status>[^/]+)"
                     + " w/(?<wantedFor>[^/]+)"
@@ -136,8 +138,8 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
-//            case EditCommand.COMMAND_WORD:
-//                return prepareEdit(arguments);
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
@@ -189,7 +191,6 @@ public class Parser {
                     matcher.group("postalCode"),
                     matcher.group("status"),
                     matcher.group("wantedFor"),
-
                     getTagsFromArgs(matcher.group("pastOffenseArguments"))
             );
         } catch (IllegalValueException ive) {
@@ -253,32 +254,25 @@ public class Parser {
      * @return the prepared command
      */
     // TODO: Refactor prepareEdit and prepareAdd
-//    private Command prepareEdit(String args) {
-//        final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
-//        // Validate arg string format
-//        if (!matcher.matches()) {
-//            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-//        }
-//        try {
-//            return new EditCommand(
-//                    matcher.group("name"),
-//
-//                    matcher.group("phone"),
-//                    isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
-//
-//                    matcher.group("email"),
-//                    isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
-//
-//                    matcher.group("address"),
-//                    isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
-//
-//                    getTagsFromArgs(matcher.group("tagArguments"))
-//            );
-//        } catch (IllegalValueException ive) {
-//            logr.log(Level.WARNING, "Invalid edit command format.", ive);
-//            return new IncorrectCommand(ive.getMessage());
-//        }
-//    }
+    private Command prepareEdit(String args) {
+        final Matcher matcher = EDIT_DATA_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new EditCommand(
+                    matcher.group("nric"),
+                    matcher.group("postalCode"),
+                    matcher.group("status"),
+                    matcher.group("wantedFor"),
+                    getTagsFromArgs(matcher.group("pastOffenseArguments"))
+            );
+        } catch (IllegalValueException ive) {
+            logr.log(Level.WARNING, "Invalid edit command format.", ive);
+            return new IncorrectCommand(ive.getMessage());
+        }
+    }
 
     /**
      * Parses arguments in the context of the view command.
@@ -331,20 +325,11 @@ public class Parser {
         return Integer.parseInt(matcher.group("targetIndex"));
     }
 
-    private String parseArgsAsName(String args) throws ParseException {
-        final Matcher matcher = PERSON_NAME_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
-            logr.warning("Name does not exist in argument");
-            throw new ParseException("Could not find name to parse");
-        }
-        return matcher.group(0);
-    }
-
     private String parseArgsAsNric(String args) throws ParseException {
         final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            logr.warning("Nric does not exist in argument");
-            throw new ParseException("Could not find nric to parse");
+            logr.warning("NRIC does not exist in argument");
+            throw new ParseException("Could not find NRIC to parse");
         }
         return matcher.group(0);
     }
@@ -404,8 +389,4 @@ public class Parser {
         }
     }
 
-
-    public static void main(String args[]) {
-
-    }
 }
