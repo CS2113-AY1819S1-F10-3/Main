@@ -5,7 +5,9 @@
 notification.txt
 policeRecords.txt
 passwordStorage.txt
+addressbook.txt
 ScreeningHistory.txt
+requestList.txt
 
 # Logger files
 parserLog.log.1
@@ -30,8 +32,5 @@ publish.sh
 build/
 
 
-addressbook.txt
-requestList.txt
-ScreeningHistory.txt
 env
-ScreeningHistory.txt
+
