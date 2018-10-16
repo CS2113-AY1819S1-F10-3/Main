@@ -61,7 +61,7 @@ public class FindCommand extends Command {
                 matchedPerson.add(person);
                 addressBook.addPersontoDbAndUpdate(person);
                 try {
-                    addressBook.updateDatabase();
+                     addressBook.updateDatabase();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

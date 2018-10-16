@@ -29,17 +29,44 @@ Adds a criminal to the database- only by Admin.
 Format: add NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR [o/PASTOFFENSES] 
 Examples:
 ●	add John Doe n/s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs"
+
 3.3. Editing a person : edit
-Edits an existing person in the address book.
+Edit a specified parameter of an existing person in the address book.
 Format: edit n/[NAME] p/[POSTAL_CODE] s/[STATUS] w/WANTED_FOR o/PAST_OFFENCES 
 ●	Edits the person with the specified NRIC.
 ●	At least one of the optional fields must be provided.
 ●	Existing values will be updated to the input values.
 Examples:
-●	edit G1952866Q p/91234567
-●	Edits the phone number of the person with the specified NRIC to be 91234567
-3.4. Deleting a person : delete
-Deletes the specified person from the database- only by Admin.
+●	edit g1952866Q p/510246
+●	Edits the postal code of the person with the specified NRIC to be 510246
+
+3.4 Display a list of all persons : list
+Shows a list of every person in the records
+Format: list
+●	Displays list of persons
+Example:
+●	list
+●	displays list of all persons
+
+3.5 Find a person: find
+Finds a person in the records by NRIC
+Format: find NRIC
+●	Shows the person with the specified NRIC
+Example:
+●	find s1234567a
+●	Shows person with s1234567a
+
+3.6 Get screening history of a person: check
+Displays all the times a person was screened in the form of timestamps
+Format: check s1234567a
+●	Returns an indexed list of timestamps for specified person
+●	Only HQP can use check command
+Example:
+●	check s1234567a
+●	Shows an indexed list of timestamps for when person with s1234567a was screened by a PO
+
+3.7. Deleting a person : delete
+Deletes the specified person from the database- only by HQP.
 Format: delete NRIC
 ●	Deletes the person with the specifies NRIC.
 ●	Deleting can be only done by an Administrator.
@@ -47,118 +74,97 @@ Examples:
 ●	delete G1952866Q
 ●	Deletes the person with the specified NRIC from the database.
 
+3.8. Clear records : clear
+Clears the records of persons- only by HQP
+Format: clear
+●	Clears records
+Example:
+●	clear
+●	Records will now be empty
 
-3.5. Requesting for assistance : RA (ambulance) or RB (Backup)
+3.9. Requesting for assistance : RA (ambulance) or RB (Backup)
 Format: RA (to call for ambulance) or RB (to call for backup)
 
 ●	Generates GPS coordinates of current location and sends it to HQ. 
 ●	Depending on type of assistance requested, either an ambulance or another patrol resource will be dispatched to said location
+Example:
+●	RB
 
+3.10. Dispatch a PO : dispatch
+Dispatches a specified PO
+Format: dispatch PO[ID]
+●	Dispatches PO[ID]
+Example:
+●	dispatch PO2
+●	PO2 will receive a dispatch message
 
+3.11. Battery check : battery check
+Checks battery level currently
+Format: battery check
+●	Shows battery level
+Example:
+●	battery check
+●	50%
 
-	3.6. Undo command: undo
-	It erases the last change done to the document reverting it to an older state.
-Only works if previous command exists, commands that can be undo are add and delete. 
+3.12. Serial Number Check : *#06#
+Checks the serial number of device against the database
+Format: *#06# [PHONE_NUMBER]
+●	If inside the database, this means the phone is stolen
+Example:
+●	*#06# 99999999
+●	Returns true if number exists in the system
 
-Format: undo
+3.13. Vehicle Number Check : VCheck
+Checks if vehicle is stolen
+Format: VCheck [VEHICLE_NUMBER]
+●	Returns true if [VEHICLE_NUMBER] is stolen
+Example:
+●	VCheck SDV1111H
+●	Returns true if SDV1111H is stolen
 
-Examples:
-●	add i/G1978411Q n/John Doe p/98765432 d/03-April-1972 s/Wanted a/John street, block 123, #01-01
-●	undo
-		Deletes John Doe from the database
+3.14. Date and Time Check : date time
+Displays current date and time
+Format: date time
+●	Shows time
+Example:
+●	date time
+●	15/10/18 19:30:27
 
-●	undo
-●	Output: ‘It looks like you haven’t entered any previous command, please enter one.’
-	
-●	help
-●	Output: ‘Your previous command cannot be undone’
+3.15. Lock System : lock
+Locks the system and unlocks with password input
+Format: lock
+●	Locks system and user is prompted to input password
+Example:
+●	lock
+●	Enter password to unlock
 
-	
+3.16. Update Password : update password
+Updates password of user- only HQP can change the user's password
+Format: update password
+●	System prompts user to input new password
+Example:
+●	update password
+●	Please select a password to change
 
-
-
-
-3.7. Repeat command: redo
-	Repeats the previous command, commands include help, battery check, serial number check, battery check, date time, inbox, list. 
-
-	Format: redo
-	
-	Examples:
-●	RA
-●	redo
-		Requests another ambulance
-
-●	redo
-●	Output: ‘It looks like you haven’t entered any previous command, please enter one.’
-	
-●	add i/G1978411Q n/John Doe p/98765432 d/03-April-1972 s/Wanted a/John street, block 123, #01-01
-●	Output: ‘Your previous command cannot be repeated. Please access the help page for a list of repeatable command’
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3.8. Check notifications: inbox
+3.17. Check notifications: inbox
 	For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp.
 	For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders
-	
 	Format: inbox
-
-	Examples (as a HQP):
+●	Shows list of unread messages for current user
+Examples (as a HQP):
 ●	inbox
-●	Output: Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:
-○	PO1: Gunman, (location in form of GPS coordinates) , 1030 hrs
-○	PO3: Gunman, (location in form of GPS coordinates), 1033 hrs
-○	PO4: Ambulance, car accident, (location in form of GPS coordinates) , 1028 hrs
-○	PO5: Firetruck, small fire, (location in form of GPS coordinates) , 1048 hrs
-Examples (as a PO requesting for assistance):
+●	Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:
+Examples:
 ●	inbox
-●	Output - for less serious cases - shows who is responding :
-○	 PO3 is dispatched and on the way
-●	Output (for severe cases):
-○	SWAT team is dispatched and on the way
-	Examples (as a PO that is dispatched by HQ):
-●	inbox
-●	Output:
-○	Dispatch message: Case of dispute, [location in form of GPS coordinates]
+●	Shows any dispatch messages by HQ or response for backup if any
 
+3.18. Exit program : exit
+Shuts down program
+Format: exit
+●	Program shuts down
+Example:
+●	Program shuts down
 
-
-3.9. Dispatch resource: dispatch (HQ Only)
-	HQ is able to dispatch officers to assign them to tasks. Only free officers are able to be dispatched. A warning would presented to HQ when they try to assign an occupied officer.
-
-	Format: dispatch [insert patrol number]
-
-	Example:
-●	dispatch PO2
-
-Output: Dispatch message sent to PO2
-	
 
 
 
@@ -168,51 +174,75 @@ Output: Dispatch message sent to PO2
 
 4. Commands List
  
-●	Help 
-Format - help
+●	Help
+Displays a list of commands available to the specific user
 
-●	Add 
-Format - add n/[NAME] n/[NRIC] d/[DATE_OF_BIRTH] p/[POSTAL_CODE] s/[STATUS] w/WANTED_FOR o/PAST_OFFENCES
+Format : help
+
+E.g. help
+
+●	Add
+Adds a person to the records
+
+Format: add n/[NAME] n/[NRIC] d/[DATE_OF_BIRTH] p/[POSTAL_CODE] s/[STATUS] w/WANTED_FOR o/PAST_OFFENCES
 
 E.g. add John Doe n/s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs"
 
 ●	Edit
-Format- edit n/[NAME] p/[POSTAL_CODE] s/[STATUS] w/WANTED_FOR o/PAST_OFFENCES 
+Edits the specified parameter of a person
 
-E.g. edit G1952866Q p/510246
+Format: edit n/[NAME] p/[POSTAL_CODE] s/[STATUS] w/WANTED_FOR o/PAST_OFFENCES
 
-●	Delete 
-Format- delete NRIC
+E.g. edit g1952866q p/510246
 
-E.g. delete G1952866Q
+●	List
+Lists out all the persons in the records
 
-	
-●	Repeat
-Performs previous run command 
+Format: list
 
-Format - redo 
+E.g. list
 
-E.g. redo
+●	Find
+Finds a person in the records
 
-●	Undo
-Format - undo
+Format: find [NRIC]
 
-E.g. undo
+E.g. find s1234567a
 
+●	Check
+Checks for the screening history of a person
 
+Format: check [NRIC]
 
+E.g. check s1234567a
 
+●	Delete
+Deletes a person by NRIC in the records
 
+Format: delete NRIC
+
+E.g. delete g1952866q
+
+●	Clear
+Clears the records of persons
+
+Format: clear
+
+E.g. clear
 
 ●	RA (Ambulance) or RF(Fire Brigade) or RB (Backup)
 RA Calls for ambulance, RF calls for Fire Brigade while RB calls for backup to current location
 
 Format: RA or RB or RF
 
-E.g: RB  
+E.g: RB
 
+●	Dispatch
+Dispatches a PO
 
+Format: dispatch PO[ID]
 
+E.g. dispatch PO2
 
 ●	Battery Check
 Checks the battery percentage left currently
@@ -235,7 +265,6 @@ Format: *#06# v/[VEHICLE_NUMBER]
 
 E.g. *#06# v/SGP0884S
 
-
 ●	Date and Time Check
 Returns the date and time currently
 
@@ -250,22 +279,33 @@ Format: lock
 
 E.g. lock
 
+●	Update Password
+Changes the password of the current user
+
+Format: update password
+
+E.g. update password
 
 ●	Check notifications: inbox
-Checks for list of dispatch requests (for HQP), status of request (for requesting POs) or dispatch messages (for free POs or POs not engaged with anything)
+Stores and displays unread messages for each PO
 
 Format: inbox
 
 E.g inbox
-
-
 
 ●	Dispatch resource: dispatch (HQ Only)
 Dispatches resources (PO)
 
 Format: dispatch PO[id] 
 
-E.g. dispatch PO1 
+E.g. dispatch PO1
+
+●	Exit
+Exits the program
+
+Format: exit
+
+E.g. exit
 	
 
 
