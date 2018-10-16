@@ -83,13 +83,13 @@ public class ParserTest {
 //        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
 //    }
     
-    @Test
-    public void deleteCommand_numericArg_indexParsedCorrectly() {
-        final int testIndex = 1;
-        final String input = "delete " + testIndex;
-        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
-        assertEquals(result.getTargetIndex(), testIndex);
-    }
+//    @Test
+//    public void deleteCommand_numericArg_indexParsedCorrectly() {
+//        final int testIndex = 1;
+//        final String input = "delete " + testIndex;
+//        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
+//        assertEquals(result.getTargetIndex(), testIndex);
+//    }
 
     /*@Test
     public void viewCommand_noArgs() {
@@ -155,25 +155,27 @@ public class ParserTest {
 
     @Test
     public void findCommand_validArgs_parsedCorrectly() {
-        final String[] keywords = { "key1", "key2", "key3" };
-        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
-
-        final String input = "find " + String.join(" ", keySet);
+        //final String[] keywords = { "key1", "key2", "key3" };
+        //final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+        final String keyword = "s1234567a";
+        final String input = "find " + keyword;
         final FindCommand result =
                 parseAndAssertCommandType(input, FindCommand.class);
-        assertEquals(keySet, result.getKeywords());
+        assertEquals(keyword, result.getNricKeyword());
     }
 
     @Test
     public void findCommand_duplicateKeys_parsedCorrectly() {
-        final String[] keywords = { "key1", "key2", "key3" };
-        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
-
+//        final String[] keywords = { "key1", "key2", "key3" };
+//        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+        final String keyword = "s1234567a";
         // duplicate every keyword
-        final String input = "find " + String.join(" ", keySet) + " " + String.join(" ", keySet);
-        final FindCommand result =
-                parseAndAssertCommandType(input, FindCommand.class);
-        assertEquals(keySet, result.getKeywords());
+        final String input = "find " + keyword + " " + keyword;
+//        final FindCommand result =
+//                parseAndAssertCommandType(input, FindCommand.class);
+        final String resultMessage =
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, input);
     }
 
     /**

@@ -26,12 +26,12 @@ Format: help
 
 3.2. Adding a new person: add
 Adds a criminal to the database- only by Admin.
-Format: add i/NRIC n/NAME p/PHONE_NUMBER d/DATE_OF_BIRTH s/STATUS a/ADDRESS 
+Format: add NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR [o/PASTOFFENSES] 
 Examples:
-●	add i/G1978411Q n/John Doe p/98765432 d/03-April-1972 s/Wanted a/John street, block 123, #01-01
+●	add John Doe n/s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs"
 3.3. Editing a person : edit
 Edits an existing person in the address book.
-Format: edit NRIC [n/NAME] [p/PHONE] [d/DATE_OF_BIRTH] [s/STATUS] [a/ADDRESS] 
+Format: edit n/[NAME] p/[POSTAL_CODE] s/[STATUS] w/WANTED_FOR o/PAST_OFFENCES 
 ●	Edits the person with the specified NRIC.
 ●	At least one of the optional fields must be provided.
 ●	Existing values will be updated to the input values.
@@ -172,14 +172,14 @@ Output: Dispatch message sent to PO2
 Format - help
 
 ●	Add 
-Format - add i/[NRIC] n/[NAME] p/[PHONE_NUMBER] d/[DATE_OF_BIRTH] s/[STATUS] a/[ADDRESS]
+Format - add n/[NAME] n/[NRIC] d/[DATE_OF_BIRTH] p/[POSTAL_CODE] s/[STATUS] w/WANTED_FOR o/PAST_OFFENCES
 
-E.g. add i/G1978411Q n/John Doe p/98765432 d/03-April-1972 s/Wanted a/John street, block 123, #01-01
+E.g. add John Doe n/s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs"
 
 ●	Edit
-Format- edit NRIC [n/NAME] [p/PHONE] [d/DATE_OF_BIRTH] [s/STATUS] [a/ADDRESS] 
+Format- edit n/[NAME] p/[POSTAL_CODE] s/[STATUS] w/WANTED_FOR o/PAST_OFFENCES 
 
-E.g. edit G1952866Q p/91234567
+E.g. edit G1952866Q p/510246
 
 ●	Delete 
 Format- delete NRIC

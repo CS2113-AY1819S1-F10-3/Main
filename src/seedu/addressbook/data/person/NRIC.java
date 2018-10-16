@@ -12,9 +12,9 @@ import java.util.List;
 
 public class NRIC {
     public static final String EXAMPLE = "s1234567a";
-    public static final String MESSAGE_NAME_CONSTRAINTS = "NRIC/FIN should start with 's'/'t'/'g'/'f' and end with a letter and " +
+    public static final String MESSAGE_NAME_CONSTRAINTS = "NRIC/FIN should start with 's'/'t'/'g'/'f'(lower case) and end with a letter and " +
             "must have 7 digits in between, no spaces";
-    public static final String NAME_VALIDATION_REGEX = "[sStTgGfF][0-9]{7}[a-zA-Z]";
+    public static final String NAME_VALIDATION_REGEX = "[stgf][0-9]{7}[a-z]";
 
     public final String identificationNumber;
 

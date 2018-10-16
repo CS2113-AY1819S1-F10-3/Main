@@ -4,8 +4,7 @@ matrix:
     - jdk: oraclejdk9
 
 script: >-
-    ./gradlew test asciidoctor
-
+    ./gradlew test asciidoctor 
 deploy:
   skip_cleanup: true
   provider: script
@@ -17,3 +16,6 @@ addons:
   apt:
     packages:
       - oracle-java9-installer
+after_success:
+    - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
+    - bash <(curl -s https://codecov.io/bash)
