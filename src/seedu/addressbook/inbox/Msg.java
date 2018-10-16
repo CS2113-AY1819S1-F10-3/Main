@@ -10,7 +10,9 @@ import java.sql.Timestamp;
  */
 
 
-public class Msg {
+public class Msg implements Comparable <Msg> {
+    protected String myId;
+    protected String backUpId;
     private String newMsg;
     private Priority priority;
     private Location location;
@@ -132,4 +134,42 @@ public class Msg {
     public Timestamp getTime(){
         return this.time;
     }
+
+    @Override
+    public int compareTo(Msg other) {
+        int otherInt = other.isRead? 1 : 0;
+        int myInt = this.isRead? 1 : 0;
+        int compare = Integer.compare(myInt, otherInt);
+        if(compare == 0){ // If same read status, compare priorities.
+            compare = compareByPriority(other);
+            if(compare == 0){ // If priority is the same, compare by timestamp.
+                compare = compareByTimestamp(other);
+            }
+            return compare;
+        }
+        else{
+            return compare;
+        }
+    }
+
+    public int compareByPriority(Msg other){
+        return Integer.compare(other.getPriority().priorityToInt(), this.getPriority().priorityToInt());
+    }
+
+    public int compareByTimestamp(Msg other){
+        return this.getTime().compareTo(other.getTime());
+    }
+
+    /*public static Comparator<Msg> PriorityComparator = new Comparator<Msg>(){
+        @Override
+        public int compare(Msg m1, Msg m2){
+            return m2.getPriority().priorityToInt() - (m1.getPriority().priorityToInt());
+        }
+    };
+    public static Comparator<Msg> TimestampComparator = new Comparator<Msg>() {
+        @Override
+        public int compare(Msg m1, Msg m2) {
+            return m1.getTime().compareTo(m2.getTime());
+        }
+    };*/
 }

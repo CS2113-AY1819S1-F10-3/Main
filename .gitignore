@@ -2,12 +2,11 @@
 *.class
 
 # Default data file
-policeRecords.txt
 notification.txt
+policeRecords.txt
 passwordStorage.txt
 
 # Logger files
-parserLog.log
 
 # Package Files #
 *.jar
