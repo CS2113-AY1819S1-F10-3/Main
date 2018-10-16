@@ -201,7 +201,7 @@ public class MainWindow {
                 else{
                     passwordValidityChecker(userCommandText);
                     existingPassword(userCommandText);
-                    if(!isInvalidNewPassword()) {
+                    if(!isInvalidNewPassword()) { //TODO prompt user to enter new password again
                         int storedNewPassword = userCommandText.hashCode();
                         if (isLoginHQP) {
                             line = br.readLine();
