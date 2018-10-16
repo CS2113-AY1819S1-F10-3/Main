@@ -83,13 +83,13 @@ public class ParserTest {
 //        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
 //    }
     
-    @Test
-    public void deleteCommand_numericArg_indexParsedCorrectly() {
-        final int testIndex = 1;
-        final String input = "delete " + testIndex;
-        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
-        assertEquals(result.getTargetIndex(), testIndex);
-    }
+//    @Test
+//    public void deleteCommand_numericArg_indexParsedCorrectly() {
+//        final int testIndex = 1;
+//        final String input = "delete " + testIndex;
+//        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
+//        assertEquals(result.getTargetIndex(), testIndex);
+//    }
 
     /*@Test
     public void viewCommand_noArgs() {

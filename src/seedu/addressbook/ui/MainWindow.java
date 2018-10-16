@@ -33,6 +33,8 @@ public class MainWindow {
     public MainWindow(){
     }
 
+
+
     public void setLogic(Logic logic){
         this.logic = logic;
     }
@@ -372,6 +374,10 @@ public class MainWindow {
      */
     private void display(List<? extends ReadOnlyPerson> persons) {
         display(new Formatter().format(persons));
+    }
+
+    public void displayTimestamps(List<String> history){
+        display(new Formatter().formatForTstamps(history));
     }
 
     /**

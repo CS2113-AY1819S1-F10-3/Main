@@ -241,6 +241,19 @@ public class LogicTest {
 
     }
 
+    private void assertInvalidCommandFormatBehaviorForCommand(String commandWord) throws Exception {
+        String expectedMessage = NRIC.MESSAGE_NAME_CONSTRAINTS;
+        TestDataHelper helper = new TestDataHelper();
+        List<Person> lastShownList = helper.generatePersonList(false, true);
+
+        logic.setLastShownList(lastShownList);
+
+        assertCommandBehavior(commandWord + " -1", expectedMessage, AddressBook.empty(), false, lastShownList);
+        assertCommandBehavior(commandWord + " 0", expectedMessage, AddressBook.empty(), false, lastShownList);
+        assertCommandBehavior(commandWord + " 3", expectedMessage, AddressBook.empty(), false, lastShownList);
+
+    }
+
     //@Test
    /*
     public void execute_view_onlyShowsNonPrivate() throws Exception {
@@ -353,30 +366,8 @@ public class LogicTest {
     }*/
 
     @Test
-    public void execute_delete_byName() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-
-        Person p1 = helper.generatePersonWithName("Harun");
-        Person p2 = helper.generatePersonWithName("Putra");
-
-        List<Person> twoPersons = helper.generatePersonList(p1, p2);
-        AddressBook expectedAB = helper.generateAddressBook(twoPersons);
-        expectedAB.removePerson(p1);
-
-        helper.addToAddressBook(addressBook, twoPersons);
-        logic.setLastShownList(twoPersons);
-
-
-        assertCommandBehavior("delete Harun",
-                String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, p1),
-                expectedAB,
-                false,
-                twoPersons);
-    }
-
-    @Test
-    public void execute_delete_invalidIndex() throws Exception {
-        assertInvalidIndexBehaviorForCommand("delete");
+    public void execute_delete_invalidCommandFormat() throws Exception {
+        assertInvalidCommandFormatBehaviorForCommand("delete");
     }
 
     @Test
@@ -395,7 +386,7 @@ public class LogicTest {
         helper.addToAddressBook(addressBook, threePersons);
         logic.setLastShownList(threePersons);
 
-        assertCommandBehavior("delete 2",
+        assertCommandBehavior("delete g9999992t",
                                 String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, p2),
                                 expectedAB,
                                 false,
@@ -419,7 +410,7 @@ public class LogicTest {
         addressBook.removePerson(p2);
         logic.setLastShownList(threePersons);
 
-        assertCommandBehavior("delete 2",
+        assertCommandBehavior("delete g9999992t",
                                 Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
                                 expectedAB,
                                 false,

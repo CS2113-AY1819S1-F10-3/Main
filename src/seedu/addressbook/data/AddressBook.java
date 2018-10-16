@@ -70,6 +70,10 @@ public class AddressBook {
             String[] parts = line.split(" ");
             if (parts[0].equals(nric)){
                 data.add(parts[1]);
+                line = br.readLine();
+            }
+            else{
+                line = br.readLine();
             }
         }
         return data;

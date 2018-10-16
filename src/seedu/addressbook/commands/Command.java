@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.Main;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
@@ -50,11 +51,12 @@ public abstract class Command {
      */
 
     public static String getMessageForScreeningHistoryShownSummary(List<String> timestampsDisplayed) {
-//        MainWindow mainwindow = new MainWindow();
-//
-//        Formatter formatter = new Formatter();
-//        formatter.formatForTstamps(timestampsDisplayed);
-        return String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, timestampsDisplayed.size());
+
+        //TODO: Try format or mainwindow methods
+        Formatter formatter = new Formatter();
+        String result = formatter.formatForTstamps(timestampsDisplayed);
+        String finalResult = result + String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, timestampsDisplayed.size());
+        return finalResult;
     }
 
     /**
