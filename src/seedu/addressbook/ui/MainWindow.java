@@ -33,6 +33,8 @@ public class MainWindow {
     public MainWindow(){
     }
 
+
+
     public void setLogic(Logic logic){
         this.logic = logic;
     }
@@ -374,10 +376,14 @@ public class MainWindow {
         display(new Formatter().format(persons));
     }
 
+    public void displayTimestamps(List<String> history){
+        display(new Formatter().formatForTstamps(history));
+    }
+
     /**
      * Displays the given messages on the output display area, after formatting appropriately.
      */
-    private void display(String... messages) {
+    public void display(String... messages) {
         outputConsole.setText(outputConsole.getText() + new Formatter().format(messages));
     }
 

@@ -43,6 +43,14 @@ public class Formatter {
         return format(asIndexedList(formattedPersons));
     }
 
+    public String formatForTstamps(List<String> timestamps) {
+        final List<String> formattedTimestamps = new ArrayList<>();
+        for (String timestamp : timestamps) {
+            formattedTimestamps.add(timestamp);
+        }
+        return format(asIndexedList(formattedTimestamps));
+    }
+
     /** Formats a list of strings as an indexed list. */
     private static String asIndexedList(List<String> listItems) {
         final StringBuilder formatted = new StringBuilder();
