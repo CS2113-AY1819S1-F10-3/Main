@@ -8,19 +8,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import seedu.addressbook.common.HttpRestClient;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Location {
-    public static final String GOOGLE_MAPS_API_KEY = "AIzaSyBC7___BJc9QTTTzvZ9BHl2_7kx2FgrP8c";
     public static final String DISTANCE_MATRIX_BASE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     public static final String GOOGLE_MAPS_BASE_URL = "https://www.google.com/maps/place/";
 
+    private String GOOGLE_MAPS_API_KEY;
     private double longitude;
     private double latitude;
 
     public Location(double latitude, double longitude) {
         this.longitude = longitude;
         this.latitude = latitude;
+        GOOGLE_MAPS_API_KEY = getGoogleMapsApiKey();
     }
 
     public double getLongitude() {
@@ -37,31 +43,49 @@ public class Location {
         this.latitude = latitude;
     }
 
-    /**
-     * Returns Google Maps API URL for HTTP GET request.
-     *
-     * @param locations calculate all locations ETA
-     * @return Google Maps URL String
-     */
-    private String getMapsDistanceURL(ArrayList<Location> locations) {
-        String originCoordinatesString = locations.get(0).latitude + "," + locations.get(0).longitude;
+    public String getGoogleMapsApiKey()  {
 
-        for (int i = 1; i < locations.size(); i++) {
-            originCoordinatesString += "|" + locations.get(i).latitude + "," + locations.get(i).longitude;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("env"));
+            return bufferedReader.readLine();
+        } catch(IOException ioe) {
+            ioe.getMessage();
         }
 
-        String GOOGLE_ETA_URL = DISTANCE_MATRIX_BASE_URL + "origins=" + originCoordinatesString
+        return null;
+    }
+
+    private ArrayList<Pair<Integer, String>> sortEta(ArrayList<Pair<Integer, String>> etaList) {
+        Collections.sort(etaList, Comparator.comparing(Pair::getValue0));
+        return etaList;
+    }
+
+    /**
+     * Returns Google Maps API URL for HTTP GET request from multiple origins.
+     *
+     * @param origins multiple origins ETA to this location
+     * @return Google Maps URL String
+     */
+    private String getMapsDistanceUrl(ArrayList<Location> origins) {
+        String originCoordinatesString = origins.get(0).latitude + "," + origins.get(0).longitude;
+
+        for (int i = 1; i < origins.size(); i++) {
+            originCoordinatesString += "|" + origins.get(i).latitude + "," + origins.get(i).longitude;
+        }
+
+        String googleEtaUrl = DISTANCE_MATRIX_BASE_URL + "origins=" + originCoordinatesString
                 + "&destinations=" + this.latitude + "," + this.longitude + "&key=" + GOOGLE_MAPS_API_KEY;
 
-        return GOOGLE_ETA_URL;
+        return googleEtaUrl;
     }
 
     /**
      * Returns List of Pairs of Estimated Time of Arrival (ETA) from JSON ETA data
-     * @param jsonData from Google Maps URL
+     *
+     * @param jsonData from Google Maps GET Request
      * @return ArrayList of Pair<ETA in seconds, ETA in natural text>
      */
-    private ArrayList<Pair<Integer, String>> getEtaListFromJsonObject(JSONObject jsonData) {
+    private ArrayList<Pair<Integer, String>> getEtaFromJsonObject(JSONObject jsonData) {
         ArrayList<Pair<Integer, String>> etaList = new ArrayList<>();
 
         try {
@@ -86,31 +110,29 @@ public class Location {
     /**
      * Returns ETA for this location from multiple locations
      *
-     * @param locations Arraylist is of Locations objects
-     * @return ArrayList of Pair of Number of seconds of ETA and text description of ETA
+     * @param locations list of origins to this destination
+     * @return ArrayList of Pair<Number of seconds ETA, Text description of ETA>
      */
 
-    public ArrayList<Pair<Integer, String>> getEtaFromMultipleLocations(ArrayList<Location> locations) {
+    public ArrayList<Pair<Integer, String>> getEtaFrom(ArrayList<Location> locations) {
         ArrayList<Pair<Integer, String>> etaList = new ArrayList<>();
 
         try {
             HttpRestClient httpRestClient = new HttpRestClient();
-            HttpResponse response = httpRestClient.requestGetResponse(getMapsDistanceURL(locations));
+            HttpResponse response = httpRestClient.requestGetResponse(getMapsDistanceUrl(locations));
 
             if (response != null) {
                 String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-                JSONObject jsonData = new JSONObject(jsonString);
-
-                etaList = getEtaListFromJsonObject(jsonData);
+                etaList = getEtaFromJsonObject(new JSONObject(jsonString));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return etaList;
+        return sortEta(etaList);
     }
 
-    public String getGooglemMapsURL() {
+    public String getGoogleMapsURL() {
         return GOOGLE_MAPS_BASE_URL + this.getLatitude() + "," + this.getLongitude();
     }
 
@@ -120,7 +142,7 @@ public class Location {
         ArrayList<Location> locationList = new ArrayList<>();
         locationList.add(origin);
 
-        ArrayList<Pair<Integer, String>> ETATiming = location.getEtaFromMultipleLocations(locationList);
+        ArrayList<Pair<Integer, String>> ETATiming = location.getEtaFrom(locationList);
         for (Pair<Integer, String> eta: ETATiming) {
             System.out.println(eta.getValue0() + " " + eta.getValue1());
         }

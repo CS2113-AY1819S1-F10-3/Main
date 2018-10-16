@@ -10,7 +10,6 @@ import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.*;
@@ -147,11 +146,7 @@ public class LogicTest {
         assertCommandBehavior(
                 "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name n/s1234567a d/1980 p/123456 s/not a convict w/none", Status.MESSAGE_NAME_CONSTRAINTS);
-        assertCommandBehavior(
-                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
-        assertCommandBehavior(
-                "add Valid Name n/s1234567a d/1980 p/123456 s/excon w/none o/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
+                "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
 
     }
 
@@ -303,6 +298,21 @@ public class LogicTest {
     */
 
     @Test
+    public void execute_request_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelp.MESSAGE_USAGE);
+        assertCommandBehavior("request ", expectedMessage);
+        assertCommandBehavior("request gun", expectedMessage);
+    }
+
+    @Test
+    public void execute_request_invalidOffense() throws Exception {
+        String expectedMessage = String.format(Offense.MESSAGE_OFFENSE_INVALID);
+        assertCommandBehavior("request bobo help", expectedMessage);
+        assertCommandBehavior("request lala help", expectedMessage);
+    }
+
+
+    @Test
     public void execute_viewAll_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         assertCommandBehavior("viewall ", expectedMessage);
@@ -419,11 +429,11 @@ public class LogicTest {
 
 
 
-//    @Test
-//    public void execute_edit_invalidArgsFormat() throws Exception {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
-//        assertCommandBehavior("edit ", expectedMessage);
-//    }
+    @Test
+    public void execute_edit_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertCommandBehavior("edit ", expectedMessage);
+    }
 
 
 
@@ -546,7 +556,7 @@ public class LogicTest {
             cmd.add("s/" + p.getStatus());
             cmd.add("w/" + p.getWantedFor().getOffense());
 
-            Set<Offense> tags = p.getPastOffense();
+            Set<Offense> tags = p.getPastOffenses();
             for(Offense t: tags){
                 cmd.add("o/" + t.getOffense());
             }

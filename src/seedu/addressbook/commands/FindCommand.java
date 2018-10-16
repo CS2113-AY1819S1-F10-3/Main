@@ -1,15 +1,10 @@
 package seedu.addressbook.commands;
 
-import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.person.NRIC;
-import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -23,51 +18,46 @@ public class FindCommand extends Command {
             + "Parameters: NRIC ...\n\t"
             + "Example: " + COMMAND_WORD + " s1234567a";
 
-    //private final Set<String> nricToFind;
-    private String nricKeyword;
+    private String nric;
 
-    public FindCommand(String nricToFind)
-    {
-        this.nricKeyword = nricToFind;
+    public FindCommand(String nricToFind) {
+        this.nric = nricToFind;
     }
 
-//    /**
-//     * Returns copy of the nric in this command.
-//     */
-//    public Set<NRIC> getNricToFind() {
-//        return new HashSet<>(nricToFind);
-//    }
-
-    public String getNricKeyword(){
-        return nricKeyword;
+    public String getNric(){
+        return nric;
     }
 
     @Override
     public CommandResult execute() {
-        final List<ReadOnlyPerson> personsFound = getPersonsWithNric(nricKeyword);
-        return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
+        final List<ReadOnlyPerson> personFound = getPersonWithNric();
+        return new CommandResult(getMessageForPersonListShownSummary(personFound), personFound);
     }
 
+
+    // TODO: Make this return only one ReadOnlyPerson
     /**
      * Retrieve all persons in the address book whose names contain some of the specified keywords.
      *
-     * @param nric for searching
-     * @return list of persons found
+     * @return Persons found, null if no person found
      */
-    private List<ReadOnlyPerson> getPersonsWithNric(String nric){
-        final List<ReadOnlyPerson> matchedPerson = new ArrayList<>();
-        for (ReadOnlyPerson person : addressBook.getAllPersonsDirect()) {
+    public List<ReadOnlyPerson> getPersonWithNric() {
+        List<ReadOnlyPerson> matchedPerson = new ArrayList<>();
+        for (ReadOnlyPerson person : relevantPersons) {
             if (person.getNRIC().getIdentificationNumber().equals(nric)) {
-                matchedPerson.add(person);
                 addressBook.addPersontoDbAndUpdate(person);
                 try {
                      addressBook.updateDatabase();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); // TODO: throws exeception
                 }
+                matchedPerson.add(person);
+
+                return matchedPerson;
             }
         }
-        return matchedPerson;
+
+        return null;
     }
 
 }

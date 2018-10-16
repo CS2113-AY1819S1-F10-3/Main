@@ -3,7 +3,6 @@ package seedu.addressbook.storage.jaxb;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.tag.Tag;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -68,7 +67,7 @@ public class AdaptedPerson {
         wantedFor.value = source.getWantedFor().getOffense();
 
         tagged = new ArrayList<>();
-        for (Offense tag : source.getPastOffense()) {
+        for (Offense tag : source.getPastOffenses()) {
             tagged.add(new AdaptedTag(tag));
         }
 
