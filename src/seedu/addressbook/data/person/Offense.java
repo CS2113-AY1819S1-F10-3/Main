@@ -72,8 +72,8 @@ public class Offense {
         return OFFENSE_LIST.get(offense);
     }
 
-    public static int toInteger(Msg.Priority priority) {
-        return priority.getPriority();
+    public static int getPriority(Msg.Priority priority) {
+        return priority.toInteger();
     }
 
     @Override

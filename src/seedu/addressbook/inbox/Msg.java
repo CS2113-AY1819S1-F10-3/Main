@@ -35,7 +35,7 @@ public class Msg implements Comparable <Msg> {
             this.priority = priority;
         }
 
-        public int getPriority() {
+        public int toInteger() {
             return priority;
         }
 
@@ -152,8 +152,9 @@ public class Msg implements Comparable <Msg> {
         }
     }
 
+    // TODO:
     public int compareByPriority(Msg other){
-        return Integer.compare(other.getPriority().priorityToInt(), this.getPriority().priorityToInt());
+        return Integer.compare(other.getPriority().toInteger(), this.getPriority().toInteger());
     }
 
     public int compareByTimestamp(Msg other){
