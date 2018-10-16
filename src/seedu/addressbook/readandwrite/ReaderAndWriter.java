@@ -1,4 +1,4 @@
-package seedu.addressbook.reader_writer;
+package seedu.addressbook.readandwrite;
 
 import java.io.*;
 

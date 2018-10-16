@@ -1,7 +1,7 @@
 package seedu.addressbook.password;
 
 import seedu.addressbook.common.Messages;
-import seedu.addressbook.reader_writer.ReaderAndWriter;
+import seedu.addressbook.readandwrite.ReaderAndWriter;
 import seedu.addressbook.ui.MainWindow;
 
 import java.io.*;
@@ -371,6 +371,10 @@ public class Password {
             }
 
         }
+        else{
+            isUpdatePasswordConfirm = false;
+            result = "The password you entered is not the same. Please try again.";
+        }
         pw.close();
         br.close();
         return result;
@@ -378,7 +382,7 @@ public class Password {
 
     private void existingPassword (String newEnteredPassword){ //TODO password can be each other's password
         if(loginEntered.equals(newEnteredPassword)){
-            isOldPassword=true;
+            isOldPassword = true;
             mainwindow.display("Your new password cannot be the same as your old password. Please try again.");
             mainwindow.display("Enter New Alphanumeric Password: ");
         }
