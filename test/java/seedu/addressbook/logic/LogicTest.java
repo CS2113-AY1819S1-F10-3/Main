@@ -147,11 +147,7 @@ public class LogicTest {
         assertCommandBehavior(
                 "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name n/s1234567a d/1980 p/123456 s/not a convict w/none", Status.MESSAGE_NAME_CONSTRAINTS);
-        assertCommandBehavior(
-                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
-        assertCommandBehavior(
-                "add Valid Name n/s1234567a d/1980 p/123456 s/excon w/none o/rob", Offense.MESSAGE_OFFENSE_CONSTRAINTS);
+                "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
 
     }
 
