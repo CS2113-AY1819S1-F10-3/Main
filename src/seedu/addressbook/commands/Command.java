@@ -3,6 +3,7 @@ package seedu.addressbook.commands;
 import seedu.addressbook.Main;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 
@@ -62,7 +63,7 @@ public abstract class Command {
     /**
      * Executes the command and returns the result.
      */
-    public CommandResult execute(){
+    public CommandResult execute() throws IllegalValueException {
         throw new UnsupportedOperationException("This method should be implement in child classes");
     }
 
@@ -86,16 +87,7 @@ public abstract class Command {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
 
-    protected ReadOnlyPerson getTargetPerson(Name name) throws UniquePersonList.PersonNotFoundException {
-        for (ReadOnlyPerson person: relevantPersons) {
-            if (person.getName().toString().equalsIgnoreCase(name.toString())) {
-                return person;
-            }
-        }
-        throw new UniquePersonList.PersonNotFoundException();
-    }
-
-    protected ReadOnlyPerson getTargetPersonWithNric(NRIC nric) throws UniquePersonList.PersonNotFoundException {
+    protected ReadOnlyPerson getTargetPerson(NRIC nric) throws UniquePersonList.PersonNotFoundException {
         for (ReadOnlyPerson person: relevantPersons) {
             if (person.getNRIC().getIdentificationNumber().equals(nric.getIdentificationNumber())) {
                 return person;
