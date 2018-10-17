@@ -4,13 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.person.*;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -161,7 +158,7 @@ public class ParserTest {
         final String input = "find " + keyword;
         final FindCommand result =
                 parseAndAssertCommandType(input, FindCommand.class);
-        assertEquals(keyword, result.getNricKeyword());
+        assertEquals(keyword, result.getNric());
     }
 
     @Test
@@ -260,7 +257,7 @@ public class ParserTest {
     public void addCommand_duplicateTags_merged() throws IllegalValueException {
         final Person testPerson = generateTestPerson();
         String input = convertPersonToAddCommandString(testPerson);
-        for (Offense tag : testPerson.getPastOffense()) {
+        for (Offense tag : testPerson.getPastOffenses()) {
             // create duplicates by doubling each tag
             input += " o/" + tag.getOffense();
         }
@@ -293,7 +290,7 @@ public class ParserTest {
                 + " p/" + person.getPostalCode().getPostalCode()
                 + " s/" + person.getStatus().getCurrentStatus()
                 + " w/" + person.getWantedFor().getOffense();
-        for (Offense tag : person.getPastOffense()) {
+        for (Offense tag : person.getPastOffenses()) {
             addCommand += " o/" + tag.getOffense();
         }
         return addCommand;
