@@ -355,8 +355,4 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
-
-    public static void main(String args[]) {
-
-    }
 }
