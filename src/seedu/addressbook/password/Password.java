@@ -8,33 +8,38 @@ import java.io.*;
 
 public class Password {
 
-    public static int getWrongPasswordCounter() {
-        return wrongPasswordCounter;
-    }
-
-    private static int wrongPasswordCounter = 5;
-
+    private static final String MESSAGE_TRY_AGAIN = "Please try again.";
     public static final String MESSAGE_ENTER_PASSWORD = "Please enter password: ";
     private static final String MESSAGE_ENTER_COMMAND = "Please enter a command: ";
     private static final String MESSAGE_WELCOME = "Welcome %s.";
-    private static final String MESSAGE_UNAUTHORIZED = "You are not authorized to ADD, CLEAR, DELETE, EDIT nor UPDATE PASSWORD.";
-    private static final String MESSAGE_INCORRECT_PASSWORD = "Password is incorrect. Please try again.";
-    private static final String MESSAGE_ATTEMPTS_LEFT = "You have %1$d attempts left.";
-    private static final String MESSAGE_ATTEMPT_LEFT = "You have %1$d attempt left.";
-    private static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect.";
-    private static final String MESSAGE_SHUTDOWN = "Password is incorrect. System is shutting down.";
+    private static final String MESSAGE_UNAUTHORIZED = "You are not authorized to ADD, CLEAR, CHECK, DELETE, EDIT nor UPDATE PASSWORD.";
+    private static final String MESSAGE_INCORRECT_PASSWORD = "Password is incorrect. " + MESSAGE_TRY_AGAIN;
+    private static final String MESSAGE_ATTEMPTS_LEFT = "You have %1$d attempts left. ";
+    private static final String MESSAGE_ATTEMPT_LEFT = "You have %1$d attempt left. ";
+    private static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect. ";
+    private static final String MESSAGE_SHUTDOWN = "Password is incorrect. System is shutting down. ";
     private static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
     private static final String MESSAGE_HQP = "Headquarter Personnel";
-    private static final String MESSAGE_PO = "Police Officer";
-    private static final String MESSAGE_ONE = " Oscar November Echo";
-    private static final String MESSAGE_TWO = " Tango Whiskey Oscar";
-    private static final String MESSAGE_THREE = " Tango Hotel Romeo Echo Echo";
-    private static final String MESSAGE_FOUR = " Foxtrot Oscar Uniform Romeo";
-    private static final String MESSAGE_FIVE = " Foxtrot India Victor Echo";
+    private static final String MESSAGE_PO = "Police Officer ";
+    private static final String MESSAGE_ONE = "Oscar November Echo ";
+    private static final String MESSAGE_TWO = "Tango Whiskey Oscar ";
+    private static final String MESSAGE_THREE = "Tango Hotel Romeo Echo Echo ";
+    private static final String MESSAGE_FOUR = "Foxtrot Oscar Uniform Romeo ";
+    private static final String MESSAGE_FIVE = "Foxtrot India Victor Echo ";
     private static final String MESSAGE_ENTER_NEW_PASSWORD = "Enter New Alphanumeric Password for ";
     private static final String MESSAGE_ENTER_NEW_PASSWORD_AGAIN = "Please New Alphanumeric Password again: ";
-    private static final String MESSAGE_UPDATED_PASSWORD = "You have updated %s password successfully.";
+    private static final String MESSAGE_UPDATED_PASSWORD = "You have updated %s password successfully. ";
+    private static final String MESSAGE_NOT_SAME = "The password you entered is not the same. " + MESSAGE_TRY_AGAIN;
+    private static final String MESSAGE_AT_LEAST_ONE = "Your new password must contain at least one %s. " + MESSAGE_TRY_AGAIN;
+    private static final String MESSAGE_PASSWORD_EXISTS = "Your new password cannot be the same as an existing password. " + MESSAGE_TRY_AGAIN;
+    private static final String MESSAGE_TRY_UNAUTHORIZED ="You are unauthorized to %s.\nPlease try a different command. ";
+    private static final String MESSAGE_PASSWORD_LENGTH = "Your password is %1$d characters long. ";
+    private static final String MESSAGE_PASSWORD_MINIMUM_LENGTH = "Your password must be at least %1$d characters long. ";
 
+    public int getWrongPasswordCounter() {
+        return wrongPasswordCounter;
+    }
+    private static int wrongPasswordCounter = 5;
 
     private static boolean isHQP = false;
     private static boolean isPO = false;
@@ -46,9 +51,6 @@ public class Password {
     }
     public boolean isHQPUser() {
         return isHQP;
-    }
-    public static boolean isPOUser() {
-        return isPO;
     }
     public boolean isLocked(){
         return !(isHQP || isPO);
@@ -65,6 +67,7 @@ public class Password {
     private void lockUpdatePasswordConfirm() {
         isUpdatePasswordConfirm = false;
     }
+
     public void lockDevice(){
         lockIsHQP();
         lockIsPO();
@@ -91,21 +94,11 @@ public class Password {
     private boolean isLoginPO4 = false;
     private boolean isLoginPO5 = false;
 
-    private boolean isPasswordMissingAlphabet = false;
-    private boolean isPasswordMissingNumber = false;
-    private boolean isOldPassword = false;
-    private boolean isValidNewPassword(){
-        return (!isPasswordMissingAlphabet && !isPasswordMissingNumber && !isOldPassword);
-    }
-
-
-
     public boolean isShutDown() {
         return shutDown;
     }
 
     private boolean shutDown= false;
-    private String loginEntered = null;
     private String oneTimePassword = null;
 
     private ReaderAndWriter readerandwriter = new ReaderAndWriter();
@@ -125,7 +118,7 @@ public class Password {
 
         while (numberOfPasswords > 0) {
             line = br.readLine();
-            String storedCurrPassword = line.substring(line.lastIndexOf(" ") + 1, line.length());
+            String storedCurrPassword = line.substring(line.lastIndexOf(" ") + 1);
             String user = line.substring(0,line.lastIndexOf(" "));
 
             if (correctHQP(user,storedCurrPassword,hashedEnteredPassword)) {
@@ -197,9 +190,9 @@ public class Password {
                     + "\n" + String.format(MESSAGE_ATTEMPT_LEFT,number)
                     + "\n" + MESSAGE_SHUTDOWN_WARNING;
             decreaseWrongPasswordCounter();
-            shutDown=true;
         }
         else if(wrongPasswordCounter == 0){
+            shutDown = true;
             result = MESSAGE_SHUTDOWN;
         }
         else{
@@ -239,8 +232,7 @@ public class Password {
     public String prepareUpdatePassword(){
         isUpdatingPassword = true;
         wrongPasswordCounter = 5;
-        String result = MESSAGE_ENTER_PASSWORD_TO_CHANGE;
-        return result;
+        return MESSAGE_ENTER_PASSWORD_TO_CHANGE;
     }
 
     public String updatePassword(String userCommandText,int number) throws Exception {
@@ -260,12 +252,11 @@ public class Password {
 
             while(numberOfPasswords>0) {
                 line = br.readLine();
-                String storedCurrPassword = line.substring(line.lastIndexOf(" ") + 1, line.length());
+                String storedCurrPassword = line.substring(line.lastIndexOf(" ") + 1);
                 String user = line.substring(0,line.lastIndexOf(" "));
 
                 if(correctPassword(storedCurrPassword, enteredCurrentPassword)){
-                    loginEntered = userCommandText;
-                    wrongPasswordCounter=5;
+                    wrongPasswordCounter = 5; //TODO may be a problem to put here
 
                     switch (user) {
                         case "hqp":
@@ -302,9 +293,8 @@ public class Password {
             }
         }
         else{
-            passwordValidityChecker(userCommandText);
-            existingPassword(userCommandText);
-            if(isValidNewPassword()){
+            result = passwordValidityChecker(userCommandText);
+            if(result == null){
                 oneTimePassword = userCommandText;
                 isUpdatePasswordConfirm = true;
                 result = MESSAGE_ENTER_NEW_PASSWORD_AGAIN;
@@ -381,16 +371,17 @@ public class Password {
             br.close();
 
             if (!originalFile.delete()) {
-                result = "Could not delete file";
+                result = (Messages.MESSAGE_ERROR);
             }
             if (!tempFile.renameTo(originalFile)) {
-                result = "Could not rename file";
+                result = (Messages.MESSAGE_ERROR);
             }
-
+            result = result +
+                    "\n" + MESSAGE_ENTER_COMMAND;
         }
         else{
             isUpdatePasswordConfirm = false;
-            result = "The password you entered is not the same. Please try again.";
+            result = MESSAGE_NOT_SAME;
         }
         pw.close();
         br.close();
@@ -403,33 +394,96 @@ public class Password {
         pw.flush();
     }
 
-    private void existingPassword (String newEnteredPassword){ //TODO password can be each other's password
-        if(loginEntered.equals(newEnteredPassword)){
-            isOldPassword = true;
-            //mainwindow.display("Your new password cannot be the same as your old password. Please try again.");
-           // mainwindow.display("Enter New Alphanumeric Password: ");
-        }
-    }
+    private String passwordExistsChecker (String newEnteredPassword) throws IOException {
+        String result = null;
 
-    private void passwordValidityChecker(String newEnteredPassword){
+        File originalFile = readerandwriter.fileToUse("passwordStorage.txt");
+        BufferedReader br = readerandwriter.openReader(originalFile);
+
+        int hashedEnteredPassword = newEnteredPassword.hashCode();
+
+        String line;
+        int numberOfPasswords = 6;
+
+        while (numberOfPasswords > 0) {
+            line = br.readLine();
+            String storedCurrPassword = line.substring(line.lastIndexOf(" ") + 1);
+            if (correctPassword(storedCurrPassword, hashedEnteredPassword)) {
+                result = MESSAGE_PASSWORD_EXISTS ;
+            }
+            numberOfPasswords--;
+        }
+        br.close();
+        return result;
+    }
+    private String passwordAlphanumericChecker(String newEnteredPassword){
+        String result;
         if (newEnteredPassword.matches(".*\\d+.*") && newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
-            isPasswordMissingNumber = false;
-            isPasswordMissingAlphabet = false;
+            return null;
         }
         else if (newEnteredPassword.matches(".*\\d+.*") && !newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
-            isPasswordMissingAlphabet = true;
-           // mainwindow.display("Your new password must contain at least one alphabet. Please try again.");
-            //mainwindow.display("Enter New Alphanumeric Password: ");
-        } else if (!newEnteredPassword.matches(".*\\d+.*") && newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
-            isPasswordMissingNumber = true;
-           // mainwindow.display("Your new password must contain at least one number. Please try again.");
-           // mainwindow.display("Enter New Alphanumeric Password: ");
-        } else {
-            isPasswordMissingNumber = true;
-            isPasswordMissingAlphabet = true;
-           // mainwindow.display("Your new password can only be alphanumeric");
-           // mainwindow.display("Enter New Alphanumeric Password: ");
+            result = String.format(MESSAGE_AT_LEAST_ONE, "alphabet");
         }
+        else if (!newEnteredPassword.matches(".*\\d+.*") && newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
+            result = String.format(MESSAGE_AT_LEAST_ONE, "number");
+        }
+        else {
+            result = String.format(MESSAGE_AT_LEAST_ONE, "alphabet and at least one number.");
+        }
+        return result;
     }
 
+    private String passwordValidityChecker(String newEnteredPassword) throws IOException {
+        String result = null;
+        if(passwordExistsChecker(newEnteredPassword) != null){
+            result = passwordExistsChecker(newEnteredPassword);
+        }
+        else if(passwordAlphanumericChecker(newEnteredPassword) != null && passwordLengthChecker(newEnteredPassword) != null){
+            result = passwordAlphanumericChecker(newEnteredPassword)
+                    + "\n" + passwordLengthChecker(newEnteredPassword);
+        }
+        else if(passwordAlphanumericChecker(newEnteredPassword) != null ){
+            result = passwordAlphanumericChecker(newEnteredPassword);
+        }
+        else if(passwordLengthChecker(newEnteredPassword) != null){
+            result = passwordLengthChecker(newEnteredPassword);
+        }
+        return result;
+    }
+
+    private String passwordLengthChecker(String newEnteredPassword){
+        String result = null;
+        int lengthPassword = newEnteredPassword.length();
+        int minNumPassword = 5;
+        if(lengthPassword < minNumPassword){
+            result = String.format(MESSAGE_PASSWORD_LENGTH, lengthPassword)
+                    + "\n" + String.format(MESSAGE_PASSWORD_MINIMUM_LENGTH, minNumPassword);
+        }
+        return result;
+    }
+
+    private String getUnauthorizedPOCommand(String input){
+        String commandWord;
+        if(input.equals("update password")){
+            commandWord = "update password";
+        }
+        else {
+            commandWord = input.substring(0, Math.max(input.lastIndexOf(" "), input.length()));
+        }
+        return commandWord;
+    }
+
+    public boolean isUnauthorizedAccess(String input){
+        return isPO && invalidPOCommand(input);
+    }
+
+    private boolean invalidPOCommand(String input){
+        String userCommandWord = getUnauthorizedPOCommand(input);
+        return (userCommandWord.equals("add") || userCommandWord.equals("delete") || userCommandWord.equals("clear")
+                || userCommandWord.equals("edit") || userCommandWord.equals("check") || userCommandWord.equals("update password"));
+    }
+
+    public String invalidPOResult(String userCommandText) {
+        return String.format(MESSAGE_TRY_UNAUTHORIZED, getUnauthorizedPOCommand(userCommandText));
+    }
 }

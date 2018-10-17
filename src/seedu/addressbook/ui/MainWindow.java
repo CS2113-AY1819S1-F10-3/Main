@@ -13,13 +13,11 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.autocorrect.Dictionary;
 import seedu.addressbook.password.Password;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
-import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 import static seedu.addressbook.common.Messages.*;
 
@@ -65,14 +63,8 @@ public class MainWindow {
         return prediction;
     }
 
-
-
-    private static Timestamp currentDAT = new Timestamp(System.currentTimeMillis()); //TODO put this somewhere else
-    private SimpleDateFormat timeStampFormatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
-    private String outputDAT = timeStampFormatter.format(currentDAT);
-    private String outputDATHrs = outputDAT + "hrs";
-
     private Password password = new Password();
+    private TimeAndDate tad = new TimeAndDate();
 
     @FXML
     private TextArea outputConsole;
@@ -93,7 +85,8 @@ public class MainWindow {
     }
 
     private void decipherUserCommandText(String userCommandText) throws Exception {
-        if(isExitCommand(userCommandText) || password.isShutDown()){
+        if(toCloseApp(userCommandText)){
+            password.lockDevice();
             mainApp.stop();
         }
         else if(isLockCommand(userCommandText)){
@@ -102,7 +95,7 @@ public class MainWindow {
             displayResult(result);
         }
         else if(password.isLocked()) {
-            String unlockDeviceResult = password.unlockDevice(userCommandText,Password.getWrongPasswordCounter());
+            String unlockDeviceResult = password.unlockDevice(userCommandText,password.getWrongPasswordCounter());
             clearScreen();
             display(unlockDeviceResult);
         }
@@ -117,25 +110,24 @@ public class MainWindow {
                 updatePasswordResult = password.updatePasswordFinal(userCommandText);
             }
             else{
-                updatePasswordResult = password.updatePassword(userCommandText,Password.getWrongPasswordCounter());
+                updatePasswordResult = password.updatePassword(userCommandText,password.getWrongPasswordCounter());
             }
             clearScreen();
             display(updatePasswordResult);
         }
 
-        else if(isUnauthorizedAccess(userCommandText)){
+        else if(password.isUnauthorizedAccess(userCommandText)){
             clearScreen();
-            display("You are unauthorized to " + userCommandText +".", "Please try a different command.");
-            //TODO maybe change output message
+            String unauthorizedCommandresult = password.invalidPOResult(userCommandText);
+            display(unauthorizedCommandresult);
         }
         else {
             String arr[] = userCommandText.split(" ", 2);
             String commandWordInput = arr[0];
             String output = checkDistance(commandWordInput);
             if(!(output.equals("none"))) {
-                clearCommandInput();
-                clearOutputConsole();
-                display("Did you mean to use " + output +"?", "Please try changing the command.");
+                clearScreen();
+                display("Did you mean to use " + output + "?", "Please try changing the command.");
             }
             else{
                 CommandResult result = logic.execute(userCommandText);
@@ -147,20 +139,20 @@ public class MainWindow {
 
 
     private boolean canUpdatePassword(String userCommandText){
-        return password.isHQPUser() && userCommandText.equals("update password");
-    }
-
-    private boolean isUnauthorizedAccess(String userCommandText){
-        return password.isPOUser() && isUnauthorizedPOCommand(userCommandText);
-    }
-
-    private boolean isUnauthorizedPOCommand(String input){
-        return (input.contains("add") || input.contains("delete") || input.contains("clear") || input.contains("edit") || input.equals("update password"));
+        return password.isHQPUser() && isUpdatePasswordCommand(userCommandText);
     }
 
     /** Returns true if the result given is the result of an exit command */
     private boolean isExitCommand(String userCommandText) {
         return userCommandText.equals(ExitCommand.COMMAND_WORD);
+    }
+
+    private boolean isUpdatePasswordCommand(String userCommandText) {
+        return userCommandText.equals("update password");
+    }
+
+    private boolean toCloseApp(String userCommandText){
+        return isExitCommand(userCommandText) || password.isShutDown();
     }
 
     private boolean isLockCommand(String userCommandText) {
@@ -169,22 +161,22 @@ public class MainWindow {
 
 
     /** Clears the command input box */
-    public void clearCommandInput() {
+    private void clearCommandInput() {
         commandInput.setText("");
     }
 
     /** Clears the output display area */
-    public void clearOutputConsole(){
+    private void clearOutputConsole(){
         outputConsole.clear();
     }
 
-    public void clearScreen(){
+    private void clearScreen(){
         clearCommandInput();
         clearOutputConsole();
     }
 
     /** Displays the result of a command execution to the user. */
-    public void displayResult(CommandResult result) {
+    private void displayResult(CommandResult result) {
         clearOutputConsole();
         final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
         if(resultPersons.isPresent()) {
@@ -193,9 +185,9 @@ public class MainWindow {
         display(result.feedbackToUser);
     }
 
-    public void displayWelcomeMessage(String version, String storageFilePath) {
+    void displayWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
-        display(MESSAGE_WELCOME, version, storageFileInfo, outputDATHrs + "\n" , password.MESSAGE_ENTER_PASSWORD);
+        display(MESSAGE_WELCOME, version, storageFileInfo, tad.outputDATHrs() + "\n" , Password.MESSAGE_ENTER_PASSWORD);
     }
 
     /**
