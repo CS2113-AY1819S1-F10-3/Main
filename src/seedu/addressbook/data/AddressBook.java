@@ -56,7 +56,7 @@ public class AddressBook {
     }
 
     public void addPersontoDbAndUpdate(ReadOnlyPerson toAdd) {
-        tempNric = toAdd.getNRIC().getIdentificationNumber();
+        tempNric = toAdd.getNric().getIdentificationNumber();
         screeningTimeStamp = new Timestamp(System.currentTimeMillis());
         tempTimestamp = timestampFormatter.format(screeningTimeStamp);
     }

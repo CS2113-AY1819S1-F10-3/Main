@@ -3,7 +3,7 @@ package seedu.addressbook.data.person;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.inbox.Msg;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class Offense {
     public static final String EXAMPLE = "theft";
@@ -74,6 +74,16 @@ public class Offense {
 
     public static int getPriority(Msg.Priority priority) {
         return priority.toInteger();
+    }
+
+    public static Set<Offense> getOffenseSet(Set<String> offenseStringSet) throws IllegalValueException {
+        Set<Offense> offenseSet = new HashSet<>();
+
+        for (String offense: offenseStringSet) {
+            offenseSet.add(new Offense(offense));
+        }
+
+        return offenseSet;
     }
 
     @Override

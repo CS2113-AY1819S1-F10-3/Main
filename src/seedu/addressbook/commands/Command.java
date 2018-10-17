@@ -89,7 +89,7 @@ public abstract class Command {
 
     protected ReadOnlyPerson getTargetPerson(NRIC nric) throws UniquePersonList.PersonNotFoundException {
         for (ReadOnlyPerson person: relevantPersons) {
-            if (person.getNRIC().getIdentificationNumber().equals(nric.getIdentificationNumber())) {
+            if (person.getNric().getIdentificationNumber().equals(nric.getIdentificationNumber())) {
                 return person;
             }
         }

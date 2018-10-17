@@ -28,6 +28,17 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %s";
     //public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Police Records";
 
+    private void updatePerson() throws IllegalValueException {
+        for (Person person : addressBook.getAllPersons()) {
+            if (person.getNric().getIdentificationNumber().equals(this.nric)) {
+                person.setPostalCode(new PostalCode(postalCode));
+                person.setWantedFor(new Offense(wantedFor));
+                person.setStatus(new Status(status));
+                person.addPastOffenses(Offense.getOffenseSet(offenses));
+            }
+        }
+    }
+
     public EditCommand(String nric,
                        String postalCode,
                        String status,
@@ -43,21 +54,7 @@ public class EditCommand extends Command {
 
     @Override
     public CommandResult execute() throws IllegalValueException {
-        FindCommand findCommand = new FindCommand(nric);
-        findCommand.setData(addressBook, addressBook.getAllPersons().immutableListView());
-        ReadOnlyPerson toEdit = findCommand.getPersonWithNric().get(0);
-
-        offenses.addAll(toEdit.getStringOffenses());
-
-        DeleteCommand deleteCommand = new DeleteCommand(new NRIC(nric));
-
-        AddCommand addCommand = new AddCommand(toEdit.getName().toString(),
-                toEdit.getNRIC().getIdentificationNumber(),
-                toEdit.getDateOfBirth().getDOB(),
-                postalCode, status,
-                wantedFor, offenses);
-
-
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, toEdit.getNRIC().getIdentificationNumber()));
+        this.updatePerson();
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, this.nric));
     }
 }
