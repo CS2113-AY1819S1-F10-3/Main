@@ -441,8 +441,88 @@ Use case resumes at step 2.
 +
 Use case ends.
 
+=== Use Case: Request Backup
+
+*MSS*
+
+. System prompts User to enter his password.
+. User enters his password.
+. System prompts User to key in command.
+. User types in to request backup with pre-defined case types and message.
+. System adds message into Headquarters inbox.
+. User will be notified with success message.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User keys in invalid command format
+** 1a1. System shows error message
+** 1a2. System prompts correct format for request feature
++
+Use case resumes from step 3.
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+
+Use case resumes in step 1.
+
+* 6a. The case type entered is invalid.
+** 6a1. System shows an error message.
+** 6a2. System will prompt current valid case types.
++
+Use case resumes at step 3.
+
+=== Use Case: Dispatch Backup
+
+*MSS*
+
+. System prompts User to enter his password.
+. User enters his password.
+. System prompts User to key in command.
+. User lists the current unread messages inside the inbox.
+. System shows unread inbox messages.
+. Inbox messages become read.
+. User types to dispatch backup with index of police officer +
+which requested backup & police officer to dispatch
+. System adds new message with ETA in police officer which requested backup
+. System adds new message with destination coordinates to dispatch idle police officer
+
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User keys in invalid command format
+** 1a1. System shows error message
+** 1a2. System prompts correct format for dispatch feature
++
+Use case resumes from step 3.
+
+* 3a. The entered password is invalid
+** 3a1. System shows an error message
++
+Use case resumes in step 1.
+
+* 4a. User is not a Headquarter Personnel
+** 4a1. System shows an error message stating invalid credentials
++
+Use case resumes in step 3.
+
+* 5a. Index entered for to dispatch police officer is invalid
+** 5a1. System shows an error message
++
+Use case resumes in step 3.
+
+* 6a. Index entered for requested backup police officer is invalid
+** 6a1. System shows an error message
++
+Use case resumes at step 3.
+
 
 [appendix]
+
 == Non Functional Requirements
 
 . Should work on any <<mainstream-os, mainstream OS>> as long as it has Java 9 or higher installed.

@@ -14,4 +14,5 @@ public class Messages {
     public static final String MESSAGE_USING_STORAGE_FILE = "Using storage file : %1$s";
     public static final String MESSAGE_BATTERY_PERCENTAGE = "Battery level left: %d";
     public static final String MESSAGE_ERROR = "An error has occured.";
+    public static final String MESSAGE_SAVE_ERROR = "System could not save storage. Please try again.";
 }

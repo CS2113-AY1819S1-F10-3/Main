@@ -5,8 +5,13 @@
 notification.txt
 policeRecords.txt
 passwordStorage.txt
+addressbook.txt
+ScreeningHistory.txt
+requestList.txt
 
 # Logger files
+parserLog.log.1
+parserLog.log
 
 # Package Files #
 *.jar
@@ -25,5 +30,3 @@ publish.sh
 # Gradle build files
 .gradle/
 build/
-
-

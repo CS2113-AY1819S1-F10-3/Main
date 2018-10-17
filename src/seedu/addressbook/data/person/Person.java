@@ -1,10 +1,9 @@
 package seedu.addressbook.data.person;
 
-import java.sql.Time;
 import java.util.*;
 
 import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.tag.Tag;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -21,7 +20,7 @@ public class Person implements ReadOnlyPerson {
     private Status status;
     private Offense wantedFor;
 
-    private Set<Offense> PastOffense = new HashSet<>();
+    private Set<Offense> PastOffenses = new HashSet<>();
 
     public static String WANTED_FOR_WARNING = "State the offence if person's status is wanted";
 
@@ -34,7 +33,7 @@ public class Person implements ReadOnlyPerson {
      * Assumption: Every field must be present and not null.
      */
     public Person(Name name, NRIC nric, DateOfBirth dateOfBirth, PostalCode postalCode, Status status ,
-                  Offense wantedFor, Set<Offense> PastOffense) throws IllegalValueException {
+                  Offense wantedFor, Set<Offense> PastOffenses) throws IllegalValueException {
         this.name = name;
         this.nric = nric;
         this.dateOfBirth = dateOfBirth;
@@ -55,7 +54,7 @@ public class Person implements ReadOnlyPerson {
 
             this.wantedFor = wantedFor;
         }
-        this.PastOffense.addAll(PastOffense);
+        this.PastOffenses.addAll(PastOffenses);
     }
 
     /**
@@ -64,7 +63,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) throws IllegalValueException {
         this(source.getName(), source.getNRIC(),
                 source.getDateOfBirth(), source.getPostalCode(), source.getStatus(),
-                source.getWantedFor(), source.getPastOffense());
+                source.getWantedFor(), source.getPastOffenses());
     }
 
 
@@ -98,14 +97,24 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Set<Offense> getPastOffense() {return PastOffense;}
+    public Set<Offense> getPastOffenses() {
+        return PastOffenses;
+    }
+
+    public Set<String> getStringOffenses() {
+        Set<String> offenseStringSet = new HashSet<>();
+        for (Offense offense: this.PastOffenses) {
+            offenseStringSet.add(offense.getOffense());
+        }
+        return offenseStringSet;
+    }
 
     /**
      * Replaces this person's tags with the tags in {@code replacement}.
      */
-    public void setPastOffense(Set<Offense> replacement) {
-        PastOffense.clear();
-        PastOffense.addAll(replacement);
+    public void setPastOffenses(Set<Offense> replacement) {
+        PastOffenses.clear();
+        PastOffenses.addAll(replacement);
     }
 
     @Override
@@ -118,7 +127,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, dateOfBirth, postalCode, status, wantedFor, PastOffense);
+        return Objects.hash(name, nric, dateOfBirth, postalCode, status, wantedFor, PastOffenses);
     }
 
     @Override
