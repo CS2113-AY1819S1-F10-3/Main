@@ -34,7 +34,6 @@ public class AdaptedAddressBook {
         source.getAllPersons().forEach(person -> persons.add(new AdaptedPerson(person)));
     }
 
-
     /**
      * Returns true if any required field is missing.
      *

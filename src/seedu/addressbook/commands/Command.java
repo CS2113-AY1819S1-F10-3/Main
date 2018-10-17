@@ -1,13 +1,18 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.Main;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
+import seedu.addressbook.ui.Formatter;
+import seedu.addressbook.ui.MainWindow;
 
 import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
@@ -40,9 +45,25 @@ public abstract class Command {
     }
 
     /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of persons.
+     *
+     * @param timestampsDisplayed used to generate summary
+     * @return summary message for timestamps displayed
+     */
+
+    public static String getMessageForScreeningHistoryShownSummary(List<String> timestampsDisplayed) {
+
+        //TODO: Try format or mainwindow methods
+        Formatter formatter = new Formatter();
+        String result = formatter.formatForTstamps(timestampsDisplayed);
+        String finalResult = result + String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, timestampsDisplayed.size());
+        return finalResult;
+    }
+
+    /**
      * Executes the command and returns the result.
      */
-    public CommandResult execute(){
+    public CommandResult execute() throws IllegalValueException {
         throw new UnsupportedOperationException("This method should be implement in child classes");
     }
 
@@ -66,14 +87,15 @@ public abstract class Command {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
 
-    protected ReadOnlyPerson getTargetPerson(Name name) throws UniquePersonList.PersonNotFoundException {
+    protected ReadOnlyPerson getTargetPerson(NRIC nric) throws UniquePersonList.PersonNotFoundException {
         for (ReadOnlyPerson person: relevantPersons) {
-            if (person.getName().toString().equalsIgnoreCase(name.toString())) {
+            if (person.getNric().getIdentificationNumber().equals(nric.getIdentificationNumber())) {
                 return person;
             }
         }
         throw new UniquePersonList.PersonNotFoundException();
     }
+
 
     public int getTargetIndex() {
         return targetIndex;

@@ -1,12 +1,9 @@
 package seedu.addressbook.parser;
 
-/*import com.oracle.tools.packager.Log;
-import seedu.addressbook.autocorrect.Dictionary;
-import seedu.addressbook.autocorrect.EditDistance;*/
 import seedu.addressbook.commands.*;
-import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.person.Name;
+import seedu.addressbook.data.person.NRIC;
+import seedu.addressbook.data.person.Offense;
 
 import java.io.IOException;
 import java.util.*;
@@ -36,7 +33,15 @@ public class Parser {
                     + " w/(?<wantedFor>[^/]+)"
                     + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
 
+    public static final Pattern EDIT_DATA_ARGS_FORMAT =
+            Pattern.compile("n/(?<nric>[^/]+)"
+                    + " p/(?<postalCode>[^/]+)"
+                    + " s/(?<status>[^/]+)"
+                    + " w/(?<wantedFor>[^/]+)"
+                    + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
+
     public static final Pattern PERSON_NAME_FORMAT = Pattern.compile("(?<name>[^/]+)");
+    public static final Pattern PERSON_NRIC_FORMAT = Pattern.compile("(?<nric>[^/]+)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -127,21 +132,23 @@ public class Parser {
         logr.info("Parsed the user input and matching commands.");
 
         switch (commandWord) {
-
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(arguments);
 
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
-//            case EditCommand.COMMAND_WORD:
-//                return prepareEdit(arguments);
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
             case FindCommand.COMMAND_WORD:
-                return prepareFind(arguments);
+                return prepareFindOrCheck(arguments,false);
+
+            case CheckCommand.COMMAND_WORD:
+                return prepareFindOrCheck(arguments,true);
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
@@ -151,6 +158,9 @@ public class Parser {
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
+
+            case RequestHelp.COMMAND_WORD:
+                return prepareRequest(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -184,7 +194,6 @@ public class Parser {
                     matcher.group("postalCode"),
                     matcher.group("status"),
                     matcher.group("wantedFor"),
-
                     getTagsFromArgs(matcher.group("pastOffenseArguments"))
             );
         } catch (IllegalValueException ive) {
@@ -222,13 +231,13 @@ public class Parser {
      */
     private Command prepareDelete(String args){
         try {
-            final String name = parseArgsAsName(args);
-            if (Utils.isStringInteger(name)) {
-                final int targetIndex = parseArgsAsDisplayedIndex(args);
-                return new DeleteCommand(targetIndex);
-            }
+            final String nric = parseArgsAsNric(args);
+//            if (Utils.isStringInteger(name)) {
+//                final int targetIndex = parseArgsAsDisplayedIndex(args);
+//                return new DeleteCommand(targetIndex);
+//            }
 
-            return new DeleteCommand(new Name(name));
+            return new DeleteCommand(new NRIC(nric));
         } catch (ParseException e) {
             logr.log(Level.WARNING, "Invalid delete command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
@@ -248,32 +257,25 @@ public class Parser {
      * @return the prepared command
      */
     // TODO: Refactor prepareEdit and prepareAdd
-//    private Command prepareEdit(String args) {
-//        final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
-//        // Validate arg string format
-//        if (!matcher.matches()) {
-//            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-//        }
-//        try {
-//            return new EditCommand(
-//                    matcher.group("name"),
-//
-//                    matcher.group("phone"),
-//                    isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
-//
-//                    matcher.group("email"),
-//                    isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
-//
-//                    matcher.group("address"),
-//                    isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
-//
-//                    getTagsFromArgs(matcher.group("tagArguments"))
-//            );
-//        } catch (IllegalValueException ive) {
-//            logr.log(Level.WARNING, "Invalid edit command format.", ive);
-//            return new IncorrectCommand(ive.getMessage());
-//        }
-//    }
+    private Command prepareEdit(String args) {
+        final Matcher matcher = EDIT_DATA_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new EditCommand(
+                    matcher.group("nric"),
+                    matcher.group("postalCode"),
+                    matcher.group("status"),
+                    matcher.group("wantedFor"),
+                    getTagsFromArgs(matcher.group("pastOffenseArguments"))
+            );
+        } catch (IllegalValueException ive) {
+            logr.log(Level.WARNING, "Invalid edit command format.", ive);
+            return new IncorrectCommand(ive.getMessage());
+        }
+    }
 
     /**
      * Parses arguments in the context of the view command.
@@ -326,11 +328,11 @@ public class Parser {
         return Integer.parseInt(matcher.group("targetIndex"));
     }
 
-    private String parseArgsAsName(String args) throws ParseException {
-        final Matcher matcher = PERSON_NAME_FORMAT.matcher(args.trim());
+    private String parseArgsAsNric(String args) throws ParseException {
+        final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            logr.warning("Name does not exist in argument");
-            throw new ParseException("Could not find name to parse");
+            logr.warning("NRIC does not exist in argument");
+            throw new ParseException("Could not find NRIC to parse");
         }
         return matcher.group(0);
     }
@@ -341,18 +343,53 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareFind(String args) {
-        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
-            logr.warning("Argument for finding NRIC is invalid");
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    FindCommand.MESSAGE_USAGE));
+    private Command prepareFindOrCheck(String args, boolean isChecking) {
+        args = args.trim();
+        try{
+            NRIC keyPerson = new NRIC(args);
+
+            return ((isChecking == true) ? new CheckCommand(args) : new FindCommand(args));
+        }
+        catch (IllegalValueException invalidNric){
+            logr.warning("NRIC argument is invalid");
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,FindCommand.MESSAGE_USAGE));
         }
 
-        // keywords delimited by whitespace
-        final String[] keywords = matcher.group("keywords").split("\\s+");
-        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
-        return new FindCommand(keywordSet);
+
+//
+//        final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args);
+//        if (!matcher.matches()) {
+//            logr.warning("Argument for finding NRIC is invalid");
+//            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+//                    FindCommand.MESSAGE_USAGE));
+//        }
+
+        //return new FindCommand(args);
+    }
+
+    /**
+     * Parses arguments in context of request help command.
+     *
+     * @param args full command args string
+     * @return the prepared request command
+     */
+    private Command prepareRequest(String args) {
+        String caseName, message;
+        String[] argParts = args.trim().split(" ", 2);
+
+        if (argParts.length < 2) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    RequestHelp.MESSAGE_USAGE));
+        }
+
+        caseName = argParts[0];
+        message = argParts[1];
+
+        try {
+            return new RequestHelp(caseName, message);
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(Offense.MESSAGE_OFFENSE_INVALID);
+        }
     }
 
 }

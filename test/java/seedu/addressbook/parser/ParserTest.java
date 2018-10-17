@@ -4,13 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.person.*;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -83,13 +80,13 @@ public class ParserTest {
 //        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
 //    }
     
-    @Test
-    public void deleteCommand_numericArg_indexParsedCorrectly() {
-        final int testIndex = 1;
-        final String input = "delete " + testIndex;
-        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
-        assertEquals(result.getTargetIndex(), testIndex);
-    }
+//    @Test
+//    public void deleteCommand_numericArg_indexParsedCorrectly() {
+//        final int testIndex = 1;
+//        final String input = "delete " + testIndex;
+//        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
+//        assertEquals(result.getTargetIndex(), testIndex);
+//    }
 
     /*@Test
     public void viewCommand_noArgs() {
@@ -155,25 +152,27 @@ public class ParserTest {
 
     @Test
     public void findCommand_validArgs_parsedCorrectly() {
-        final String[] keywords = { "key1", "key2", "key3" };
-        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
-
-        final String input = "find " + String.join(" ", keySet);
+        //final String[] keywords = { "key1", "key2", "key3" };
+        //final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+        final String keyword = "s1234567a";
+        final String input = "find " + keyword;
         final FindCommand result =
                 parseAndAssertCommandType(input, FindCommand.class);
-        assertEquals(keySet, result.getKeywords());
+        assertEquals(keyword, result.getNric());
     }
 
     @Test
     public void findCommand_duplicateKeys_parsedCorrectly() {
-        final String[] keywords = { "key1", "key2", "key3" };
-        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
-
+//        final String[] keywords = { "key1", "key2", "key3" };
+//        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+        final String keyword = "s1234567a";
         // duplicate every keyword
-        final String input = "find " + String.join(" ", keySet) + " " + String.join(" ", keySet);
-        final FindCommand result =
-                parseAndAssertCommandType(input, FindCommand.class);
-        assertEquals(keySet, result.getKeywords());
+        final String input = "find " + keyword + " " + keyword;
+//        final FindCommand result =
+//                parseAndAssertCommandType(input, FindCommand.class);
+        final String resultMessage =
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, input);
     }
 
     /**
@@ -258,7 +257,7 @@ public class ParserTest {
     public void addCommand_duplicateTags_merged() throws IllegalValueException {
         final Person testPerson = generateTestPerson();
         String input = convertPersonToAddCommandString(testPerson);
-        for (Offense tag : testPerson.getPastOffense()) {
+        for (Offense tag : testPerson.getPastOffenses()) {
             // create duplicates by doubling each tag
             input += " o/" + tag.getOffense();
         }
@@ -286,12 +285,12 @@ public class ParserTest {
     private static String convertPersonToAddCommandString(ReadOnlyPerson person) {
         String addCommand = "add "
                 + person.getName().fullName
-                + " n/" + person.getNRIC().getIdentificationNumber()
+                + " n/" + person.getNric().getIdentificationNumber()
                 + " d/" + person.getDateOfBirth().getDOB()
                 + " p/" + person.getPostalCode().getPostalCode()
                 + " s/" + person.getStatus().getCurrentStatus()
                 + " w/" + person.getWantedFor().getOffense();
-        for (Offense tag : person.getPastOffense()) {
+        for (Offense tag : person.getPastOffenses()) {
             addCommand += " o/" + tag.getOffense();
         }
         return addCommand;

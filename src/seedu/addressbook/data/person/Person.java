@@ -1,10 +1,9 @@
 package seedu.addressbook.data.person;
 
-import java.sql.Time;
 import java.util.*;
 
 import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.tag.Tag;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -14,6 +13,9 @@ import java.text.SimpleDateFormat;
  */
 public class Person implements ReadOnlyPerson {
 
+    //TODO: Make test cases for:
+    //Create person with wanted status but missing WantedFor argument
+
     private Name name;
     private NRIC nric;
     private DateOfBirth dateOfBirth;
@@ -21,19 +23,20 @@ public class Person implements ReadOnlyPerson {
     private Status status;
     private Offense wantedFor;
 
-    private final Set<Offense> PastOffense = new HashSet<>();
+    private Set<Offense> pastOffenses = new HashSet<>();
 
     public static String WANTED_FOR_WARNING = "State the offence if person's status is wanted";
 
-    private Set<Timestamp> screeningHistory;
 
 
+    public static Timestamp screeningTimeStamp;
+    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     /**
      * Assumption: Every field must be present and not null.
      */
     public Person(Name name, NRIC nric, DateOfBirth dateOfBirth, PostalCode postalCode, Status status ,
-                  Offense wantedFor, Set<Offense> PastOffense) throws IllegalValueException {
+                  Offense wantedFor, Set<Offense> PastOffenses) throws IllegalValueException {
         this.name = name;
         this.nric = nric;
         this.dateOfBirth = dateOfBirth;
@@ -54,17 +57,19 @@ public class Person implements ReadOnlyPerson {
 
             this.wantedFor = wantedFor;
         }
-        this.PastOffense.addAll(PastOffense);
+        this.pastOffenses.addAll(PastOffenses);
     }
 
     /**
      * Copy constructor.
      */
     public Person(ReadOnlyPerson source) throws IllegalValueException {
-        this(source.getName(), source.getNRIC(),
+        this(source.getName(), source.getNric(),
                 source.getDateOfBirth(), source.getPostalCode(), source.getStatus(),
-                source.getWantedFor(), source.getPastOffense());
+                source.getWantedFor(), source.getPastOffenses());
     }
+
+
 
     @Override
     public Name getName() {
@@ -72,7 +77,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public NRIC getNRIC() {
+    public NRIC getNric() {
         return nric;
     }
 
@@ -83,29 +88,45 @@ public class Person implements ReadOnlyPerson {
     public PostalCode getPostalCode() {
         return postalCode;
     }
+    public void setPostalCode(PostalCode postalCode) {
+        this.postalCode = postalCode;
+    }
 
     @Override
     public Status getStatus() {
         return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
     public Offense getWantedFor() {
         return wantedFor;
     }
+    public void setWantedFor(Offense wantedFor) {
+        this.wantedFor = wantedFor;
+    }
+
 
     @Override
-    public Set<Offense> getPastOffense() {return PastOffense;}
+    public Set<Offense> getPastOffenses() {
+        return pastOffenses;
+    }
 
-    @Override
-    public Set<Timestamp> getScreeningHistory() {return screeningHistory;}
+    public Set<String> getStringOffenses() {
+        Set<String> offenseStringSet = new HashSet<>();
+        for (Offense offense: this.pastOffenses) {
+            offenseStringSet.add(offense.getOffense());
+        }
+        return offenseStringSet;
+    }
 
     /**
-     * Replaces this person's tags with the tags in {@code replacement}.
+     * Replaces this person's tags with the tags in {@code newPastOffenses}.
      */
-    public void setPastOffense(Set<Offense> replacement) {
-        PastOffense.clear();
-        PastOffense.addAll(replacement);
+    public void addPastOffenses(Set<Offense> newPastOffenses) {
+        pastOffenses.addAll(newPastOffenses);
     }
 
     @Override
@@ -118,7 +139,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, dateOfBirth, postalCode, status, wantedFor, PastOffense);
+        return Objects.hash(name, nric, dateOfBirth, postalCode, status, wantedFor, pastOffenses);
     }
 
     @Override

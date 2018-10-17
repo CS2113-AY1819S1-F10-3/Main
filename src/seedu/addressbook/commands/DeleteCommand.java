@@ -1,7 +1,7 @@
 package seedu.addressbook.commands;
 
 import seedu.addressbook.common.Messages;
-import seedu.addressbook.data.person.Name;
+import seedu.addressbook.data.person.NRIC;;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 
@@ -16,22 +16,18 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" 
             + "Deletes the person by nric.\n\t"
             + "Parameters: NRIC\n\t"
-            + "Example: " + COMMAND_WORD + " s1234567";
+            + "Example: " + COMMAND_WORD + " s1234567a";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
-    private Name toDelete;
+    private NRIC toDelete;
 
     public DeleteCommand(int targetVisibleIndex) {
         super(targetVisibleIndex);
     }
 
-    public DeleteCommand(Name name) {
-
-
-
-        this.toDelete = name;
-
+    public DeleteCommand(NRIC nric) {
+        this.toDelete = nric;
     }
 
 

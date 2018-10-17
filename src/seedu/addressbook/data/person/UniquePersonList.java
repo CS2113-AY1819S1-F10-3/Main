@@ -3,6 +3,8 @@ package seedu.addressbook.data.person;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.DuplicateDataException;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -16,6 +18,9 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
+    public static Timestamp screeningTimeStamp;
+    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
     public static class DuplicatePersonException extends DuplicateDataException {
         protected DuplicatePersonException() {
             super("Operation would result in duplicate persons");
@@ -44,7 +49,7 @@ public class UniquePersonList implements Iterable<Person> {
 
     public boolean containNric(Person toCheck) {
         for ( Person person : internalList){
-            if (person.getNRIC().getIdentificationNumber().equals(toCheck.getNRIC().getIdentificationNumber())){
+            if (person.getNric().getIdentificationNumber().equals(toCheck.getNric().getIdentificationNumber())){
                 return true;
             }
         }

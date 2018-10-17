@@ -7,6 +7,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     id 'java'
     id 'org.asciidoctor.convert' version '1.5.6'
+	id 'jacoco'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_9
@@ -92,6 +93,13 @@ asciidoctor {
     }
 }
 
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		html.enabled false
+	}
+}
+
 // Copies stylesheets into the directory containing generated HTML files as
 // Asciidoctor does not copy linked CSS files to the output directory when rendering.
 // This is needed for linked stylesheets and embedded stylesheets which import other files.
@@ -100,5 +108,7 @@ task copyStylesheets(type: Copy) {
     into "${asciidoctor.outputDir}/html5/stylesheets"
 }
 asciidoctor.dependsOn copyStylesheets
+
+check.dependsOn jacocoTestReport
 
 defaultTasks 'clean', 'test', 'asciidoctor'

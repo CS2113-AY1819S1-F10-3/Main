@@ -25,17 +25,20 @@ public class Msg implements Comparable <Msg> {
     public static final boolean MESSAGE_IS_UNREAD = false;
 
     public enum Priority {
-        HIGH(2),   // For messages that require HPQ intervention
-        MED(1),    // For messages that only require PO back-up
-        LOW(0);     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
+        HIGH(3),   // For messages that require HPQ intervention
+        MED(2),    // For messages that only require PO back-up
+        LOW(1);     // Messages that are FYI (e.g. Notifications to admin that details of subjects have changed
 
-        private int severity;
-        Priority(int urgency){
-            this.severity = urgency;
+        private int priority;
+
+        Priority (int priority) {
+            this.priority = priority;
         }
-        int priorityToInt(){
-            return severity;
+
+        public int toInteger() {
+            return priority;
         }
+
     }
 
     public Msg(){   // Create overloading constructors.
@@ -149,8 +152,9 @@ public class Msg implements Comparable <Msg> {
         }
     }
 
+    // TODO:
     public int compareByPriority(Msg other){
-        return Integer.compare(other.getPriority().priorityToInt(), this.getPriority().priorityToInt());
+        return Integer.compare(other.getPriority().toInteger(), this.getPriority().toInteger());
     }
 
     public int compareByTimestamp(Msg other){

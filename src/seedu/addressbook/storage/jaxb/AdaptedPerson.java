@@ -3,7 +3,6 @@ package seedu.addressbook.storage.jaxb;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.tag.Tag;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -53,7 +52,7 @@ public class AdaptedPerson {
         name = source.getName().fullName;
 
         nric = new AdaptedContactDetail();
-        nric.value = source.getNRIC().getIdentificationNumber();
+        nric.value = source.getNric().getIdentificationNumber();
 
         dateOfBirth = new AdaptedContactDetail();dateOfBirth = new AdaptedContactDetail();
         dateOfBirth.value = source.getDateOfBirth().getDOB();
@@ -68,9 +67,10 @@ public class AdaptedPerson {
         wantedFor.value = source.getWantedFor().getOffense();
 
         tagged = new ArrayList<>();
-        for (Offense tag : source.getPastOffense()) {
+        for (Offense tag : source.getPastOffenses()) {
             tagged.add(new AdaptedTag(tag));
         }
+
     }
 
     /**
@@ -99,9 +99,12 @@ public class AdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final Set<Offense> tags = new HashSet<>();
+
         for (AdaptedTag tag : tagged) {
             tags.add(tag.toModelType());
         }
+        Set<String> screeningHistory = new HashSet<>();
+
         final Name name = new Name(this.name);
         final NRIC nric = new NRIC(this.nric.value);
         final DateOfBirth dateOfBirth = new DateOfBirth(this.dateOfBirth.value);
