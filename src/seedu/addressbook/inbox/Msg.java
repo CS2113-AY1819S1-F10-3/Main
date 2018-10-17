@@ -11,13 +11,13 @@ import java.sql.Timestamp;
 
 
 public class Msg implements Comparable <Msg> {
-    protected String myId;
-    protected String backUpId;
+    protected String senderID;
+    protected String receiverID;
     private String newMsg;
     private Priority priority;
     private Location location;
     private int eta = -1;
-    private String comment;
+    //private String comment;
     protected boolean isRead;
     protected boolean isLocationAvailable;
     private Timestamp time;
