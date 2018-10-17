@@ -21,17 +21,17 @@ public class Password {
     private static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
     private static final String MESSAGE_HQP = "Headquarter Personnel";
     private static final String MESSAGE_PO = "Police Officer ";
-    private static final String MESSAGE_ONE = "Oscar November Echo ";
-    private static final String MESSAGE_TWO = "Tango Whiskey Oscar ";
-    private static final String MESSAGE_THREE = "Tango Hotel Romeo Echo Echo ";
-    private static final String MESSAGE_FOUR = "Foxtrot Oscar Uniform Romeo ";
-    private static final String MESSAGE_FIVE = "Foxtrot India Victor Echo ";
-    private static final String MESSAGE_ENTER_NEW_PASSWORD = "Enter New Alphanumeric Password for ";
-    private static final String MESSAGE_ENTER_NEW_PASSWORD_AGAIN = "Please New Alphanumeric Password again: ";
+    private static final String MESSAGE_ONE = "Oscar November Echo";
+    private static final String MESSAGE_TWO = "Tango Whiskey Oscar";
+    private static final String MESSAGE_THREE = "Tango Hotel Romeo Echo Echo";
+    private static final String MESSAGE_FOUR = "Foxtrot Oscar Uniform Romeo";
+    private static final String MESSAGE_FIVE = "Foxtrot India Victor Echo";
+    private static final String MESSAGE_ENTER_NEW_PASSWORD = "Please enter new alphanumeric password for ";
+    private static final String MESSAGE_ENTER_NEW_PASSWORD_AGAIN = "Please enter new alphanumeric password again: ";
     private static final String MESSAGE_UPDATED_PASSWORD = "You have updated %s password successfully. ";
-    private static final String MESSAGE_NOT_SAME = "The password you entered is not the same. " + MESSAGE_TRY_AGAIN;
-    private static final String MESSAGE_AT_LEAST_ONE = "Your new password must contain at least one %s. " + MESSAGE_TRY_AGAIN;
-    private static final String MESSAGE_PASSWORD_EXISTS = "Your new password cannot be the same as an existing password. " + MESSAGE_TRY_AGAIN;
+    private static final String MESSAGE_NOT_SAME = "The password you entered is not the same. ";
+    private static final String MESSAGE_AT_LEAST_ONE = "Your new password must contain at least one %s. ";
+    private static final String MESSAGE_PASSWORD_EXISTS = "Your new password cannot be the same as an existing password. ";
     private static final String MESSAGE_TRY_UNAUTHORIZED ="You are unauthorized to %s.\nPlease try a different command. ";
     private static final String MESSAGE_PASSWORD_LENGTH = "Your password is %1$d characters long. ";
     private static final String MESSAGE_PASSWORD_MINIMUM_LENGTH = "Your password must be at least %1$d characters long. ";
@@ -294,7 +294,7 @@ public class Password {
         }
         else{
             result = passwordValidityChecker(userCommandText);
-            if(result == null){
+            if(result.equals(MESSAGE_TRY_AGAIN)){
                 oneTimePassword = userCommandText;
                 isUpdatePasswordConfirm = true;
                 result = MESSAGE_ENTER_NEW_PASSWORD_AGAIN;
@@ -448,7 +448,7 @@ public class Password {
         else if(passwordLengthChecker(newEnteredPassword) != null){
             result = passwordLengthChecker(newEnteredPassword);
         }
-        return result;
+        return result + MESSAGE_TRY_AGAIN;
     }
 
     private String passwordLengthChecker(String newEnteredPassword){
