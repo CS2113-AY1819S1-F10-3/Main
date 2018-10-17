@@ -30,7 +30,3 @@ publish.sh
 # Gradle build files
 .gradle/
 build/
-
-
-env
-
