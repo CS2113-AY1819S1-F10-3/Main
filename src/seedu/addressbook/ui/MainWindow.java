@@ -12,13 +12,12 @@ import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.autocorrect.Dictionary;
+import seedu.addressbook.password.Password;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 import static seedu.addressbook.common.Messages.*;
 
@@ -43,51 +42,29 @@ public class MainWindow {
         this.mainApp = mainApp;
     }
 
+
     public String checkDistance(String commandInput) {
         Dictionary A = new Dictionary();
         EditDistance B = new EditDistance();
         String prediction = "none";
         ArrayList<String> commandList = A.getCommands();
         int distance, check = 0;
-        for(String command : commandList) {
+        for (String command : commandList) {
             distance = B.computeDistance(commandInput, command);
-            if(distance == 1) {
+            if (distance == 1) {
                 prediction = command;
                 check = 1;
                 break;
             }
         }
-        if(check == 0) {
+        if (check == 0) {
             prediction = "none";
         }
         return prediction;
     }
 
-    private boolean isHQP = false;
-    private boolean isPO = false;
-    private boolean isLocked(){
-        return !(isHQP || isPO);
-    }
-    private boolean isUpdatingPassword=false;
-    private boolean isLogin(){
-        return (isLoginHQP || isLoginPO);
-    }
-    private boolean isLoginHQP = false;
-    private boolean isLoginPO = false;
-    private boolean isPasswordMissingAlphabet = false;
-    private boolean isPasswordMissingNumber = false;
-    private boolean isOldPassword = false;
-    private boolean isInvalidNewPassword(){
-        return (isPasswordMissingAlphabet || isPasswordMissingNumber || isOldPassword);
-    }
-    private int wrongPasswordCounter=5;
-    private boolean shutDown= false;
-    private String loginEntered = null;
-
-    private static Timestamp currentDAT = new Timestamp(System.currentTimeMillis());
-    private SimpleDateFormat timeStampFormatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
-    private String outputDAT = timeStampFormatter.format(currentDAT);
-    private String outputDATHrs = outputDAT + "hrs";
+    private Password password = new Password();
+    private TimeAndDate tad = new TimeAndDate();
 
     @FXML
     private TextArea outputConsole;
@@ -99,172 +76,7 @@ public class MainWindow {
     void onCommand(ActionEvent event) {
         try {
             String userCommandText = commandInput.getText();
-
-            File originalFile = new File("passwordStorage.txt");
-            BufferedReader br = new BufferedReader(new FileReader(originalFile));
-
-            File tempFile = new File("tempfile.txt");
-            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
-            if(userCommandText.equals("exit")){
-                mainApp.stop();
-            }
-            else if(userCommandText.equals("lock")){
-                isHQP=false;
-                isPO=false;
-                wrongPasswordCounter=5;
-                clearCommandInput();
-                clearOutputConsole();
-                display(LockCommand.MESSAGE_LOCK);
-            }
-            else if(isLocked()) {
-                int hashedEnteredPassword= userCommandText.hashCode();
-
-                String line = null;
-                int numberOfPasswords = 2;
-
-                while (numberOfPasswords > 0) {
-                    line = br.readLine();
-                    String storedCurrPassword = line.substring(line.lastIndexOf(" ") + 1, line.length());
-                    String user = line.substring(0,line.lastIndexOf(" "));
-
-                    if (user.equals("hqp") && storedCurrPassword.equals(Integer.toString(hashedEnteredPassword))) {
-                        isHQP=true;
-                        clearCommandInput();
-                        clearOutputConsole();
-                        display("Welcome Headquarters Personnel.", "Please enter a command: ");
-                        break;
-                    }
-                    else if (user.equals("po") && storedCurrPassword.equals(Integer.toString(hashedEnteredPassword))) {
-                        isPO=true;
-                        clearCommandInput();
-                        clearOutputConsole();
-                        display("Welcome Police Officer.",
-                                    "You are not authorized to ADD, DELETE, CLEAR nor EDIT.",
-                                    "Please enter a command: ");
-                        break;
-                    }
-                    numberOfPasswords--;
-                }
-                if(isLocked()){
-                    wrongPasswordShutDown();
-                }
-                pw.close();
-                br.close();
-            }
-            else if(isHQP && userCommandText.equals("update password")){
-                clearCommandInput();
-                clearOutputConsole();
-                display("Please enter current password : ");
-                isUpdatingPassword=true;
-                wrongPasswordCounter=5;
-            }
-            else if(isUpdatingPassword){
-                clearCommandInput();
-                clearOutputConsole();
-
-                String line = null;
-
-                if(!isLogin()){
-                    int enteredCurrentPassword = userCommandText.hashCode();
-
-                    int numberOfPasswords =2;
-
-                    while(numberOfPasswords>0) {
-                        line = br.readLine();
-                        String storedCurrPassword = line.substring(line.lastIndexOf(" ") + 1, line.length());
-                        String user = line.substring(0,line.lastIndexOf(" "));
-
-                        if(storedCurrPassword.equals(Integer.toString(enteredCurrentPassword))){
-                            loginEntered=userCommandText;
-                            wrongPasswordCounter=5;
-                            if (user.equals("hqp")) {
-                                isLoginHQP = true;
-                                display("Enter New Alphanumeric Password for HQP: ");
-                            }
-                            else if(user.equals("po")){
-                                isLoginPO = true;
-                                display("Enter New Alphanumeric Password for PO: ");
-                            }
-                            break;
-                        }
-                        numberOfPasswords--;
-                    }
-                    pw.close();
-                    br.close();
-
-                    if(!isLogin()){
-                        wrongPasswordShutDown();
-                        if (shutDown){
-                            mainApp.stop();
-                        }
-                    }
-                }
-                else{
-                    passwordValidityChecker(userCommandText);
-                    existingPassword(userCommandText);
-                    if(!isInvalidNewPassword()) { //TODO problem updating password
-                        int storedNewPassword = userCommandText.hashCode();
-                        if (isLoginHQP) {
-                            line = br.readLine();
-                            line = line.substring(0, line.lastIndexOf(" ") + 1) + Integer.toString(storedNewPassword);
-                            pw.println(line); //TODO loop this
-                            pw.flush();
-                            line = br.readLine();
-                            pw.println(line);
-                            pw.flush();
-                            display("You have updated HQP password to : " + userCommandText);
-                            isUpdatingPassword = false;
-                            isLoginHQP = false;
-                        } else if (isLoginPO) {
-                            line = br.readLine(); //TODO loop this 2
-                            pw.println(line);
-                            pw.flush();
-                            line = br.readLine();
-                            line = line.substring(0, line.lastIndexOf(" ") + 1) + Integer.toString(storedNewPassword);
-                            pw.println(line);
-                            pw.flush();
-                            display("You have updated PO password to : " + userCommandText);
-                            isUpdatingPassword = false;
-                            isLoginHQP = false;
-                        }
-                        pw.close();
-                        br.close();
-
-                        if (!originalFile.delete()) {
-                            display("Could not delete file");
-                            return;
-                        }
-                        if (!tempFile.renameTo(originalFile)) {
-                            display("Could not rename file");
-                        }
-
-                    }
-                }
-            }
-
-            else if(isPO && isUnauthorizedPOCommand(userCommandText)){
-                clearCommandInput();
-                clearOutputConsole();
-                display("You are unauthorized to " + userCommandText +".", "Please try a different command.");
-                //TODO maybe change output message
-            }
-            else{
-                String arr[] = userCommandText.split(" ", 2);
-                String commandWordInput = arr[0];
-                String output = checkDistance(commandWordInput);
-                if(!(output.equals("none"))) {
-                    clearCommandInput();
-                    clearOutputConsole();
-                    display("Did you mean to use " + output +"?", "Please try changing the command.");
-                }
-                else{
-                    CommandResult result = logic.execute(userCommandText);
-                    displayResult(result);
-                    clearCommandInput();
-                }
-            }
-            pw.close();
-            br.close();
+            decipherUserCommandText(userCommandText);
         } catch (Exception e) {
             e.printStackTrace();
             display(e.getMessage());
@@ -272,76 +84,81 @@ public class MainWindow {
         }
     }
 
-    private void exitApp() throws Exception {
-        mainApp.stop();
-    }
+    private void decipherUserCommandText(String userCommandText) throws Exception {
+        if(toCloseApp(userCommandText)){
+            password.lockDevice();
+            mainApp.stop();
+        }
+        else if(isLockCommand(userCommandText)){
+            CommandResult result = logic.execute(userCommandText);
+            clearScreen();
+            displayResult(result);
+        }
+        else if(password.isLocked()) {
+            String unlockDeviceResult = password.unlockDevice(userCommandText,password.getWrongPasswordCounter());
+            clearScreen();
+            display(unlockDeviceResult);
+        }
+        else if(canUpdatePassword(userCommandText)){
+            String prepareUpdatePasswordResult = password.prepareUpdatePassword();
+            clearScreen();
+            display(prepareUpdatePasswordResult);
+        }
+        else if(password.isUpdatingPasswordNow()){
+            String updatePasswordResult;
+            if(password.isUpdatePasswordConfirmNow()) {
+                updatePasswordResult = password.updatePasswordFinal(userCommandText);
+            }
+            else{
+                updatePasswordResult = password.updatePassword(userCommandText,password.getWrongPasswordCounter());
+            }
+            clearScreen();
+            display(updatePasswordResult);
+        }
 
-    private void existingPassword (String newEnteredPassword){ //TODO password can be each other's password
-        if(loginEntered.equals(newEnteredPassword)){
-            isOldPassword=true;
-            display("Your new password cannot be the same as your old password. Please try again.");
-            display("Enter New Alphanumeric Password: ");
+        else if(password.isUnauthorizedAccess(userCommandText)){
+            clearScreen();
+            String unauthorizedCommandresult = password.invalidPOResult(userCommandText);
+            display(unauthorizedCommandresult);
         }
-    }
-
-    private void passwordValidityChecker(String newEnteredPassword){
-        if (newEnteredPassword.matches(".*\\d+.*") && newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
-            isPasswordMissingNumber =false;
-            isPasswordMissingAlphabet =false;
-        }
-        else if (newEnteredPassword.matches(".*\\d+.*") && !newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
-            isPasswordMissingAlphabet =true;
-            display("Your new password must contain at least one alphabet. Please try again.");
-            display("Enter New Alphanumeric Password: ");
-        } else if (!newEnteredPassword.matches(".*\\d+.*") && newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
-            isPasswordMissingNumber = true;
-            display("Your new password must contain at least one number. Please try again.");
-            display("Enter New Alphanumeric Password: ");
-        } else {
-            isPasswordMissingNumber =true;
-            isPasswordMissingAlphabet =true;
-            display("Your new password can only be alphanumeric");
-            display("Enter New Alphanumeric Password: ");
-        }
-    }
-    private void wrongPasswordShutDown(){
-        if(wrongPasswordCounter>1) {
-            clearCommandInput();
-            clearOutputConsole();
-            display("Password is incorrect. Please try again.");
-            display("You have " + wrongPasswordCounter + " attempts left. \n");
-            display(MESSAGE_ENTER_PASSWORD);
-            wrongPasswordCounter--;
-        }
-        else if(wrongPasswordCounter==1){
-            clearCommandInput();
-            clearOutputConsole();
-            display("Password is incorrect. Please try again.");
-            display("You have " + wrongPasswordCounter + " attempt left.");
-            display("System will shut down if password is incorrect.");
-            display(MESSAGE_ENTER_PASSWORD);
-            wrongPasswordCounter--;
-        }
-        else if(wrongPasswordCounter==0){
-            clearCommandInput();
-            clearOutputConsole();
-            display("Password is incorrect. System is shutting down.");
-            shutDown=true;
+        else {
+            String arr[] = userCommandText.split(" ", 2);
+            String commandWordInput = arr[0];
+            String output = checkDistance(commandWordInput);
+            if(!(output.equals("none"))) {
+                clearScreen();
+                display("Did you mean to use " + output + "?", "Please try changing the command.");
+            }
+            else{
+                CommandResult result = logic.execute(userCommandText);
+                displayResult(result);
+                clearCommandInput();
+            }
         }
     }
 
-    private boolean isUnauthorizedPOCommand(String input){
-        return (input.contains("add ") || input.contains("delete") || input.contains("clear") || input.contains("edit") || input.equals("update password"));
+
+    private boolean canUpdatePassword(String userCommandText){
+        return password.isHQPUser() && isUpdatePasswordCommand(userCommandText);
     }
 
     /** Returns true if the result given is the result of an exit command */
-    private boolean isExitCommand(CommandResult result) {
-        return result.feedbackToUser.equals(ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
+    private boolean isExitCommand(String userCommandText) {
+        return userCommandText.equals(ExitCommand.COMMAND_WORD);
     }
 
-    private boolean isLockCommand(CommandResult result) {
-        return result.feedbackToUser.equals(LockCommand.MESSAGE_LOCK);
+    private boolean isUpdatePasswordCommand(String userCommandText) {
+        return userCommandText.equals("update password");
     }
+
+    private boolean toCloseApp(String userCommandText){
+        return isExitCommand(userCommandText) || password.isShutDown();
+    }
+
+    private boolean isLockCommand(String userCommandText) {
+        return userCommandText.equals(LockCommand.COMMAND_WORD);
+    }
+
 
     /** Clears the command input box */
     private void clearCommandInput() {
@@ -349,12 +166,17 @@ public class MainWindow {
     }
 
     /** Clears the output display area */
-    public void clearOutputConsole(){
+    private void clearOutputConsole(){
         outputConsole.clear();
     }
 
+    private void clearScreen(){
+        clearCommandInput();
+        clearOutputConsole();
+    }
+
     /** Displays the result of a command execution to the user. */
-    public void displayResult(CommandResult result) {
+    private void displayResult(CommandResult result) {
         clearOutputConsole();
         final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
         if(resultPersons.isPresent()) {
@@ -363,9 +185,9 @@ public class MainWindow {
         display(result.feedbackToUser);
     }
 
-    public void displayWelcomeMessage(String version, String storageFilePath) {
+    void displayWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
-        display(MESSAGE_WELCOME, version, storageFileInfo, outputDATHrs + "\n" , MESSAGE_ENTER_PASSWORD);
+        display(MESSAGE_WELCOME, version, storageFileInfo, tad.outputDATHrs() + "\n" , Password.MESSAGE_ENTER_PASSWORD);
     }
 
     /**
