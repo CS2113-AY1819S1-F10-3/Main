@@ -285,7 +285,7 @@ public class ParserTest {
     private static String convertPersonToAddCommandString(ReadOnlyPerson person) {
         String addCommand = "add "
                 + person.getName().fullName
-                + " n/" + person.getNRIC().getIdentificationNumber()
+                + " n/" + person.getNric().getIdentificationNumber()
                 + " d/" + person.getDateOfBirth().getDOB()
                 + " p/" + person.getPostalCode().getPostalCode()
                 + " s/" + person.getStatus().getCurrentStatus()
