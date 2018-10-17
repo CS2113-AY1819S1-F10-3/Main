@@ -1,8 +1,8 @@
 package seedu.addressbook.parser;
 
-import com.oracle.tools.packager.Log;
+/*import com.oracle.tools.packager.Log;
 import seedu.addressbook.autocorrect.Dictionary;
-import seedu.addressbook.autocorrect.EditDistance;
+import seedu.addressbook.autocorrect.EditDistance;*/
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.IllegalValueException;
@@ -145,6 +145,9 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
+
+            case InboxCommand.COMMAND_WORD:
+                return new InboxCommand();
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
