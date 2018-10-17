@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import seedu.addressbook.Main;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.LockCommand;
 import seedu.addressbook.logic.Logic;
@@ -15,8 +14,7 @@ import seedu.addressbook.autocorrect.EditDistance;
 import seedu.addressbook.autocorrect.Dictionary;
 import seedu.addressbook.password.Password;
 
-import javax.swing.*;
-import java.io.*;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +67,7 @@ public class MainWindow {
 
 
 
-    private static Timestamp currentDAT = new Timestamp(System.currentTimeMillis());
+    private static Timestamp currentDAT = new Timestamp(System.currentTimeMillis()); //TODO put this somewhere else
     private SimpleDateFormat timeStampFormatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
     private String outputDAT = timeStampFormatter.format(currentDAT);
     private String outputDATHrs = outputDAT + "hrs";
@@ -86,57 +84,7 @@ public class MainWindow {
     void onCommand(ActionEvent event) {
         try {
             String userCommandText = commandInput.getText();
-
-            if(isExitCommand(userCommandText)){
-                mainApp.stop();
-            }
-            else if(isLockCommand(userCommandText)){
-                CommandResult result = logic.execute(userCommandText);
-                clearScreen();
-                displayResult(result);
-            }
-            else if(password.isLocked()) {
-                String unlockDeviceResult = password.unlockDevice(userCommandText);
-                clearScreen();
-                display(unlockDeviceResult);
-            }
-            else if(canUpdatePassword(userCommandText)){
-                String prepareUpdatePasswordResult = password.prepareUpdatePassword();
-                clearScreen();
-                display(prepareUpdatePasswordResult);
-            }
-            else if(password.isUpdatingPasswordNow()){
-                String updatePasswordResult;
-                if(password.isUpdatePasswordConfirmNow()) {
-                    updatePasswordResult = password.updatePasswordFinal(userCommandText);
-                }
-                else{
-                    updatePasswordResult = password.updatePassword(userCommandText);
-                }
-                clearScreen();
-                display(updatePasswordResult);
-            }
-
-            else if(isUnauthorizedAccess(userCommandText)){
-                clearScreen();
-                display("You are unauthorized to " + userCommandText +".", "Please try a different command.");
-                //TODO maybe change output message
-            }
-            else{
-                String arr[] = userCommandText.split(" ", 2);
-                String commandWordInput = arr[0];
-                String output = checkDistance(commandWordInput);
-                if(!(output.equals("none"))) {
-                    clearCommandInput();
-                    clearOutputConsole();
-                    display("Did you mean to use " + output +"?", "Please try changing the command.");
-                }
-                else{
-                    CommandResult result = logic.execute(userCommandText);
-                    displayResult(result);
-                    clearCommandInput();
-                }
-            }
+            decipherUserCommandText(userCommandText);
         } catch (Exception e) {
             e.printStackTrace();
             display(e.getMessage());
@@ -144,8 +92,57 @@ public class MainWindow {
         }
     }
 
-    public void exitApp() throws Exception {
-        mainApp.stop();
+    private void decipherUserCommandText(String userCommandText) throws Exception {
+        if(isExitCommand(userCommandText) || password.isShutDown()){
+            mainApp.stop();
+        }
+        else if(isLockCommand(userCommandText)){
+            CommandResult result = logic.execute(userCommandText);
+            clearScreen();
+            displayResult(result);
+        }
+        else if(password.isLocked()) {
+            String unlockDeviceResult = password.unlockDevice(userCommandText,Password.getWrongPasswordCounter());
+            clearScreen();
+            display(unlockDeviceResult);
+        }
+        else if(canUpdatePassword(userCommandText)){
+            String prepareUpdatePasswordResult = password.prepareUpdatePassword();
+            clearScreen();
+            display(prepareUpdatePasswordResult);
+        }
+        else if(password.isUpdatingPasswordNow()){
+            String updatePasswordResult;
+            if(password.isUpdatePasswordConfirmNow()) {
+                updatePasswordResult = password.updatePasswordFinal(userCommandText);
+            }
+            else{
+                updatePasswordResult = password.updatePassword(userCommandText,Password.getWrongPasswordCounter());
+            }
+            clearScreen();
+            display(updatePasswordResult);
+        }
+
+        else if(isUnauthorizedAccess(userCommandText)){
+            clearScreen();
+            display("You are unauthorized to " + userCommandText +".", "Please try a different command.");
+            //TODO maybe change output message
+        }
+        else {
+            String arr[] = userCommandText.split(" ", 2);
+            String commandWordInput = arr[0];
+            String output = checkDistance(commandWordInput);
+            if(!(output.equals("none"))) {
+                clearCommandInput();
+                clearOutputConsole();
+                display("Did you mean to use " + output +"?", "Please try changing the command.");
+            }
+            else{
+                CommandResult result = logic.execute(userCommandText);
+                displayResult(result);
+                clearCommandInput();
+            }
+        }
     }
 
 

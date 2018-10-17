@@ -2,48 +2,47 @@ package seedu.addressbook.password;
 
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.readandwrite.ReaderAndWriter;
-import seedu.addressbook.ui.MainWindow;
 
 import java.io.*;
 
 
 public class Password {
 
-    private static int wrongPasswordCounter=5;
-    private static String formatWrongPasswordCounter = Integer.toString(wrongPasswordCounter);
+    public static int getWrongPasswordCounter() {
+        return wrongPasswordCounter;
+    }
+
+    private static int wrongPasswordCounter = 5;
 
     public static final String MESSAGE_ENTER_PASSWORD = "Please enter password: ";
     private static final String MESSAGE_ENTER_COMMAND = "Please enter a command: ";
-    private static final String MESSAGE_WELCOME = "Welcome ";
+    private static final String MESSAGE_WELCOME = "Welcome %s.";
     private static final String MESSAGE_UNAUTHORIZED = "You are not authorized to ADD, CLEAR, DELETE, EDIT nor UPDATE PASSWORD.";
     private static final String MESSAGE_INCORRECT_PASSWORD = "Password is incorrect. Please try again.";
-    private static final String MESSAGE_ATTEMPTS_LEFT = "You have "
-                        + formatWrongPasswordCounter
-                        + " attempts left.";
-    private static final String MESSAGE_ATTEMPT_LEFT = "You have "
-                        + formatWrongPasswordCounter
-                        + " attempt left.";
+    private static final String MESSAGE_ATTEMPTS_LEFT = "You have %1$d attempts left.";
+    private static final String MESSAGE_ATTEMPT_LEFT = "You have %1$d attempt left.";
     private static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect.";
     private static final String MESSAGE_SHUTDOWN = "Password is incorrect. System is shutting down.";
     private static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
     private static final String MESSAGE_HQP = "Headquarter Personnel";
     private static final String MESSAGE_PO = "Police Officer";
-    private static final String MESSAGE_ONE = " Oscar November Echo.";
-    private static final String MESSAGE_TWO = " Tango Whiskey Oscar.";
-    private static final String MESSAGE_THREE = " Tango Hotel Romeo Echo Echo.";
-    private static final String MESSAGE_FOUR = " Foxtrot Oscar Uniform Romeo.";
-    private static final String MESSAGE_FIVE = " Foxtrot India Victor Echo.";
+    private static final String MESSAGE_ONE = " Oscar November Echo";
+    private static final String MESSAGE_TWO = " Tango Whiskey Oscar";
+    private static final String MESSAGE_THREE = " Tango Hotel Romeo Echo Echo";
+    private static final String MESSAGE_FOUR = " Foxtrot Oscar Uniform Romeo";
+    private static final String MESSAGE_FIVE = " Foxtrot India Victor Echo";
     private static final String MESSAGE_ENTER_NEW_PASSWORD = "Enter New Alphanumeric Password for ";
     private static final String MESSAGE_ENTER_NEW_PASSWORD_AGAIN = "Please New Alphanumeric Password again: ";
+    private static final String MESSAGE_UPDATED_PASSWORD = "You have updated %s password successfully.";
 
 
     private static boolean isHQP = false;
     private static boolean isPO = false;
-    public static void setIsHQP(boolean isHQP) {
-        Password.isHQP = isHQP;
+    private static void lockIsHQP() {
+        isHQP = false;
     }
-    public static void setIsPO(boolean isPO) {
-        Password.isPO = isPO;
+    private static void lockIsPO() {
+        isPO = false;
     }
     public boolean isHQPUser() {
         return isHQP;
@@ -59,7 +58,26 @@ public class Password {
         return isUpdatingPassword;
     }
 
+    private void lockUpdatingPassword() {
+        isUpdatingPassword = false;
+    }
+
+    private void lockUpdatePasswordConfirm() {
+        isUpdatePasswordConfirm = false;
+    }
+    public void lockDevice(){
+        lockIsHQP();
+        lockIsPO();
+        lockUpdatePasswordConfirm();
+        lockUpdatingPassword();
+    }
     private boolean isUpdatingPassword = false;
+    public boolean isUpdatePasswordConfirmNow() {
+        return isUpdatePasswordConfirm;
+    }
+
+    private boolean isUpdatePasswordConfirm = false;
+
     private boolean isNotLogin(){
         return (!isLoginHQP && !isLoginPO());
     }
@@ -80,30 +98,25 @@ public class Password {
         return (!isPasswordMissingAlphabet && !isPasswordMissingNumber && !isOldPassword);
     }
 
-    public void setWrongPasswordCounter(int wrongPasswordCounter) {
-        Password.wrongPasswordCounter = wrongPasswordCounter;
-    }
 
-    public boolean isUpdatePasswordConfirmNow() {
-        return isUpdatePasswordConfirm;
-    }
 
-    private boolean isUpdatePasswordConfirm = false;
+    public boolean isShutDown() {
+        return shutDown;
+    }
 
     private boolean shutDown= false;
     private String loginEntered = null;
     private String oneTimePassword = null;
 
-
-    private MainWindow mainwindow = new MainWindow();
     private ReaderAndWriter readerandwriter = new ReaderAndWriter();
 
-    public String unlockDevice(String userCommandText) throws IOException {
+    public String unlockDevice(String userCommandText,int number) throws IOException {
 
         String result = null;
 
-        File originalFile =readerandwriter.fileToUse("passwordStorage.txt");
+        File originalFile = readerandwriter.fileToUse("passwordStorage.txt");
         BufferedReader br = readerandwriter.openReader(originalFile);
+
 
         int hashedEnteredPassword= userCommandText.hashCode();
 
@@ -117,41 +130,41 @@ public class Password {
 
             if (correctHQP(user,storedCurrPassword,hashedEnteredPassword)) {
                 isHQP = true;
-                result = MESSAGE_WELCOME + MESSAGE_HQP + ".\n"
+                result = String.format(MESSAGE_WELCOME , MESSAGE_HQP) + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO1(user,storedCurrPassword,hashedEnteredPassword)) {
                 isPO = true;
-                result = MESSAGE_WELCOME + MESSAGE_PO + MESSAGE_ONE + "\n"
+                result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_ONE) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO2(user,storedCurrPassword,hashedEnteredPassword)) {
                 isPO = true;
-                result = MESSAGE_WELCOME + MESSAGE_PO + MESSAGE_TWO + "\n"
+                result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_TWO) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO3(user,storedCurrPassword,hashedEnteredPassword)) {
                 isPO = true;
-                result = MESSAGE_WELCOME + MESSAGE_PO + MESSAGE_THREE + "\n"
+                result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_THREE) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO4(user,storedCurrPassword,hashedEnteredPassword)) {
                 isPO = true;
-                result = MESSAGE_WELCOME + MESSAGE_PO + MESSAGE_FOUR + "\n"
+                result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_FOUR) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO5(user,storedCurrPassword,hashedEnteredPassword)) {
                 isPO = true;
-                result = MESSAGE_WELCOME + MESSAGE_PO + MESSAGE_FIVE + "\n"
+                result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_FIVE) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
@@ -162,29 +175,32 @@ public class Password {
             numberOfPasswords--;
         }
         if(isLocked()){
-            result = wrongPasswordShutDown();
+            result = wrongPasswordShutDown(number);
+        }
+        else{
+            shutDown = false;
         }
         br.close();
         return result;
     }
 
-    private String wrongPasswordShutDown(){
+    private String wrongPasswordShutDown(int number){
         String result;
         if(wrongPasswordCounter>1) {
             result = MESSAGE_INCORRECT_PASSWORD
-                    + "\n" + MESSAGE_ATTEMPTS_LEFT
+                    + "\n" + String.format(MESSAGE_ATTEMPTS_LEFT,number)
                     + "\n" + MESSAGE_ENTER_PASSWORD;
             decreaseWrongPasswordCounter();
         }
-        else if(wrongPasswordCounter==1){
+        else if(wrongPasswordCounter == 1){
             result = MESSAGE_INCORRECT_PASSWORD
-                    + "\n" + MESSAGE_ATTEMPT_LEFT
+                    + "\n" + String.format(MESSAGE_ATTEMPT_LEFT,number)
                     + "\n" + MESSAGE_SHUTDOWN_WARNING;
             decreaseWrongPasswordCounter();
-        }
-        else if(wrongPasswordCounter==0){
-            result = MESSAGE_SHUTDOWN;
             shutDown=true;
+        }
+        else if(wrongPasswordCounter == 0){
+            result = MESSAGE_SHUTDOWN;
         }
         else{
             result = Messages.MESSAGE_ERROR;
@@ -223,14 +239,15 @@ public class Password {
     public String prepareUpdatePassword(){
         isUpdatingPassword = true;
         wrongPasswordCounter = 5;
-        return MESSAGE_ENTER_PASSWORD_TO_CHANGE;
+        String result = MESSAGE_ENTER_PASSWORD_TO_CHANGE;
+        return result;
     }
 
-    public String updatePassword(String userCommandText) throws Exception {
+    public String updatePassword(String userCommandText,int number) throws Exception {
 
-        String result= null;
+        String result = null;
 
-        File originalFile =readerandwriter.fileToUse("passwordStorage.txt");
+        File originalFile = readerandwriter.fileToUse("passwordStorage.txt");
         BufferedReader br = readerandwriter.openReader(originalFile);
 
         String line;
@@ -281,14 +298,11 @@ public class Password {
                 numberOfPasswords--;
             }
             if(isNotLogin()){
-                wrongPasswordShutDown();
-                if (shutDown){
-                    mainwindow.exitApp();
-                }
+                wrongPasswordShutDown(number);
             }
         }
         else{
-            passwordValidityChecker(userCommandText); //TODO remove mainWindow calls
+            passwordValidityChecker(userCommandText);
             existingPassword(userCommandText);
             if(isValidNewPassword()){
                 oneTimePassword = userCommandText;
@@ -307,59 +321,62 @@ public class Password {
     public String updatePasswordFinal (String userCommandText) throws IOException {
 
         String result = null;
-        int lineNumber = 0 ;
+        int lineNumber =0 , linesLeft;
 
         File originalFile = readerandwriter.fileToUse("passwordStorage.txt");
         BufferedReader br = readerandwriter.openReader(originalFile);
         File tempFile = readerandwriter.fileToUse("tempFile.txt");
         PrintWriter pw = readerandwriter.openTempWriter(tempFile);
 
-        String line = null;
+        String line;
 
         if(isEqualPassword(userCommandText)) {
             int storedNewPassword = userCommandText.hashCode();
 
             if(isLoginHQP){
                 isLoginHQP = false;
-                result = "You have updated HQP password to : " + userCommandText; //TODO create messages
+                result = String.format(MESSAGE_UPDATED_PASSWORD,MESSAGE_HQP);
             }
             else if(isLoginPO1){
                 lineNumber = 1;
                 isLoginPO1 = false;
-                result = "You have updated PO1 password to : " + userCommandText;
+                result = String.format(MESSAGE_UPDATED_PASSWORD,MESSAGE_PO + MESSAGE_ONE);
             }
             else if(isLoginPO2){
                 lineNumber = 2;
                 isLoginPO2 = false;
-                result = "You have updated PO2 password to : " + userCommandText;
+                result = String.format(MESSAGE_UPDATED_PASSWORD,MESSAGE_PO + MESSAGE_TWO);
             }
             else if(isLoginPO3){
                 lineNumber = 3;
                 isLoginPO3 = false;
-                result = "You have updated PO3 password to : " + userCommandText;
+                result = String.format(MESSAGE_UPDATED_PASSWORD,MESSAGE_PO + MESSAGE_THREE);
             }
             else if(isLoginPO4){
                 lineNumber = 4;
                 isLoginPO4 = false;
-                result = "You have updated PO4 password to : " + userCommandText;
+                result = String.format(MESSAGE_UPDATED_PASSWORD,MESSAGE_PO + MESSAGE_FOUR);
             }
             else if(isLoginPO5){
                 lineNumber = 5;
                 isLoginPO5 = false;
-                result = "You have updated PO5 password to : " + userCommandText;
+                result = String.format(MESSAGE_UPDATED_PASSWORD,MESSAGE_PO + MESSAGE_FIVE);
             }
             isUpdatingPassword = false;
             isUpdatePasswordConfirm = false;
-
+            linesLeft = 5 - lineNumber;
             while (lineNumber > 0){
-                line = br.readLine();
-                pw.println(line);
-                pw.flush();
+                reprintLine(br,pw);
                 lineNumber--;
             }
+            line = br.readLine();
             line = line.substring(0, line.lastIndexOf(" ") + 1) + Integer.toString(storedNewPassword);
             pw.println(line);
             pw.flush();
+            while (linesLeft > 0){
+                reprintLine(br,pw);
+                linesLeft--;
+            }
             pw.close();
             br.close();
 
@@ -380,11 +397,17 @@ public class Password {
         return result;
     }
 
+    private void reprintLine(BufferedReader br, PrintWriter pw) throws IOException {
+        String line = br.readLine();
+        pw.println(line);
+        pw.flush();
+    }
+
     private void existingPassword (String newEnteredPassword){ //TODO password can be each other's password
         if(loginEntered.equals(newEnteredPassword)){
             isOldPassword = true;
-            mainwindow.display("Your new password cannot be the same as your old password. Please try again.");
-            mainwindow.display("Enter New Alphanumeric Password: ");
+            //mainwindow.display("Your new password cannot be the same as your old password. Please try again.");
+           // mainwindow.display("Enter New Alphanumeric Password: ");
         }
     }
 
@@ -395,17 +418,17 @@ public class Password {
         }
         else if (newEnteredPassword.matches(".*\\d+.*") && !newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
             isPasswordMissingAlphabet = true;
-            mainwindow.display("Your new password must contain at least one alphabet. Please try again.");
-            mainwindow.display("Enter New Alphanumeric Password: ");
+           // mainwindow.display("Your new password must contain at least one alphabet. Please try again.");
+            //mainwindow.display("Enter New Alphanumeric Password: ");
         } else if (!newEnteredPassword.matches(".*\\d+.*") && newEnteredPassword.matches(".*[a-zA-Z]+.*")) {
             isPasswordMissingNumber = true;
-            mainwindow.display("Your new password must contain at least one number. Please try again.");
-            mainwindow.display("Enter New Alphanumeric Password: ");
+           // mainwindow.display("Your new password must contain at least one number. Please try again.");
+           // mainwindow.display("Enter New Alphanumeric Password: ");
         } else {
             isPasswordMissingNumber = true;
             isPasswordMissingAlphabet = true;
-            mainwindow.display("Your new password can only be alphanumeric");
-            mainwindow.display("Enter New Alphanumeric Password: ");
+           // mainwindow.display("Your new password can only be alphanumeric");
+           // mainwindow.display("Enter New Alphanumeric Password: ");
         }
     }
 

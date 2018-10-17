@@ -26,4 +26,4 @@ publish.sh
 .gradle/
 build/
 
-parserLog.log
+
