@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckCommand extends Command {
-
+    //TODO: make test cases for:
+    //Check with invalid NRIC
+    //Check with no IC
+    //Check with non-existing NRIC
 
     public static final String COMMAND_WORD = "check";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Gets screening history of person with specified NRIC \n\t"
