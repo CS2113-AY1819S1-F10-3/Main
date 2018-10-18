@@ -48,12 +48,12 @@ This section describes some of the more important details of certain features im
 The new "find" command is revised from the existing "find" command in AB3. Instead of finding a person by name, it finds a person using his NRIC.
 It also implements the following operations:
 
-. execute() - executes the "find" command itself and displays the result to the user
-. getPersonWithNric() - Searches the addressbook to retrieve the person with the specified NRIC
+. execute() - executes the "find" command itself and displays the result to the user.
+. getPersonWithNric() - Searches the addressbook to retrieve the person with the specified NRIC.
 
 The following is an example usage scenario of the "find" command:
 
-Step 1: The user input his password and unlocks the system
+Step 1: The user input his password and unlocks the system.
 
 Step 2: The user executes "find s1234567a" command where the first argument is the command word "find" and the second argument is the NRIC to be
 searched, which in this case is "s1234567a" (all letter are lower cased). The "find" command calls execute() which also calls getPersonWithNric() method.
@@ -71,16 +71,38 @@ The "check" command makes some use of the "find" command. Every time the "find" 
 "NRIC timestamp" is printed in a text file called "ScreeningHistory.txt". The "check" command will read this file and retrieve the timestamps
 corresponding to the specified NRIC. Below is an example of its usage:
 
-Step 1: The user(a HQP) input his password and unlocks the system
+Step 1: The user(a HQP) input his password and unlocks the system.
 
-Step 2: The user executes "check s1234567a" where the first argument is the command word "check" and the second is the NRIC to be checked which in is "s1234567a"
+Step 2: The user executes "check s1234567a" where the first argument is the command word "check" and the second is the NRIC to be checked which in is "s1234567a".
 
 Step 3: The "check" command calls execute() which calls the getPersonWithNric() method. This method will read the ScreeningHistory.txt line by line, where each line
 is in the format of "NRIC timestamp", for example "s1234567a 18/10/2018-20:38:42". Each line is split into the NRIC and timestamp. If line[0] is the NRIC specified,
 the corresponding timestamp is stored in a list.
 
-Step 4: The list from step 3 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user
+Step 4: The list from step 3 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user.
 
+
+2c. "show unread" command
+
+Once system is unlocked, regardless of which user you are, you can use this command. This command lists the new/unread messages in your inbox based on the password you used to unlock the system.
+When messages are sent, they are stored inside a text file called "notifications.txt".
+It also implements the following operations:
+
+. execute() - executes the "show unread" command itself and displays the result to the user.
+. getMessagesFor(String poId) - Searches the text file storing messages for the police officer identified by the poId and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).
+. printMessages() - Displays messages on screen if the read status is unread.
+
+The following is an example usage scenario of the "show unread" command:
+
+Step 1: The user input his password and unlocks the system.
+
+Step 2: The user executes "show unread" command. The "show unread" command calls execute() which also calls getMessagesFor() method.
+
+Step 3: The getMessagesFor() method searches "notifications.txt" for the messages directed to the respective user, if any, and they are stored into a data structure.
+
+Step 4: The messages that are found and are stored in a TreeSet, split by its read status, message priority, timestamp, and the message itself for sorting purposes. execute() returns a CommandResult using the messages list as its argument.
+
+Step 5: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.
 
 == Use Cases
 The use cases for the current features and commands implemented can be found in Appendix B.
