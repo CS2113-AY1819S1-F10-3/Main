@@ -13,9 +13,6 @@ import java.text.SimpleDateFormat;
  */
 public class Person implements ReadOnlyPerson {
 
-    //TODO: Make test cases for:
-    //Create person with wanted status but missing WantedFor argument
-
     private Name name;
     private NRIC nric;
     private DateOfBirth dateOfBirth;

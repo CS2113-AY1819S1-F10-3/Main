@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import seedu.addressbook.autocorrect.Dictionary;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Messages;
@@ -12,6 +13,7 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.storage.StorageFile;
 
+import java.io.ObjectInputFilter;
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
@@ -91,18 +93,21 @@ public class LogicTest {
         assertEquals(addressBook, saveFile.load());
     }
 
-    /* //TODO test for help command
-    @Test
-    public void execute_unknownCommandWord() throws Exception {
-        String unknownCommand = "uicfhmowqewca";
-        assertCommandBehavior(unknownCommand, HelpCommand.MESSAGE_ALL_USAGES);
-    }
+//    //TODO test for help command
+//    @Test
+//    public void execute_unknownCommandWord() throws Exception {
+//        Dictionary dict = new Dictionary();
+//        String unknownCommand = "lost";
+//        dict.
+//
+//        assertCommandBehavior(unknownCommand,messag);
+//    }
 
-    @Test
-    public void execute_help() throws Exception {
-        assertCommandBehavior("help", HelpCommand.MESSAGE_ALL_USAGES);
-    }
-    */
+//    @Test
+//    public void execute_help() throws Exception {
+//        assertCommandBehavior("help", HelpCommand.MESSAGE_ALL_USAGES);
+//    }
+
 
     @Test
     public void execute_exit() throws Exception {
@@ -148,6 +153,8 @@ public class LogicTest {
                 "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
                 "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
 
     }
 
@@ -428,16 +435,11 @@ public class LogicTest {
                                 threePersons);
     }
 
-
-
     @Test
     public void execute_edit_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertCommandBehavior("edit ", expectedMessage);
     }
-
-
-
 
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
@@ -464,6 +466,34 @@ public class LogicTest {
                                 true,
                                 expectedList);
     }
+
+    @Test
+    public void execute_check_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckCommand.MESSAGE_USAGE);
+        assertCommandBehavior("check S1234567A", expectedMessage);
+        assertCommandBehavior("check s12345a", expectedMessage);
+        assertCommandBehavior("check ", expectedMessage);
+    }
+
+    @Test
+    public void execute_check_validNric() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person toBeAdded = helper.generateDummyPerson();
+        String nric = toBeAdded.getNric().getIdentificationNumber();
+        logic.execute(helper.generateAddCommand(toBeAdded));
+        CommandResult r = logic.execute("check " + nric);
+        String message = r.feedbackToUser.trim();
+        String expectedMessage = String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,0);
+        assertEquals(expectedMessage,message);
+        logic.execute("delete " + nric);
+
+    }
+
+//    @Test
+//    public void execute_autocorrect_command() throws Exception {
+//        CommandResult r =
+//
+//    }
 
 //    @Test
 //    public void execute_find_isCaseSensitive() throws Exception {
@@ -524,6 +554,7 @@ public class LogicTest {
             return new Person(name, nric, dateOfBirth, postalCode, status, wantedFor, tags);
         }
 
+
         /**
          * Generates a valid person using the given seed.
          * Running this function with the same parameter values guarantees the returned person will have the same state.
@@ -541,6 +572,18 @@ public class LogicTest {
                     new Status("xc"),
                     new Offense(),
                     new HashSet<>(Arrays.asList(new Offense("theft" + Math.abs(seed)), new Offense("theft" + Math.abs(seed + 1))))
+            );
+        }
+
+        Person generateDummyPerson() throws Exception {
+            return new Person(
+                    new Name("Not a human"),
+                    new NRIC("f0000000z"),
+                    new DateOfBirth("1900"),
+                    new PostalCode("777777"),
+                    new Status("xc"),
+                    new Offense(),
+                    new HashSet<>(Arrays.asList(new Offense("theft")))
             );
         }
 
