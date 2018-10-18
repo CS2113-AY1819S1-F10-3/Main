@@ -42,18 +42,30 @@ public class Password {
     private static int wrongPasswordCounter = 5;
 
     private static boolean isHQP = false;
-    private static boolean isPO = false;
+    private static boolean isPO1 = false;
+    private static boolean isPO2 = false;
+    private static boolean isPO3 = false;
+    private static boolean isPO4 = false;
+    private static boolean isPO5 = false;
     private static void lockIsHQP() {
         isHQP = false;
     }
     private static void lockIsPO() {
-        isPO = false;
+        isPO1 = false;
+        isPO2 = false;
+        isPO3 = false;
+        isPO4 = false;
+        isPO5 = false;
     }
     public boolean isHQPUser() {
         return isHQP;
     }
     public boolean isLocked(){
-        return !(isHQP || isPO);
+        return !(isHQP || isPO());
+    }
+
+    private boolean isPO(){
+        return (isPO1 || isPO2 || isPO3 || isPO4 || isPO5);
     }
 
     public boolean isUpdatingPasswordNow() {
@@ -128,35 +140,35 @@ public class Password {
                 break;
             }
             else if (correctPO1(user,storedCurrPassword,hashedEnteredPassword)) {
-                isPO = true;
+                isPO1 = true;
                 result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_ONE) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO2(user,storedCurrPassword,hashedEnteredPassword)) {
-                isPO = true;
+                isPO2 = true;
                 result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_TWO) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO3(user,storedCurrPassword,hashedEnteredPassword)) {
-                isPO = true;
+                isPO3 = true;
                 result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_THREE) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO4(user,storedCurrPassword,hashedEnteredPassword)) {
-                isPO = true;
+                isPO4 = true;
                 result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_FOUR) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
             else if (correctPO5(user,storedCurrPassword,hashedEnteredPassword)) {
-                isPO = true;
+                isPO5 = true;
                 result = String.format(MESSAGE_WELCOME, MESSAGE_PO + MESSAGE_FIVE) + "\n"
                         + MESSAGE_UNAUTHORIZED + "\n"
                         + MESSAGE_ENTER_COMMAND;
@@ -256,7 +268,7 @@ public class Password {
                 String user = line.substring(0,line.lastIndexOf(" "));
 
                 if(correctPassword(storedCurrPassword, enteredCurrentPassword)){
-                    wrongPasswordCounter = 5; //TODO may be a problem to put here
+                    wrongPasswordCounter = 5;
 
                     switch (user) {
                         case "hqp":
@@ -474,7 +486,7 @@ public class Password {
     }
 
     public boolean isUnauthorizedAccess(String input){
-        return isPO && invalidPOCommand(input);
+        return isPO() && invalidPOCommand(input);
     }
 
     private boolean invalidPOCommand(String input){
@@ -485,5 +497,28 @@ public class Password {
 
     public String invalidPOResult(String userCommandText) {
         return String.format(MESSAGE_TRY_UNAUTHORIZED, getUnauthorizedPOCommand(userCommandText));
+    }
+
+    public String getID(){
+        String result = null;
+        if(isHQP){
+            result = "hqp";
+        }
+        else if(isPO1){
+            result = "po1";
+        }
+        else if(isPO2){
+            result = "po2";
+        }
+        else if(isPO3){
+            result = "po3";
+        }
+        else if(isPO4){
+            result = "po4";
+        }
+        else if(isPO5){
+            result = "po5";
+        }
+        return result;
     }
 }
