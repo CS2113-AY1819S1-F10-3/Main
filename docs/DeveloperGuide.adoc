@@ -24,7 +24,7 @@
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Run the `F10-3.EX-SI-03.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
+. Run the `seedu.addressbook.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
 . Run all the tests (right-click the `test` folder, and click `Run 'All Tests'`) and ensure that they pass
 . Open the `StorageFile` file and check for any code errors
 .. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
@@ -52,9 +52,10 @@ TD- Fire Truck Driver
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |PO |request backup efficiently and quickly |get help in dangerous situations like capturing an escaped criminal, saving a person’s life
 |`* * *` |PO |know if accused is dangerous |know the steps I should take to handle the accused
-|`* * *` |AD |know the severity of the accident |prepare myself and my men
-|`* * *` |TD |know the severity of the fire |prepare myself and my men
-|`* *` |PO |update HQ |let HQ know if I’m free or engaged
+|`* * *` |PO |easily access numerous NRICs and commands with autocorrection |be efficient in going through many records even if some mistake is made
+|`* * *` |PO |quickly screen the subject using his NRIC |know his current status and past offences if any
+|`* * *` |HQP |know the screening history of a particular subject using his NRIC |use it in my investigation
+|`* *` |PO |update HQP |let HQP know if I’m free or engaged
 |`* *` |PO |know next actions to be taken |respond effectively to any type of situation
 |`*` |PO |know the serial number and battery level |to return it to HQ and charge it when necessary
 |===========================================================================================================================================
@@ -62,10 +63,11 @@ TD- Fire Truck Driver
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *User* is either the `Police Officer (PO)' or 'Head Quarters Personnel (HQP)', unless specified otherwise)
+(For all use cases below, the *System* is the `Police Records` and the *User* is either the `Police Officer (PO)' or 'Head Quarters Personnel (HQP)', unless specified otherwise)
 
 === Use case: Enter Headquarter Personnel password
 
+. User opens System.
 . System prompts User to enter his password.
 . User enters HQP password.
 . System displays message "Welcome Headquarter Personnel" and System prompts User for a command. Only HQP commands are set to accessible.
@@ -74,18 +76,19 @@ Use case ends.
 
 *Extensions*
 
-* 2a. User enters invalid password.
-** 2a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
+* 3a. User enters invalid password.
+** 3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
 +
 Use case resumes at step 1.
 
-** 2a1a. The number of attempts reaches zero.
-*** 2a1b. System shuts down.
+** 3b. The number of attempts reaches zero.
+*** 3b1. System shuts down.
 +
 Use case ends.
 
 === Use case: Enter Police Officer password
 
+. User opens System.
 . System prompts User to enter his password.
 . User enters Police Officer password.
 . Only Police Officer commands are set to accessible, System displays message "Welcome Police Officer" and System prompts User for a command.
@@ -94,13 +97,13 @@ Use case ends.
 
 *Extensions*
 
-* 2a. User enters invalid password.
-** 2a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
+* 3a. User enters invalid password.
+** 3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
 +
 Use case resumes at step 1.
 
-** 2a1a. The number of attempts reaches zero.
-*** 2a1b. System shuts down.
+** 3b. The number of attempts reaches zero.
+*** 3b1. System shuts down.
 +
 Use case ends.
 
@@ -131,8 +134,8 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-** 3a1a. The number of attempts reaches zero.
-*** 3a1b. System shuts down.
+** 3b. The number of attempts reaches zero.
+*** 3b1. System shuts down.
 +
 Use case ends.
 
@@ -153,7 +156,12 @@ Use case resumes at step 5.
 
 === Use case: Add person
 
+*MSS*
 
+. User opens System.
+. System prompts User to enter his password.
+. User enters password.
+. System prompts user to enter his command.
 . User requests to add person to the list.
 . System adds person to the list and informs User that person has been successfully added.
 +
@@ -161,15 +169,15 @@ Use case ends.
 
 *Extensions*
 
-* 2a. Person already exists in the list.
-** 2a1. System shows an error message.
+* 6a. Person already exists in the list.
+** 6a1. System shows an error message.
 +
 Use case ends.
 
-* 2b. User enters person’s details with invalid formats.
-** 2b1. System shows an error message.
+* 6b. User enters person’s details with invalid formats.
+** 6b1. System shows an error message.
 +
-Use case resumes at step 1.
+Use case resumes at step 5.
 
 * *a. At any time, User cancels add action.
 * *a1. System requests for confirmation to cancel.
@@ -182,6 +190,7 @@ Use case ends.
 
 *MSS*
 
+. User opens System.
 . System prompts user to enter his password.
 . User enters password.
 . System prompts user to enter his command.
@@ -196,8 +205,8 @@ Use case ends.
 
 *Extensions*
 
-* 2a. User enters an invalid password.
-** 2a1. System shows an error message.
+* 3a. User enters an invalid password.
+** 3a1. System shows an error message.
 +
 Use case resumes at step 1.
 
@@ -259,10 +268,9 @@ Use case ends.
 
 *MSS*
 
-
-. User requests to find person
 . System prompts User to enter his password
 . User enters his password
+. User requests to find person
 . System prompts User to key in NRIC to find
 . User enters NRIC of person
 . System displays details of person, if found on the list.
@@ -356,7 +364,7 @@ Use case ends.
 Use case ends.
 
 
-=== Use case: Autoprediction
+=== Use case: Autocorrection
 
 
 *MSS*
@@ -371,6 +379,13 @@ Use case ends.
 
 * 1a. User enters an invalid input which is an invalid command.
 ** 1a1. System also displays the valid usage of the command.
++
+Use case ends.
+
+*Extensions*
+
+* 1b. User enters an invalid input for which the system cannot find a prediction.
+** 1a1. System shows error message.
 +
 Use case ends.
 
