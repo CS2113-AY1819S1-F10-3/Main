@@ -44,10 +44,10 @@ public class FindCommand extends Command {
     public List<ReadOnlyPerson> getPersonWithNric() {
         List<ReadOnlyPerson> matchedPerson = new ArrayList<>();
         for (ReadOnlyPerson person : relevantPersons) {
-            if (person.getNRIC().getIdentificationNumber().equals(nric)) {
+            if (person.getNric().getIdentificationNumber().equals(nric)) {
                 addressBook.addPersontoDbAndUpdate(person);
                 try {
-                    addressBook.updateDatabase();
+                     addressBook.updateDatabase();
                 } catch (IOException e) {
                     e.printStackTrace(); // TODO: throws exeception
                 }

@@ -52,7 +52,7 @@ public class AdaptedPerson {
         name = source.getName().fullName;
 
         nric = new AdaptedContactDetail();
-        nric.value = source.getNRIC().getIdentificationNumber();
+        nric.value = source.getNric().getIdentificationNumber();
 
         dateOfBirth = new AdaptedContactDetail();dateOfBirth = new AdaptedContactDetail();
         dateOfBirth.value = source.getDateOfBirth().getDOB();

@@ -49,7 +49,7 @@ public class UniquePersonList implements Iterable<Person> {
 
     public boolean containNric(Person toCheck) {
         for ( Person person : internalList){
-            if (person.getNRIC().getIdentificationNumber().equals(toCheck.getNRIC().getIdentificationNumber())){
+            if (person.getNric().getIdentificationNumber().equals(toCheck.getNric().getIdentificationNumber())){
                 return true;
             }
         }

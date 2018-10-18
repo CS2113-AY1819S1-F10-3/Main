@@ -9,7 +9,7 @@ import java.util.Set;
 public interface ReadOnlyPerson {
 
     Name getName();
-    NRIC getNRIC();
+    NRIC getNric();
     DateOfBirth getDateOfBirth();
     PostalCode getPostalCode();
     Status getStatus();
@@ -33,7 +33,7 @@ public interface ReadOnlyPerson {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getName().fullName.equals(this.getName().fullName) // state checks here onwards
-                && other.getNRIC().getIdentificationNumber().equals(this.getNRIC().getIdentificationNumber())
+                && other.getNric().getIdentificationNumber().equals(this.getNric().getIdentificationNumber())
                 && other.getDateOfBirth().getDOB().equals((this.getDateOfBirth().getDOB()))
                 && other.getPostalCode().getPostalCode().equals(this.getPostalCode().getPostalCode())
                 && other.getStatus().getCurrentStatus().equals(this.getStatus().getCurrentStatus())
@@ -47,7 +47,7 @@ public interface ReadOnlyPerson {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
                 .append(" NRIC: ");
-        builder.append(getNRIC())
+        builder.append(getNric())
                 .append(" DateOfBirth: ");
         builder.append(getDateOfBirth().getDOB())
                 .append(" Postal Code: ");

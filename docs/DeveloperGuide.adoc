@@ -382,9 +382,6 @@ Use case ends.
 Use case ends.
 
 
-
-=== Use case: Undo
-
 === Use case: Load messages
 
 

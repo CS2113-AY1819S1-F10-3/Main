@@ -551,7 +551,7 @@ public class LogicTest {
             cmd.add("add");
 
             cmd.add(p.getName().toString());
-            cmd.add("n/" + p.getNRIC());
+            cmd.add("n/" + p.getNric());
             cmd.add("d/" + p.getDateOfBirth().getDOB());
             cmd.add("p/" + p.getPostalCode());
             cmd.add("s/" + p.getStatus());
