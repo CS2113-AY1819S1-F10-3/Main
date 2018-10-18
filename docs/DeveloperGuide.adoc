@@ -82,14 +82,14 @@ the corresponding timestamp is stored in a list.
 Step 4: The list from step 3 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user.
 
 
-2c. "show unread" command
+3a. "show unread" command
 
 Once system is unlocked, regardless of which user you are, you can use this command. This command lists the new/unread messages in your inbox based on the password you used to unlock the system.
-When messages are sent, they are stored inside a text file called "notifications.txt".
+When messages are sent, they are stored inside a text file called "notifications_<userID>.txt", where 'userID' refers to the individual users.
 It also implements the following operations:
 
 . execute() - executes the "show unread" command itself and displays the result to the user.
-. getMessagesFor(String poId) - Searches the text file storing messages for the police officer identified by the poId and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).
+. getMessagesFor(String userId) - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).
 . printMessages() - Displays messages on screen if the read status is unread.
 
 The following is an example usage scenario of the "show unread" command:
@@ -98,11 +98,21 @@ Step 1: The user input his password and unlocks the system.
 
 Step 2: The user executes "show unread" command. The "show unread" command calls execute() which also calls getMessagesFor() method.
 
-Step 3: The getMessagesFor() method searches "notifications.txt" for the messages directed to the respective user, if any, and they are stored into a data structure.
+Step 3: The getMessagesFor() method searches message storage file for the messages directed to the respective user, if any, and they are stored into a data structure.
 
 Step 4: The messages that are found and are stored in a TreeSet, split by its read status, message priority, timestamp, and the message itself for sorting purposes. execute() returns a CommandResult using the messages list as its argument.
 
 Step 5: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.
+
+
+Alternatives considered:
+* Using a List instead of a TreeSet.
+** Pros: Smaller space complexity.
+** Cons: Less efficient code as 'sort' function must be called every time a new message is stored to maintain sorted order.
+
+* Using a single text file for storing messages, storing the userID of the recipient in the text file.
+** Pros: Fewer files to manage and filepaths to traverse.
+** Cons: Less efficient as it means more memory is required for storage per message stored (additional information of recipient of message required to be stored in the data structure itself when loaded).
 
 == Use Cases
 The use cases for the current features and commands implemented can be found in Appendix B.
