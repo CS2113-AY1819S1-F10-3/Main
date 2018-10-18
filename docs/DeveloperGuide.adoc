@@ -6,9 +6,14 @@
 :stylesDir: stylesheets
 :experimental:
 
+== Introduction
+The purpose of this Developer Guide is to provide useful information to software developers who desire to contribute to the project (e.g. optimizing of code, adding test cases, etc.), including an overview of the software architecture, design as well as current implementations and intended functionality of current features. The police database is for police officers(PO) and headquarters personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database. Refer to quick start to get started.
+
 == Setting up
+To set up the project successfully on your computer, follow the steps below.
 
 === Prerequisites
+In order to start the setup, you are required to install the following:
 
 * JDK 9 or later
 * IntelliJ IDE
@@ -31,10 +36,18 @@
 .. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=java.xml.bind' to module compiler options`
 
 == Design
+The diagram below shows a high level architecture design of the current classes that are used in the project.
 
 image::mainClassDiagram.png[]
 
+== Implementation
+This section describes some of the more important details of certain features implemented.
+
+== Use Cases
+The use cases for the current features and commands implemented can be found in Appendix B.
+
 == Testing
+To run tests for the project, complete the step below.
 
 * In IntelliJ, right-click on the `test` folder and choose `Run 'All Tests'`
 
@@ -67,6 +80,8 @@ TD- Fire Truck Driver
 
 === Use case: Enter Headquarter Personnel password
 
+*MSS*
+
 . User opens System.
 . System prompts User to enter his password.
 . User enters HQP password.
@@ -87,6 +102,8 @@ Use case resumes at step 1.
 Use case ends.
 
 === Use case: Enter Police Officer password
+
+*MSS*
 
 . User opens System.
 . System prompts User to enter his password.
@@ -109,12 +126,16 @@ Use case ends.
 
 === Use case: Lock System
 
+*MSS*
+
 . User locks the System at any point.
 . System sets all commands to inaccessible, displays System lock message and prompts User for password.
 
 Use case ends.
 
 === Use case: Update any password
+
+*MSS*
 
 . User requests to update password.
 . System prompts User for current password to change.
@@ -185,7 +206,6 @@ Use case resumes at step 5.
 +
 Use case ends.
 
-
 === Use case: Delete person
 
 *MSS*
@@ -231,9 +251,7 @@ Use case resumes at step 3.
 +
 Use case ends.
 
-
 === Use case: Edit person
-
 
 *MSS*
 
@@ -261,10 +279,8 @@ Use case resumes at step 3.
 ** *a2. User confirms the cancellation.
 +
 Use case ends.
-	
 
 === Use case: Find person
-
 
 *MSS*
 
@@ -278,7 +294,6 @@ Use case ends.
 Use case ends.
 
 *Extensions*
-
 
 * 3a. User enters an invalid password.
 ** 3a1. System shows an error message.
@@ -356,16 +371,13 @@ Use case ends.
 +
 Use case ends.
 
-
 * *a. At any time, User chooses to cancel the delete action.
 ** *a1. System requests confirmation to cancel.
 ** *a2. User confirms the cancellation.
 +
 Use case ends.
 
-
 === Use case: Autocorrection
-
 
 *MSS*
 
@@ -373,7 +385,6 @@ Use case ends.
 . System predicts what the user would have wanted to type and displays the list of valid inputs, if any.
 +
 Use case ends.
-
 
 *Extensions*
 
@@ -395,9 +406,7 @@ Use case ends.
 +
 Use case ends.
 
-
 === Use case: Load messages
-
 
 *MSS*
 
