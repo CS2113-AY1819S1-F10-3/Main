@@ -4,13 +4,11 @@
 # Default data file
 notification.txt
 policeRecords.txt
-addressbook.txt
 ScreeningHistory.txt
 requestList.txt
 
 # Logger files
-parserLog.log.1
-parserLog.log
+
 
 # Package Files #
 *.jar

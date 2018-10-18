@@ -11,7 +11,9 @@ import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
+import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.ui.MainWindow;
 
 import java.io.ObjectInputFilter;
 import java.util.*;
@@ -93,21 +95,35 @@ public class LogicTest {
         assertEquals(addressBook, saveFile.load());
     }
 
-//    //TODO test for help command
-//    @Test
-//    public void execute_unknownCommandWord() throws Exception {
-//        Dictionary dict = new Dictionary();
-//        String unknownCommand = "lost";
-//        dict.
-//
-//        assertCommandBehavior(unknownCommand,messag);
-//    }
+    @Test
+    public void execute_unknownCommandWord_forHQP() throws Exception {
+        String unknownCommand = "uicfhmowqewca";
+        Password.unlockHQP();
+        assertCommandBehavior(unknownCommand, HelpCommand.MESSAGE_ALL_USAGES);
+        Password.lockIsHQP();
+    }
 
-//    @Test
-//    public void execute_help() throws Exception {
-//        assertCommandBehavior("help", HelpCommand.MESSAGE_ALL_USAGES);
-//    }
+    @Test
+    public void execute_help_forHQP() throws Exception {
+        Password.unlockHQP();
+        assertCommandBehavior("help", HelpCommand.MESSAGE_ALL_USAGES);
+        Password.lockIsHQP();
+    }
 
+    @Test
+    public void execute_unknownCommandWord_forPO() throws Exception {
+        String unknownCommand = "uicfhmowqewca";
+        Password.unlockPO();
+        assertCommandBehavior(unknownCommand, HelpCommand.MESSAGE_PO_USAGES);
+        Password.lockIsPO();
+    }
+
+    @Test
+    public void execute_help_forPO() throws Exception {
+        Password.unlockPO();
+        assertCommandBehavior("help", HelpCommand.MESSAGE_PO_USAGES);
+        Password.lockIsPO();
+    }
 
     @Test
     public void execute_exit() throws Exception {
@@ -535,6 +551,25 @@ public class LogicTest {
 //                                true,
 //                                expectedList);
 //    }
+
+    @Test
+    public void execute_unlockHQP() throws Exception {
+        String result = Password.unlockDevice("mama123",5);
+        assertEquals(String.format(Password.MESSAGE_WELCOME , Password.MESSAGE_HQP)
+                + "\n" + Password.MESSAGE_ENTER_COMMAND , result);
+        Password.lockIsHQP();
+    }
+
+    @Test
+    public void execute_unlockPO() throws Exception {
+        String result = Password.unlockDevice("popo1",5);
+        assertEquals(String.format(Password.MESSAGE_WELCOME , Password.MESSAGE_PO + Password.MESSAGE_ONE)
+                + "\n" + Password.MESSAGE_UNAUTHORIZED
+                + "\n" + Password.MESSAGE_ENTER_COMMAND , result);
+        Password.lockIsPO();
+    }
+
+
 
     /**
      * A utility class to generate test data.

@@ -45,10 +45,10 @@ public class MainWindow {
         Dictionary A = new Dictionary();
         EditDistance B = new EditDistance();
         String prediction = "none";
-        ArrayList<String> commandList = A.getCommands();
+        ArrayList<String> commandList = Dictionary.getCommands();
         int distance, check = 0;
         for (String command : commandList) {
-            distance = B.computeDistance(commandInput, command);
+            distance = EditDistance.computeDistance(commandInput, command);
             if (distance == 1) {
                 prediction = command;
                 check = 1;
@@ -92,8 +92,8 @@ public class MainWindow {
             clearScreen();
             displayResult(result);
         }
-        else if(password.isLocked()) {
-            String unlockDeviceResult = password.unlockDevice(userCommandText,password.getWrongPasswordCounter());
+        else if(Password.isLocked()) {
+            String unlockDeviceResult = Password.unlockDevice(userCommandText,password.getWrongPasswordCounter());
             clearScreen();
             display(unlockDeviceResult);
         }
@@ -116,8 +116,8 @@ public class MainWindow {
 
         else if(password.isUnauthorizedAccess(userCommandText)){
             clearScreen();
-            String unauthorizedCommandresult = password.invalidPOResult(userCommandText);
-            display(unauthorizedCommandresult);
+            String unauthorizedCommandResult = password.invalidPOResult(userCommandText);
+            display(unauthorizedCommandResult);
         }
         else {
             Dictionary dict = new Dictionary();
@@ -248,7 +248,7 @@ public class MainWindow {
     /**
      * Displays the given messages on the output display area, after formatting appropriately.
      */
-    public void display(String... messages) {
+    private void display(String... messages) {
         outputConsole.setText(outputConsole.getText() + new Formatter().format(messages));
     }
 
