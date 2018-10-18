@@ -486,11 +486,11 @@ public class Password {
 
     private String getUnauthorizedPOCommand(String input){
         String commandWord;
-        if(input.equals("update password")){
-            commandWord = "update password";
+        if(isRejectPO(input)){
+            commandWord = input;
         }
         else {
-            commandWord = input.substring(0, Math.max(input.lastIndexOf(" "), input.length()));
+            commandWord = input.substring(0, input.indexOf(" "));
         }
         return commandWord;
     }
@@ -501,6 +501,10 @@ public class Password {
 
     private boolean invalidPOCommand(String input){
         String userCommandWord = getUnauthorizedPOCommand(input);
+        return isRejectPO(userCommandWord);
+    }
+
+    private boolean isRejectPO(String userCommandWord){
         return (userCommandWord.equals("add") || userCommandWord.equals("delete") || userCommandWord.equals("clear")
                 || userCommandWord.equals("edit") || userCommandWord.equals("check") || userCommandWord.equals("update password"));
     }
