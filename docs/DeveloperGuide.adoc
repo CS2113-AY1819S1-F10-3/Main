@@ -34,12 +34,14 @@ The purpose of this Developer Guide is to provide useful information to software
 .. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=java.xml.bind' to module compiler options`
 
 == Design
+The diagram below shows a high level architecture design of the current classes that are used in the project:
 
 image::mainClassDiagram.png[]
 
 == Implementation
 
 == Use Cases
+The use cases for the current features and commands implemented can be found in Appendix B.
 
 == Testing
 
