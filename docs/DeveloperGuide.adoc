@@ -10,8 +10,10 @@
 The purpose of this Developer Guide is to provide useful information to software developers who desire to contribute to the project (e.g. optimizing of code, adding test cases, etc.), including an overview of the software architecture, design as well as current implementations and intended functionality of current features. The police database is for police officers(PO) and headquarters personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database. Refer to quick start to get started.
 
 == Setting up
+To set up the project successfully on your computer, follow the steps below.
 
 === Prerequisites
+In order to start the setup, you are required to install the following:
 
 * JDK 9 or later
 * IntelliJ IDE
@@ -34,16 +36,18 @@ The purpose of this Developer Guide is to provide useful information to software
 .. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=java.xml.bind' to module compiler options`
 
 == Design
-The diagram below shows a high level architecture design of the current classes that are used in the project:
+The diagram below shows a high level architecture design of the current classes that are used in the project.
 
 image::mainClassDiagram.png[]
 
 == Implementation
+This section describes some of the more important details of certain features implemented.
 
 == Use Cases
 The use cases for the current features and commands implemented can be found in Appendix B.
 
 == Testing
+To run tests for the project, complete the step below.
 
 * In IntelliJ, right-click on the `test` folder and choose `Run 'All Tests'`
 
