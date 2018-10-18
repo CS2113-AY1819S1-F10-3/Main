@@ -289,7 +289,7 @@ public class Password {
                 numberOfPasswords--;
             }
             if(isNotLogin()){
-                result = wrongPasswordShutDown(number);
+                wrongPasswordShutDown(number);
             }
         }
         else{
