@@ -29,7 +29,7 @@ In order to start the setup, you are required to install the following:
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Run the `F10-3.EX-SI-03.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
+. Run the `seedu.addressbook.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
 . Run all the tests (right-click the `test` folder, and click `Run 'All Tests'`) and ensure that they pass
 . Open the `StorageFile` file and check for any code errors
 .. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
@@ -42,6 +42,45 @@ image::mainClassDiagram.png[]
 
 == Implementation
 This section describes some of the more important details of certain features implemented.
+
+2a. "find" command (edited)
+
+The new "find" command is revised from the existing "find" command in AB3. Instead of finding a person by name, it finds a person using his NRIC.
+It also implements the following operations:
+
+. execute() - executes the "find" command itself and displays the result to the user
+. getPersonWithNric() - Searches the addressbook to retrieve the person with the specified NRIC
+
+The following is an example usage scenario of the "find" command:
+
+Step 1: The user input his password and unlocks the system
+
+Step 2: The user executes "find s1234567a" command where the first argument is the command word "find" and the second argument is the NRIC to be
+searched, which in this case is "s1234567a" (all letter are lower cased). The "find" command calls execute() which also calls getPersonWithNric() method.
+
+Step 3: The getPersonWithNric() method searches the addressbook for the person with "s1234567a" if he exists and person is stored in a list.
+
+Step 4: The person is found and is stored in a matchedPerson list variable. execute() returns a CommandResult using the matchedPerson list as its argument.
+
+Step 5: The CommandResult object displays to the user the searched person and his details, all of which in string form.
+
+2b. "check" command
+
+Only a HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
+The "check" command makes some use of the "find" command. Every time the "find" command successfully finds a person, a line in the format of:
+"NRIC timestamp" is printed in a text file called "ScreeningHistory.txt". The "check" command will read this file and retrieve the timestamps
+corresponding to the specified NRIC. Below is an example of its usage:
+
+Step 1: The user(a HQP) input his password and unlocks the system
+
+Step 2: The user executes "check s1234567a" where the first argument is the command word "check" and the second is the NRIC to be checked which in is "s1234567a"
+
+Step 3: The "check" command calls execute() which calls the getPersonWithNric() method. This method will read the ScreeningHistory.txt line by line, where each line
+is in the format of "NRIC timestamp", for example "s1234567a 18/10/2018-20:38:42". Each line is split into the NRIC and timestamp. If line[0] is the NRIC specified,
+the corresponding timestamp is stored in a list.
+
+Step 4: The list from step 3 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user
+
 
 == Use Cases
 The use cases for the current features and commands implemented can be found in Appendix B.
@@ -57,44 +96,46 @@ To run tests for the project, complete the step below.
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 PO- Police Officer
-AD- Ambulance Driver
-TD- Fire Truck Driver
+HQP- Headquarters Personnel
 
 [width="100%",cols="22%,<23%,<25%,<30%",options="header",]
 |===========================================================================================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |PO |request backup efficiently and quickly |get help in dangerous situations like capturing an escaped criminal, saving a person’s life
 |`* * *` |PO |know if accused is dangerous |know the steps I should take to handle the accused
-|`* * *` |AD |know the severity of the accident |prepare myself and my men
-|`* * *` |TD |know the severity of the fire |prepare myself and my men
-|`* *` |PO |update HQ |let HQ know if I’m free or engaged
-|`* *` |PO |know next actions to be taken |respond effectively to any type of situation
+|`* * *` |PO |easily access numerous NRICs and commands with autocorrection |be efficient in going through many records even if some mistake is made
+|`* * *` |PO |quickly screen the subject using his NRIC |know his current status and past offences if any
+|`* * *` |HQP |know the screening history of a particular subject using his NRIC |use it in my investigation
+|`* * *` |PO |secure my device with a password |prevent breach of confidential data
+|`* *` |HQP |update password of any device regularly |so that I can increase security
 |`*` |PO |know the serial number and battery level |to return it to HQ and charge it when necessary
 |===========================================================================================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *User* is either the `Police Officer (PO)' or 'Head Quarters Personnel (HQP)', unless specified otherwise)
+(For all use cases below, the *System* is the `Police Records` and the *User* is either the `Police Officer (PO)' or 'Headquarters Personnel (HQP)', unless specified otherwise)
 
-=== Use case: Enter Headquarter Personnel password
+=== Use case: Enter Headquarters Personnel password
 
 *MSS*
+
+. User opens System.
 . System prompts User to enter his password.
 . User enters HQP password.
-. System displays message "Welcome Headquarter Personnel" and System prompts User for a command. Only HQP commands are set to accessible.
+. System displays message "Welcome Headquarters Personnel" and System prompts User for a command. Only HQP commands are set to accessible.
 +
 Use case ends.
 
 *Extensions*
 
-* 2a. User enters invalid password.
-** 2a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
+* 3a. User enters invalid password.
+** 3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a maximum of 5 attempts.
 +
 Use case resumes at step 1.
 
-** 2a1a. The number of attempts reaches zero.
-*** 2a1b. System shuts down.
+** 3b. The number of attempts reaches zero.
+*** 3b1. System shuts down.
 +
 Use case ends.
 
@@ -102,6 +143,7 @@ Use case ends.
 
 *MSS*
 
+. User opens System.
 . System prompts User to enter his password.
 . User enters Police Officer password.
 . Only Police Officer commands are set to accessible, System displays message "Welcome Police Officer" and System prompts User for a command.
@@ -110,13 +152,13 @@ Use case ends.
 
 *Extensions*
 
-* 2a. User enters invalid password.
-** 2a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.
+* 3a. User enters invalid password.
+** 3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a maximum of 5 attempts.
 +
 Use case resumes at step 1.
 
-** 2a1a. The number of attempts reaches zero.
-*** 2a1b. System shuts down.
+** 3b. The number of attempts reaches zero.
+*** 3b1. System shuts down.
 +
 Use case ends.
 
@@ -151,8 +193,8 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-** 3a1a. The number of attempts reaches zero.
-*** 3a1b. System shuts down.
+** 3b. The number of attempts reaches zero.
+*** 3b1. System shuts down.
 +
 Use case ends.
 
@@ -175,6 +217,10 @@ Use case resumes at step 5.
 
 *MSS*
 
+. User opens System.
+. System prompts User to enter his password.
+. User enters password.
+. System prompts user to enter his command.
 . User requests to add person to the list.
 . System adds person to the list and informs User that person has been successfully added.
 +
@@ -182,15 +228,15 @@ Use case ends.
 
 *Extensions*
 
-* 2a. Person already exists in the list.
-** 2a1. System shows an error message.
+* 6a. Person already exists in the list.
+** 6a1. System shows an error message.
 +
 Use case ends.
 
-* 2b. User enters person’s details with invalid formats.
-** 2b1. System shows an error message.
+* 6b. User enters person’s details with invalid formats.
+** 6b1. System shows an error message.
 +
-Use case resumes at step 1.
+Use case resumes at step 5.
 
 * *a. At any time, User cancels add action.
 * *a1. System requests for confirmation to cancel.
@@ -198,11 +244,11 @@ Use case resumes at step 1.
 +
 Use case ends.
 
-
 === Use case: Delete person
 
 *MSS*
 
+. User opens System.
 . System prompts user to enter his password.
 . User enters password.
 . System prompts user to enter his command.
@@ -217,25 +263,15 @@ Use case ends.
 
 *Extensions*
 
-* 2a. User enters an invalid password.
-** 2a1. System shows an error message.
+* 3a. User enters an invalid password.
+** 3a1. System shows an error message.
 +
 Use case resumes at step 1.
 
-* 4a. The list is empty.
-** 4a1. System shows an error message
+* 5a. User enters invalid NRIC.
+** 5a1. System shows an error message.
 +
-Use case ends.
-
-* 4b. User enters invalid NRIC.
-** 4b1. System shows an error message.
-+
-Use case ends.
-
-* 4c. User enters an NRIC that does not exist in the system.
-** 4c1. System shows an error message.
-+
-Use case resumes at step 3.
+Use case resumes at step 5.
 
 * *a. At any time, User chooses to cancel the delete action.
 ** *a1. System requests confirmation to cancel.
@@ -243,11 +279,14 @@ Use case resumes at step 3.
 +
 Use case ends.
 
-
 === Use case: Edit person
 
 *MSS*
 
+. User opens System.
+. System prompts user to enter his password.
+. User enters password.
+. System prompts user to enter his command.
 . User requests to edit persons.
 . System shows a list of persons.
 . User requests to update a specific person in the list.
@@ -257,30 +296,31 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The list is empty.
-** 1a1. System shows an error message.
+* 5a. The list is empty.
+** 5a1. System shows an error message.
 +
 Use case ends.
 
-* 3a. User enters person's details with invalid format.
-** 3a1. System shows an error message.
+* 8a. User enters person's details with invalid format.
+** 8a1. System shows an error message.
 +
-Use case resumes at step 3.
+Use case resumes at step 8.
 
 * *a. At any time, User chooses to cancel the delete action.
 ** *a1. System requests confirmation to cancel.
 ** *a2. User confirms the cancellation.
 +
 Use case ends.
-	
 
 === Use case: Find person
 
 *MSS*
 
+. User boots System.
+. System prompts user to enter his password.
+. User enters password.
+. System prompts user to enter his command.
 . User requests to find person
-. System prompts User to enter his password
-. User enters his password
 . System prompts User to key in NRIC to find
 . User enters NRIC of person
 . System displays details of person, if found on the list.
@@ -289,24 +329,23 @@ Use case ends.
 
 *Extensions*
 
-
 * 3a. User enters an invalid password.
 ** 3a1. System shows an error message.
 +
-Use case resumes in step 2.
+Use case resumes at step 2.
 
-* 5a. User enters person's NRIC with invalid format.
-** 5a1. System shows an error message.
-+
-Use case resumes at step 4.
-
-* 5b. The list of persons is empty.
-** 5b1. System shows an error message.
+* 7a. User enters an NRIC that does not exist in the list.
+** 7a1. System informs User that person is not in the list.
 +
 Use case ends.
 
-* 5a. User enters an NRIC that does not exist in the list.
-** 5a1. System informs User that person is not in the list.
+* 7b. User enters person's NRIC with invalid format.
+** 7b1. System shows an error message.
++
+Use case resumes at step 6.
+
+* 8a. The list of persons is empty.
+** 8a1. System shows an error message.
 +
 Use case ends.
 
@@ -320,9 +359,11 @@ Use case ends.
 
 *MSS*
 
+. User opens System.
+. System prompts user to enter his password.
+. User enters password.
+. System prompts user to enter his command.
 . User requests to check person's screening history.
-. System prompts User to enter his password.
-. User enters his password.
 . System prompts User to key in NRIC to check.
 . User enters NRIC of person.
 . System displays past screening timestamps of person, if found on the list.
@@ -331,41 +372,30 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The list is empty.
-** 1a1. System shows an error message.
-+
-Use case ends.
-
 * 3a. User enters an invalid password.
 ** 3a1. System shows an error message.
 +
-Use case ends.
+Use case resumes at step 2.
 
-* 3b. User enters person's details with invalid format.
-** 3b1. System shows an error message.
-+
-Use case resumes at step 3.
-
-* 5a. User enters an NRIC that does not exist in the list.
-** 5a1. System informs User that person is not in the list.
+* 5a. The list is empty.
+** 5a1. System shows an error message.
 +
 Use case ends.
 
-* 5b. User enters the an NRIC with invalid format.
-** 5b1. System shows an error message.
+* 6a. User enters person's details with invalid format.
+** 6a1. System shows an error message.
++
+Use case resumes at step 6.
+
+* 6b. User enters an NRIC that does not exist in the list.
+** 6b1. System informs User that person is not in the list.
 +
 Use case ends.
 
-* 5c. The list of persons is empty.
-** 5c1. System shows an error message.
+* 6c. User enters the an NRIC with invalid format.
+** 6c1. System shows an error message.
 +
 Use case ends.
-
-* 5d. User enters an NRIC that does not exist in the list.
-** 5d1. System informs User that person is not in the list.
-+
-Use case ends.
-
 
 * *a. At any time, User chooses to cancel the delete action.
 ** *a1. System requests confirmation to cancel.
@@ -373,21 +403,35 @@ Use case ends.
 +
 Use case ends.
 
-
-=== Use case: Autoprediction
+=== Use case: Autocorrection
 
 *MSS*
 
+. User opens System.
+. System prompts user to enter his password.
+. User enters password.
+. System prompts user to enter his command.
 . User enters invalid input.
 . System predicts what the user would have wanted to type and displays the list of valid inputs, if any.
 +
 Use case ends.
 
+*Extensions*
+
+* 3a. User enters an invalid password.
+** 3a1. System shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User enters an invalid input which is an invalid command.
+** 5a1. System also displays the valid usage of the command.
++
+Use case ends.
 
 *Extensions*
 
-* 1a. User enters an invalid input which is an invalid command.
-** 1a1. System also displays the valid usage of the command.
+* 5b. User enters an invalid input for which the system cannot find a prediction.
+** 5b1. System shows error message.
 +
 Use case ends.
 
@@ -397,11 +441,14 @@ Use case ends.
 +
 Use case ends.
 
-
 === Use case: Load messages
 
 *MSS*
 
+. User opens System.
+. System prompts user to enter his password.
+. User enters password.
+. System prompts user to enter his command.
 . User requests to display messages in inbox.
 . System prints the number of unread messages, total messages and list of messages.
 +
@@ -409,13 +456,13 @@ Use case ends.
 
 *Extensions*
 
-* 1a. There are no messages.
-** 1a1. System informs user that there are no messages available.
+* 5a. There are no messages.
+** 5a1. System informs user that there are no messages available.
 +
 Use case ends.
 
-* 1b. There are no unread messages.
-** 1b1. System informs user that there are no unread messages and prints the last 5 messages stored.
+* 5b. There are no unread messages.
+** 5b1. System informs user that there are no unread messages and prints the last 5 messages stored.
 +
 Use case ends.
 
@@ -423,6 +470,10 @@ Use case ends.
 
 *MSS*
 
+. User opens System.
+. System prompts user to enter his password.
+. User enters password.
+. System prompts user to enter his command.
 . User enters the message number he wishes to reply to.
 . System displays the list of possible responses to message.
 . User enters the number of the response he chooses.
@@ -432,20 +483,20 @@ Use case ends.
 
 *Extensions*
 
-* 1a. User enters an invalid message number.
-** 1a1. System shows an error message.
+* 5a. User enters an invalid message number.
+** 5a1. System shows an error message.
 +
 Use case ends.
 
-* 1b. There are no unread messages.
-** 1b1. System informs user that there are no messages to respond to.
+* 5b. There are no unread messages.
+** 5b1. System informs user that there are no messages to respond to.
 +
 Use case ends.
 
-* 3a. User enters an invalid response number.
-** 3a1. System shows an error message.
+* 7a. User enters an invalid response number.
+** 7a1. System shows an error message.
 +
-Use case resumes at step 2.
+Use case resumes at step 6.
 
 * *a. At anytime, user chooses to cancel response to message.
 ** *a1. System requests for user confirmation for cancellation.
@@ -457,6 +508,7 @@ Use case ends.
 
 *MSS*
 
+. User opens System.
 . System prompts User to enter his password.
 . User enters his password.
 . System prompts User to key in command.
@@ -468,25 +520,26 @@ Use case ends.
 
 *Extensions*
 
-* 2a. User enters an invalid password.
-** 2a1. System shows an error message.
+* 3a. User enters an invalid password.
+** 3a1. System shows an error message.
 +
-Use case resumes in step 1.
+Use case resumes in step 2.
 
-* 4a. User enters an invalid input with invalid command format.
-** 4a1. System shows error message and prompts correct format for request feature.
+* 5a. User enters an invalid input with invalid command format.
+** 5a1. System shows error message and prompts correct format for request feature.
 +
-Use case resumes from step 3.
+Use case resumes from step 4.
 
-* 6a. User enters an invalid case type.
-** 6a1. System shows an error message and prompts current valid case types.
+* 7a. User enters an invalid case type.
+** 7a1. System shows an error message and prompts current valid case types.
 +
-Use case resumes at step 3.
+Use case resumes at step 4.
 
 === Use Case: Dispatch Backup
 
 *MSS*
 
+. User opens System.
 . System prompts User to enter his password.
 . User enters his password.
 . System prompts User to key in command.
@@ -504,28 +557,27 @@ Use case ends.
 * 0a. User keys in invalid command format.
 ** 0a1. System shows error message and prompts correct format for dispatch feature.
 +
-Use case resumes from step 3.
+Use case resumes from step 4.
 
-* 2a. The entered password is invalid.
-** 2a1. System shows an error message.
+* 3a. The entered password is invalid.
+** 3a1. System shows an error message.
 +
-Use case resumes in step 1.
+Use case resumes in step 2.
 
-* 4a. User is not a Headquarter Personnel.
-** 4a1. System shows an error message stating invalid credentials.
+* 5a. User is not a Headquarter Personnel.
+** 5a1. System shows an error message stating invalid credentials.
 +
-Use case resumes in step 3.
+Use case resumes in step 4.
 
-* 6a. User enters an invalid index entered for police officer to be dispatched.
-** 6a1. System shows an error message.
+* 7a. User enters an invalid index entered for police officer to be dispatched.
+** 7a1. System shows an error message.
 +
-Use case resumes in step 3.
+Use case resumes in step 4.
 
-* 6a. User enters an invalid index for police officer requesting backup.
-** 6a1. System shows an error message.
+* 7b. User enters an invalid index for police officer requesting backup.
+** 7b1. System shows an error message.
 +
-Use case resumes at step 3.
-
+Use case resumes at step 4.
 
 [appendix]
 
@@ -544,7 +596,6 @@ Use case resumes at step 3.
 . Data requirements:
 .. Data should be constant, not volatile.
 .. Data should be recoverable from last save point
-
 
 [appendix]
 == Glossary

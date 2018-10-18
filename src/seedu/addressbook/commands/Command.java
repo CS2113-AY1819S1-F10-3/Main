@@ -49,7 +49,6 @@ public abstract class Command {
 
     public static String getMessageForScreeningHistoryShownSummary(List<String> timestampsDisplayed) {
 
-        //TODO: Try format or mainwindow methods
         Formatter formatter = new Formatter();
         String result = formatter.formatForTstamps(timestampsDisplayed);
         String finalResult = result + String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, timestampsDisplayed.size());
