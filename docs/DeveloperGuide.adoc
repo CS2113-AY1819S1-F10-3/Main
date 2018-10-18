@@ -109,10 +109,12 @@ Alternatives considered:
 * Using a List instead of a TreeSet.
 ** Pros: Smaller space complexity.
 ** Cons: Less efficient code as 'sort' function must be called every time a new message is stored to maintain sorted order.
+Eventually, we decided to use TreeSet in our implementation as we felt that the pros outweighed the cons. This becomes more obvious when the amount of data stored gets larger.
 
 * Using a single text file for storing messages, storing the userID of the recipient in the text file.
 ** Pros: Fewer files to manage and filepaths to traverse.
 ** Cons: Less efficient as it means more memory is required for storage per message stored (additional information of recipient of message required to be stored in the data structure itself when loaded).
+Eventually, we also used multiple message storage files, each dedicated to a specific user, as this allowed us to increase the time efficiency of the code as the getMessagesFor() method did not need to sort through the messages based on recipient anymore. This benefit becomes especially obvious as well when there is a large number of messages that has to be stored, directed towards multiple users.
 
 == Use Cases
 The use cases for the current features and commands implemented can be found in Appendix B.
