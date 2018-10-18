@@ -147,6 +147,8 @@ public class LogicTest {
                 "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
                 "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/nones", Person.WANTED_FOR_WARNING);
 
     }
 
