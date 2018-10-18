@@ -82,7 +82,7 @@ the corresponding timestamp is stored in a list.
 Step 4: The list from step 3 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user.
 
 
-3a. "show unread" command
+4a. "show unread" command
 
 Once system is unlocked, regardless of which user you are, you can use this command. This command lists the new/unread messages in your inbox based on the password you used to unlock the system.
 When messages are sent, they are stored inside a text file called "notifications_<userID>.txt", where 'userID' refers to the individual users.
