@@ -94,8 +94,8 @@ public class MainWindow {
             clearScreen();
             displayResult(result);
         }
-        else if(password.isLocked()) {
-            String unlockDeviceResult = password.unlockDevice(userCommandText,password.getWrongPasswordCounter());
+        else if(Password.isLocked()) {
+            String unlockDeviceResult = Password.unlockDevice(userCommandText,password.getWrongPasswordCounter());
             clearScreen();
             display(unlockDeviceResult);
         }

@@ -10,18 +10,18 @@ public class Password {
 
     private static final String MESSAGE_TRY_AGAIN = "Please try again.";
     public static final String MESSAGE_ENTER_PASSWORD = "Please enter password: ";
-    private static final String MESSAGE_ENTER_COMMAND = "Please enter a command: ";
-    private static final String MESSAGE_WELCOME = "Welcome %s.";
-    private static final String MESSAGE_UNAUTHORIZED = "You are not authorized to ADD, CLEAR, CHECK, DELETE, EDIT nor UPDATE PASSWORD.";
+    public static final String MESSAGE_ENTER_COMMAND = "Please enter a command: ";
+    public static final String MESSAGE_WELCOME = "Welcome %s.";
+    public static final String MESSAGE_UNAUTHORIZED = "You are not authorized to ADD, CLEAR, CHECK, DELETE, EDIT nor UPDATE PASSWORD.";
     private static final String MESSAGE_INCORRECT_PASSWORD = "Password is incorrect. " + MESSAGE_TRY_AGAIN;
     private static final String MESSAGE_ATTEMPTS_LEFT = "You have %1$d attempts left. ";
     private static final String MESSAGE_ATTEMPT_LEFT = "You have %1$d attempt left. ";
     private static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect. ";
     private static final String MESSAGE_SHUTDOWN = "Password is incorrect. System is shutting down. ";
     private static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
-    private static final String MESSAGE_HQP = "Headquarters Personnel";
-    private static final String MESSAGE_PO = "Police Officer ";
-    private static final String MESSAGE_ONE = "Oscar November Echo";
+    public static final String MESSAGE_HQP = "Headquarters Personnel";
+    public static final String MESSAGE_PO = "Police Officer ";
+    public static final String MESSAGE_ONE = "Oscar November Echo";
     private static final String MESSAGE_TWO = "Tango Whiskey Oscar";
     private static final String MESSAGE_THREE = "Tango Hotel Romeo Echo Echo";
     private static final String MESSAGE_FOUR = "Foxtrot Oscar Uniform Romeo";
@@ -42,15 +42,25 @@ public class Password {
     private static int wrongPasswordCounter = 5;
 
     private static boolean isHQP = false;
+    public static void unlockHQP(){
+        isHQP = true;
+    }
+    public static void unlockPO(){
+        isPO1 = true;
+        isPO2 = true;
+        isPO3 = true;
+        isPO4 = true;
+        isPO5 = true;
+    }
     private static boolean isPO1 = false;
     private static boolean isPO2 = false;
     private static boolean isPO3 = false;
     private static boolean isPO4 = false;
     private static boolean isPO5 = false;
-    private static void lockIsHQP() {
+    public static void lockIsHQP() {
         isHQP = false;
     }
-    private static void lockIsPO() {
+    public static void lockIsPO() {
         isPO1 = false;
         isPO2 = false;
         isPO3 = false;
@@ -60,11 +70,11 @@ public class Password {
     public boolean isHQPUser() {
         return isHQP;
     }
-    public boolean isLocked(){
+    public static boolean isLocked(){
         return !(isHQP || isPO());
     }
 
-    private boolean isPO(){
+    private static boolean isPO(){
         return (isPO1 || isPO2 || isPO3 || isPO4 || isPO5);
     }
 
@@ -110,12 +120,12 @@ public class Password {
         return shutDown;
     }
 
-    private boolean shutDown= false;
+    private static boolean shutDown= false;
     private String oneTimePassword = null;
 
-    private ReaderAndWriter readerandwriter = new ReaderAndWriter();
+    private static ReaderAndWriter readerandwriter = new ReaderAndWriter();
 
-    public String unlockDevice(String userCommandText,int number) throws IOException {
+    public static String unlockDevice(String userCommandText, int number) throws IOException {
 
         String result = null;
 
@@ -189,7 +199,7 @@ public class Password {
         return result;
     }
 
-    private String wrongPasswordShutDown(int number){
+    private static String wrongPasswordShutDown(int number){
         String result;
         if(wrongPasswordCounter>1) {
             result = MESSAGE_INCORRECT_PASSWORD
@@ -213,31 +223,31 @@ public class Password {
         return result;
     }
 
-    private void decreaseWrongPasswordCounter(){
+    private static void decreaseWrongPasswordCounter(){
         wrongPasswordCounter--;
     }
 
-    private boolean correctPassword(String storedCurrPassword , int hashedEnteredPassword){
+    private static boolean correctPassword(String storedCurrPassword, int hashedEnteredPassword){
         return storedCurrPassword.equals(Integer.toString(hashedEnteredPassword));
     }
 
-    private boolean correctHQP(String user , String storedCurrPassword , int hashedEnteredPassword){
+    private static boolean correctHQP(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("hqp") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
 
-    private boolean correctPO1(String user , String storedCurrPassword , int hashedEnteredPassword){
+    private static boolean correctPO1(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po1") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
-    private boolean correctPO2(String user , String storedCurrPassword , int hashedEnteredPassword){
+    private static boolean correctPO2(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po2") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
-    private boolean correctPO3(String user , String storedCurrPassword , int hashedEnteredPassword){
+    private static boolean correctPO3(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po3") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
-    private boolean correctPO4(String user , String storedCurrPassword , int hashedEnteredPassword){
+    private static boolean correctPO4(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po4") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
-    private boolean correctPO5(String user , String storedCurrPassword , int hashedEnteredPassword){
+    private static boolean correctPO5(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po5") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
 

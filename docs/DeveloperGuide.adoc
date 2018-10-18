@@ -43,6 +43,45 @@ image::mainClassDiagram.png[]
 == Implementation
 This section describes some of the more important details of certain features implemented.
 
+*1a. Password Feature*
+
+Users and passwords are stored in passwordStorage.txt in the format: USER PASSWORD.
+This is to simplify reading the line by splitting the line using the whitespace.
+Each user and corresponding password are in stored in one line.
+Since each line refers to one user, the reader can loop through each line to check for a specific user and password.
+Passwords are stored in hashcoded form so that even if passwordStorage.txt is deleted, the system still cannot be accessed.
+Headquarters Personnel have full access to all the commands while Police officers cannot Add, Clear, Check, Delete, Edit nor Update password.
+
+When the device is locked, User has to enter a specific password to grant user the level of access requested.
+A buffered reader reads through the whole file to match the password entered.
+If the password is wrong, the user has 5 attempts left. This number decreases with each wrong password.
+The system shuts down after 5 wrong passwords.
+This is to ensure that the system denies access to anyone who is not authorized.
+
+The User can enter the lock command at any time to ensure that the device is logged out immediately.
+
+Alternatives considered:
+- using an internal hashmap to store user and passwords. Difficult to observe how many POs are there.
+- Storing password in plaintext . Passwords can be seen in passwordStorage.txt
+- Allowing any number of attempts to unlock device. Can be easily looped to try all passwords.
+
+*1b. Update Password Feature*
+
+Headquarters Personnel can update any stored password with the update password command.
+The buffered reader reads the passwordStorage.txt file for the specific password to change.
+Once the user has entered a new password, he is prompted to enter the same password again.
+This is to ensure that the password typed is accurate.
+However, the new password must be alphanumeric and at least 5 characters long.
+This is to ensure a strong password.
+The print writer then loops over the passwordStorage.txt file and places all existing passwords into a new temporary file, while placing the new password over the old password.
+The temporary file is renamed to passwordStorage.txt and the original file containing the old password is deleted.
+
+Alternatives considered:
+- Update password one time, without secondary prompt to enter password. This will make the changes permanent even if a mistake is made.
+- Updating using any password, without validity. Password may be weak.
+- Overwriting passwordStorage.txt . This will cause errors in replacing password.
+
+
 == Use Cases
 The use cases for the current features and commands implemented can be found in Appendix B.
 
