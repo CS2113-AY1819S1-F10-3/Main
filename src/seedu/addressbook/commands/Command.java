@@ -1,18 +1,14 @@
 package seedu.addressbook.commands;
 
-import seedu.addressbook.Main;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.person.NRIC;
+import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.person.UniquePersonList;
+import seedu.addressbook.ui.Formatter;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-
-import seedu.addressbook.ui.Formatter;
-import seedu.addressbook.ui.MainWindow;
 
 import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
