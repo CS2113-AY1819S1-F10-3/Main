@@ -19,7 +19,7 @@ public class Password {
     private static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect. ";
     private static final String MESSAGE_SHUTDOWN = "Password is incorrect. System is shutting down. ";
     private static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
-    private static final String MESSAGE_HQP = "Headquarter Personnel";
+    private static final String MESSAGE_HQP = "Headquarters Personnel";
     private static final String MESSAGE_PO = "Police Officer ";
     private static final String MESSAGE_ONE = "Oscar November Echo";
     private static final String MESSAGE_TWO = "Tango Whiskey Oscar";
@@ -33,8 +33,8 @@ public class Password {
     private static final String MESSAGE_AT_LEAST_ONE = "Your new password must contain at least one %s. ";
     private static final String MESSAGE_PASSWORD_EXISTS = "Your new password cannot be the same as an existing password. ";
     private static final String MESSAGE_TRY_UNAUTHORIZED ="You are unauthorized to %s.\nPlease try a different command. ";
-    private static final String MESSAGE_PASSWORD_LENGTH = "Your password is %1$d characters long. ";
-    private static final String MESSAGE_PASSWORD_MINIMUM_LENGTH = "Your password must be at least %1$d characters long. ";
+    private static final String MESSAGE_PASSWORD_LENGTH = "Your new password is %1$d character(s) long. ";
+    private static final String MESSAGE_PASSWORD_MINIMUM_LENGTH = "Your new password must be at least %1$d characters long. ";
 
     public int getWrongPasswordCounter() {
         return wrongPasswordCounter;
@@ -301,12 +301,12 @@ public class Password {
                 numberOfPasswords--;
             }
             if(isNotLogin()){
-                wrongPasswordShutDown(number);
+                result = wrongPasswordShutDown(number);
             }
         }
         else{
             result = passwordValidityChecker(userCommandText);
-            if(result.equals(MESSAGE_TRY_AGAIN)){
+            if(result == null){
                 oneTimePassword = userCommandText;
                 isUpdatePasswordConfirm = true;
                 result = MESSAGE_ENTER_NEW_PASSWORD_AGAIN;
@@ -445,6 +445,17 @@ public class Password {
         return result;
     }
 
+    private String passwordLengthChecker(String newEnteredPassword){
+        String result = null;
+        int lengthPassword = newEnteredPassword.length();
+        int minNumPassword = 5;
+        if(lengthPassword < minNumPassword){
+            result = String.format(MESSAGE_PASSWORD_LENGTH, lengthPassword)
+                    + "\n" + String.format(MESSAGE_PASSWORD_MINIMUM_LENGTH, minNumPassword);
+        }
+        return result;
+    }
+
     private String passwordValidityChecker(String newEnteredPassword) throws IOException {
         String result = null;
         if(passwordExistsChecker(newEnteredPassword) != null){
@@ -460,18 +471,7 @@ public class Password {
         else if(passwordLengthChecker(newEnteredPassword) != null){
             result = passwordLengthChecker(newEnteredPassword);
         }
-        return result + MESSAGE_TRY_AGAIN;
-    }
-
-    private String passwordLengthChecker(String newEnteredPassword){
-        String result = null;
-        int lengthPassword = newEnteredPassword.length();
-        int minNumPassword = 5;
-        if(lengthPassword < minNumPassword){
-            result = String.format(MESSAGE_PASSWORD_LENGTH, lengthPassword)
-                    + "\n" + String.format(MESSAGE_PASSWORD_MINIMUM_LENGTH, minNumPassword);
-        }
-        return result;
+        return (result == null) ? null : result + MESSAGE_TRY_AGAIN ;
     }
 
     private String getUnauthorizedPOCommand(String input){
