@@ -37,6 +37,10 @@ The purpose of this Developer Guide is to provide useful information to software
 
 image::mainClassDiagram.png[]
 
+== Implementation
+
+== Use Cases
+
 == Testing
 
 * In IntelliJ, right-click on the `test` folder and choose `Run 'All Tests'`
