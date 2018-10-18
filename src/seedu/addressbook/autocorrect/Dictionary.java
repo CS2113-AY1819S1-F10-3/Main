@@ -9,6 +9,10 @@ public class Dictionary {
 
     public static final ArrayList<String> commands = new ArrayList<>();
 
+    public String errorMessage = "Did you mean to use %s ? Please try changing the command.";
+
+
+
     public Dictionary() {
         commands.add("add");
         commands.add("clear");
@@ -20,6 +24,10 @@ public class Dictionary {
         commands.add("edit");
         commands.add("viewall");
         commands.add("view");
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     public static ArrayList<String> getCommands() {

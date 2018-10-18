@@ -122,12 +122,13 @@ public class MainWindow {
             display(unauthorizedCommandresult);
         }
         else {
+            Dictionary dict = new Dictionary();
             String arr[] = userCommandText.split(" ", 2);
             String commandWordInput = arr[0];
             String output = checkDistance(commandWordInput);
             if(!(output.equals("none"))) {
                 clearScreen();
-                display("Did you mean to use " + output + "?", "Please try changing the command.");
+                display(String.format(dict.errorMessage, output));
             }
             else{
                 CommandResult result = logic.execute(userCommandText);

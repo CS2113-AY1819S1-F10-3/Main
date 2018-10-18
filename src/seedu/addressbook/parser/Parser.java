@@ -352,8 +352,9 @@ public class Parser {
         }
         catch (IllegalValueException invalidNric){
             logr.warning("NRIC argument is invalid");
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,FindCommand.MESSAGE_USAGE));
-        }
+            return ((isChecking == true) ? new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,CheckCommand.MESSAGE_USAGE)):
+                    new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,FindCommand.MESSAGE_USAGE)));
+         }
 
 
 //
