@@ -47,7 +47,7 @@ public class FindCommand extends Command {
             if (person.getNric().getIdentificationNumber().equals(nric)) {
                 addressBook.addPersontoDbAndUpdate(person);
                 try {
-                    addressBook.updateDatabase();
+                     addressBook.updateDatabase();
                 } catch (IOException e) {
                     e.printStackTrace(); // TODO: throws exeception
                 }

@@ -176,6 +176,40 @@ public class ParserTest {
     }
 
     /**
+     * Test find persons by keyword in name command
+     */
+
+    @Test
+    public void checkCommand_invalidArgs() {
+        // no keywords
+        final String[] inputs = {
+                "check",
+                "check "
+        };
+        final String resultMessage =
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+    @Test
+    public void checkCommand_validArgs_parsedCorrectly() {
+        final String keyword = "s1234567a";
+        final String input = "check " + keyword;
+        final CheckCommand result =
+                parseAndAssertCommandType(input, CheckCommand.class);
+        assertEquals(keyword, result.getNricKeyword());
+    }
+
+    @Test
+    public void checkCommand_invalidNricArg() {
+        final String keyword = "s12345a";
+        final String input = "check " + keyword;
+        final String resultMessage =
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, input);
+    }
+
+    /**
      * Test add person command
      */
     
