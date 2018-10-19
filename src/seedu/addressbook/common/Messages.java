@@ -12,6 +12,8 @@ public class Messages {
     public static final String MESSAGE_TIMESTAMPS_LISTED_OVERVIEW = "%1$d time(s) screened";
     public static final String MESSAGE_UNREAD_MSG_NOTIFICATION = "You have %1$d unread message(s).";
     public static final String MESSAGE_NO_UNREAD_MSGS = "You have no unread messages.";
+//    public static final String MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE = "Launch command format: " +
+//            "java seedu.addressbook.Main [STORAGE_FILE_PATH]";
     public static final String MESSAGE_WELCOME = "Welcome to the Police Records System.";
     public static final String MESSAGE_USING_STORAGE_FILE = "Using storage file : %1$s";
     public static final String MESSAGE_BATTERY_PERCENTAGE = "Battery level left: %d";
