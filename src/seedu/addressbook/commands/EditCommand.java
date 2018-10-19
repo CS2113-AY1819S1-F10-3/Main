@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
 
@@ -23,12 +24,12 @@ public class EditCommand extends Command {
             + "Contact details can be marked private by prepending 'p' to the prefix.\n\t"
             + "Parameters: n/NRIC p/POSTALCODE s/STATUS w/WANTEDFOR [o/PASTOFFENSES]...\n\t"
             + "Example: " + COMMAND_WORD
-            + " n/s1234567a p/510247 s/wanted w/murder o/manslaughter";
+            + " n/s1234567a p/510247 s/wanted w/murder o/gun";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %s";
     //public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Police Records";
 
-    private void updatePerson() throws IllegalValueException {
+    private void updatePerson() throws IllegalValueException, UniquePersonList.PersonNotFoundException {
         for (Person person : addressBook.getAllPersons()) {
             if (person.getNric().getIdentificationNumber().equals(this.nric)) {
                 person.setPostalCode(new PostalCode(postalCode));
@@ -37,6 +38,8 @@ public class EditCommand extends Command {
                 person.addPastOffenses(Offense.getOffenseSet(offenses));
             }
         }
+
+        throw new UniquePersonList.PersonNotFoundException();
     }
 
     public EditCommand(String nric,
@@ -54,7 +57,12 @@ public class EditCommand extends Command {
 
     @Override
     public CommandResult execute() throws IllegalValueException {
-        this.updatePerson();
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, this.nric));
+        try {
+            this.updatePerson();
+            return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, this.nric));
+        } catch(UniquePersonList.PersonNotFoundException pnfe) {
+            return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
+        }
+
     }
 }
