@@ -15,12 +15,13 @@ public class Dictionary {
         commands.add("add");
         commands.add("clear");
         commands.add("delete");
-        commands.add("exit");
+        commands.add("shutdown");
+        commands.add("edit");
         commands.add("lock");
         commands.add("find");
         commands.add("help");
         commands.add("list");
-        commands.add("edit");
+        commands.add("clear");
         commands.add("viewall");
         commands.add("view");
     }
