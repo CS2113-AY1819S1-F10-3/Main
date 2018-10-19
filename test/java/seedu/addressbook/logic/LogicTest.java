@@ -5,21 +5,18 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import seedu.addressbook.autocorrect.Dictionary;
-import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
-import seedu.addressbook.ui.MainWindow;
 
-import java.io.ObjectInputFilter;
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
-import static seedu.addressbook.common.Messages.*;
+import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.addressbook.common.Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW;
 
 
 public class LogicTest {
@@ -127,7 +124,7 @@ public class LogicTest {
 
     @Test
     public void execute_exit() throws Exception {
-        assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
+        assertCommandBehavior("shutdown", ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
 
     @Test
