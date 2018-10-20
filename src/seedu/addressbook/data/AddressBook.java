@@ -6,6 +6,8 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
+import seedu.addressbook.readandwrite.ReaderAndWriter;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.io.*;
 import java.sql.Timestamp;
@@ -17,14 +19,14 @@ import java.util.*;
  */
 public class AddressBook {
 
-    public static final String SCREENING_DATABASE = "ScreeningHistory.txt";
-    public static Timestamp screeningTimeStamp;
-    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+    private static final String SCREENING_DATABASE = "ScreeningHistory.txt";
     private String tempNric;
     private String tempTimestamp;
     private int counter = 0;
 
     private final UniquePersonList allPersons;
+    private ReaderAndWriter readerAndWriter = new ReaderAndWriter();
+    private File databaseFile = readerAndWriter.fileToUse(SCREENING_DATABASE);
 
     public static AddressBook empty() {
         return new AddressBook();
@@ -56,15 +58,15 @@ public class AddressBook {
     }
 
     public void addPersontoDbAndUpdate(ReadOnlyPerson toAdd) {
+        TimeAndDate timeAndDate = new TimeAndDate();
         tempNric = toAdd.getNric().getIdentificationNumber();
-        screeningTimeStamp = new Timestamp(System.currentTimeMillis());
-        tempTimestamp = timestampFormatter.format(screeningTimeStamp);
+        tempTimestamp = timeAndDate.getOutputScreeningDAT();
     }
 
     public List<String> readDatabase(String nric) throws IOException {
         List<String> data = new ArrayList<>();
         String line;
-        BufferedReader br = new BufferedReader(new FileReader(SCREENING_DATABASE));
+        BufferedReader br = readerAndWriter.openReader(databaseFile);
         line = br.readLine();
         while (line != null){
             String[] parts = line.split(" ");
@@ -76,12 +78,13 @@ public class AddressBook {
                 line = br.readLine();
             }
         }
+        br.close();
         return data;
     }
 
     public void updateDatabase() throws IOException {
         String line;
-        BufferedReader br = new BufferedReader(new FileReader(SCREENING_DATABASE));
+        BufferedReader br = readerAndWriter.openReader(databaseFile);
         FileWriter write = new FileWriter(SCREENING_DATABASE,true);
         PrintWriter myPrinter = new PrintWriter(write);
         try {
@@ -106,11 +109,6 @@ public class AddressBook {
             myPrinter.close();
             br.close();
         }
-
-
-
-
-
     }
 
     /**

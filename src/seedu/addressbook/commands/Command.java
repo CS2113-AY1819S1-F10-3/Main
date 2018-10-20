@@ -41,17 +41,34 @@ public abstract class Command {
     }
 
     /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of a person.
+     *
+     * @param personDisplayed used to generate summary
+     * @return summary message for persons displayed
+     */
+
+    public static String getMessageForPersonShownSummary(ReadOnlyPerson personDisplayed) {
+        if (personDisplayed == null){
+            return Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK;
+        }
+        else{
+            return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        }
+    }
+
+    /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
      * @param timestampsDisplayed used to generate summary
      * @return summary message for timestamps displayed
      */
 
-    public static String getMessageForScreeningHistoryShownSummary(List<String> timestampsDisplayed) {
+    public static String getMessageForScreeningHistoryShownSummary(List<String> timestampsDisplayed, String nric) {
 
         Formatter formatter = new Formatter();
         String result = formatter.formatForTstamps(timestampsDisplayed);
-        String finalResult = result + String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, timestampsDisplayed.size());
+
+        String finalResult = result + String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, nric, timestampsDisplayed.size());
         return finalResult;
     }
 

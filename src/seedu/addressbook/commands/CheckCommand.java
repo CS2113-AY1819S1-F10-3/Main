@@ -22,7 +22,6 @@ public class CheckCommand extends Command {
             + "Parameters: NRIC ...\n\t"
             + "Example: " + COMMAND_WORD + " s1234567a";
     private String nricKeyword;
-    private ReadOnlyPerson matchedPerson;
 
 
     public CheckCommand(String nricToFind)
@@ -39,7 +38,7 @@ public class CheckCommand extends Command {
     @Override
     public CommandResult execute() {
         final List<String> screeningHistory = getPersonWithNric(nricKeyword);
-        return new CommandResult(getMessageForScreeningHistoryShownSummary(screeningHistory));
+        return new CommandResult(getMessageForScreeningHistoryShownSummary(screeningHistory,nricKeyword));
     }
 
     private List<String> getPersonWithNric(String nric){
