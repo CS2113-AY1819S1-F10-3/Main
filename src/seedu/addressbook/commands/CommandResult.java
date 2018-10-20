@@ -15,15 +15,24 @@ public class CommandResult {
 
     /** The list of persons that was produced by the command */
     private final List<? extends ReadOnlyPerson> relevantPersons;
+    private final int relevantNumUnreadMsgs;
 
     public CommandResult(String feedbackToUser) {
         this.feedbackToUser = feedbackToUser;
         relevantPersons = null;
+        this.relevantNumUnreadMsgs = -1;
     }
 
     public CommandResult(String feedbackToUser, List<? extends ReadOnlyPerson> relevantPersons) {
         this.feedbackToUser = feedbackToUser;
         this.relevantPersons = relevantPersons;
+        this.relevantNumUnreadMsgs = -1;
+    }
+
+    public CommandResult(String feedbackToUser, int numUnreadMsgs){
+        this.feedbackToUser = feedbackToUser;
+        this.relevantPersons = null;
+        this.relevantNumUnreadMsgs = numUnreadMsgs;
     }
 
     /**

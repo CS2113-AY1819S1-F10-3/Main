@@ -17,7 +17,7 @@ public class Password {
     private static final String MESSAGE_ATTEMPTS_LEFT = "You have %1$d attempts left. ";
     private static final String MESSAGE_ATTEMPT_LEFT = "You have %1$d attempt left. ";
     private static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect. ";
-    private static final String MESSAGE_SHUTDOWN = "Password is incorrect. System is shutting down. ";
+    private static final String MESSAGE_SHUTDOWN = "Password is incorrect. System will shut down. ";
     private static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
     public static final String MESSAGE_HQP = "Headquarters Personnel";
     public static final String MESSAGE_PO = "Police Officer ";
@@ -40,6 +40,7 @@ public class Password {
         return wrongPasswordCounter;
     }
     private static int wrongPasswordCounter = 5;
+
 
     private static boolean isHQP = false;
     public static void unlockHQP(){
@@ -117,10 +118,10 @@ public class Password {
     private boolean isLoginPO5 = false;
 
     public boolean isShutDown() {
-        return shutDown;
+        return isShutDown;
     }
 
-    private static boolean shutDown= false;
+    private static boolean isShutDown= false;
     private String oneTimePassword = null;
 
     private static ReaderAndWriter readerandwriter = new ReaderAndWriter();
@@ -145,7 +146,7 @@ public class Password {
 
             if (correctHQP(user,storedCurrPassword,hashedEnteredPassword)) {
                 isHQP = true;
-                result = String.format(MESSAGE_WELCOME , MESSAGE_HQP) + "\n"
+                result = String.format(MESSAGE_WELCOME, MESSAGE_HQP) + "\n"
                         + MESSAGE_ENTER_COMMAND;
                 break;
             }
@@ -193,7 +194,7 @@ public class Password {
             result = wrongPasswordShutDown(number);
         }
         else{
-            shutDown = false;
+            isShutDown = false;
         }
         br.close();
         return result;
@@ -214,7 +215,7 @@ public class Password {
             decreaseWrongPasswordCounter();
         }
         else if(wrongPasswordCounter == 0){
-            shutDown = true;
+            isShutDown = true;
             result = MESSAGE_SHUTDOWN;
         }
         else{
@@ -490,7 +491,8 @@ public class Password {
             commandWord = input;
         }
         else {
-            commandWord = input.substring(0, input.indexOf(" "));
+            input += " ";
+            commandWord = input.substring(0,input.indexOf(" "));
         }
         return commandWord;
     }
@@ -513,7 +515,7 @@ public class Password {
         return String.format(MESSAGE_TRY_UNAUTHORIZED, getUnauthorizedPOCommand(userCommandText));
     }
 
-    public String getID(){
+    public static String getID(){
         String result = null;
         if(isHQP){
             result = "hqp";
