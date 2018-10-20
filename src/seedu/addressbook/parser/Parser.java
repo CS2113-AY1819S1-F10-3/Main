@@ -153,8 +153,8 @@ public class Parser {
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
 
-            /*case InboxCommand.COMMAND_WORD:
-                return new InboxCommand();*/
+            case InboxCommand.COMMAND_WORD:
+                return new InboxCommand();
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
