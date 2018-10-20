@@ -23,6 +23,7 @@ public class Dictionary {
         commands.add("edit");
         commands.add("viewall");
         commands.add("view");
+        commands.add("edit");
     }
 
     public String getErrorMessage() {
