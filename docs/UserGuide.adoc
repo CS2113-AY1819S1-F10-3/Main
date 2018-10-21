@@ -53,7 +53,6 @@ Format: 'help'
 image::HelpCommand.png[width="790"]
 
 === Adding a person: `add`
-
 Adds a criminal to the database - only by HQP.
 
 Format: 'add NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR o/PASTOFFENSES'
@@ -91,7 +90,7 @@ Examples:
 *	edit g1952866Q p/510246
 *	Edits the postal code of the person with the specified NRIC to be 510246
 
-=== Display a list of all persons : 'list'
+=== Display a list of all persons : `list`
 
 Shows a list of every person in the records
 
@@ -104,7 +103,7 @@ Examples:
 
 image::ListCommand.png[width="790"]
 
-=== Find a person by NRIC : 'find'
+=== Find a person by NRIC : `find`
 
 Finds a person in the records by the specified NRIC
 
@@ -115,13 +114,13 @@ Examples:
 *	find s1234567a
 *	Returns person with 's1234567a'
 
+
 [NOTE]
 ====
 *   A timestamp and current ID is stored whenever this command is used
 ====
 
-
-=== Get screening history of a person: 'check'
+=== Get screening history of a person: `check`
 
 Displays all the times a person was screened in the form of timestamps (using 'find' command) - Only by HQP
 
@@ -137,7 +136,7 @@ Examples:
 
 image::CheckCommand.png[width="790"]
 
-=== Deleting a person : 'delete'
+=== Deleting a person : `delete`
 
 Deletes the specified person from the database- only by HQP.
 
@@ -150,7 +149,7 @@ Examples:
 *	delete G1952866Q
 *	Deletes the person with the specified NRIC from the records.
 
-=== Clear records : 'clear'
+=== Clear records : `clear`
 
 Clears the records of persons- only by HQP
 
@@ -161,7 +160,7 @@ Example:
 *	clear
 *	Records will now be empty
 
-=== Requesting for assistance : 'RA' (ambulance) or 'RB' (Backup)
+=== Requesting for assistance : `RA` (ambulance) or `RF` (Fire Brigade) or `RB` (Backup)
 
 Generates GPS coordinates of current location and sends it to HQ. Depending on type of assistance requested, either an ambulance or another patrol resource will be dispatched to said location
 
@@ -172,20 +171,18 @@ Examples:
 *	RB
 *   Returns a set of GPS coordinates to HQ
 
-=== Dispatch a PO : 'dispatch'
+=== Dispatch a PO : `dispatch`
 
 Dispatches a specified PO
 
 Format: 'dispatch PO(ID)'
 
-
-*	Dispatches PO[ID]
 Examples:
 
 *	dispatch PO2
 *	PO2 will receive a dispatch message
 
-=== Battery check : 'battery check'
+=== Battery check : `battery check`
 
 Checks battery level currently
 
@@ -195,7 +192,7 @@ Examples:
 *	battery check
 *	returns the battery level, for e.g : 50%
 
-=== Serial Number Check : '*06'
+=== Serial Number Check : `*06`
 
 Checks the serial number of device against the database. If inside the database, this means the phone is stolen
 
@@ -205,7 +202,7 @@ Examples:
 *	*06 99999999
 *	Returns true if number exists in the system
 
-=== Vehicle Number Check : 'vcheck'
+=== Vehicle Number Check : `vcheck`
 
 Checks if vehicle is stolen
 
@@ -216,7 +213,7 @@ Examples:
 *	vcheck SDV1111H
 *	Returns true if SDV1111H is stolen
 
-=== Date and Time Check : 'datetime'
+=== Date and Time Check : `datetime`
 
 Displays current date and time
 
@@ -227,7 +224,7 @@ Example:
 *	'datetime'
 *	15/10/18 1930hrs
 
-=== Lock System : 'lock'
+=== Lock System : `lock`
 
 Locks the system and unlocks with password input
 
@@ -238,7 +235,7 @@ Examples:
 *	lock
 *	Any user must enter their respective password to unlock
 
-=== Update Password : 'update password'
+=== Update Password : `update password`
 
 Updates password of user - only HQP can change the user's password
 
@@ -250,7 +247,7 @@ Examples:
 *	Please select a password to change
 *   User then has to enter old and new alphanumeric password
 
-=== Check notifications: 'inbox'
+=== Check notifications: `inbox`
 
 For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp.
 For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders
@@ -267,9 +264,9 @@ Examples (as a PO):
 *	'inbox'
 *	Shows any dispatch messages by HQ or response for backup if any
 
-=== Exit program : 'shutdown'
+=== Exit program : `shutdown`
 
-Shuts down program
+Shutdown the system
 
 Format: 'shutdown'
 
