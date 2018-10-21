@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import seedu.addressbook.autocorrect.CheckDistance;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.data.person.ReadOnlyPerson;
@@ -30,35 +31,12 @@ public class MainWindow {
     public MainWindow(){
     }
 
-
-
     public void setLogic(Logic logic){
         this.logic = logic;
     }
 
     public void setMainApp(Stoppable mainApp){
         this.mainApp = mainApp;
-    }
-
-
-    public String checkDistance(String commandInput) {
-        Dictionary A = new Dictionary();
-        EditDistance B = new EditDistance();
-        String prediction = "none";
-        ArrayList<String> commandList = Dictionary.getCommands();
-        int distance, check = 0;
-        for (String command : commandList) {
-            distance = EditDistance.computeDistance(commandInput, command);
-            if (distance == 1) {
-                prediction = command;
-                check = 1;
-                break;
-            }
-        }
-        if (check == 0) {
-            prediction = "none";
-        }
-        return prediction;
     }
 
     private Password password = new Password();
@@ -120,14 +98,14 @@ public class MainWindow {
             display(unauthorizedCommandResult);
         }
         else {
-            Dictionary dict = new Dictionary();
+            CheckDistance checker = new CheckDistance();
             String arr[] = userCommandText.split(" ", 2);
             String commandWordInput = arr[0];
-            String output = checkDistance(commandWordInput);
+            String output = checker.checkDistance(commandWordInput);
             String displayCommand = "not working";
             if(!(output.equals("none"))) {
                 clearScreen();
-                display(String.format(dict.getErrorMessage(), output));
+                display(String.format(Dictionary.getErrorMessage(), output));
                 switch (output) {
                     case AddCommand.COMMAND_WORD:
                         displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE)).feedbackToUser;

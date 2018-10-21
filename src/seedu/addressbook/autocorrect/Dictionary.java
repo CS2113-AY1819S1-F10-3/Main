@@ -9,7 +9,7 @@ public class Dictionary {
 
     public static final ArrayList<String> commands = new ArrayList<>();
 
-    public String errorMessage = "Did you mean to use %s?" + "\n" + "Please try using the correct implementation of the command as shown below-";
+    public static String errorMessage = "Did you mean to use %s?" + "\n" + "Please try using the correct implementation of the command as shown below-";
 
     public Dictionary() {
         commands.add("add");
@@ -26,7 +26,7 @@ public class Dictionary {
         commands.add("view");
     }
 
-    public String getErrorMessage() {
+    public static String getErrorMessage() {
         return errorMessage;
     }
 
