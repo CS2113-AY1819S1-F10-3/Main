@@ -7,13 +7,14 @@ import java.util.ArrayList;
  */
 public class CheckDistance {
 
-    public static String checkDistance(String commandInput) {
-        Dictionary dictionary = new Dictionary();
-        EditDistance calculate = new EditDistance();
-        String prediction = "none";
-        ArrayList<String> commandList = dictionary.getCommands();
-        if(commandList.isEmpty())
-            System.out.println("Empty");
+    Dictionary dictionary = new Dictionary();
+    EditDistance calculate = new EditDistance();
+
+    ArrayList<String> commandList = dictionary.getCommands();
+
+    String prediction = "none";
+
+    public String checkDistance(String commandInput) {
         int distance, check = 0;
         for (String command : commandList) {
             distance = calculate.computeDistance(commandInput, command);
@@ -27,5 +28,17 @@ public class CheckDistance {
             prediction = "none";
         }
         return prediction;
+    }
+
+    public Integer checkCommandDistance(String commandInput) {
+        int distance, check = 0;
+        for (String command : commandList) {
+            distance = calculate.computeDistance(commandInput, command);
+            if (distance == 0) {
+                check = 1;
+                break;
+            }
+        }
+        return check;
     }
 }
