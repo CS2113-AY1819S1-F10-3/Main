@@ -37,7 +37,8 @@ public abstract class Command {
      * @return summary message for persons displayed
      */
     public static String getMessageForPersonListShownSummary(List<? extends ReadOnlyPerson> personsDisplayed) {
-        return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, personsDisplayed.size());
+
+        return "\n\n" + String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, personsDisplayed.size());
     }
 
     /**
@@ -52,7 +53,8 @@ public abstract class Command {
             return Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK;
         }
         else{
-            return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+            String result = personDisplayed.getAsTextShowAllInVerticalMode();
+            return result + "\n\n" + String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         }
     }
 

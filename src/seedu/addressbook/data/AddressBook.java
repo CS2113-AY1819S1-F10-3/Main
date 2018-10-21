@@ -6,6 +6,7 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
+import seedu.addressbook.password.Password;
 import seedu.addressbook.readandwrite.ReaderAndWriter;
 import seedu.addressbook.timeanddate.TimeAndDate;
 
@@ -70,8 +71,12 @@ public class AddressBook {
         line = br.readLine();
         while (line != null){
             String[] parts = line.split(" ");
+
             if (parts[0].equals(nric)){
-                data.add(parts[1]);
+                if(parts[2].equals("null")){
+                    break;
+                }
+                data.add(parts[1] + " by " + parts[2]);
                 line = br.readLine();
             }
             else{
@@ -91,7 +96,7 @@ public class AddressBook {
             while ((line = br.readLine()) !=  null){
                 String[] parts = line.split(" ");
                 if (parts[0].equals(tempNric)){
-                    myPrinter.println(tempNric + " " + tempTimestamp);
+                    myPrinter.println(tempNric + " " + tempTimestamp + " " + Password.getID());
                     myPrinter.close();
                     br.close();
                     return;
@@ -99,12 +104,12 @@ public class AddressBook {
                 line = br.readLine();
                 continue;
             }
-            myPrinter.println(tempNric + " " + tempTimestamp);
+            myPrinter.println(tempNric + " " + tempTimestamp + " " + Password.getID());
             myPrinter.close();
             br.close();
         }
         catch (Exception e){
-            myPrinter.print(tempNric + " " + tempTimestamp);
+            myPrinter.print(tempNric + " " + tempTimestamp + " " + Password.getID());
 
             myPrinter.close();
             br.close();
