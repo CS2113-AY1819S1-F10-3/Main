@@ -1,0 +1,30 @@
+{
+  "authors":
+  [
+    {
+      "githubId": "andyrobert3",
+      "displayName": "MAT...DER",
+      "authorNames": ["andyrobert3"]
+    },
+    {
+      "githubId": "muhdharun",
+      "displayName": "MUH...HID",
+      "authorNames": ["muhdharun", "Harun"]
+    },
+    {
+      "githubId": "ongweekeong",
+      "displayName": "ONG...ONG",
+      "authorNames": ["Wee Keong Ong", "Ong Wee Keong"]
+    },
+    {
+      "githubId": "iamputradanish",
+      "displayName": "PUT...FEE",
+      "authorNames": ["iamputradanish"]
+    },
+    {
+      "githubId": "ShreyasKp",
+      "displayName": "SHR...ASH",
+      "authorNames": ["ShreyasKp"]
+    }
+  ]
+}

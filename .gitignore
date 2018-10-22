@@ -8,7 +8,7 @@ ScreeningHistory.txt
 requestList.txt
 
 # Logger files
-
+/config.json
 
 # Package Files #
 *.jar
