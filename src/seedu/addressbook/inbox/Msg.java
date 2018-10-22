@@ -1,6 +1,6 @@
 package seedu.addressbook.inbox;
 
-import seedu.addressbook.Location;
+import seedu.addressbook.common.Location;
 
 import java.sql.Timestamp;
 
@@ -17,6 +17,8 @@ public class Msg implements Comparable <Msg> {
     private Priority priority;
     private Location location;
     private int eta = -1;
+    private String policeOfficerId;
+
     //private String comment;
     protected boolean isRead;
     protected boolean isLocationAvailable;
@@ -46,12 +48,13 @@ public class Msg implements Comparable <Msg> {
         isRead = MESSAGE_IS_UNREAD;
     }
 
-    public Msg(Priority urgency, String message){
+    public Msg(Priority urgency, String message, String policeOfficerId){
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
         priority = urgency;
         time = new Timestamp(System.currentTimeMillis());
         newMsg = message;
+        this.policeOfficerId = policeOfficerId;
     }
 
     public Msg(Priority urgency, String message, Location myLocale){ // Constructor for request backup message
@@ -72,6 +75,7 @@ public class Msg implements Comparable <Msg> {
         location = requesterLocale;
         eta = myEta;
     }
+
 
     public void addMsg(String msg){
         this.newMsg = msg;
@@ -105,7 +109,6 @@ public class Msg implements Comparable <Msg> {
     public double getLongitude(){
         return location.getLongitude();
     }
-
     public double getLatitude(){
         return location.getLatitude();
     }
@@ -115,12 +118,18 @@ public class Msg implements Comparable <Msg> {
     public int getEta(){
         return this.eta;
     }
-
     public boolean hasEta(){
-        if(eta == -1)
-            return false;
-        else
-            return true;
+       return eta != -1;
+    }
+
+
+    public String getPoliceOfficerId() {
+        return policeOfficerId;
+    }
+    public void setPoliceOfficerId(String policeOfficerId) { this.policeOfficerId = policeOfficerId; }
+
+    public boolean hasPoliceOfficerId() {
+        return policeOfficerId != null;
     }
 
     public void setTime(){

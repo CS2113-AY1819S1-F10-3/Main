@@ -162,6 +162,9 @@ public class Parser {
             case RequestHelp.COMMAND_WORD:
                 return prepareRequest(arguments);
 
+            case DispatchBackup.COMMAND_WORD:
+                return prepareDispatch(arguments);
+
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
 
@@ -391,6 +394,28 @@ public class Parser {
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(Offense.MESSAGE_OFFENSE_INVALID);
         }
+    }
+
+    /**
+     * Parses arguments in context of dispatch command
+     *
+     * @params args full command args string
+     * @return the prepared request command
+     */
+    private Command prepareDispatch(String args) {
+        String backupOfficer, dispatchRequester, caseName;
+        String[] argParts = args.trim().split(" ",  3);
+
+        if (argParts.length < 3) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DispatchBackup.MESSAGE_USAGE));
+        }
+
+        backupOfficer = argParts[0];
+        caseName = argParts[1];
+        dispatchRequester = argParts[2];
+
+        return new DispatchBackup(backupOfficer, dispatchRequester, caseName);
     }
 
 }

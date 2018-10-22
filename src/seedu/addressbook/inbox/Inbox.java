@@ -8,7 +8,7 @@ import static seedu.addressbook.inbox.Msg.MESSAGE_IS_UNREAD;
 
 public class Inbox {
     // all messages will be stored here, notifications will appear based on severity and timestamp.
-    public static final String MESSAGE_STORAGE_FILEPATH = "notifications.txt";
+    public static final String MESSAGE_STORAGE_FILEPATH = "inboxMessages/headquartersInbox";
     public static final String COMMAND_WORD = "inbox";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Opens up list of unread notifications. \n\t"
             + "Example: " + COMMAND_WORD;

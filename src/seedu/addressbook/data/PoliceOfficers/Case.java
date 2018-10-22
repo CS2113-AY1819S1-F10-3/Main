@@ -1,6 +1,6 @@
 package seedu.addressbook.data.PoliceOfficers;
 
-import seedu.addressbook.Location;
+import seedu.addressbook.common.Location;
 
 
 

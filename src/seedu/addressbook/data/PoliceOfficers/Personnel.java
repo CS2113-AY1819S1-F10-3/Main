@@ -1,7 +1,7 @@
 package seedu.addressbook.data.PoliceOfficers;
 
 import org.javatuples.Triplet;
-import seedu.addressbook.Location;
+import seedu.addressbook.common.Location;
 
 import java.util.LinkedHashMap;
 

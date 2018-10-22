@@ -1,7 +1,7 @@
 package seedu.addressbook.inbox;
 
 import org.javatuples.Triplet;
-import seedu.addressbook.Location;
+import seedu.addressbook.common.Location;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -89,6 +89,7 @@ public class ReadNotification {
     ReadFromFile() throws IOException {  // If no new notifications and 'inbox' command invoked, show past 10 notifications
         String line;
         BufferedReader br = new BufferedReader(new FileReader(path));
+        unreadMsgs = 0;
         while ((line = br.readLine()) != null) {
             if (line.equals("> START OF MESSAGE <")) {
                 returnMsg = new Msg();

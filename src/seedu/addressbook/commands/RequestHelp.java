@@ -6,6 +6,7 @@ import seedu.addressbook.data.person.Offense;
 import seedu.addressbook.inbox.Inbox;
 import seedu.addressbook.inbox.Msg;
 import seedu.addressbook.inbox.WriteNotification;
+import seedu.addressbook.password.Password;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class RequestHelp extends Command {
             + "Requests help from headquarters.\n\t"
             + "Message from police officer can be appended in text.\n\t"
             + "Example: " + COMMAND_WORD
-            + " GUN \t"
+            + " gun "
             + " Help needed on Jane Street";
 
 
@@ -27,8 +28,8 @@ public class RequestHelp extends Command {
     private WriteNotification writeNotification;
 
     public RequestHelp(String caseName, String messageString) throws IllegalValueException {
-        writeNotification = new WriteNotification("requestList.txt", true);
-        requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString);
+        writeNotification = new WriteNotification("inboxMessages/headquartersInbox", true);
+        requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, Password.getID());
     }
 
 
