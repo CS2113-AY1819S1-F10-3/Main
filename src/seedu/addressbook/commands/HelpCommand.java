@@ -33,6 +33,8 @@ public class HelpCommand extends Command {
             + "\n" + LockCommand.MESSAGE_USAGE
             + "\n" + ExitCommand.MESSAGE_USAGE;
 
+
+    //@@author iamputradanish
     @Override
     public CommandResult execute() {
         Password password = new Password();

@@ -107,6 +107,7 @@ public class LogicTest {
         Password.lockIsHQP();
     }
 
+    //@@author iamputradanish
     @Test
     public void execute_unknownCommandWord_forPO() throws Exception {
         String unknownCommand = "uicfhmowqewca";
@@ -122,6 +123,7 @@ public class LogicTest {
         Password.lockIsPO();
     }
 
+    //@@author
     @Test
     public void execute_exit() throws Exception {
         assertCommandBehavior("shutdown", ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
@@ -549,6 +551,7 @@ public class LogicTest {
 //                                expectedList);
 //    }
 
+    //@@author iamputradanish
     @Test
     public void execute_unlockHQP() throws Exception {
         String result = Password.unlockDevice("mama123",5);
@@ -566,7 +569,7 @@ public class LogicTest {
         Password.lockIsPO();
     }
 
-
+    //@@author
 
     /**
      * A utility class to generate test data.

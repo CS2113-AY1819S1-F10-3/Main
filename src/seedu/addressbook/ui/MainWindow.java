@@ -82,6 +82,7 @@ public class MainWindow {
         }
     }
 
+    //@@author iamputradanish
     private void decipherUserCommandText(String userCommandText) throws Exception {
         if(toCloseApp(userCommandText)){
             password.lockDevice();
@@ -119,6 +120,7 @@ public class MainWindow {
             String unauthorizedCommandResult = password.invalidPOResult(userCommandText);
             display(unauthorizedCommandResult);
         }
+        //@@author ShreyasKp
         else {
             Dictionary dict = new Dictionary();
             String arr[] = userCommandText.split(" ", 2);
@@ -180,18 +182,20 @@ public class MainWindow {
         }
     }
 
-
+    //@@author iamputradanish
     private boolean canUpdatePassword(String userCommandText){
         return password.isHQPUser() && isUpdatePasswordCommand(userCommandText);
     }
 
+    //@@author
     /** Returns true if the result given is the result of an exit command */
     private boolean isExitCommand(String userCommandText) {
         return userCommandText.equals(ExitCommand.COMMAND_WORD);
     }
 
+    //@@author iamputradanish
     private boolean isUpdatePasswordCommand(String userCommandText) {
-        return userCommandText.equals("update password");
+        return userCommandText.equals(UpdatePasswordCommand.COMMAND_WORD);
     }
 
     private boolean toCloseApp(String userCommandText){
@@ -202,7 +206,7 @@ public class MainWindow {
         return userCommandText.equals(LockCommand.COMMAND_WORD);
     }
 
-
+    //@@author
     /** Clears the command input box */
     private void clearCommandInput() {
         commandInput.setText("");
@@ -213,11 +217,13 @@ public class MainWindow {
         outputConsole.clear();
     }
 
+    //@@author iamputradanish
     private void clearScreen(){
         clearCommandInput();
         clearOutputConsole();
     }
 
+    //@@author
     /** Displays the result of a command execution to the user. */
     private void displayResult(CommandResult result) {
         clearOutputConsole();
