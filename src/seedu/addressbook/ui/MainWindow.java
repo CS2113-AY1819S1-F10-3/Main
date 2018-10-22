@@ -96,6 +96,7 @@ public class MainWindow {
             display(unauthorizedCommandResult);
         }
         else {
+            userCommandText = userCommandText.trim();
             CheckDistance checker = new CheckDistance();
             Dictionary dict = new Dictionary();
             String arr[] = userCommandText.split(" ", 2);
@@ -109,6 +110,10 @@ public class MainWindow {
                     switch (output) {
                         case AddCommand.COMMAND_WORD:
                             displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
+
+                        case DateTimeCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DateTimeCommand.MESSAGE_USAGE)).feedbackToUser;
                             break;
 
                         case DeleteCommand.COMMAND_WORD:

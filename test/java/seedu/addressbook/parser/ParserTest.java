@@ -43,6 +43,12 @@ public class ParserTest {
         final String input = "help";
         parseAndAssertCommandType(input, HelpCommand.class);
     }
+
+    @Test
+    public void dateTimeCommand_parsedCorrectly() {
+        final String input = DateTimeCommand.COMMAND_WORD;
+        parseAndAssertCommandType(input, DateTimeCommand.class);
+    }
     
     @Test
     public void clearCommand_parsedCorrectly() {

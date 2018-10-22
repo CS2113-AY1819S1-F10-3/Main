@@ -11,6 +11,7 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.util.*;
 
@@ -105,6 +106,13 @@ public class LogicTest {
         Password.unlockHQP();
         assertCommandBehavior("help", HelpCommand.MESSAGE_ALL_USAGES);
         Password.lockIsHQP();
+    }
+
+    @Test
+    public void execute_timeCommand() throws Exception {
+        String command = DateTimeCommand.COMMAND_WORD;
+        TimeAndDate timeAndDate = new TimeAndDate();
+        assertCommandBehavior(command, timeAndDate.outputDATHrs());
     }
 
     @Test
