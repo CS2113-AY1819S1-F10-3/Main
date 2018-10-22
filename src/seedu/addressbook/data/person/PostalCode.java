@@ -1,9 +1,7 @@
 package seedu.addressbook.data.person;
 
+//@@author muhdharun
 import seedu.addressbook.data.exception.IllegalValueException;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Represents a Person's Postal Code in the address book.

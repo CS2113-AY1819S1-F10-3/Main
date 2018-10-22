@@ -23,7 +23,7 @@ public class Parser {
 
     public static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
-
+//@@author muhdharun -reused
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
                     + " n/(?<nric>[^/]+)"
@@ -32,7 +32,7 @@ public class Parser {
                     + " s/(?<status>[^/]+)"
                     + " w/(?<wantedFor>[^/]+)"
                     + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
-
+//@@author
     public static final Pattern EDIT_DATA_ARGS_FORMAT =
             Pattern.compile("n/(?<nric>[^/]+)"
                     + " p/(?<postalCode>[^/]+)"
@@ -173,7 +173,7 @@ public class Parser {
                 return new HelpCommand();
         }
     }
-
+//@@author muhdharun -reused
     /**
      * Parses arguments in the context of the add person command.
      *
@@ -200,7 +200,7 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
+//@@author
     /**
      * Checks whether the private prefix of a contact detail in the add command's arguments string is present.
      */
@@ -222,7 +222,7 @@ public class Parser {
         return new HashSet<>(tagStrings);
     }
 
-
+//@@author muhdharun -reused
     /**
      * Parses arguments in the context of the delete person command.
      *
@@ -232,10 +232,6 @@ public class Parser {
     private Command prepareDelete(String args){
         try {
             final String nric = parseArgsAsNric(args);
-//            if (Utils.isStringInteger(name)) {
-//                final int targetIndex = parseArgsAsDisplayedIndex(args);
-//                return new DeleteCommand(targetIndex);
-//            }
 
             return new DeleteCommand(new NRIC(nric));
         } catch (ParseException e) {
@@ -249,7 +245,7 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
+//@@author
     /**
      * Parses arguments in the context of the edit person command.
      *
@@ -327,7 +323,7 @@ public class Parser {
         }
         return Integer.parseInt(matcher.group("targetIndex"));
     }
-
+//@@author muhdharun
     private String parseArgsAsNric(String args) throws ParseException {
         final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
@@ -355,19 +351,8 @@ public class Parser {
             return ((isChecking == true) ? new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,CheckCommand.MESSAGE_USAGE)):
                     new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,FindCommand.MESSAGE_USAGE)));
          }
-
-
-//
-//        final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args);
-//        if (!matcher.matches()) {
-//            logr.warning("Argument for finding NRIC is invalid");
-//            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-//                    FindCommand.MESSAGE_USAGE));
-//        }
-
-        //return new FindCommand(args);
     }
-
+//@@author
     /**
      * Parses arguments in context of request help command.
      *

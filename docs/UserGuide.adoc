@@ -59,6 +59,7 @@ Format: 'add NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR o/PASTO
 
 Examples:
 
+
 *	add John Doe n/f1234567p d/1996 p/510246 s/xc w/none o/theft o/drugs"
 *   Displays a message stating the new person being added
 
@@ -160,15 +161,15 @@ Example:
 *	clear
 *	Records will now be empty
 
-=== Requesting for assistance : `RA` (ambulance) or `RF` (Fire Brigade) or `RB` (Backup)
+=== Requesting for assistance : `request`
 
 Generates GPS coordinates of current location and sends it to HQ. Depending on type of assistance requested, either an ambulance or another patrol resource will be dispatched to said location
 
-Format: 'RA' (to call for ambulance) or 'RB' (to call for backup)
+Format: 'request'
 
 Examples:
 
-*	RB
+*	request
 *   Returns a set of GPS coordinates to HQ
 
 === Dispatch a PO : `dispatch`
@@ -181,48 +182,6 @@ Examples:
 
 *	dispatch PO2
 *	PO2 will receive a dispatch message
-
-=== Battery check : `battery check`
-
-Checks battery level currently
-
-Format: 'battery check'
-
-Examples:
-*	battery check
-*	returns the battery level, for e.g : 50%
-
-=== Serial Number Check : `*06`
-
-Checks the serial number of device against the database. If inside the database, this means the phone is stolen
-
-Format: '*06 PHONE_NUMBER'
-
-Examples:
-*	*06 99999999
-*	Returns true if number exists in the system
-
-=== Vehicle Number Check : `vcheck`
-
-Checks if vehicle is stolen
-
-Format: 'vcheck VEHICLE_NUMBER'
-
-Examples:
-
-*	vcheck SDV1111H
-*	Returns true if SDV1111H is stolen
-
-=== Date and Time Check : `datetime`
-
-Displays current date and time
-
-Format: 'datetime'
-
-Example:
-
-*	'datetime'
-*	15/10/18 1930hrs
 
 === Lock System : `lock`
 
@@ -308,20 +267,6 @@ E.g. delete g1952866q
 *	*Dispatch* : 'dispatch PO(ID)'
 
 E.g. dispatch PO2
-
-*	*Battery Check* : 'battery check'
-
-*	*Serial Number Check* : '*06 PHONE_NUMBER'
-
-E.g. *06 86781234
-
-*	*Vehicle Number Check* : 'vcheck'
-
-Format: vcheck VEHICLE_NUMBER
-
-E.g. vcheck v/SGP0884S
-
-*	*Date and Time Check* : 'datetime'
 
 *	*Lock* : 'lock'
 

@@ -47,7 +47,7 @@ public abstract class Command {
      * @param personDisplayed used to generate summary
      * @return summary message for persons displayed
      */
-
+    //@@author muhdharun
     public static String getMessageForPersonShownSummary(ReadOnlyPerson personDisplayed) {
         if (personDisplayed == null){
             return Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK;
@@ -73,7 +73,7 @@ public abstract class Command {
         String finalResult = result + String.format(Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW, nric, timestampsDisplayed.size());
         return finalResult;
     }
-
+    //@@ author
     /**
      * Executes the command and returns the result.
      */

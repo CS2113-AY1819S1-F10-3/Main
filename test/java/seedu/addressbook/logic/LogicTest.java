@@ -136,7 +136,7 @@ public class LogicTest {
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, AddressBook.empty(), false, Collections.emptyList());
     }
-
+//@@author muhdharun -reused
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
@@ -170,7 +170,7 @@ public class LogicTest {
                 "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
 
     }
-
+//@@author
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
@@ -400,7 +400,7 @@ public class LogicTest {
     public void execute_delete_invalidCommandFormat() throws Exception {
         assertInvalidCommandFormatBehaviorForCommand("delete");
     }
-
+//@@author muhdharun -reused
     @Test
     public void execute_delete_removesCorrectPerson() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -447,13 +447,13 @@ public class LogicTest {
                                 false,
                                 threePersons);
     }
-
+//@@author
     @Test
     public void execute_edit_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertCommandBehavior("edit ", expectedMessage);
     }
-
+//@@author muhdharun -reused
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
@@ -480,6 +480,25 @@ public class LogicTest {
     }
 
     @Test
+    public void execute_find_isCaseSensitive() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person pTarget1 = helper.generatePersonWithNric("s1234567b");
+        Person pTarget2 = helper.generatePersonWithNric("s1234567c");
+        Person p1 = helper.generatePersonWithNric("s1234567d");
+        Person p2 = helper.generatePersonWithNric("s1234567e");
+
+        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
+        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
+        helper.addToAddressBook(addressBook, fourPersons);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        CommandResult r = logic.execute("find " + "S1234567B");
+        assertEquals(expectedMessage,r.feedbackToUser);
+
+    }
+
+//@@author muhdharun
+    @Test
     public void execute_check_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckCommand.MESSAGE_USAGE);
         assertCommandBehavior("check S1234567A", expectedMessage);
@@ -500,53 +519,13 @@ public class LogicTest {
         logic.execute("delete " + nric);
 
     }
-
+//@@author
 //    @Test
 //    public void execute_autocorrect_command() throws Exception {
 //        CommandResult r =
 //
 //    }
 
-//    @Test
-//    public void execute_find_isCaseSensitive() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        Person pTarget1 = helper.generatePersonWithNric("s1234567b");
-//        Person pTarget2 = helper.generatePersonWithNric("s1234567c");
-//        Person p1 = helper.generatePersonWithNric("s1234567d");
-//        Person p2 = helper.generatePersonWithNric("s1234567e");
-//
-//        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-//        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-//        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
-//        helper.addToAddressBook(addressBook, fourPersons);
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
-//        assertCommandBehavior("find S1234567B",
-//                                Command.getMessageForPersonListShownSummary(expectedList),
-//                                expectedAB,
-//                                true,
-//                                expectedList);
-//
-//    }
-
-//    @Test
-//    public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-//        Person pTarget2 = helper.generatePersonWithName("bla rAnDoM bla bceofeia");
-//        Person p1 = helper.generatePersonWithName("key key");
-//        Person p2 = helper.generatePersonWithName("KEy sduauo");
-//
-//        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-//        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-//        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
-//        helper.addToAddressBook(addressBook, fourPersons);
-//
-//        assertCommandBehavior("find KEY rAnDoM",
-//                                Command.getMessageForPersonListShownSummary(expectedList),
-//                                expectedAB,
-//                                true,
-//                                expectedList);
-//    }
 
     @Test
     public void execute_unlockHQP() throws Exception {
@@ -571,7 +550,7 @@ public class LogicTest {
      * A utility class to generate test data.
      */
     class TestDataHelper{
-
+//@@author muhdharun -reused
         Person adam() throws Exception {
             Name name = new Name("Adam Brown");
             NRIC nric = new NRIC("f1234567j");
@@ -605,7 +584,7 @@ public class LogicTest {
                     new HashSet<>(Arrays.asList(new Offense("theft" + Math.abs(seed)), new Offense("theft" + Math.abs(seed + 1))))
             );
         }
-
+//@@author muhdharun
         Person generateDummyPerson() throws Exception {
             return new Person(
                     new Name("Not a human"),
@@ -617,7 +596,7 @@ public class LogicTest {
                     new HashSet<>(Arrays.asList(new Offense("theft")))
             );
         }
-
+//@@author muhdharun -reused
         /** Generates the correct add command based on the person given */
         String generateAddCommand(Person p) {
             StringJoiner cmd = new StringJoiner(" ");
@@ -638,7 +617,7 @@ public class LogicTest {
 
             return cmd.toString();
         }
-
+//@@author
         /**
          * Generates an AddressBook with auto-generated persons.
          * @param isPrivateStatuses flags to indicate if all contact details of respective persons should be set to
@@ -706,6 +685,7 @@ public class LogicTest {
         /**
          * Generates a random NRIC
          */
+        //@@author muhdharun
         String generateRandomNric() {
             int min = 1111111;
             int max = 9999999;
@@ -728,7 +708,7 @@ public class LogicTest {
                     Collections.singleton(new Offense("riot"))
             );
         }
-
+        //@@author muhdharun -reused
         /**
          * Generates a Person object with given name. Other fields will have some dummy values.
          */

@@ -1,5 +1,5 @@
 package seedu.addressbook.data.PoliceOfficers;
-
+//@@author muhdharun -unused
 import seedu.addressbook.Location;
 
 
@@ -53,16 +53,6 @@ public class Case {
 
     public String getCaseTimeStampFormatted() {return caseTimeStampFormatted;}
 
-    /*public static void main(String[] args) {
-        Location location = new Location(-6.206968,106.751365);
-        Location origin = new Location(-6.189482, 106.733902);
-        PatrolID id = new PatrolID(5);
-        String msg = "Fire";
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        Case c = new Case(id,msg,location,now);
-        System.out.print(c.PrintCase());
 
-
-    }*/
 
 }

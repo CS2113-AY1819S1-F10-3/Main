@@ -57,8 +57,8 @@ public class AddressBook {
     public void addPerson(Person toAdd) throws UniquePersonList.DuplicateNricException {
         allPersons.add(toAdd);
     }
-
-    public void addPersontoDbAndUpdate(ReadOnlyPerson toAdd) {
+//@@author muhdharun
+    public void addPersonToDbAndUpdate(ReadOnlyPerson toAdd) {
         TimeAndDate timeAndDate = new TimeAndDate();
         tempNric = toAdd.getNric().getIdentificationNumber();
         tempTimestamp = timeAndDate.getOutputScreeningDAT();
@@ -74,7 +74,7 @@ public class AddressBook {
 
             if (parts[0].equals(nric)){
                 if(parts[2].equals("null")){
-                    break;
+                    continue;
                 }
                 data.add(parts[1] + " by " + parts[2]);
                 line = br.readLine();
@@ -115,7 +115,7 @@ public class AddressBook {
             br.close();
         }
     }
-
+//@@author
     /**
      * Checks if an equivalent person exists in the address book.
      */
@@ -156,10 +156,6 @@ public class AddressBook {
      */
     public UniquePersonList getAllPersons() {
         return new UniquePersonList(allPersons);
-    }
-
-    public UniquePersonList getAllPersonsDirect() {
-        return allPersons;
     }
 
     @Override
