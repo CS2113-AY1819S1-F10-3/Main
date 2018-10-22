@@ -3,12 +3,10 @@ package seedu.addressbook.commands;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Offense;
-import seedu.addressbook.inbox.Inbox;
 import seedu.addressbook.inbox.Msg;
 import seedu.addressbook.inbox.WriteNotification;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class RequestHelp extends Command {
     public static final String COMMAND_WORD = "request";
@@ -27,7 +25,7 @@ public class RequestHelp extends Command {
     private WriteNotification writeNotification;
 
     public RequestHelp(String caseName, String messageString) throws IllegalValueException {
-        writeNotification = new WriteNotification("requestList.txt", true);
+        writeNotification = new WriteNotification("notifications.txt", true);
         requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString);
     }
 

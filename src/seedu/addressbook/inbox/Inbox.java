@@ -27,7 +27,7 @@ public class Inbox {
 //        Inbox inbox = new Inbox();
     }
 
-    public static TreeSet<Msg> loadMsgs() throws IOException {
+    public TreeSet<Msg> loadMsgs() throws IOException {
      //   notificationsToPrint = nw.ReadFromFile();
         notificationsToPrint = nw.ReadFromFile();
         numUnreadMsgs = nw.getNumUnreadMsgs(); // TODO: eventually when bugs are all cleared, use .size() method.
@@ -60,7 +60,7 @@ public class Inbox {
      * Messages will all be marked as read and rewritten in the new notifications file.
      *
      */
-    public static void printNewMsgs() throws IOException {
+    public void printNewMsgs() throws IOException {
         // print new messages in order according to TreeSet. After messages are printed, they are considered old.
         Msg myPrintMsg;
         int messageNum = 1;
@@ -75,7 +75,7 @@ public class Inbox {
                 printMessageNoLocation(messageNum, myPrintMsg);
             }
             messageNum++;
-        //  myPrintMsg = markMsgAsRead(myPrintMsg); //TODO: Only markMsgAsUnread when the messages are responded to.
+          //myPrintMsg = markMsgAsRead(myPrintMsg); //TODO: Only markMsgAsUnread when the messages are responded to.
         // put updated message into new TreeSet.
             allNotifications.add(myPrintMsg);
         }
@@ -83,7 +83,7 @@ public class Inbox {
 
     }
 
-    public static void printMessage(int messageNum, Msg msgToPrint){
+    public void printMessage(int messageNum, Msg msgToPrint){
         if(msgToPrint.isRead == MESSAGE_IS_UNREAD) {
             System.out.println(messageNum + " [UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
                     ", message: " + msgToPrint.getMsg() + ", Coordinates: " + msgToPrint.getLatitude() + ", " +
@@ -95,7 +95,7 @@ public class Inbox {
                     msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + '.');
         }
     }
-    public static void printMessageNoLocation(int messageNum, Msg msgToPrint){
+    public void printMessageNoLocation(int messageNum, Msg msgToPrint){
         if(msgToPrint.isRead == MESSAGE_IS_UNREAD) {
             System.out.println(messageNum + " [UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
                     ", message: " + msgToPrint.getMsg() + '.');
@@ -106,21 +106,21 @@ public class Inbox {
         }
     }
 
-    public static Msg markMsgAsRead(Msg myMsg){ // Construct a new message, copy from TreeMap, then change read status, update.
+    public Msg markMsgAsRead(Msg myMsg){ // Construct a new message, copy from TreeMap, then change read status, update.
         myMsg.isRead = MESSAGE_IS_READ;
         return myMsg;
     }
 
-    public static void main(String[] args) throws IOException {
-        /*Msg newMsg = new Msg();
+    /*public static void main(String[] args) throws IOException {
+        Msg newMsg = new Msg();
         Location location = new Location(-6.206968,106.751365);
         newMsg.addMsg("Backup requested");
         newMsg.setLocation(location);
         newMsg.setPriority(Msg.Priority.HIGH);
         newMsg.setTime();
-        newMessages.writeToFile(newMsg);*/
-        loadMsgs();
+        newMessages.writeToFile(newMsg);
+        //loadMsgs();
         //printNumOfUnreadMsg();
-        printNewMsgs();
-    }
+        //printNewMsgs();
+    }*/
 }

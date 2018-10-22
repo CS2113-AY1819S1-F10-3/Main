@@ -16,7 +16,7 @@ import java.util.TreeSet;
 public class ReadNotification {
     private static String path;
     private static Msg returnMsg;
-    private static int unreadMsgs = 0;
+    private int unreadMsgs = 0;
     protected static HashMap<Triplet<Boolean, Msg.Priority, Timestamp>, Triplet<String, Integer, Location>> allMsg = new HashMap<>();
     protected static TreeSet<Msg> sortedMsgs = new TreeSet<>();
 
@@ -85,10 +85,11 @@ public class ReadNotification {
         return allMsg;
     }*/
 
-    public static TreeSet<Msg>
+    public TreeSet<Msg>
     ReadFromFile() throws IOException {  // If no new notifications and 'inbox' command invoked, show past 10 notifications
         String line;
         BufferedReader br = new BufferedReader(new FileReader(path));
+        unreadMsgs = 0;
         while ((line = br.readLine()) != null) {
             if (line.equals("> START OF MESSAGE <")) {
                 returnMsg = new Msg();
@@ -153,7 +154,7 @@ public class ReadNotification {
     public void resetUnreadMsgs(){
         this.unreadMsgs = 0;
     }
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         ReadNotification myFile = new ReadNotification("notifications.txt");
         int messageNum = 1;
         sortedMsgs = ReadFromFile();
@@ -174,5 +175,5 @@ public class ReadNotification {
             messageNum++;
         }
 
-    }
+    }*/
 }

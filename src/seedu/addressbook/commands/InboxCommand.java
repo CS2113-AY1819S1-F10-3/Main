@@ -16,10 +16,8 @@ public class InboxCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        /*List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
-        return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);*/
         Inbox myInbox = new Inbox();
-        TreeSet<Msg> allMsgs = null; // TODO: Figure out how to send the whole list of messages over.
+        TreeSet<Msg> allMsgs;
         int myUnreadMsgs;
         int messageNum = 1;
         Msg msgToPrint;
@@ -31,13 +29,23 @@ public class InboxCommand extends Command {
                 for(int i=0; i<myUnreadMsgs; i++){
                     msgToPrint = allMsgs.pollFirst();
                     assert msgToPrint != null;
-                    fullPrintedMessage += String.valueOf(messageNum++) + ".\t[UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " +
-                            msgToPrint.getTime() + ", message: " + msgToPrint.getMsg() + ", Coordinates: " + msgToPrint.getLatitude() + ", " +
-                            msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + ".\n";
+                    try {
+                        fullPrintedMessage += String.valueOf(messageNum) + ".\t[UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " +
+                                msgToPrint.getTime() + ", message: " + msgToPrint.getMsg() + ", Coordinates: " + msgToPrint.getLatitude() + ", " +
+                                msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + ".\n";
+                        messageNum++;
+                    }
+                    catch (NullPointerException e){
+                        fullPrintedMessage += String.valueOf(messageNum) + ".\t[UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " +
+                                msgToPrint.getTime() + ", message: " + msgToPrint.getMsg() + ".\n";
+                        messageNum++;
+                    }
                 }
+                allMsgs.clear();
                 return new CommandResult(String.format(fullPrintedMessage, myUnreadMsgs));
             }
             else{
+                allMsgs.clear();
                 return new CommandResult(Messages.MESSAGE_NO_UNREAD_MSGS);
             }
         } catch (IOException e) {
