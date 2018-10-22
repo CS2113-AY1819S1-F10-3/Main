@@ -81,7 +81,7 @@ Alternatives considered:
 - Updating using any password, without validity. Password may be weak.
 - Overwriting passwordStorage.txt . This will cause errors in replacing password.
 
-2a. "find" command (edited)
+*2a. "find" command (edited)*
 
 The new "find" command is revised from the existing "find" command in AB3. Instead of finding a person by name, it finds a person using his NRIC.
 It also implements the following operations:
@@ -102,7 +102,7 @@ Step 4: The person is found and is stored in a matchedPerson list variable. exec
 
 Step 5: The CommandResult object displays to the user the searched person and his details, all of which in string form.
 
-2b. "check" command
+*2b. "check" command*
 
 Only a HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
 The "check" command makes some use of the "find" command. Every time the "find" command successfully finds a person, a line in the format of:
@@ -156,6 +156,48 @@ Eventually, we decided to use TreeSet in our implementation as we felt that the 
 Eventually, we also used multiple message storage files, each dedicated to a specific user, as this allowed us to increase the time efficiency of the code as the getMessagesFor() method did not need to sort through the messages based on recipient anymore. This benefit becomes especially obvious as well when there is a large number of messages that has to be stored, directed towards multiple users.
 
 
+*3. Autocorrection feature*
+
+Current Implementation
+
+The autocorrect mechanism is facilitated by use of dynamic programming.
+The algorithm called EditDistance checks the number of single character
+changes to be made to convert an invalid input into one expected by the
+system. Currently, changes involving one single character can be corrected
+by the system.
+It implements the following operations:
+
+. checkDistance() - It returns the edit distance needed to convert one
+string to the other. In this case, it returns the number of single character
+changes (either addition of a character, deletion of a character or changing
+a character) to convert invalid user input into its most probable correct
+implementation.
+. getCommands() - This function returns the list of possible commands that
+the user can input.
+
+The following is an example usage scenario of the autocorrection feature:
+
+Step 1: The user inputs his password and unlocks the system.
+
+Step 2: The user enters an invalid command.
+
+Step 3: The system predicts the most probable intended command the user
+would have wanted to input, based on a threshold and then prompts the user
+to use the prediction given in its valid format.
+
+The input is checked by the algorithm in the MainWindow before it is sent
+to the Parser class. This is to ensure invalid input can be caught by the
+algorithm to give its correction before it is deemed as invalid by the Parser
+during which time all commands will be laid out to the user.
+
+Alternatives considered-
+
+. Running the algorithm from the Parser- This however will not allow the
+prediction to be reported efficiently.
+
+. Include predictions with more than one character changes- This will bring
+in ambiguity in the correction algorithm and increases chances of errors.
+
 == Use Cases
 The use cases for the current features and commands implemented can be found in Appendix B.
 
@@ -208,8 +250,8 @@ Use case ends.
 +
 Use case resumes at step 1.
 
-** 3b. The number of attempts reaches zero.
-*** 3b1. System shuts down.
+* 3b. The number of attempts reaches zero.
+** 3b1. System shuts down.
 +
 Use case ends.
 
@@ -231,8 +273,8 @@ Use case ends.
 +
 Use case resumes at step 1.
 
-** 3b. The number of attempts reaches zero.
-*** 3b1. System shuts down.
+* 3b. The number of attempts reaches zero.
+** 3b1. System shuts down.
 +
 Use case ends.
 
@@ -267,8 +309,8 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-** 3b. The number of attempts reaches zero.
-*** 3b1. System shuts down.
+* 3b. The number of attempts reaches zero.
+** 3b1. System shuts down.
 +
 Use case ends.
 
@@ -313,8 +355,8 @@ Use case ends.
 Use case resumes at step 5.
 
 * *a. At any time, User cancels add action.
-* *a1. System requests for confirmation to cancel.
-* *a2. User confirms cancellation.
+** *a1. System requests for confirmation to cancel.
+** *a2. User confirms cancellation.
 +
 Use case ends.
 
@@ -501,8 +543,6 @@ Use case resumes at step 2.
 ** 5a1. System also displays the valid usage of the command.
 +
 Use case ends.
-
-*Extensions*
 
 * 5b. User enters an invalid input for which the system cannot find a prediction.
 ** 5b1. System shows error message.
