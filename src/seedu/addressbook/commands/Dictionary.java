@@ -33,6 +33,7 @@ public class Dictionary extends Command{
             commands.add(AddCommand.COMMAND_WORD);
             commands.add(CheckCommand.COMMAND_WORD);
             commands.add(ClearCommand.COMMAND_WORD);
+            commands.add(DateTimeCommand.COMMAND_WORD);
             commands.add(DeleteCommand.COMMAND_WORD);
             commands.add(EditCommand.COMMAND_WORD);
             commands.add(ExitCommand.COMMAND_WORD);

@@ -135,6 +135,9 @@ public class Parser {
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(arguments);
 
+            case DateTimeCommand.COMMAND_WORD:
+                return new DateTimeCommand();
+
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
