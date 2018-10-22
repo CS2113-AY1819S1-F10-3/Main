@@ -1,3 +1,4 @@
+//@@author ongweekeong
 package seedu.addressbook.inbox;
 
 import java.io.IOException;
@@ -14,21 +15,14 @@ public class Inbox {
             + "Example: " + COMMAND_WORD;
     public static final String MESSAGE_PROMPT = "Press 'Enter' to take action for Message 1";
     public static int numUnreadMsgs = 0;
-    private Msg message;
     private static ReadNotification nw = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
     static WriteNotification newMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
     static WriteNotification allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false);
-
-    //protected static HashMap<Triplet<Boolean, Msg.Priority, Timestamp>, Triplet<String, Integer, Location>> notificationsToPrint = new HashMap<>();
     protected static TreeSet<Msg> notificationsToPrint = new TreeSet<>();
     protected static TreeSet<Msg> allNotifications = new TreeSet<>();
 
-    public Inbox(){
-//        Inbox inbox = new Inbox();
-    }
 
     public TreeSet<Msg> loadMsgs() throws IOException {
-     //   notificationsToPrint = nw.ReadFromFile();
         notificationsToPrint = nw.ReadFromFile();
         numUnreadMsgs = nw.getNumUnreadMsgs(); // TODO: eventually when bugs are all cleared, use .size() method.
         return notificationsToPrint;
@@ -43,12 +37,7 @@ public class Inbox {
         return numUnreadMsgs;
     }
 
-    /*public static void printNumOfUnreadMsg(){
-        if(numUnreadMsgs > 0)
-            System.out.println("You have " + numUnreadMsgs + " new message" + ((numUnreadMsgs == 1) ? "." : "s."));
-        else
-            System.out.println("You have no new messages.");
-    }*/
+
     public String printNumOfUnreadMsg(){
         if(numUnreadMsgs > 0)
             return "You have " + numUnreadMsgs + " new message" + ((numUnreadMsgs == 1) ? "." : "s.");

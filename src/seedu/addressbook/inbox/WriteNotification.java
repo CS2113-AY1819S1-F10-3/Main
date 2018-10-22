@@ -1,4 +1,7 @@
+//@@author ongweekeong
 package seedu.addressbook.inbox;
+
+import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,13 +32,13 @@ public class WriteNotification {
      */
 
     public void writeToFile(Msg message) throws IOException{
-
+        TimeAndDate dateFormatter = new TimeAndDate();
         FileWriter write = new FileWriter (path, isAppend);
         PrintWriter myPrinter = new PrintWriter(write);
         myPrinter.println("> START OF MESSAGE <");
         myPrinter.println("Read status:" + message.isRead);
         myPrinter.println("Priority:" + message.getPriority());
-        myPrinter.println("Timestamp:" + message.getTime());
+        myPrinter.println("Timestamp:" + dateFormatter.outputDATHrs());
         myPrinter.println("Message:" + message.getMsg());
         if(message.hasEta())
             myPrinter.println("ETA:" + message.getEta());
@@ -50,17 +53,17 @@ public class WriteNotification {
 
     // Create overload function for write to file to write a set of notifications.
     public void writeToFile(TreeSet<Msg> msgSet) throws IOException {
-
+        TimeAndDate dateFormatter = new TimeAndDate();
         FileWriter write = new FileWriter (path, isAppend);
         PrintWriter myPrinter = new PrintWriter(write);
         int numMsg = msgSet.size();
         Msg msg;
         for(int i = 0; i< numMsg; i++) {
-            msg = msgSet.pollLast(); // TODO: Understand if saving first to last or last to first is more efficient.
+            msg = msgSet.pollFirst();
             myPrinter.println("> START OF MESSAGE <");
             myPrinter.println("Read status:" + msg.isRead);
             myPrinter.println("Priority:" + msg.getPriority());
-            myPrinter.println("Timestamp:" + msg.getTime());
+            myPrinter.println("Timestamp:" + dateFormatter.outputDATHrs());
             myPrinter.println("Message:" + msg.getMsg());
             if (msg.hasEta())
                 myPrinter.println("ETA:" + msg.getEta());

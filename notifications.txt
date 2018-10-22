@@ -1,7 +1,7 @@
 > START OF MESSAGE <
 Read status:true
 Priority:LOW
-Timestamp:2017-01-01 22:00:41.426
+Timestamp:12/12/2017 2045:35
 Message:This should be last message
 -
 Location:-6.206968,106.751365
@@ -9,7 +9,7 @@ Location:-6.206968,106.751365
 > START OF MESSAGE <
 Read status:false
 Priority:LOW
-Timestamp:2017-01-01 22:00:41.426
+Timestamp:12/12/2017 2145:49
 Message:This should be last message
 -
 Location:-6.206968,106.751365
@@ -17,7 +17,7 @@ Location:-6.206968,106.751365
 > START OF MESSAGE <
 Read status:false
 Priority:MED
-Timestamp:2017-01-01 20:00:41.426
+Timestamp:11/12/2017 2345:55
 Message:This should be second message
 -
 Location:-6.206968,106.751365
@@ -25,8 +25,24 @@ Location:-6.206968,106.751365
 > START OF MESSAGE <
 Read status:false
 Priority:HIGH
-Timestamp:2017-01-01 22:00:41.426
+Timestamp:13/12/2017 1745:52
 Message:This should be first message
+-
+-
+> END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:22/10/2018 2029:00
+Message: Help needed on Jane Street
+-
+-
+> END OF MESSAGE <
+> START OF MESSAGE <
+Read status:false
+Priority:HIGH
+Timestamp:22/10/2018 2036:56hrs
+Message: Help needed on Jane Street
 -
 -
 > END OF MESSAGE <
