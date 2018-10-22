@@ -13,10 +13,14 @@ import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static junit.framework.TestCase.assertEquals;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.addressbook.common.Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW;
+import static seedu.addressbook.password.Password.MESSAGE_ENTER_PASSWORD;
+import static seedu.addressbook.password.Password.unlockHQP;
+import static seedu.addressbook.password.Password.unlockPO;
 
 
 public class LogicTest {
@@ -92,6 +96,7 @@ public class LogicTest {
         assertEquals(addressBook, saveFile.load());
     }
 
+    //@@author iamputradanish
     @Test
     public void execute_unknownCommandWord_forHQP() throws Exception {
         String unknownCommand = "uicfhmowqewca";
@@ -107,18 +112,18 @@ public class LogicTest {
         Password.lockIsHQP();
     }
 
-    //@@author iamputradanish
+
     @Test
     public void execute_unknownCommandWord_forPO() throws Exception {
         String unknownCommand = "uicfhmowqewca";
-        Password.unlockPO();
+        unlockPO();
         assertCommandBehavior(unknownCommand, HelpCommand.MESSAGE_PO_USAGES);
         Password.lockIsPO();
     }
 
     @Test
     public void execute_help_forPO() throws Exception {
-        Password.unlockPO();
+        unlockPO();
         assertCommandBehavior("help", HelpCommand.MESSAGE_PO_USAGES);
         Password.lockIsPO();
     }
@@ -567,6 +572,67 @@ public class LogicTest {
                 + "\n" + Password.MESSAGE_UNAUTHORIZED
                 + "\n" + Password.MESSAGE_ENTER_COMMAND , result);
         Password.lockIsPO();
+    }
+
+    @Test
+    public void execute_wrongPassword_firstTime() throws Exception{
+        String wrongPassword = "thisiswrong";
+        int numberOfAttemptsLeft = 5;
+        Password.setWrongPasswordCounter(numberOfAttemptsLeft);
+        String result = Password.unlockDevice(wrongPassword, numberOfAttemptsLeft);
+        assertEquals(Password.MESSAGE_INCORRECT_PASSWORD
+                + "\n" + String.format(Password.MESSAGE_ATTEMPTS_LEFT, numberOfAttemptsLeft)
+                + "\n" + MESSAGE_ENTER_PASSWORD,result);
+        Password.setWrongPasswordCounter(5);
+    }
+    @Test
+    public void execute_wrongPassword_fourthTime() throws Exception{
+        String wrongPassword = "thisiswrong";
+        int numberOfAttemptsLeft = 1;
+        Password.setWrongPasswordCounter(numberOfAttemptsLeft);
+        String result = Password.unlockDevice(wrongPassword, numberOfAttemptsLeft);
+        assertEquals(Password.MESSAGE_INCORRECT_PASSWORD
+                + "\n" + String.format(Password.MESSAGE_ATTEMPT_LEFT, numberOfAttemptsLeft)
+                + "\n" + Password.MESSAGE_SHUTDOWN_WARNING,result);
+
+    }
+
+    @Test
+    public void execute_wrongPassword_lastTime() throws Exception{
+        String wrongPassword = "thisiswrong";
+        int numberOfAttemptsLeft = 0;
+        Password.setWrongPasswordCounter(numberOfAttemptsLeft);
+        String result = Password.unlockDevice(wrongPassword, numberOfAttemptsLeft);
+        assertEquals(Password.MESSAGE_SHUTDOWN, result);
+    }
+
+    @Test
+    public void execute_setWrongPasswordCounter_toPositiveNumber() {
+        int randomNumber = ThreadLocalRandom.current().nextInt(0, 6);
+        Password.setWrongPasswordCounter(randomNumber);
+        assertEquals(randomNumber, Password.getWrongPasswordCounter());
+    }
+
+    @Test
+    public void execute_setWrongPasswordCounter_toNegativeNumber() {
+        int randomNumber = ThreadLocalRandom.current().nextInt(-6, 0);
+        Password.setWrongPasswordCounter(randomNumber);
+        int result = Password.getWrongPasswordCounter();
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void execute_unlockHQPUser(){
+        unlockHQP();
+        boolean result = Password.isHQPUser();
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void execute_unlockPOUser(){
+        unlockPO();
+        boolean result = Password.isPO();
+        assertEquals(true, result);
     }
 
     //@@author
