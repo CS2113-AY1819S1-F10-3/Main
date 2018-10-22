@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.autocorrect.CheckDistance;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.person.NRIC;;
 import seedu.addressbook.data.person.ReadOnlyPerson;
@@ -40,7 +41,21 @@ public class DeleteCommand extends Command {
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (PersonNotFoundException pnfe) {
-            return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
+            CheckDistance checker = new CheckDistance();
+            Dictionary dict = new Dictionary();
+
+            String nric = toDelete.toString();
+            String prediction = checker.checkInputDistance(nric);
+
+            if(!(prediction.equals("none"))) {
+                return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK
+                        + "\n"
+                        + "Did you mean to use "
+                        + prediction);
+            }
+            else {
+                return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK );
+            }
         }
     }
 

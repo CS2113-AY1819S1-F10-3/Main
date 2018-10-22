@@ -9,12 +9,10 @@ import seedu.addressbook.autocorrect.CheckDistance;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.data.person.ReadOnlyPerson;
-import seedu.addressbook.autocorrect.EditDistance;
-import seedu.addressbook.autocorrect.Dictionary;
+import seedu.addressbook.commands.Dictionary;
 import seedu.addressbook.password.Password;
 import seedu.addressbook.timeanddate.TimeAndDate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

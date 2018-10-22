@@ -222,7 +222,6 @@ public class Parser {
         return new HashSet<>(tagStrings);
     }
 
-
     /**
      * Parses arguments in the context of the delete person command.
      *
@@ -239,6 +238,7 @@ public class Parser {
 
             return new DeleteCommand(new NRIC(nric));
         } catch (ParseException e) {
+
             logr.log(Level.WARNING, "Invalid delete command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 

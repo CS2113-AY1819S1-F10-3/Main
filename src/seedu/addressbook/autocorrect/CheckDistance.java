@@ -1,5 +1,7 @@
 package seedu.addressbook.autocorrect;
 
+import seedu.addressbook.commands.Dictionary;
+
 import java.util.ArrayList;
 
 /**
@@ -12,6 +14,8 @@ public class CheckDistance {
 
     ArrayList<String> commandList = dictionary.getCommands();
 
+    ArrayList<String> detailsList = dictionary.getDetails();
+
     String prediction = "none";
 
     public String checkDistance(String commandInput) {
@@ -20,6 +24,23 @@ public class CheckDistance {
             distance = calculate.computeDistance(commandInput, command);
             if (distance == 1) {
                 prediction = command;
+                check = 1;
+                break;
+            }
+        }
+        if (check == 0) {
+            prediction = "none";
+        }
+        return prediction;
+    }
+
+    public String checkInputDistance(String input) {
+        int distance, check = 0;
+        ArrayList<String> detailsList = dictionary.getDetails();
+        for (String nric : detailsList) {
+            distance = calculate.computeDistance(input, nric);
+            if (distance == 1 || distance == 2) {
+                prediction = nric;
                 check = 1;
                 break;
             }
