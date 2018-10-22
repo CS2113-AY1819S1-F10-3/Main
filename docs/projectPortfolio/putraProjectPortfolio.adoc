@@ -15,8 +15,8 @@ The police database is for police officers(PO) and headquarter personnel(HQP). B
 
 == Summary of contributions
 
-* * Role: Team Leader
-* * Responsibility : Deadlines
+* *Role*: Team Leader
+* *Responsibility* : Deadlines
 * *Major enhancements*: added *log in ability using only passwords* & *the ability for HQP to update any password* 
 ** What they do: 
 ** *Password Accessibility* : allows HQP and PO to log into their respective profiles using just a password and without username. Once logged in, PO is not allowed to perform certain commands.
