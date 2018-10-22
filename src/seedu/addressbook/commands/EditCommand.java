@@ -36,6 +36,8 @@ public class EditCommand extends Command {
                 person.setWantedFor(new Offense(wantedFor));
                 person.setStatus(new Status(status));
                 person.addPastOffenses(Offense.getOffenseSet(offenses));
+
+                return;
             }
         }
 
