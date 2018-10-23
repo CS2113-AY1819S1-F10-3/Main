@@ -8,7 +8,7 @@ import static seedu.addressbook.inbox.Msg.MESSAGE_IS_READ;
 
 public class Inbox {
     // all messages will be stored here, notifications will appear based on severity and timestamp.
-    public static String MESSAGE_STORAGE_FILEPATH = "notifications.txt";
+    public static String MESSAGE_STORAGE_FILEPATH;
     public static final String COMMAND_WORD = "inbox";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Opens up list of unread notifications. \n\t"
             + "Example: " + COMMAND_WORD;
@@ -17,35 +17,16 @@ public class Inbox {
     protected TreeSet<Msg> notificationsToPrint = new TreeSet<>();
     protected TreeSet<Msg> allNotifications = new TreeSet<>();
     protected ReadNotification readNotification;
-    protected WriteNotification newMessages; //TODO: Overwrite read status of messages after action taken
-    protected WriteNotification allMessages;
+    protected WriteNotification allMessages; //TODO: Overwrite read status of messages after action taken
+    protected MessageFilePaths msgFilePaths = new MessageFilePaths();
+
     public Inbox(){
     }
 
     public Inbox(String userId) {
-        switch(userId){
-            case "hqp":
-                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_HQP_INBOX;
-                break;
-            case "po1":
-                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO1_INBOX;
-                break;
-            case "po2":
-                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO2_INBOX;
-                break;
-            case "po3":
-                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO3_INBOX;
-                break;
-            case "po4":
-                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO4_INBOX;
-                break;
-            case "po5":
-                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO5_INBOX;
-                break;
-        }
+        MESSAGE_STORAGE_FILEPATH = msgFilePaths.getFilePathFromUserId(userId);
         readNotification = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
-       // newMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
-       // allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false);
+       // allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false); //TODO: for updating of read status
     }
 
 
