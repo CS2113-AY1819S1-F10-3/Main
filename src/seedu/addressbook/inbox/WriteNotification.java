@@ -11,30 +11,10 @@ import java.util.TreeSet;
 public class WriteNotification {
     private String path;
     private boolean isAppend = false;
+    protected MessageFilePaths msgFilePaths = new MessageFilePaths();
 
     public WriteNotification(String userId){
-        switch(userId){
-            case "hqp":
-                path = MessageFilePaths.FILEPATH_HQP_INBOX;
-                break;
-            case "po1":
-                path = MessageFilePaths.FILEPATH_PO1_INBOX;
-                break;
-            case "po2":
-                path = MessageFilePaths.FILEPATH_PO2_INBOX;
-                break;
-            case "po3":
-                path = MessageFilePaths.FILEPATH_PO3_INBOX;
-                break;
-            case "po4":
-                path = MessageFilePaths.FILEPATH_PO4_INBOX;
-                break;
-            case "po5":
-                path = MessageFilePaths.FILEPATH_PO5_INBOX;
-                break;
-            default:
-                path = MessageFilePaths.FILEPATH_DEFAULT;
-        }
+        path = msgFilePaths.getFilePathFromUserId(userId);
         this.isAppend = true;
     }
 
