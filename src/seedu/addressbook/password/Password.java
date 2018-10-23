@@ -5,7 +5,7 @@ import seedu.addressbook.readandwrite.ReaderAndWriter;
 
 import java.io.*;
 
-
+//@@author iamputradanish
 public class Password {
 
     private static final String MESSAGE_TRY_AGAIN = "Please try again.";
@@ -13,11 +13,11 @@ public class Password {
     public static final String MESSAGE_ENTER_COMMAND = "Please enter a command: ";
     public static final String MESSAGE_WELCOME = "Welcome %s.";
     public static final String MESSAGE_UNAUTHORIZED = "You are not authorized to ADD, CLEAR, CHECK, DELETE, EDIT nor UPDATE PASSWORD.";
-    private static final String MESSAGE_INCORRECT_PASSWORD = "Password is incorrect. " + MESSAGE_TRY_AGAIN;
-    private static final String MESSAGE_ATTEMPTS_LEFT = "You have %1$d attempts left. ";
-    private static final String MESSAGE_ATTEMPT_LEFT = "You have %1$d attempt left. ";
-    private static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect. ";
-    private static final String MESSAGE_SHUTDOWN = "Password is incorrect. System will shut down. ";
+    public static final String MESSAGE_INCORRECT_PASSWORD = "Password is incorrect. " + MESSAGE_TRY_AGAIN;
+    public static final String MESSAGE_ATTEMPTS_LEFT = "You have %1$d attempts left. ";
+    public static final String MESSAGE_ATTEMPT_LEFT = "You have %1$d attempt left. ";
+    public static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect. ";
+    public static final String MESSAGE_SHUTDOWN = "Password is incorrect. System will shut down. ";
     private static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
     public static final String MESSAGE_HQP = "Headquarters Personnel";
     public static final String MESSAGE_PO = "Police Officer ";
@@ -36,8 +36,11 @@ public class Password {
     private static final String MESSAGE_PASSWORD_LENGTH = "Your new password is %1$d character(s) long. ";
     private static final String MESSAGE_PASSWORD_MINIMUM_LENGTH = "Your new password must be at least %1$d characters long. ";
 
-    public int getWrongPasswordCounter() {
+    public static int getWrongPasswordCounter() {
         return wrongPasswordCounter;
+    }
+    public static void setWrongPasswordCounter(int number) {
+        wrongPasswordCounter = (number >= 0) ? number:0;
     }
     private static int wrongPasswordCounter = 5;
 
@@ -68,14 +71,14 @@ public class Password {
         isPO4 = false;
         isPO5 = false;
     }
-    public boolean isHQPUser() {
+    public static boolean isHQPUser() {
         return isHQP;
     }
     public static boolean isLocked(){
         return !(isHQP || isPO());
     }
 
-    private static boolean isPO(){
+    public static boolean isPO(){
         return (isPO1 || isPO2 || isPO3 || isPO4 || isPO5);
     }
 
@@ -254,7 +257,7 @@ public class Password {
 
     public String prepareUpdatePassword(){
         isUpdatingPassword = true;
-        wrongPasswordCounter = 5;
+        setWrongPasswordCounter(5);
         return MESSAGE_ENTER_PASSWORD_TO_CHANGE;
     }
 
@@ -279,7 +282,7 @@ public class Password {
                 String user = line.substring(0,line.lastIndexOf(" "));
 
                 if(correctPassword(storedCurrPassword, enteredCurrentPassword)){
-                    wrongPasswordCounter = 5;
+                    setWrongPasswordCounter(5);
 
                     switch (user) {
                         case "hqp":
