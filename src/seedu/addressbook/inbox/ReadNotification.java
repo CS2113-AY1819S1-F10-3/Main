@@ -1,6 +1,6 @@
+//@@author ongweekeong
 package seedu.addressbook.inbox;
 
-import org.javatuples.Triplet;
 import seedu.addressbook.Location;
 
 import java.io.BufferedReader;
@@ -10,14 +10,12 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TreeSet;
 
 public class ReadNotification {
     private static String path;
     private static Msg returnMsg;
-    private static int unreadMsgs = 0;
-    protected static HashMap<Triplet<Boolean, Msg.Priority, Timestamp>, Triplet<String, Integer, Location>> allMsg = new HashMap<>();
+    private int unreadMsgs = 0;
     protected static TreeSet<Msg> sortedMsgs = new TreeSet<>();
 
     public ReadNotification(String filePath) {
@@ -85,15 +83,16 @@ public class ReadNotification {
         return allMsg;
     }*/
 
-    public static TreeSet<Msg>
+    public TreeSet<Msg>
     ReadFromFile() throws IOException {  // If no new notifications and 'inbox' command invoked, show past 10 notifications
         String line;
         BufferedReader br = new BufferedReader(new FileReader(path));
+        unreadMsgs = 0;
         while ((line = br.readLine()) != null) {
             if (line.equals("> START OF MESSAGE <")) {
                 returnMsg = new Msg();
             }
-            else if (line.equals("> END OF MESSAGE <")) {  // End of message entry, store into hashmap
+            else if (line.equals("> END OF MESSAGE <")) {  // End of message entry, store into TreeSet
                 sortedMsgs.add(returnMsg);
             }
             else {
@@ -116,8 +115,7 @@ public class ReadNotification {
                         returnMsg.setPriority(msgPriority);
                     }
                     else if (msgType.equals("Timestamp")) {
-                        //SimpleDateFormat timeFormatted = new SimpleDateFormat("dd.MM.YYYY.HH.MM.ss");
-                        SimpleDateFormat timeFormatted = new SimpleDateFormat("YYYY-MM-dd HH:MM:ss.SSS");
+                        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy HHmm:ss");
                         Date parsedTimeStamp;
                         try {
                             parsedTimeStamp = timeFormatted.parse(parts[1]);
@@ -143,7 +141,7 @@ public class ReadNotification {
 
             }
         }
-        return sortedMsgs; //TODO: Get information flow down. Add msg function to Inbox.
+        return sortedMsgs;
     }
 
     public int getNumUnreadMsgs(){
@@ -153,7 +151,7 @@ public class ReadNotification {
     public void resetUnreadMsgs(){
         this.unreadMsgs = 0;
     }
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         ReadNotification myFile = new ReadNotification("notifications.txt");
         int messageNum = 1;
         sortedMsgs = ReadFromFile();
@@ -174,5 +172,5 @@ public class ReadNotification {
             messageNum++;
         }
 
-    }
+    }*/
 }
