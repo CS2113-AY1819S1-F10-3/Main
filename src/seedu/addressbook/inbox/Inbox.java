@@ -25,22 +25,22 @@ public class Inbox {
     public Inbox(String userId) {
         switch(userId){
             case "hqp":
-                MESSAGE_STORAGE_FILEPATH = "inboxMessages/headquartersInbox";
+                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_HQP_INBOX;
                 break;
             case "po1":
-                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO1";
+                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO1_INBOX;
                 break;
             case "po2":
-                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO2";
+                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO2_INBOX;
                 break;
             case "po3":
-                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO3";
+                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO3_INBOX;
                 break;
             case "po4":
-                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO4";
+                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO4_INBOX;
                 break;
             case "po5":
-                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO5";
+                MESSAGE_STORAGE_FILEPATH = MessageFilePaths.FILEPATH_PO5_INBOX;
                 break;
         }
         readNotification = new ReadNotification(MESSAGE_STORAGE_FILEPATH);

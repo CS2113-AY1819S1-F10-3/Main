@@ -12,8 +12,30 @@ public class WriteNotification {
     private String path;
     private boolean isAppend = false;
 
-    public WriteNotification(String filePath){
-        path = filePath;
+    public WriteNotification(String userId){
+        switch(userId){
+            case "hqp":
+                path = MessageFilePaths.FILEPATH_HQP_INBOX;
+                break;
+            case "po1":
+                path = MessageFilePaths.FILEPATH_PO1_INBOX;
+                break;
+            case "po2":
+                path = MessageFilePaths.FILEPATH_PO2_INBOX;
+                break;
+            case "po3":
+                path = MessageFilePaths.FILEPATH_PO3_INBOX;
+                break;
+            case "po4":
+                path = MessageFilePaths.FILEPATH_PO4_INBOX;
+                break;
+            case "po5":
+                path = MessageFilePaths.FILEPATH_PO5_INBOX;
+                break;
+            default:
+                path = MessageFilePaths.FILEPATH_DEFAULT;
+        }
+        this.isAppend = true;
     }
 
     public WriteNotification(String filePath, boolean appendValue){
@@ -47,7 +69,7 @@ public class WriteNotification {
             myPrinter.println("Location:" + message.getLatitude() + "," + message.getLongitude());
         }
         else myPrinter.println('-');
-        myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
+        myPrinter.println("> END OF MESSAGE <");
         myPrinter.close();
     }
 
