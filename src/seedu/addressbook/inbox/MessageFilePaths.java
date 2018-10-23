@@ -13,7 +13,7 @@ public class MessageFilePaths {
     public static final String FILEPATH_PO5_INBOX = "inboxMessages/PO5";
     public static final String FILEPATH_DEFAULT = "notifications.txt";
 
-    public String getFilePathFromUserId(String userId){
+    public static String getFilePathFromUserId(String userId){
         String filepath;
         switch(userId) {
             case "hqp":

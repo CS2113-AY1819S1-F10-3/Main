@@ -14,7 +14,7 @@ import java.util.TreeSet;
 
 public class ReadNotification {
     private static String path;
-    private static Msg returnMsg;
+    private Msg returnMsg;
     private int unreadMsgs = 0;
     protected static TreeSet<Msg> sortedMsgs = new TreeSet<>();
 
@@ -65,7 +65,7 @@ public class ReadNotification {
                         returnMsg.setTime(msgTime);
                     }
                     else if (msgType.equals("Message")) {
-                        returnMsg.addMsg(parts[1]); // Multiple lines of message required or not?
+                        returnMsg.setMsg(parts[1]); // Multiple lines of message required or not?
                     }
                     else if (msgType.equals("ETA")) {
                         returnMsg.setEta(Integer.parseInt(parts[1]));
@@ -100,42 +100,24 @@ public class ReadNotification {
                 String msgType = parts[0];
                 if (parts.length == 2) {
                     if (msgType.equals("Read status")) {
-                        returnMsg.isRead = Boolean.parseBoolean(parts[1]);
+                        readMsgReadStatus(parts[1]);
                         if (!returnMsg.isRead)
                             unreadMsgs += 1;
                     }
                     else if (msgType.equals("Priority")) {
-                        Msg.Priority msgPriority;
-                        if (parts[1].equals("HIGH"))
-                            msgPriority = Msg.Priority.HIGH;
-                        else if (parts[1].equals("MED"))
-                            msgPriority = Msg.Priority.MED;
-                        else
-                            msgPriority = Msg.Priority.LOW;
-                        returnMsg.setPriority(msgPriority);
+                        readMsgPriority(parts[1]);
                     }
                     else if (msgType.equals("Timestamp")) {
-                        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy HHmm:ss");
-                        Date parsedTimeStamp;
-                        try {
-                            parsedTimeStamp = timeFormatted.parse(parts[1]);
-                        } catch (ParseException e) {
-                            continue;   // Find a way to debug this if time format is invalid.
-                        }
-                        Timestamp msgTime = new Timestamp(parsedTimeStamp.getTime());
-                        returnMsg.setTime(msgTime);
+                        readMsgTimestamp(parts[1]);
                     }
                     else if (msgType.equals("Message")) {
-                        returnMsg.addMsg(parts[1]);
+                        readMsgMessage(parts[1]);
                     }
                     else if (msgType.equals("ETA")) {
-                        returnMsg.setEta(Integer.parseInt(parts[1]));
+                        readMsgEta(parts[1]);
                     }
                     else if (msgType.equals("Location")) {
-                        String[] coordinates = parts[1].split(",", 2);
-                        Location myLocation = new Location(Double.parseDouble(coordinates[0]),
-                                Double.parseDouble(coordinates[1]));
-                        returnMsg.setLocation(myLocation);
+                        readMsgLocation(parts[1]);
                     }
                 }
 
@@ -150,6 +132,51 @@ public class ReadNotification {
 
     public void resetUnreadMsgs(){
         this.unreadMsgs = 0;
+    }
+
+    public void readMsgReadStatus(String readStatus) {
+        this.returnMsg.isRead = Boolean.parseBoolean(readStatus);
+    }
+
+    public void readMsgPriority(String priority){
+        Msg.Priority msgPriority;
+        if (priority.equals("HIGH"))
+            msgPriority = Msg.Priority.HIGH;
+        else if (priority.equals("MED")) {
+            msgPriority = Msg.Priority.MED;
+        }
+        else {
+            msgPriority = Msg.Priority.LOW;
+        }
+
+        this.returnMsg.setPriority(msgPriority);
+    }
+
+    public void readMsgTimestamp(String timestamp){
+        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HHmm:ss");
+        Date parsedTimeStamp = new Date();
+        try {
+            parsedTimeStamp = timeFormatted.parse(timestamp);
+        } catch (ParseException e) {
+            // Find a way to debug this if time format is invalid.
+        }
+        Timestamp msgTime = new Timestamp(parsedTimeStamp.getTime());
+        returnMsg.setTime(msgTime);
+    }
+
+    public void readMsgMessage(String message){
+        this.returnMsg.setMsg(message);
+    }
+
+    public void readMsgEta (String eta){
+        this.returnMsg.setEta(Integer.parseInt(eta));
+    }
+
+    public void readMsgLocation(String xyValue){
+        String[] coordinates = xyValue.split(",", 2);
+        Location myLocation = new Location(Double.parseDouble(coordinates[0]),
+                Double.parseDouble(coordinates[1]));
+        this.returnMsg.setLocation(myLocation);
     }
     /*public static void main(String[] args) throws IOException {
         ReadNotification myFile = new ReadNotification("notifications.txt");

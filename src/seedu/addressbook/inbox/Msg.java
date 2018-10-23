@@ -6,8 +6,7 @@ import seedu.addressbook.Location;
 import java.sql.Timestamp;
 
 /** Msg has the following attributes:
- *  @params Priority, timestamp, message, location (x,y coordinates) and ETA.
- *  Priority, timestamp and message are compulsory fields. Location and ETA are optional.
+ *  @params Read Status, Priority, timestamp, message, location (x,y coordinates) and ETA.
  */
 
 
@@ -73,7 +72,7 @@ public class Msg implements Comparable <Msg> {
         eta = myEta;
     }
 
-    public void addMsg(String msg){
+    public void setMsg(String msg){
         this.newMsg = msg;
     }
 

@@ -25,7 +25,7 @@ public class WriteNotification {
 
 
     /**	Message format should look like this
-     *	Read/Unread (1 or 0) --> for writeToFile function, messages are entered as unread.
+     *	Read/Unread (1 or 0)
      *	Priority of Message
      *	Timestamp of message
      *	Message
