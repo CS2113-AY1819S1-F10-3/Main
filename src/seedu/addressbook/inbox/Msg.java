@@ -83,6 +83,7 @@ public class Msg implements Comparable <Msg> {
     public Priority getPriority(){
         return this.priority;
     }
+
     public String getMsg(){
         return this.newMsg;
     }
@@ -98,9 +99,11 @@ public class Msg implements Comparable <Msg> {
     public void setLongitude(double x){
         location.setLongitude(x);
     }
+
     public void setLatitude(double y){
         location.setLatitude(y);
     }
+
     public double getLongitude(){
         return location.getLongitude();
     }
@@ -108,9 +111,11 @@ public class Msg implements Comparable <Msg> {
     public double getLatitude(){
         return location.getLatitude();
     }
+
     public void setEta(int eta){
         this.eta = eta;
     }
+
     public int getEta(){
         return this.eta;
     }
