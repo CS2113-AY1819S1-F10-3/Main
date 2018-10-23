@@ -1,3 +1,4 @@
+//@@author ongweekeong
 package seedu.addressbook.inbox;
 
 import seedu.addressbook.Location;
@@ -11,13 +12,12 @@ import java.sql.Timestamp;
 
 
 public class Msg implements Comparable <Msg> {
-    protected String senderID;
-    protected String receiverID;
+    protected String senderId;
+    protected String receiverId;
     private String newMsg;
     private Priority priority;
     private Location location;
     private int eta = -1;
-    //private String comment;
     protected boolean isRead;
     protected boolean isLocationAvailable;
     private Timestamp time;
@@ -41,7 +41,7 @@ public class Msg implements Comparable <Msg> {
 
     }
 
-    public Msg(){   // Create overloading constructors.
+    public Msg(){
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
     }
@@ -161,16 +161,4 @@ public class Msg implements Comparable <Msg> {
         return this.getTime().compareTo(other.getTime());
     }
 
-    /*public static Comparator<Msg> PriorityComparator = new Comparator<Msg>(){
-        @Override
-        public int compare(Msg m1, Msg m2){
-            return m2.getPriority().priorityToInt() - (m1.getPriority().priorityToInt());
-        }
-    };
-    public static Comparator<Msg> TimestampComparator = new Comparator<Msg>() {
-        @Override
-        public int compare(Msg m1, Msg m2) {
-            return m1.getTime().compareTo(m2.getTime());
-        }
-    };*/
 }

@@ -61,7 +61,7 @@ public class AddressBook {
     public void addPersonToDbAndUpdate(ReadOnlyPerson toAdd) {
         TimeAndDate timeAndDate = new TimeAndDate();
         tempNric = toAdd.getNric().getIdentificationNumber();
-        tempTimestamp = timeAndDate.getOutputScreeningDAT();
+        tempTimestamp = timeAndDate.outputDATHrs();
     }
 
     public List<String> readDatabase(String nric) throws IOException {
