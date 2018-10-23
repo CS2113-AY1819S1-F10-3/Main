@@ -24,6 +24,7 @@ public class Dictionary {
         commands.add("list");
         commands.add("viewall");
         commands.add("view");
+        commands.add("edit");
     }
 
     public String getErrorMessage() {

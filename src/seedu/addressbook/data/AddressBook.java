@@ -6,6 +6,9 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
+import seedu.addressbook.password.Password;
+import seedu.addressbook.readandwrite.ReaderAndWriter;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.io.*;
 import java.sql.Timestamp;
@@ -17,14 +20,14 @@ import java.util.*;
  */
 public class AddressBook {
 
-    public static final String SCREENING_DATABASE = "ScreeningHistory.txt";
-    public static Timestamp screeningTimeStamp;
-    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+    private static final String SCREENING_DATABASE = "ScreeningHistory.txt";
     private String tempNric;
     private String tempTimestamp;
     private int counter = 0;
 
     private final UniquePersonList allPersons;
+    private ReaderAndWriter readerAndWriter = new ReaderAndWriter();
+    private File databaseFile = readerAndWriter.fileToUse(SCREENING_DATABASE);
 
     public static AddressBook empty() {
         return new AddressBook();
@@ -56,39 +59,44 @@ public class AddressBook {
     }
 
     public void addPersontoDbAndUpdate(ReadOnlyPerson toAdd) {
+        TimeAndDate timeAndDate = new TimeAndDate();
         tempNric = toAdd.getNric().getIdentificationNumber();
-        screeningTimeStamp = new Timestamp(System.currentTimeMillis());
-        tempTimestamp = timestampFormatter.format(screeningTimeStamp);
+        tempTimestamp = timeAndDate.outputDATHrs();
     }
 
     public List<String> readDatabase(String nric) throws IOException {
         List<String> data = new ArrayList<>();
         String line;
-        BufferedReader br = new BufferedReader(new FileReader(SCREENING_DATABASE));
+        BufferedReader br = readerAndWriter.openReader(databaseFile);
         line = br.readLine();
         while (line != null){
             String[] parts = line.split(" ");
+
             if (parts[0].equals(nric)){
-                data.add(parts[1]);
+                if(parts[2].equals("null")){
+                    break;
+                }
+                data.add(parts[1] + " by " + parts[2]);
                 line = br.readLine();
             }
             else{
                 line = br.readLine();
             }
         }
+        br.close();
         return data;
     }
 
     public void updateDatabase() throws IOException {
         String line;
-        BufferedReader br = new BufferedReader(new FileReader(SCREENING_DATABASE));
+        BufferedReader br = readerAndWriter.openReader(databaseFile);
         FileWriter write = new FileWriter(SCREENING_DATABASE,true);
         PrintWriter myPrinter = new PrintWriter(write);
         try {
             while ((line = br.readLine()) !=  null){
                 String[] parts = line.split(" ");
                 if (parts[0].equals(tempNric)){
-                    myPrinter.println(tempNric + " " + tempTimestamp);
+                    myPrinter.println(tempNric + " " + tempTimestamp + " " + Password.getID());
                     myPrinter.close();
                     br.close();
                     return;
@@ -96,21 +104,16 @@ public class AddressBook {
                 line = br.readLine();
                 continue;
             }
-            myPrinter.println(tempNric + " " + tempTimestamp);
+            myPrinter.println(tempNric + " " + tempTimestamp + " " + Password.getID());
             myPrinter.close();
             br.close();
         }
         catch (Exception e){
-            myPrinter.print(tempNric + " " + tempTimestamp);
+            myPrinter.print(tempNric + " " + tempTimestamp + " " + Password.getID());
 
             myPrinter.close();
             br.close();
         }
-
-
-
-
-
     }
 
     /**
