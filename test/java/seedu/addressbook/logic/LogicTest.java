@@ -325,6 +325,7 @@ public class LogicTest {
         assertCommandBehavior("request gun", expectedMessage);
     }
 
+    //@@author andyrobert3
     @Test
     public void execute_request_invalidOffense() throws Exception {
         String expectedMessage = String.format(Offense.MESSAGE_OFFENSE_INVALID);
@@ -332,7 +333,7 @@ public class LogicTest {
         assertCommandBehavior("request lala help", expectedMessage);
     }
 
-
+    //@@author
     @Test
     public void execute_viewAll_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
@@ -448,6 +449,7 @@ public class LogicTest {
                                 threePersons);
     }
 
+    //@@author andyrobert3
     @Test
     public void execute_edit_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
