@@ -16,6 +16,8 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.addressbook.common.Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW;
 import static seedu.addressbook.password.Password.MESSAGE_ENTER_PASSWORD;
@@ -576,6 +578,8 @@ public class LogicTest {
 
     @Test
     public void execute_wrongPassword_firstTime() throws Exception{
+        Password.lockIsPO();
+        Password.lockIsHQP();
         String wrongPassword = "thisiswrong";
         int numberOfAttemptsLeft = 5;
         Password.setWrongPasswordCounter(numberOfAttemptsLeft);
@@ -587,6 +591,8 @@ public class LogicTest {
     }
     @Test
     public void execute_wrongPassword_fourthTime() throws Exception{
+        Password.lockIsPO();
+        Password.lockIsHQP();
         String wrongPassword = "thisiswrong";
         int numberOfAttemptsLeft = 1;
         Password.setWrongPasswordCounter(numberOfAttemptsLeft);
@@ -599,6 +605,8 @@ public class LogicTest {
 
     @Test
     public void execute_wrongPassword_lastTime() throws Exception{
+        Password.lockIsPO();
+        Password.lockIsHQP();
         String wrongPassword = "thisiswrong";
         int numberOfAttemptsLeft = 0;
         Password.setWrongPasswordCounter(numberOfAttemptsLeft);
@@ -625,14 +633,28 @@ public class LogicTest {
     public void execute_unlockHQPUser(){
         unlockHQP();
         boolean result = Password.isHQPUser();
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
     public void execute_unlockPOUser(){
         unlockPO();
         boolean result = Password.isPO();
-        assertEquals(true, result);
+        assertTrue(result);
+    }
+
+    @Test
+    public void execute_lockHQPUser(){
+        Password.lockIsHQP();
+        boolean result = Password.isHQPUser();
+        assertFalse(result);
+    }
+
+    @Test
+    public void execute_lockPOUser(){
+        Password.lockIsPO();
+        boolean result = Password.isPO();
+        assertFalse(result);
     }
 
     //@@author
