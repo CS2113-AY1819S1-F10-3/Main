@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+//@@author iamputradanish
 public class UpdatePasswordCommand extends Command {
 
     public static final String COMMAND_WORD = "update password";
