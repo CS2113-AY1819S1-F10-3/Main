@@ -5,26 +5,53 @@ import java.io.IOException;
 import java.util.TreeSet;
 
 import static seedu.addressbook.inbox.Msg.MESSAGE_IS_READ;
-import static seedu.addressbook.inbox.Msg.MESSAGE_IS_UNREAD;
 
 public class Inbox {
     // all messages will be stored here, notifications will appear based on severity and timestamp.
-    public static final String MESSAGE_STORAGE_FILEPATH = "notifications.txt";
+    public static String MESSAGE_STORAGE_FILEPATH = "notifications.txt";
     public static final String COMMAND_WORD = "inbox";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Opens up list of unread notifications. \n\t"
             + "Example: " + COMMAND_WORD;
-    public static final String MESSAGE_PROMPT = "Press 'Enter' to take action for Message 1";
+    //public static final String MESSAGE_PROMPT = "Press 'Enter' to take action for Message 1";
     public static int numUnreadMsgs = 0;
-    private static ReadNotification nw = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
-    static WriteNotification newMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
-    static WriteNotification allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false);
-    protected static TreeSet<Msg> notificationsToPrint = new TreeSet<>();
-    protected static TreeSet<Msg> allNotifications = new TreeSet<>();
+    protected TreeSet<Msg> notificationsToPrint = new TreeSet<>();
+    protected TreeSet<Msg> allNotifications = new TreeSet<>();
+    protected ReadNotification readNotification;
+    protected WriteNotification newMessages; //TODO: Overwrite read status of messages after action taken
+    protected WriteNotification allMessages;
+    public Inbox(){
+    }
+
+    public Inbox(String userId) {
+        switch(userId){
+            case "hqp":
+                MESSAGE_STORAGE_FILEPATH = "inboxMessages/headquartersInbox";
+                break;
+            case "po1":
+                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO1";
+                break;
+            case "po2":
+                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO2";
+                break;
+            case "po3":
+                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO3";
+                break;
+            case "po4":
+                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO4";
+                break;
+            case "po5":
+                MESSAGE_STORAGE_FILEPATH = "inboxMessages/PO5";
+                break;
+        }
+        readNotification = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
+       // newMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
+       // allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false);
+    }
 
 
     public TreeSet<Msg> loadMsgs() throws IOException {
-        notificationsToPrint = nw.ReadFromFile();
-        numUnreadMsgs = nw.getNumUnreadMsgs(); // TODO: eventually when bugs are all cleared, use .size() method.
+        notificationsToPrint = readNotification.ReadFromFile();
+        numUnreadMsgs = readNotification.getNumUnreadMsgs();
         return notificationsToPrint;
     }
 
@@ -49,7 +76,7 @@ public class Inbox {
      * Messages will all be marked as read and rewritten in the new notifications file.
      *
      */
-    public void printNewMsgs() throws IOException {
+    /*public void printNewMsgs() throws IOException {
         // print new messages in order according to TreeSet. After messages are printed, they are considered old.
         Msg myPrintMsg;
         int messageNum = 1;
@@ -93,7 +120,7 @@ public class Inbox {
             System.out.println(messageNum + " Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
                     ", message: " + msgToPrint.getMsg() + '.');
         }
-    }
+    }*/
 
     public Msg markMsgAsRead(Msg myMsg){ // Construct a new message, copy from TreeMap, then change read status, update.
         myMsg.isRead = MESSAGE_IS_READ;
