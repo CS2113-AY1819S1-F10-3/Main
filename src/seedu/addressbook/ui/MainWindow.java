@@ -195,7 +195,7 @@ public class MainWindow {
 
     //@@author iamputradanish
     private boolean isUpdatePasswordCommand(String userCommandText) {
-        return userCommandText.equals(UpdatePasswordCommand.COMMAND_WORD);
+        return userCommandText.equals(Password.UPDATE_PASSWORD_COMMAND_WORD);
     }
 
     private boolean toCloseApp(String userCommandText){
