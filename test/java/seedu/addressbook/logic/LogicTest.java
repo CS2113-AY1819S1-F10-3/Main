@@ -329,7 +329,7 @@ public class LogicTest {
 
     @Test
     public void execute_request_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelp.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelpCommand.MESSAGE_USAGE);
         assertCommandBehavior("request ", expectedMessage);
         assertCommandBehavior("request gun", expectedMessage);
     }

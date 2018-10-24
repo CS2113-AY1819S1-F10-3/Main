@@ -159,7 +159,7 @@ public class Parser {
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
 
-            case RequestHelp.COMMAND_WORD:
+            case RequestHelpCommand.COMMAND_WORD:
                 return prepareRequest(arguments);
 
             case DispatchBackup.COMMAND_WORD:
@@ -387,14 +387,14 @@ public class Parser {
 
         if (argParts.length < 2) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    RequestHelp.MESSAGE_USAGE));
+                    RequestHelpCommand.MESSAGE_USAGE));
         }
 
         caseName = argParts[0];
         message = argParts[1];
 
         try {
-            return new RequestHelp(caseName, message);
+            return new RequestHelpCommand(caseName, message);
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(Offense.MESSAGE_OFFENSE_INVALID);
         }
