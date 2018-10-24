@@ -60,12 +60,12 @@ public class InboxCommand extends Command {
         String concatenatedMsg;
         try{
             concatenatedMsg = String.valueOf(messageNum) + ".\t[UNREAD] Sender: " + message.getSenderId() + " Priority: " + message.getPriority() +
-                    ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ", message: " + message.getMsg() + ", Coordinates: " +
+                    ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ",\n\t\tMessage: " + message.getMsg() + ", Coordinates: " +
                     message.getLatitude() + ", " + message.getLongitude() + ", ETA: " + message.getEta() + ".\n";
         }
         catch(Exception e){
             concatenatedMsg = String.valueOf(messageNum) + ".\t[UNREAD] Sender: " + message.getSenderId() + " Priority: " +
-                    message.getPriority() + ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ", message: " + message.getMsg() + ".\n";
+                    message.getPriority() + ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ",\n\t\tMessage: " + message.getMsg() + ".\n";
         }
         return concatenatedMsg;
     }
