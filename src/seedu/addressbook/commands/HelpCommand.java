@@ -22,7 +22,7 @@ public class HelpCommand extends Command {
             + "\n" + InboxCommand.MESSAGE_USAGE
             + "\n" + ListCommand.MESSAGE_USAGE
             + "\n" + ViewAllCommand.MESSAGE_USAGE
-            + "\n" + UpdatePasswordCommand.MESSAGE_USAGE
+            + "\n" + Password.UPDATE_PASSWORD_MESSAGE_USAGE
             + "\n" + HelpCommand.MESSAGE_USAGE
             + "\n" + LockCommand.MESSAGE_USAGE
             + "\n" + ExitCommand.MESSAGE_USAGE;
