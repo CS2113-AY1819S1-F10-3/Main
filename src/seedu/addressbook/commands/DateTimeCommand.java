@@ -1,8 +1,8 @@
 package seedu.addressbook.commands;
-
 import seedu.addressbook.timeanddate.TimeAndDate;
 
 public class DateTimeCommand extends Command {
+
     public static final String COMMAND_WORD = "time";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Returns current date and time \n\t"

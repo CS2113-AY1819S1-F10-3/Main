@@ -1,36 +1,38 @@
+//@@author ongweekeong
 package seedu.addressbook.inbox;
 
 import java.io.IOException;
 import java.util.TreeSet;
 
 import static seedu.addressbook.inbox.Msg.MESSAGE_IS_READ;
-import static seedu.addressbook.inbox.Msg.MESSAGE_IS_UNREAD;
 
 public class Inbox {
     // all messages will be stored here, notifications will appear based on severity and timestamp.
-    public static final String MESSAGE_STORAGE_FILEPATH = "notifications.txt";
+    public static String MESSAGE_STORAGE_FILEPATH;
     public static final String COMMAND_WORD = "inbox";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Opens up list of unread notifications. \n\t"
             + "Example: " + COMMAND_WORD;
-    public static final String MESSAGE_PROMPT = "Press 'Enter' to take action for Message 1";
+    //public static final String MESSAGE_PROMPT = "Press 'Enter' to take action for Message 1";
     public static int numUnreadMsgs = 0;
-    private Msg message;
-    private static ReadNotification nw = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
-    static WriteNotification newMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
-    static WriteNotification allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false);
-
-    //protected static HashMap<Triplet<Boolean, Msg.Priority, Timestamp>, Triplet<String, Integer, Location>> notificationsToPrint = new HashMap<>();
-    protected static TreeSet<Msg> notificationsToPrint = new TreeSet<>();
-    protected static TreeSet<Msg> allNotifications = new TreeSet<>();
+    protected TreeSet<Msg> notificationsToPrint = new TreeSet<>();
+    protected TreeSet<Msg> allNotifications = new TreeSet<>();
+    protected ReadNotification readNotification;
+    protected WriteNotification allMessages; //TODO: Overwrite read status of messages after action taken
+    protected MessageFilePaths msgFilePaths = new MessageFilePaths();
 
     public Inbox(){
-//        Inbox inbox = new Inbox();
     }
 
-    public static TreeSet<Msg> loadMsgs() throws IOException {
-     //   notificationsToPrint = nw.ReadFromFile();
-        notificationsToPrint = nw.ReadFromFile();
-        numUnreadMsgs = nw.getNumUnreadMsgs(); // TODO: eventually when bugs are all cleared, use .size() method.
+    public Inbox(String userId) {
+        MESSAGE_STORAGE_FILEPATH = msgFilePaths.getFilePathFromUserId(userId);
+        readNotification = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
+       // allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false); //TODO: for updating of read status
+    }
+
+
+    public TreeSet<Msg> loadMsgs() throws IOException {
+        notificationsToPrint = readNotification.ReadFromFile();
+        numUnreadMsgs = readNotification.getNumUnreadMsgs();
         return notificationsToPrint;
     }
 
@@ -43,12 +45,7 @@ public class Inbox {
         return numUnreadMsgs;
     }
 
-    /*public static void printNumOfUnreadMsg(){
-        if(numUnreadMsgs > 0)
-            System.out.println("You have " + numUnreadMsgs + " new message" + ((numUnreadMsgs == 1) ? "." : "s."));
-        else
-            System.out.println("You have no new messages.");
-    }*/
+
     public String printNumOfUnreadMsg(){
         if(numUnreadMsgs > 0)
             return "You have " + numUnreadMsgs + " new message" + ((numUnreadMsgs == 1) ? "." : "s.");
@@ -60,7 +57,7 @@ public class Inbox {
      * Messages will all be marked as read and rewritten in the new notifications file.
      *
      */
-    public static void printNewMsgs() throws IOException {
+    /*public void printNewMsgs() throws IOException {
         // print new messages in order according to TreeSet. After messages are printed, they are considered old.
         Msg myPrintMsg;
         int messageNum = 1;
@@ -75,7 +72,7 @@ public class Inbox {
                 printMessageNoLocation(messageNum, myPrintMsg);
             }
             messageNum++;
-        //  myPrintMsg = markMsgAsRead(myPrintMsg); //TODO: Only markMsgAsUnread when the messages are responded to.
+          //myPrintMsg = markMsgAsRead(myPrintMsg); //TODO: Only markMsgAsUnread when the messages are responded to.
         // put updated message into new TreeSet.
             allNotifications.add(myPrintMsg);
         }
@@ -83,7 +80,7 @@ public class Inbox {
 
     }
 
-    public static void printMessage(int messageNum, Msg msgToPrint){
+    public void printMessage(int messageNum, Msg msgToPrint){
         if(msgToPrint.isRead == MESSAGE_IS_UNREAD) {
             System.out.println(messageNum + " [UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
                     ", message: " + msgToPrint.getMsg() + ", Coordinates: " + msgToPrint.getLatitude() + ", " +
@@ -95,7 +92,7 @@ public class Inbox {
                     msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + '.');
         }
     }
-    public static void printMessageNoLocation(int messageNum, Msg msgToPrint){
+    public void printMessageNoLocation(int messageNum, Msg msgToPrint){
         if(msgToPrint.isRead == MESSAGE_IS_UNREAD) {
             System.out.println(messageNum + " [UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
                     ", message: " + msgToPrint.getMsg() + '.');
@@ -104,23 +101,23 @@ public class Inbox {
             System.out.println(messageNum + " Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
                     ", message: " + msgToPrint.getMsg() + '.');
         }
-    }
+    }*/
 
-    public static Msg markMsgAsRead(Msg myMsg){ // Construct a new message, copy from TreeMap, then change read status, update.
+    public Msg markMsgAsRead(Msg myMsg){ // Construct a new message, copy from TreeMap, then change read status, update.
         myMsg.isRead = MESSAGE_IS_READ;
         return myMsg;
     }
 
-    public static void main(String[] args) throws IOException {
-        /*Msg newMsg = new Msg();
+    /*public static void main(String[] args) throws IOException {
+        Msg newMsg = new Msg();
         Location location = new Location(-6.206968,106.751365);
-        newMsg.addMsg("Backup requested");
+        newMsg.setMsg("Backup requested");
         newMsg.setLocation(location);
         newMsg.setPriority(Msg.Priority.HIGH);
         newMsg.setTime();
-        newMessages.writeToFile(newMsg);*/
-        loadMsgs();
+        newMessages.writeToFile(newMsg);
+        //loadMsgs();
         //printNumOfUnreadMsg();
-        printNewMsgs();
-    }
+        //printNewMsgs();
+    }*/
 }

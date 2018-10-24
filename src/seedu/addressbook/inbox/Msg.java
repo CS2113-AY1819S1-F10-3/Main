@@ -1,23 +1,23 @@
+//@@author ongweekeong
 package seedu.addressbook.inbox;
 
 import seedu.addressbook.Location;
+import seedu.addressbook.password.Password;
 
 import java.sql.Timestamp;
 
 /** Msg has the following attributes:
- *  @params Priority, timestamp, message, location (x,y coordinates) and ETA.
- *  Priority, timestamp and message are compulsory fields. Location and ETA are optional.
+ *  @params Read Status, Priority, timestamp, message, location (x,y coordinates) and ETA.
  */
 
 
 public class Msg implements Comparable <Msg> {
-    protected String senderID;
-    protected String receiverID;
+    private String senderId = Password.getID();
+    protected String receiverId;
     private String newMsg;
     private Priority priority;
     private Location location;
     private int eta = -1;
-    //private String comment;
     protected boolean isRead;
     protected boolean isLocationAvailable;
     private Timestamp time;
@@ -41,7 +41,7 @@ public class Msg implements Comparable <Msg> {
 
     }
 
-    public Msg(){   // Create overloading constructors.
+    public Msg(){
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
     }
@@ -73,7 +73,15 @@ public class Msg implements Comparable <Msg> {
         eta = myEta;
     }
 
-    public void addMsg(String msg){
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getSenderId(){
+        return this.senderId;
+    }
+
+    public void setMsg(String msg){
         this.newMsg = msg;
     }
 
@@ -84,6 +92,7 @@ public class Msg implements Comparable <Msg> {
     public Priority getPriority(){
         return this.priority;
     }
+
     public String getMsg(){
         return this.newMsg;
     }
@@ -99,9 +108,11 @@ public class Msg implements Comparable <Msg> {
     public void setLongitude(double x){
         location.setLongitude(x);
     }
+
     public void setLatitude(double y){
         location.setLatitude(y);
     }
+
     public double getLongitude(){
         return location.getLongitude();
     }
@@ -109,9 +120,11 @@ public class Msg implements Comparable <Msg> {
     public double getLatitude(){
         return location.getLatitude();
     }
+
     public void setEta(int eta){
         this.eta = eta;
     }
+
     public int getEta(){
         return this.eta;
     }
@@ -161,16 +174,4 @@ public class Msg implements Comparable <Msg> {
         return this.getTime().compareTo(other.getTime());
     }
 
-    /*public static Comparator<Msg> PriorityComparator = new Comparator<Msg>(){
-        @Override
-        public int compare(Msg m1, Msg m2){
-            return m2.getPriority().priorityToInt() - (m1.getPriority().priorityToInt());
-        }
-    };
-    public static Comparator<Msg> TimestampComparator = new Comparator<Msg>() {
-        @Override
-        public int compare(Msg m1, Msg m2) {
-            return m1.getTime().compareTo(m2.getTime());
-        }
-    };*/
 }
