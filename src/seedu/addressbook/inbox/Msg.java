@@ -2,6 +2,7 @@
 package seedu.addressbook.inbox;
 
 import seedu.addressbook.Location;
+import seedu.addressbook.password.Password;
 
 import java.sql.Timestamp;
 
@@ -11,7 +12,7 @@ import java.sql.Timestamp;
 
 
 public class Msg implements Comparable <Msg> {
-    protected String senderId;
+    private String senderId = Password.getID();
     protected String receiverId;
     private String newMsg;
     private Priority priority;
@@ -70,6 +71,14 @@ public class Msg implements Comparable <Msg> {
         newMsg = message;
         location = requesterLocale;
         eta = myEta;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getSenderId(){
+        return this.senderId;
     }
 
     public void setMsg(String msg){
