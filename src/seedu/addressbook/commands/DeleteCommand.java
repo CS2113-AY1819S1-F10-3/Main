@@ -42,7 +42,6 @@ public class DeleteCommand extends Command {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (PersonNotFoundException pnfe) {
             CheckDistance checker = new CheckDistance();
-            Dictionary dict = new Dictionary();
 
             String nric = toDelete.toString();
             String prediction = checker.checkInputDistance(nric);
