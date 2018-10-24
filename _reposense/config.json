@@ -2,9 +2,9 @@
   "authors":
   [
     {
-      "githubId": "andyrobert3",
+      "githubId": "Matthew Alexander",
       "displayName": "MAT...DER",
-      "authorNames": ["andyrobert3"]
+      "authorNames": ["andyrobert3", "Matthew Alexander"]
     },
     {
       "githubId": "muhdharun",
@@ -12,14 +12,14 @@
       "authorNames": ["muhdharun", "Harun"]
     },
     {
-      "githubId": "ongweekeong",
+      "githubId": "Ong Wee Keong",
       "displayName": "ONG...ONG",
-      "authorNames": ["Wee Keong Ong", "Ong Wee Keong"]
+      "authorNames": ["ongweekeong", "Wee Keong Ong", "Ong Wee Keong"]
     },
     {
-      "githubId": "iamputradanish",
+      "githubId": "Putra Danish",
       "displayName": "PUT...FEE",
-      "authorNames": ["iamputradanish"]
+      "authorNames": ["iamputradanish", "Putra Danish"]
     },
     {
       "githubId": "ShreyasKp",
