@@ -33,7 +33,7 @@ public class InboxCommand extends Command {
                     assert msgToPrint != null;
                     fullPrintedMessage += String.valueOf(messageNum++) + ".\t[UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " +
                             msgToPrint.getTime() + ", message: " + msgToPrint.getMsg() + ", Coordinates: " + msgToPrint.getLatitude() + ", " +
-                            msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + ".\n";
+                            msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + ", Request/Backup Police Officer: " + msgToPrint.getPoliceOfficerId() + ".\n";
                 }
                 return new CommandResult(String.format(fullPrintedMessage, myUnreadMsgs));
             }

@@ -59,6 +59,9 @@ public class ReadNotification {
                     else if (msgType.equals("Location")) {
                         readMsgLocation(parts[1]);
                     }
+                    else if (msgType.equals("Police Officer ID")) {
+                        readMsgPO(parts[1]);
+                    }
                 }
 
             }
@@ -117,6 +120,10 @@ public class ReadNotification {
         Location myLocation = new Location(Double.parseDouble(coordinates[0]),
                 Double.parseDouble(coordinates[1]));
         this.returnMsg.setLocation(myLocation);
+    }
+
+    public void readMsgPO(String poId) {
+        this.returnMsg.setPoliceOfficerId(poId);
     }
 
 }

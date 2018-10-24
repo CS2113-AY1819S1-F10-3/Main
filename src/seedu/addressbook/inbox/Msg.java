@@ -50,6 +50,11 @@ public class Msg implements Comparable <Msg> {
         isRead = MESSAGE_IS_UNREAD;
     }
 
+    // constructor for dispatcher message
+
+    // constructor for requester message
+    
+
     public Msg(Priority urgency, String message, String policeOfficerId){
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
@@ -59,16 +64,17 @@ public class Msg implements Comparable <Msg> {
         this.policeOfficerId = policeOfficerId;
     }
 
-    public Msg(Priority urgency, String message, Location myLocale){ // Constructor for request backup message
+    public Msg(Priority urgency, String message, Location myLocale, String policeOfficerId){ // Constructor for request backup message
         isLocationAvailable = true;
         isRead = MESSAGE_IS_UNREAD;
         priority = urgency;
         time = new Timestamp(System.currentTimeMillis());
         newMsg = message;
         location = myLocale;
+        this.policeOfficerId = policeOfficerId;
     }
 
-    public Msg(Priority urgency, String message, Location requesterLocale, int myEta, String policeOfficerId){ // Constructor for request backup message
+    public Msg(Priority urgency, String message, Location requesterLocale, int myEta){ // Constructor for request backup message
         isLocationAvailable = true;                                                    // An ack message should be sent to PO requesting
         isRead = MESSAGE_IS_UNREAD;                                                    // backup, stating ETA of backup deployed.
         priority = urgency;
@@ -76,7 +82,6 @@ public class Msg implements Comparable <Msg> {
         newMsg = message;
         location = requesterLocale;
         eta = myEta;
-        this.policeOfficerId = policeOfficerId;
     }
 
 
@@ -109,14 +114,14 @@ public class Msg implements Comparable <Msg> {
     }
 
     public double getLongitude(){
-        return location.getLongitude();
+        return (location == null) ? 0.000 : location.getLongitude();
     }
     public void setLongitude(double x){
         location.setLongitude(x);
     }
 
     public double getLatitude(){
-        return location.getLatitude();
+        return (location == null) ? 0.000 : location.getLatitude();
     }
     public void setLatitude(double y){
         location.setLatitude(y);
@@ -134,7 +139,7 @@ public class Msg implements Comparable <Msg> {
     }
 
     public String getPoliceOfficerId() {
-        return policeOfficerId;
+        return (this.policeOfficerId == null) ? "-" : policeOfficerId;
     }
     public void setPoliceOfficerId(String policeOfficerId) { this.policeOfficerId = policeOfficerId; }
 

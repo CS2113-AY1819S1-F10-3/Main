@@ -1,5 +1,8 @@
 package seedu.addressbook.inbox;
 
+import seedu.addressbook.commands.DispatchBackup;
+import seedu.addressbook.password.Password;
+
 import java.io.IOException;
 import java.util.TreeSet;
 
@@ -8,7 +11,7 @@ import static seedu.addressbook.inbox.Msg.MESSAGE_IS_UNREAD;
 
 public class Inbox {
     // all messages will be stored here, notifications will appear based on severity and timestamp.
-    public static final String MESSAGE_STORAGE_FILEPATH = "inboxMessages/headquartersInbox";
+    public static final String MESSAGE_STORAGE_FILEPATH = MessageFilePaths.getFilePathFromUserId(Password.getID());
     public static final String COMMAND_WORD = "inbox";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Opens up list of unread notifications. \n\t"
             + "Example: " + COMMAND_WORD;
@@ -92,7 +95,7 @@ public class Inbox {
         else{
             System.out.println(messageNum + " Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
                     ", message: " + msgToPrint.getMsg() + ", Coordinates: " + msgToPrint.getLatitude() + ", " +
-                    msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + '.');
+                    msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + ", Request/Backup Police Officer: " + msgToPrint.getPoliceOfficerId() + ".");
         }
     }
     public static void printMessageNoLocation(int messageNum, Msg msgToPrint){
@@ -102,7 +105,7 @@ public class Inbox {
         }
         else{
             System.out.println(messageNum + " Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
-                    ", message: " + msgToPrint.getMsg() + '.');
+                    ", message: " + msgToPrint.getMsg() + ", Request/Backup Police Officer: " + msgToPrint.getPoliceOfficerId() + ".");
         }
     }
 

@@ -77,13 +77,15 @@ public class DispatchBackup extends Command{
         String etaMessage = etaList.get(0).getValue1();
 
         try {
-            Msg dispatchMessage = new Msg(Offense.getPriority(offense), etaMessage, PatrolResourceStatus.getLocation(requester), eta, requester);
+            Msg dispatchMessage = new Msg(Offense.getPriority(offense), "ETA " + etaMessage,
+                                            PatrolResourceStatus.getLocation(requester), eta);
             dispatchMessage.setPoliceOfficerId(requester);
             writeNotificationToBackupOfficer.writeToFile(dispatchMessage);
 
 
             // TODO: Backup is not available
-            Msg requesterMessage = new Msg(Offense.getPriority(offense), etaMessage, PatrolResourceStatus.getLocation(backupOfficer), eta, backupOfficer);
+            Msg requesterMessage = new Msg(Offense.getPriority(offense), "ETA " + etaMessage,
+                                            PatrolResourceStatus.getLocation(backupOfficer), eta);
             writeNotificationToRequester.writeToFile(requesterMessage);
         } catch(IOException ioe) {
             return new CommandResult(Messages.MESSAGE_SAVE_ERROR);

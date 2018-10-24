@@ -1,6 +1,7 @@
 //@@author andyrobert3
 package seedu.addressbook.commands;
 
+import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Offense;
@@ -28,7 +29,7 @@ public class RequestHelp extends Command {
 
     public RequestHelp(String caseName, String messageString) throws IllegalValueException {
         writeNotification = new WriteNotification(MessageFilePaths.FILEPATH_HQP_INBOX, true);
-        requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, Password.getID());
+        requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, PatrolResourceStatus.getLocation(Password.getID()), Password.getID());
     }
 
 
