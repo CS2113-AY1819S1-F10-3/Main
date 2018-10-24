@@ -1,7 +1,5 @@
 package seedu.addressbook.inbox;
 
-import seedu.addressbook.commands.DispatchBackup;
-import seedu.addressbook.password.Password;
 
 import java.io.IOException;
 import java.util.TreeSet;
@@ -11,23 +9,29 @@ import static seedu.addressbook.inbox.Msg.MESSAGE_IS_UNREAD;
 
 public class Inbox {
     // all messages will be stored here, notifications will appear based on severity and timestamp.
-    public static final String MESSAGE_STORAGE_FILEPATH = MessageFilePaths.getFilePathFromUserId(Password.getID());
+
     public static final String COMMAND_WORD = "inbox";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Opens up list of unread notifications. \n\t"
             + "Example: " + COMMAND_WORD;
     public static final String MESSAGE_PROMPT = "Press 'Enter' to take action for Message 1";
     public static int numUnreadMsgs = 0;
     private Msg message;
-    private static ReadNotification nw = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
-    static WriteNotification newMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
-    static WriteNotification allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false);
+
+    public static String MESSAGE_STORAGE_FILEPATH;
+    private static ReadNotification nw;
+    static WriteNotification newMessages;
+    static WriteNotification allMessages;
 
     //protected static HashMap<Triplet<Boolean, Msg.Priority, Timestamp>, Triplet<String, Integer, Location>> notificationsToPrint = new HashMap<>();
     protected static TreeSet<Msg> notificationsToPrint = new TreeSet<>();
     protected static TreeSet<Msg> allNotifications = new TreeSet<>();
 
-    public Inbox(){
-//        Inbox inbox = new Inbox();
+
+    public Inbox(String policeOfficerId) {
+        MESSAGE_STORAGE_FILEPATH = MessageFilePaths.getFilePathFromUserId(policeOfficerId);
+        nw = new ReadNotification(MESSAGE_STORAGE_FILEPATH);
+        newMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, true);
+        allMessages = new WriteNotification(MESSAGE_STORAGE_FILEPATH, false);
     }
 
     public static TreeSet<Msg> loadMsgs() throws IOException {

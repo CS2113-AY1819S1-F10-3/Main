@@ -102,34 +102,6 @@ public class ReadNotification {
         this.returnMsg.setPriority(msgPriority);
     }
 
-    public void readMsgTimestamp(String timestamp){
-        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
-        Date parsedTimeStamp = new Date();
-        try {
-            parsedTimeStamp = timeFormatted.parse(timestamp);
-        } catch (ParseException e) {
-            // Find a way to debug this if time format is invalid.
-        }
-        Timestamp msgTime = new Timestamp(parsedTimeStamp.getTime());
-        returnMsg.setTime(msgTime);
-    }
-
-    public void readMsgMessage(String message){
-        this.returnMsg.setMsg(message);
-    }
-
-    public void readMsgEta (String eta){
-        this.returnMsg.setEta(Integer.parseInt(eta));
-    }
-
-    public void readMsgLocation(String xyValue){
-        String[] coordinates = xyValue.split(",", 2);
-        Location myLocation = new Location(Double.parseDouble(coordinates[0]),
-                Double.parseDouble(coordinates[1]));
-        this.returnMsg.setLocation(myLocation);
-    }
-
-}
 
     public void readMsgTimestamp(String timestamp){
         SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HHmm:ss");

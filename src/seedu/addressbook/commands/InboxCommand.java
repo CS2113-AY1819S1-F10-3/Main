@@ -3,6 +3,8 @@ package seedu.addressbook.commands;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.inbox.Inbox;
 import seedu.addressbook.inbox.Msg;
+import seedu.addressbook.password.Password;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;

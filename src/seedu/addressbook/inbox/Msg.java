@@ -1,7 +1,8 @@
 //@@author ongweekeong
 package seedu.addressbook.inbox;
 
-import seedu.addressbook.Location;
+
+import seedu.addressbook.common.Location;
 import seedu.addressbook.password.Password;
 
 import java.sql.Timestamp;
@@ -27,6 +28,8 @@ public class Msg implements Comparable <Msg> {
     private Timestamp time;
     public static final boolean MESSAGE_IS_READ = true;
     public static final boolean MESSAGE_IS_UNREAD = false;
+
+
 
     public enum Priority {
         HIGH(3),   // For messages that require HPQ intervention
@@ -117,9 +120,6 @@ public class Msg implements Comparable <Msg> {
         return location;
     }
 
-    public double getLongitude(){
-        return (location == null) ? 0.000 : location.getLongitude();
-    }
     public void setLongitude(double x){
         location.setLongitude(x);
     }
@@ -132,8 +132,8 @@ public class Msg implements Comparable <Msg> {
         return location.getLongitude();
     }
 
-    public int getEta(){
-        return this.eta;
+    public double getLatitude() {
+        return location.getLatitude();
     }
 
     public void setEta(int eta){
