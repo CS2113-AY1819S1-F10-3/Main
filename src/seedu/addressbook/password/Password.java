@@ -35,6 +35,10 @@ public class Password {
     private static final String MESSAGE_TRY_UNAUTHORIZED ="You are unauthorized to %s.\nPlease try a different command. ";
     private static final String MESSAGE_PASSWORD_LENGTH = "Your new password is %1$d character(s) long. ";
     private static final String MESSAGE_PASSWORD_MINIMUM_LENGTH = "Your new password must be at least %1$d characters long. ";
+    public static final String UPDATE_PASSWORD_COMMAND_WORD = "update password";
+    public static final String UPDATE_PASSWORD_MESSAGE_USAGE = UPDATE_PASSWORD_COMMAND_WORD + ":\n" + "Updates a password\n\t"
+            + "Example: " + UPDATE_PASSWORD_COMMAND_WORD;
+
 
     public static int getWrongPasswordCounter() {
         return wrongPasswordCounter;
@@ -521,22 +525,22 @@ public class Password {
     public static String getID(){
         String result = null;
         if(isHQP){
-            result = "hqp";
+            result = MESSAGE_HQP;
         }
         else if(isPO1){
-            result = "po1";
+            result = MESSAGE_PO + MESSAGE_ONE;
         }
         else if(isPO2){
-            result = "po2";
+            result = MESSAGE_PO + MESSAGE_TWO;
         }
         else if(isPO3){
-            result = "po3";
+            result = MESSAGE_PO + MESSAGE_THREE;
         }
         else if(isPO4){
-            result = "po4";
+            result = MESSAGE_PO + MESSAGE_FOUR;
         }
         else if(isPO5){
-            result = "po5";
+            result = MESSAGE_PO + MESSAGE_FIVE;
         }
         return result;
     }
