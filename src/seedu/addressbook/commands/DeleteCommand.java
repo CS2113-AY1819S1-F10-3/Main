@@ -41,6 +41,7 @@ public class DeleteCommand extends Command {
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (PersonNotFoundException pnfe) {
+            //@@author ShreyasKp
             CheckDistance checker = new CheckDistance();
 
             String nric = toDelete.toString();

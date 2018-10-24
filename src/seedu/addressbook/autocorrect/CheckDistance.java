@@ -1,3 +1,4 @@
+//@@author ShreyasKp
 package seedu.addressbook.autocorrect;
 
 import seedu.addressbook.commands.Dictionary;

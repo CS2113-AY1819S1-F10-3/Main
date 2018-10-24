@@ -115,13 +115,15 @@ public class LogicTest {
         Password.lockIsHQP();
     }
 
-
+    //@@author ShreyasKp
     @Test
     public void execute_timeCommand() throws Exception {
         String command = DateTimeCommand.COMMAND_WORD;
         TimeAndDate timeAndDate = new TimeAndDate();
         assertCommandBehavior(command, timeAndDate.outputDATHrs());
     }
+
+    //@@author iamputradanish
 
     @Test
     public void execute_unknownCommandWord_forPO() throws Exception {
