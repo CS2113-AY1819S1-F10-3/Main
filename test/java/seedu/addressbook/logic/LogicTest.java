@@ -478,15 +478,14 @@ public class LogicTest {
         Person p2 = helper.generatePersonWithNric("s1234567d");
 
         List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget2);
+        Person expectedPerson = pTarget2;
         helper.addToAddressBook(addressBook, fourPersons);
+        String inputCommand = "find " + pTarget2.getNric().getIdentificationNumber();
+        CommandResult r = logic.execute(inputCommand);
 
-        assertCommandBehavior("find s1234567b",
-                                Command.getMessageForPersonListShownSummary(expectedList),
-                                expectedAB,
-                                true,
-                                expectedList);
+
+        assertEquals(Command.getMessageForPersonShownSummary(expectedPerson), r.feedbackToUser);
+
     }
 
     @Test
@@ -505,7 +504,7 @@ public class LogicTest {
         logic.execute(helper.generateAddCommand(toBeAdded));
         CommandResult r = logic.execute("check " + nric);
         String message = r.feedbackToUser.trim();
-        String expectedMessage = String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,0);
+        String expectedMessage = String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,nric,0);
         assertEquals(expectedMessage,message);
         logic.execute("delete " + nric);
 
@@ -561,7 +560,7 @@ public class LogicTest {
     //@@author iamputradanish
     @Test
     public void execute_unlockHQP() throws Exception {
-        String result = Password.unlockDevice("mama123",5);
+        String result = Password.unlockDevice("papa123",5);
         assertEquals(String.format(Password.MESSAGE_WELCOME , Password.MESSAGE_HQP)
                 + "\n" + Password.MESSAGE_ENTER_COMMAND , result);
         Password.lockIsHQP();

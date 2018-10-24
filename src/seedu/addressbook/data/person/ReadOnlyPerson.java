@@ -2,6 +2,7 @@ package seedu.addressbook.data.person;
 
 import java.util.Set;
 
+
 /**
  * A read-only immutable interface for a Person in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
@@ -56,6 +57,33 @@ public interface ReadOnlyPerson {
         builder.append(getStatus())
                 .append(" Wanted For: ");
         builder.append(getWantedFor())
+                .append(" Past Offences:");
+        for (Offense offense : getPastOffenses()) {
+            builder.append(offense);
+        }
+        return builder.toString();
+    }
+
+    default String getAsTextShowAllInVerticalMode() {
+
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append("\n")
+                .append(" NRIC: ");
+        builder.append(getNric())
+                .append("\n")
+                .append(" DateOfBirth: ");
+        builder.append(getDateOfBirth().getDOB())
+                .append("\n")
+                .append(" Postal Code: ");
+        builder.append(getPostalCode())
+                .append("\n")
+                .append(" Status: ");
+        builder.append(getStatus())
+                .append("\n")
+                .append(" Wanted For: ");
+        builder.append(getWantedFor())
+                .append("\n")
                 .append(" Past Offences:");
         for (Offense offense : getPastOffenses()) {
             builder.append(offense);
