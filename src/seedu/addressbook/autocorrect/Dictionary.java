@@ -23,7 +23,10 @@ public class Dictionary {
         commands.add("help");
         commands.add("list");
         commands.add("viewall");
+        commands.add("request");
+        commands.add("dispatch");
         commands.add("view");
+        commands.add("edit");
     }
 
     public String getErrorMessage() {

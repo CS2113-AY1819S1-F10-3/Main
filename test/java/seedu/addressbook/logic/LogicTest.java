@@ -13,10 +13,16 @@ import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.addressbook.common.Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW;
+import static seedu.addressbook.password.Password.MESSAGE_ENTER_PASSWORD;
+import static seedu.addressbook.password.Password.unlockHQP;
+import static seedu.addressbook.password.Password.unlockPO;
 
 
 public class LogicTest {
@@ -92,6 +98,7 @@ public class LogicTest {
         assertEquals(addressBook, saveFile.load());
     }
 
+    //@@author iamputradanish
     @Test
     public void execute_unknownCommandWord_forHQP() throws Exception {
         String unknownCommand = "uicfhmowqewca";
@@ -107,21 +114,23 @@ public class LogicTest {
         Password.lockIsHQP();
     }
 
+
     @Test
     public void execute_unknownCommandWord_forPO() throws Exception {
         String unknownCommand = "uicfhmowqewca";
-        Password.unlockPO();
+        unlockPO();
         assertCommandBehavior(unknownCommand, HelpCommand.MESSAGE_PO_USAGES);
         Password.lockIsPO();
     }
 
     @Test
     public void execute_help_forPO() throws Exception {
-        Password.unlockPO();
+        unlockPO();
         assertCommandBehavior("help", HelpCommand.MESSAGE_PO_USAGES);
         Password.lockIsPO();
     }
 
+    //@@author
     @Test
     public void execute_exit() throws Exception {
         assertCommandBehavior("shutdown", ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
@@ -462,6 +471,17 @@ public class LogicTest {
         assertCommandBehavior("find S1234567A", expectedMessage);
     }
 
+
+
+    //@@author andyrobert3
+    @Test
+    public void execute_edit_personExists() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.generatePersonWithNric("s1234567a");
+        
+    }
+
+
     @Test
     public void execute_find_onlyMatchesFullNric() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -471,15 +491,14 @@ public class LogicTest {
         Person p2 = helper.generatePersonWithNric("s1234567d");
 
         List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget2);
+        Person expectedPerson = pTarget2;
         helper.addToAddressBook(addressBook, fourPersons);
+        String inputCommand = "find " + pTarget2.getNric().getIdentificationNumber();
+        CommandResult r = logic.execute(inputCommand);
 
-        assertCommandBehavior("find s1234567b",
-                                Command.getMessageForPersonListShownSummary(expectedList),
-                                expectedAB,
-                                true,
-                                expectedList);
+
+        assertEquals(Command.getMessageForPersonShownSummary(expectedPerson), r.feedbackToUser);
+
     }
 
     @Test
@@ -498,7 +517,7 @@ public class LogicTest {
         logic.execute(helper.generateAddCommand(toBeAdded));
         CommandResult r = logic.execute("check " + nric);
         String message = r.feedbackToUser.trim();
-        String expectedMessage = String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,0);
+        String expectedMessage = String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,nric,0);
         assertEquals(expectedMessage,message);
         logic.execute("delete " + nric);
 
@@ -551,9 +570,10 @@ public class LogicTest {
 //                                expectedList);
 //    }
 
+    //@@author iamputradanish
     @Test
     public void execute_unlockHQP() throws Exception {
-        String result = Password.unlockDevice("mama123",5);
+        String result = Password.unlockDevice("papa123",5);
         assertEquals(String.format(Password.MESSAGE_WELCOME , Password.MESSAGE_HQP)
                 + "\n" + Password.MESSAGE_ENTER_COMMAND , result);
         Password.lockIsHQP();
@@ -568,7 +588,88 @@ public class LogicTest {
         Password.lockIsPO();
     }
 
+    @Test
+    public void execute_wrongPassword_firstTime() throws Exception{
+        Password.lockIsPO();
+        Password.lockIsHQP();
+        String wrongPassword = "thisiswrong";
+        int numberOfAttemptsLeft = 5;
+        Password.setWrongPasswordCounter(numberOfAttemptsLeft);
+        String result = Password.unlockDevice(wrongPassword, numberOfAttemptsLeft);
+        assertEquals(Password.MESSAGE_INCORRECT_PASSWORD
+                + "\n" + String.format(Password.MESSAGE_ATTEMPTS_LEFT, numberOfAttemptsLeft)
+                + "\n" + MESSAGE_ENTER_PASSWORD,result);
+        Password.setWrongPasswordCounter(5);
+    }
+    @Test
+    public void execute_wrongPassword_fourthTime() throws Exception{
+        Password.lockIsPO();
+        Password.lockIsHQP();
+        String wrongPassword = "thisiswrong";
+        int numberOfAttemptsLeft = 1;
+        Password.setWrongPasswordCounter(numberOfAttemptsLeft);
+        String result = Password.unlockDevice(wrongPassword, numberOfAttemptsLeft);
+        assertEquals(Password.MESSAGE_INCORRECT_PASSWORD
+                + "\n" + String.format(Password.MESSAGE_ATTEMPT_LEFT, numberOfAttemptsLeft)
+                + "\n" + Password.MESSAGE_SHUTDOWN_WARNING,result);
 
+    }
+
+    @Test
+    public void execute_wrongPassword_lastTime() throws Exception{
+        Password.lockIsPO();
+        Password.lockIsHQP();
+        String wrongPassword = "thisiswrong";
+        int numberOfAttemptsLeft = 0;
+        Password.setWrongPasswordCounter(numberOfAttemptsLeft);
+        String result = Password.unlockDevice(wrongPassword, numberOfAttemptsLeft);
+        assertEquals(Password.MESSAGE_SHUTDOWN, result);
+    }
+
+    @Test
+    public void execute_setWrongPasswordCounter_toPositiveNumber() {
+        int randomNumber = ThreadLocalRandom.current().nextInt(0, 6);
+        Password.setWrongPasswordCounter(randomNumber);
+        assertEquals(randomNumber, Password.getWrongPasswordCounter());
+    }
+
+    @Test
+    public void execute_setWrongPasswordCounter_toNegativeNumber() {
+        int randomNumber = ThreadLocalRandom.current().nextInt(-6, 0);
+        Password.setWrongPasswordCounter(randomNumber);
+        int result = Password.getWrongPasswordCounter();
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void execute_unlockHQPUser(){
+        unlockHQP();
+        boolean result = Password.isHQPUser();
+        assertTrue(result);
+    }
+
+    @Test
+    public void execute_unlockPOUser(){
+        unlockPO();
+        boolean result = Password.isPO();
+        assertTrue(result);
+    }
+
+    @Test
+    public void execute_lockHQPUser(){
+        Password.lockIsHQP();
+        boolean result = Password.isHQPUser();
+        assertFalse(result);
+    }
+
+    @Test
+    public void execute_lockPOUser(){
+        Password.lockIsPO();
+        boolean result = Password.isPO();
+        assertFalse(result);
+    }
+
+    //@@author
 
     /**
      * A utility class to generate test data.

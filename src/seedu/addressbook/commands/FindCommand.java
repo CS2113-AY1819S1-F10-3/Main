@@ -3,8 +3,7 @@ package seedu.addressbook.commands;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -30,19 +29,17 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        final List<ReadOnlyPerson> personFound = getPersonWithNric();
-        return new CommandResult(getMessageForPersonListShownSummary(personFound), personFound);
+        final ReadOnlyPerson personFound = getPersonWithNric();
+        return new CommandResult(getMessageForPersonShownSummary(personFound));
     }
 
 
-    // TODO: Make this return only one ReadOnlyPerson
     /**
      * Retrieve all persons in the address book whose names contain some of the specified keywords.
      *
      * @return Persons found, null if no person found
      */
-    public List<ReadOnlyPerson> getPersonWithNric() {
-        List<ReadOnlyPerson> matchedPerson = new ArrayList<>();
+    public ReadOnlyPerson getPersonWithNric() {
         for (ReadOnlyPerson person : relevantPersons) {
             if (person.getNric().getIdentificationNumber().equals(nric)) {
                 addressBook.addPersontoDbAndUpdate(person);
@@ -51,9 +48,8 @@ public class FindCommand extends Command {
                 } catch (IOException e) {
                     e.printStackTrace(); // TODO: throws exeception
                 }
-                matchedPerson.add(person);
 
-                return matchedPerson;
+                return person;
             }
         }
 

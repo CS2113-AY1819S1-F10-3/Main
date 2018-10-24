@@ -1,25 +1,23 @@
+//@@author andyrobert3
 package seedu.addressbook;
 
-import org.javatuples.Pair;
+import org.javatuples.Triplet;
 import seedu.addressbook.common.Location;
-import seedu.addressbook.data.PoliceOfficers.PatrolResource;
 
 import java.util.ArrayList;
 
 public class PatrolResourceStatus {
-    private static ArrayList<Pair<String, Location>> patrolResourceStatus = new ArrayList<>(){{
-        add(new Pair<>("hqp", new Location(1.294166, 103.770730))); // NUS FASS
-        add(new Pair<>("po1", new Location(1.306935, 103.790564))); // Buona Vista
-        add(new Pair<>("po2", new Location(1.346301, 103.682060))); // NTU
-        add(new Pair<>("po3", new Location(1.296057, 103.849865))); // SMU
-        add(new Pair<>("po4", new Location(1.340352, 103.962193))); // SUTD
-        add(new Pair<>("po5", new Location(1.329393, 103.776169))); // SIM
+    // Triplet<Police Officer ID, Location, isEngaged
+    private static ArrayList<Triplet<String, Location, Boolean>> patrolResourceStatus = new ArrayList<>(){{
+        add( new Triplet<>("hqp", new Location(1.294166, 103.770730), false) ); // NUS FASS
+        add( new Triplet<>("po1", new Location(1.306935, 103.790564), false) ); // Buona Vista
+        add( new Triplet<>("po2", new Location(1.346301, 103.682060), false) ); // NTU
+        add( new Triplet<>("po3", new Location(1.296057, 103.849865), false) ); // SMU
+        add( new Triplet<>("po4", new Location(1.340352, 103.962193), false) ); // SUTD
+        add( new Triplet<>("po5", new Location(1.329393, 103.776169), false) ); // SIM
     }};
 
-    public PatrolResourceStatus() {
-    }
-
-
+    // TODO: put into message
     public static Location getLocation(String patrolResource) {
         switch (patrolResource) {
             case "hqp":
@@ -38,4 +36,14 @@ public class PatrolResourceStatus {
                 return null;
         }
     }
+
+    public void setStatus(String policeOfficerId, Boolean status) {
+        for (Triplet<String, Location, Boolean> policeOfficer : patrolResourceStatus) {
+            if (policeOfficer.getValue0().equalsIgnoreCase(policeOfficerId)) {
+                policeOfficer.setAt2(status);
+                return;
+            }
+        }
+    }
+
 }

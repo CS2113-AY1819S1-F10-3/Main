@@ -33,9 +33,9 @@ public class DispatchBackup extends Command{
 
 
     private WriteNotification writeNotificationToBackupOfficer;
-    private WriteNotification writeNotificationDispatchRequester;
+    private WriteNotification writeNotificationToRequester;
     private String backupOfficer;
-    private String dispatchRequester;
+    private String requester;
     private String offense;
 
     private String getNotificationFilePath(String policeId) {
@@ -57,35 +57,34 @@ public class DispatchBackup extends Command{
         return MESSAGE_INVALID_POLICE_ID;
     }
 
-    public DispatchBackup(String backupOfficer, String dispatchRequester, String caseName) {
+    public DispatchBackup(String backupOfficer, String requester, String caseName) {
         writeNotificationToBackupOfficer = new WriteNotification(getNotificationFilePath(backupOfficer), true);
-        writeNotificationDispatchRequester = new WriteNotification(getNotificationFilePath(dispatchRequester), true);
+        writeNotificationToRequester = new WriteNotification(getNotificationFilePath(requester), true);
 
         this.offense = caseName;
         this.backupOfficer = backupOfficer;
-        this.dispatchRequester = dispatchRequester;
+        this.requester = requester;
     }
 
     public CommandResult execute()  {
         Location origin = PatrolResourceStatus.getLocation(backupOfficer);
 
         ArrayList<Location> destinationList = new ArrayList<>();
-        destinationList.add(PatrolResourceStatus.getLocation(dispatchRequester));
+        destinationList.add(PatrolResourceStatus.getLocation(requester));
         ArrayList<Pair<Integer, String>> etaList = origin.getEtaFrom(destinationList);
 
         int eta = etaList.get(0).getValue0();
         String etaMessage = etaList.get(0).getValue1();
 
         try {
-            Msg dispatchMessage = new Msg(Offense.getPriority(offense), null, PatrolResourceStatus.getLocation(dispatchRequester), eta);
-            dispatchMessage.setPoliceOfficerId(dispatchRequester);
+            Msg dispatchMessage = new Msg(Offense.getPriority(offense), etaMessage, PatrolResourceStatus.getLocation(requester), eta, requester);
+            dispatchMessage.setPoliceOfficerId(requester);
             writeNotificationToBackupOfficer.writeToFile(dispatchMessage);
 
+
             // TODO: Backup is not available
-            Msg dispatchRequesterMessage = new Msg();
-            dispatchRequesterMessage.setEta(eta);
-            dispatchRequesterMessage.setPoliceOfficerId(backupOfficer);
-            writeNotificationDispatchRequester.writeToFile(dispatchRequesterMessage);
+            Msg requesterMessage = new Msg(Offense.getPriority(offense), etaMessage, PatrolResourceStatus.getLocation(backupOfficer), eta, backupOfficer);
+            writeNotificationToRequester.writeToFile(requesterMessage);
         } catch(IOException ioe) {
             return new CommandResult(Messages.MESSAGE_SAVE_ERROR);
         } catch (IllegalValueException ioe) {

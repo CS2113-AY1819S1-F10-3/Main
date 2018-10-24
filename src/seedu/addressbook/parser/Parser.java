@@ -253,13 +253,13 @@ public class Parser {
         }
     }
 
+    //@@author andyrobert3
     /**
      * Parses arguments in the context of the edit person command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    // TODO: Refactor prepareEdit and prepareAdd
     private Command prepareEdit(String args) {
         final Matcher matcher = EDIT_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
@@ -280,6 +280,7 @@ public class Parser {
         }
     }
 
+    //@@author
     /**
      * Parses arguments in the context of the view command.
      *
@@ -297,6 +298,7 @@ public class Parser {
         }
     }
 
+    //@@author
     /**
      * Parses arguments in the context of the view all command.
      *
@@ -314,6 +316,7 @@ public class Parser {
         }
     }
 
+    //@@author
     /**
      * Parses the given arguments string as a single index number.
      *
@@ -371,6 +374,7 @@ public class Parser {
         //return new FindCommand(args);
     }
 
+    //@@author andyrobert3
     /**
      * Parses arguments in context of request help command.
      *
@@ -396,6 +400,7 @@ public class Parser {
         }
     }
 
+    //@@author andyrobert3
     /**
      * Parses arguments in context of dispatch command
      *
@@ -411,9 +416,9 @@ public class Parser {
                     DispatchBackup.MESSAGE_USAGE));
         }
 
-        backupOfficer = argParts[0];
-        caseName = argParts[1];
-        dispatchRequester = argParts[2];
+        backupOfficer = argParts[0].toLowerCase();
+        caseName = argParts[1].toLowerCase();
+        dispatchRequester = argParts[2].toLowerCase();
 
         return new DispatchBackup(backupOfficer, dispatchRequester, caseName);
     }
