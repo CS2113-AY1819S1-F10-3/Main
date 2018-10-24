@@ -39,7 +39,10 @@ public class ReadNotification {
                 String[] parts = line.split(":", 2);
                 String msgType = parts[0];
                 if (parts.length == 2) {
-                    if (msgType.equals("Read status")) {
+                    if(msgType.equals("Sender ID")){
+                        readMsgSenderId(parts[1]);
+                    }
+                    else if (msgType.equals("Read status")) {
                         readMsgReadStatus(parts[1]);
                         if (!returnMsg.isRead)
                             unreadMsgs += 1;
@@ -77,6 +80,10 @@ public class ReadNotification {
         this.unreadMsgs = 0;
     }
 
+    public void readMsgSenderId(String userId){
+        this.returnMsg.setSenderId(userId);
+    }
+
     public void readMsgReadStatus(String readStatus) {
         this.returnMsg.isRead = Boolean.parseBoolean(readStatus);
     }
@@ -94,6 +101,35 @@ public class ReadNotification {
 
         this.returnMsg.setPriority(msgPriority);
     }
+
+    public void readMsgTimestamp(String timestamp){
+        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+        Date parsedTimeStamp = new Date();
+        try {
+            parsedTimeStamp = timeFormatted.parse(timestamp);
+        } catch (ParseException e) {
+            // Find a way to debug this if time format is invalid.
+        }
+        Timestamp msgTime = new Timestamp(parsedTimeStamp.getTime());
+        returnMsg.setTime(msgTime);
+    }
+
+    public void readMsgMessage(String message){
+        this.returnMsg.setMsg(message);
+    }
+
+    public void readMsgEta (String eta){
+        this.returnMsg.setEta(Integer.parseInt(eta));
+    }
+
+    public void readMsgLocation(String xyValue){
+        String[] coordinates = xyValue.split(",", 2);
+        Location myLocation = new Location(Double.parseDouble(coordinates[0]),
+                Double.parseDouble(coordinates[1]));
+        this.returnMsg.setLocation(myLocation);
+    }
+
+}
 
     public void readMsgTimestamp(String timestamp){
         SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HHmm:ss");

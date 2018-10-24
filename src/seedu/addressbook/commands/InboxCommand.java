@@ -5,6 +5,7 @@ import seedu.addressbook.inbox.Inbox;
 import seedu.addressbook.inbox.Msg;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.TreeSet;
 
 public class InboxCommand extends Command {
@@ -14,12 +15,17 @@ public class InboxCommand extends Command {
             + "Displays all unread messages in the application starting from the most urgent.\n\t"
             + "Example: " + COMMAND_WORD;
 
+    TimeAndDate dateFormatter = new TimeAndDate();
+
+    public static LinkedHashMap<Integer, Msg> recordedMessages = new LinkedHashMap();
+
     @Override
     public CommandResult execute() {
-        /*List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
-        return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);*/
-        Inbox myInbox = new Inbox();
-        TreeSet<Msg> allMsgs = null; // TODO: Figure out how to send the whole list of messages over.
+
+        //Inbox myInbox = new Inbox();
+        Inbox myInbox = new Inbox(Password.getID());
+        TreeSet<Msg> allMsgs;
+        recordedMessages.clear();
         int myUnreadMsgs;
         int messageNum = 1;
         Msg msgToPrint;
@@ -30,10 +36,9 @@ public class InboxCommand extends Command {
                 String fullPrintedMessage = Messages.MESSAGE_UNREAD_MSG_NOTIFICATION + '\n';
                 for(int i=0; i<myUnreadMsgs; i++){
                     msgToPrint = allMsgs.pollFirst();
-                    assert msgToPrint != null;
-                    fullPrintedMessage += String.valueOf(messageNum++) + ".\t[UNREAD] Priority: " + msgToPrint.getPriority() + ", Sent: " +
-                            msgToPrint.getTime() + ", message: " + msgToPrint.getMsg() + ", Coordinates: " + msgToPrint.getLatitude() + ", " +
-                            msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + ", Request/Backup Police Officer: " + msgToPrint.getPoliceOfficerId() + ".\n";
+                    recordedMessages.put(messageNum, msgToPrint);
+                    fullPrintedMessage += concatenateMsg(messageNum, msgToPrint);
+                    messageNum++;
                 }
                 return new CommandResult(String.format(fullPrintedMessage, myUnreadMsgs));
             }
@@ -45,4 +50,23 @@ public class InboxCommand extends Command {
             return new CommandResult("Error loading messages.");
         }
     }
+
+    public String concatenateMsg(int messageNum, Msg message) throws NullPointerException{
+        String concatenatedMsg;
+        try{
+            concatenatedMsg = String.valueOf(messageNum) + ".\t[UNREAD] Sender: " + message.getSenderId() + " Priority: " + message.getPriority() +
+                    ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ", message: " + message.getMsg() + ", Coordinates: " +
+                    message.getLatitude() + ", " + message.getLongitude() + ", ETA: " + message.getEta() + ".\n";
+        }
+        catch(Exception e){
+            concatenatedMsg = String.valueOf(messageNum) + ".\t[UNREAD] Sender: " + message.getSenderId() + " Priority: " +
+                    message.getPriority() + ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ", message: " + message.getMsg() + ".\n";
+        }
+        return concatenatedMsg;
+    }
+
+    public void recordMessage(Msg message){
+
+    }
+
 }

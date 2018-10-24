@@ -1,19 +1,19 @@
 //@@author ongweekeong
 package seedu.addressbook.inbox;
 
-import seedu.addressbook.common.Location;
+import seedu.addressbook.Location;
+import seedu.addressbook.password.Password;
 
 import java.sql.Timestamp;
 
 /** Msg has the following attributes:
- *  @params Priority, timestamp, message, location (x,y coordinates) and ETA.
- *  Priority, timestamp and message are compulsory fields. Location and ETA are optional.
+ *  @params Read Status, Priority, timestamp, message, location (x,y coordinates) and ETA.
  */
 
 
 public class Msg implements Comparable <Msg> {
-//    protected String senderId;
-//    protected String receiverId;
+    private String senderId = Password.getID();
+    protected String receiverId;
     private String newMsg;
     private Priority priority;
     private Location location;
@@ -84,10 +84,15 @@ public class Msg implements Comparable <Msg> {
         eta = myEta;
     }
 
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
 
+    public String getSenderId(){
+        return this.senderId;
+    }
 
-
-    public void addMsg(String msg){
+    public void setMsg(String msg){
         this.newMsg = msg;
     }
 
@@ -99,7 +104,6 @@ public class Msg implements Comparable <Msg> {
         return this.priority;
     }
 
-    public void setMsg(String message) { this.newMsg = message; }
     public String getMsg(){
         return this.newMsg;
     }
@@ -120,18 +124,24 @@ public class Msg implements Comparable <Msg> {
         location.setLongitude(x);
     }
 
-    public double getLatitude(){
-        return (location == null) ? 0.000 : location.getLatitude();
-    }
     public void setLatitude(double y){
         location.setLatitude(y);
+    }
+
+    public double getLongitude(){
+        return location.getLongitude();
     }
 
     public int getEta(){
         return this.eta;
     }
+
     public void setEta(int eta){
         this.eta = eta;
+    }
+
+    public int getEta(){
+        return this.eta;
     }
 
     public boolean hasEta(){

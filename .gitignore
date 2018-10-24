@@ -27,3 +27,8 @@ publish.sh
 # Gradle build files
 .gradle/
 build/
+parserLog\.log\.1
+
+notifications\.txt
+
+inboxMessages/
