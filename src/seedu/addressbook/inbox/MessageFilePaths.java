@@ -1,6 +1,8 @@
 //@@author ongweekeong
 package seedu.addressbook.inbox;
 
+import seedu.addressbook.password.Password;
+
 /**
  * Container for filepaths to storage files of each user's messages.
  */
@@ -16,22 +18,22 @@ public class MessageFilePaths {
     public static String getFilePathFromUserId(String userId){
         String filepath;
         switch(userId) {
-            case "hqp":
+            case Password.MESSAGE_HQP:
                 filepath = MessageFilePaths.FILEPATH_HQP_INBOX;
                 break;
-            case "po1":
+            case Password.MESSAGE_ONE:
                 filepath = MessageFilePaths.FILEPATH_PO1_INBOX;
                 break;
-            case "po2":
+            case Password.MESSAGE_TWO:
                 filepath = MessageFilePaths.FILEPATH_PO2_INBOX;
                 break;
-            case "po3":
+            case Password.MESSAGE_THREE:
                 filepath = MessageFilePaths.FILEPATH_PO3_INBOX;
                 break;
-            case "po4":
+            case Password.MESSAGE_FOUR:
                 filepath = MessageFilePaths.FILEPATH_PO4_INBOX;
                 break;
-            case "po5":
+            case Password.MESSAGE_FIVE:
                 filepath = MessageFilePaths.FILEPATH_PO5_INBOX;
                 break;
             default:
