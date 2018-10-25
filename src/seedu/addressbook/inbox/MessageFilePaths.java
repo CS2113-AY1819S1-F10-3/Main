@@ -14,30 +14,22 @@ public class MessageFilePaths {
     public static final String FILEPATH_DEFAULT = "notifications.txt";
 
     public static String getFilePathFromUserId(String userId){
-        String filepath;
         switch(userId) {
             case "hqp":
-                filepath = MessageFilePaths.FILEPATH_HQP_INBOX;
-                break;
+                return MessageFilePaths.FILEPATH_HQP_INBOX;
             case "po1":
-                filepath = MessageFilePaths.FILEPATH_PO1_INBOX;
-                break;
+                return MessageFilePaths.FILEPATH_PO1_INBOX;
             case "po2":
-                filepath = MessageFilePaths.FILEPATH_PO2_INBOX;
-                break;
+                return MessageFilePaths.FILEPATH_PO2_INBOX;
             case "po3":
-                filepath = MessageFilePaths.FILEPATH_PO3_INBOX;
-                break;
+                return MessageFilePaths.FILEPATH_PO3_INBOX;
             case "po4":
-                filepath = MessageFilePaths.FILEPATH_PO4_INBOX;
-                break;
+                return MessageFilePaths.FILEPATH_PO4_INBOX;
             case "po5":
-                filepath = MessageFilePaths.FILEPATH_PO5_INBOX;
-                break;
+                return MessageFilePaths.FILEPATH_PO5_INBOX;
             default:
-                filepath = FILEPATH_DEFAULT;
+                return FILEPATH_DEFAULT;
         }
-        return filepath;
     }
 
 }

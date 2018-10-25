@@ -44,6 +44,7 @@ public class Dictionary extends Command{
             commands.add(ListCommand.COMMAND_WORD);
             commands.add(LockCommand.COMMAND_WORD);
             commands.add(RequestHelp.COMMAND_WORD);
+            commands.add(DispatchBackup.COMMAND_WORD);
             //commands.add(UpdatePasswordCommand.COMMAND_WORD);
             commands.add(ViewAllCommand.COMMAND_WORD);
         }

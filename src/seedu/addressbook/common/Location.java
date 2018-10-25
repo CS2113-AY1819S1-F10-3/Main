@@ -1,5 +1,5 @@
 //@@author andyrobert3
-package seedu.addressbook;
+package seedu.addressbook.common;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -7,7 +7,6 @@ import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import seedu.addressbook.common.HttpRestClient;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

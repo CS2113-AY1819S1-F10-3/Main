@@ -339,11 +339,12 @@ public class LogicTest {
 
     @Test
     public void execute_request_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelp.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelpCommand.MESSAGE_USAGE);
         assertCommandBehavior("request ", expectedMessage);
         assertCommandBehavior("request gun", expectedMessage);
     }
 
+    //@@author andyrobert3
     @Test
     public void execute_request_invalidOffense() throws Exception {
         String expectedMessage = String.format(Offense.MESSAGE_OFFENSE_INVALID);
@@ -351,7 +352,7 @@ public class LogicTest {
         assertCommandBehavior("request lala help", expectedMessage);
     }
 
-
+    //@@author
     @Test
     public void execute_viewAll_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
@@ -467,6 +468,7 @@ public class LogicTest {
                                 threePersons);
     }
 
+    //@@author andyrobert3
     @Test
     public void execute_edit_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
@@ -478,6 +480,17 @@ public class LogicTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("find S1234567A", expectedMessage);
     }
+
+
+
+    //@@author andyrobert3
+    @Test
+    public void execute_edit_personExists() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.generatePersonWithNric("s1234567a");
+        
+    }
+
 
     @Test
     public void execute_find_onlyMatchesFullNric() throws Exception {

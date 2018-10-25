@@ -1,7 +1,8 @@
 //@@author ongweekeong
 package seedu.addressbook.inbox;
 
-import seedu.addressbook.Location;
+
+import seedu.addressbook.common.Location;
 import seedu.addressbook.password.Password;
 
 import java.sql.Timestamp;
@@ -18,11 +19,15 @@ public class Msg implements Comparable <Msg> {
     private Priority priority;
     private Location location;
     private int eta = -1;
+
+    //private String comment;
     protected boolean isRead;
     protected boolean isLocationAvailable;
     private Timestamp time;
     public static final boolean MESSAGE_IS_READ = true;
     public static final boolean MESSAGE_IS_UNREAD = false;
+
+
 
     public enum Priority {
         HIGH(3),   // For messages that require HPQ intervention
@@ -46,7 +51,12 @@ public class Msg implements Comparable <Msg> {
         isRead = MESSAGE_IS_UNREAD;
     }
 
-    public Msg(Priority urgency, String message){
+    // constructor for dispatcher message
+
+    // constructor for requester message
+    
+
+    public Msg(Priority urgency, String message, String policeOfficerId){
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
         priority = urgency;
@@ -105,6 +115,7 @@ public class Msg implements Comparable <Msg> {
     public Location getLocation(){
         return location;
     }
+
     public void setLongitude(double x){
         location.setLongitude(x);
     }
@@ -117,7 +128,7 @@ public class Msg implements Comparable <Msg> {
         return location.getLongitude();
     }
 
-    public double getLatitude(){
+    public double getLatitude() {
         return location.getLatitude();
     }
 
@@ -130,11 +141,17 @@ public class Msg implements Comparable <Msg> {
     }
 
     public boolean hasEta(){
-        if(eta == -1)
-            return false;
-        else
-            return true;
+       return eta != -1;
     }
+
+//    public String getPoliceOfficerId() {
+//        return (this.policeOfficerId == null) ? "-" : policeOfficerId;
+//    }
+//    public void setPoliceOfficerId(String policeOfficerId) { this.policeOfficerId = policeOfficerId; }
+//
+//    public boolean hasPoliceOfficerId() {
+//        return policeOfficerId != null;
+//    }
 
     public void setTime(){
         time = new Timestamp(System.currentTimeMillis()); // Set to current time if no timestamp passed.
