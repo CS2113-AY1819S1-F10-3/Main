@@ -15,7 +15,7 @@ public class Inbox {
     public static final String INBOX_NOT_READ_YET = "You have not read your inbox! \n\t" +
             "Type \"showunread\" to view your unread messages.";
     public static final String INBOX_NO_UNREAD_MESSAGES = "You have no unread messages in your inbox.";
-    public static final String INDEX_OUT_OF_BOUNDS = "Index entered is out of bounds.";
+    public static final String INDEX_OUT_OF_BOUNDS = "Index entered is out of bounds. Enter message number from 1 to %1$d.";
     public static final String MESSAGE_STORAGE_PATH_NOT_FOUND = "Cannot find file to write to.";
     public static final String MESSAGE_READ_STATUS_UPDATED = "Successful update";
     //public static final String COMMAND_WORD = "inbox";
@@ -57,7 +57,7 @@ public class Inbox {
             }
 //            notificationsToPrint.remove(recordNotifications.get(index));
             recordNotifications.get(index).setMsgAsRead();
-            for(int i = 1; i <= numUnreadMsgs; i++) {
+            for(int i = 1; i <= recordNotifications.size(); i++) {
                 notificationsToPrint.add(recordNotifications.get(i));
             }
             allMessages.writeToFile(notificationsToPrint);
@@ -66,10 +66,7 @@ public class Inbox {
             if(numUnreadMsgs>0) {
                 return INDEX_OUT_OF_BOUNDS;
             }
-            else throw new NullPointerException();
-        }
-        catch (NullPointerException e){
-            if(numUnreadMsgs == -1){
+            else if(numUnreadMsgs == -1){
                 return INBOX_NOT_READ_YET;
             }
             else if(numUnreadMsgs == 0) {

@@ -37,7 +37,7 @@ public class ReadCommand extends Command {
             return new CommandResult(MESSAGE_UPDATE_SUCCESS);
         }
         else if(result.equals(myInbox.INDEX_OUT_OF_BOUNDS)){
-            return new CommandResult(String.format(myInbox.INBOX_NO_UNREAD_MESSAGES, myInbox.checkNumUnreadMessages()));
+            return new CommandResult(String.format(myInbox.INDEX_OUT_OF_BOUNDS, myInbox.checkNumUnreadMessages()));
         }
         else if(result.equals(myInbox.INBOX_NOT_READ_YET)){
             return new CommandResult(myInbox.INBOX_NOT_READ_YET);
