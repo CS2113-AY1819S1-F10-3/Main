@@ -101,6 +101,7 @@ public abstract class Command {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
 
+    //@@author andyrobert3
     protected ReadOnlyPerson getTargetPerson(NRIC nric) throws UniquePersonList.PersonNotFoundException {
         for (ReadOnlyPerson person: relevantPersons) {
             if (person.getNric().getIdentificationNumber().equals(nric.getIdentificationNumber())) {

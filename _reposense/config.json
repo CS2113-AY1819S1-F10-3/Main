@@ -1,0 +1,30 @@
+{
+  "authors":
+  [
+    {
+      "githubId": "Matthew Alexander",
+      "displayName": "MAT...DER",
+      "authorNames": ["andyrobert3", "Matthew Alexander"]
+    },
+    {
+      "githubId": "muhdharun",
+      "displayName": "MUH...HID",
+      "authorNames": ["muhdharun", "Harun"]
+    },
+    {
+      "githubId": "Ong Wee Keong",
+      "displayName": "ONG...ONG",
+      "authorNames": ["ongweekeong", "Wee Keong Ong", "Ong Wee Keong"]
+    },
+    {
+      "githubId": "Putra Danish",
+      "displayName": "PUT...FEE",
+      "authorNames": ["iamputradanish", "Putra Danish"]
+    },
+    {
+      "githubId": "ShreyasKp",
+      "displayName": "SHR...ASH",
+      "authorNames": ["ShreyasKp"]
+    }
+  ]
+}

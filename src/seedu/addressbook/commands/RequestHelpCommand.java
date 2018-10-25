@@ -12,7 +12,7 @@ import seedu.addressbook.password.Password;
 
 import java.io.IOException;
 
-public class RequestHelp extends Command {
+public class RequestHelpCommand extends Command {
     public static final String COMMAND_WORD = "request";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
             + "Requests help from headquarters.\n\t"
@@ -27,7 +27,7 @@ public class RequestHelp extends Command {
     private Msg requestHelpMessage;
     private WriteNotification writeNotification;
 
-    public RequestHelp(String caseName, String messageString) throws IllegalValueException {
+    public RequestHelpCommand(String caseName, String messageString) throws IllegalValueException {
         writeNotification = new WriteNotification(MessageFilePaths.FILEPATH_HQP_INBOX, true);
         requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, PatrolResourceStatus.getLocation(Password.getID()));
     }

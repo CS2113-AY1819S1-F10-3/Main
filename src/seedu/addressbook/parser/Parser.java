@@ -84,6 +84,7 @@ public class Parser {
         setupLogger();
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
 
+        // TODO: Delete this if not used
         /*if (!matcher.matches()) {
             switch (result) {
                 case AddCommand.COMMAND_WORD:
@@ -162,8 +163,11 @@ public class Parser {
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
 
-            case RequestHelp.COMMAND_WORD:
+            case RequestHelpCommand.COMMAND_WORD:
                 return prepareRequest(arguments);
+
+            case DispatchBackup.COMMAND_WORD:
+                return prepareDispatch(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -251,14 +255,16 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-//@@author
+
+
+//@@author andyrobert3
+
     /**
      * Parses arguments in the context of the edit person command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    // TODO: Refactor prepareEdit and prepareAdd
     private Command prepareEdit(String args) {
         final Matcher matcher = EDIT_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
@@ -279,6 +285,7 @@ public class Parser {
         }
     }
 
+    //@@author
     /**
      * Parses arguments in the context of the view command.
      *
@@ -296,6 +303,7 @@ public class Parser {
         }
     }
 
+    //@@author
     /**
      * Parses arguments in the context of the view all command.
      *
@@ -313,6 +321,7 @@ public class Parser {
         }
     }
 
+    //@@author
     /**
      * Parses the given arguments string as a single index number.
      *
@@ -355,7 +364,7 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,CheckCommand.MESSAGE_USAGE));
         }
     }
-
+    
     private Command prepareFind(String args) {
         args = args.trim();
         if (NRIC.isValidNRIC(args)) {
@@ -365,7 +374,9 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
     }
-//@@author
+
+//@@author andyrobert3
+
     /**
      * Parses arguments in context of request help command.
      *
@@ -378,17 +389,40 @@ public class Parser {
 
         if (argParts.length < 2) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    RequestHelp.MESSAGE_USAGE));
+                    RequestHelpCommand.MESSAGE_USAGE));
         }
 
         caseName = argParts[0];
         message = argParts[1];
 
         try {
-            return new RequestHelp(caseName, message);
+            return new RequestHelpCommand(caseName, message);
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(Offense.MESSAGE_OFFENSE_INVALID);
         }
+    }
+
+    //@@author andyrobert3
+    /**
+     * Parses arguments in context of dispatch command
+     *
+     * @params args full command args string
+     * @return the prepared request command
+     */
+    private Command prepareDispatch(String args) {
+        String backupOfficer, dispatchRequester, caseName;
+        String[] argParts = args.trim().split(" ",  3);
+
+        if (argParts.length < 3) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DispatchBackup.MESSAGE_USAGE));
+        }
+
+        backupOfficer = argParts[0].toLowerCase();
+        caseName = argParts[1].toLowerCase();
+        dispatchRequester = argParts[2].toLowerCase();
+
+        return new DispatchBackup(backupOfficer, dispatchRequester, caseName);
     }
 
 }
