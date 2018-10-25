@@ -156,6 +156,9 @@ public class Parser {
             case InboxCommand.COMMAND_WORD:
                 return new InboxCommand();
 
+            case ReadCommand.COMMAND_WORD:
+                return prepareRead(arguments);
+
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
 
@@ -274,6 +277,18 @@ public class Parser {
         } catch (IllegalValueException ive) {
             logr.log(Level.WARNING, "Invalid edit command format.", ive);
             return new IncorrectCommand(ive.getMessage());
+        }
+    }
+
+    private Command prepareRead(String args){
+        try{
+            final int targetIndex = parseArgsAsDisplayedIndex(args);
+            return new ReadCommand(targetIndex);
+        }
+        catch (ParseException | NumberFormatException e){
+            logr.log(Level.WARNING, "Invalid read command format.", e);
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ReadCommand.MESSAGE_USAGE));
         }
     }
 
