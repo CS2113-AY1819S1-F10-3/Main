@@ -11,6 +11,7 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -114,6 +115,15 @@ public class LogicTest {
         Password.lockIsHQP();
     }
 
+    //@@author ShreyasKp
+    @Test
+    public void execute_timeCommand() throws Exception {
+        String command = DateTimeCommand.COMMAND_WORD;
+        TimeAndDate timeAndDate = new TimeAndDate();
+        assertCommandBehavior(command, timeAndDate.outputDATHrs());
+    }
+
+    //@@author iamputradanish
 
     @Test
     public void execute_unknownCommandWord_forPO() throws Exception {
