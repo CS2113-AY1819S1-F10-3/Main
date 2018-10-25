@@ -8,7 +8,7 @@ ScreeningHistory.txt
 requestList.txt
 
 # Logger files
-
+/config.json
 
 # Package Files #
 *.jar
@@ -27,3 +27,12 @@ publish.sh
 # Gradle build files
 .gradle/
 build/
+parserLog\.log\.1
+
+notifications\.txt
+
+inboxMessages/
+
+Todo List\.txt
+
+parserLog\.log\.lck

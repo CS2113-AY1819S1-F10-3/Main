@@ -1,3 +1,4 @@
+//@@author ShreyasKp
 package seedu.addressbook.autocorrect;
 
 /**
@@ -18,6 +19,7 @@ public class EditDistance {
         int length1 = inputString.length();
         int length2 = storedString.length();
 
+        //Solution below adapted from https://www.programcreek.com/2013/12/edit-distance-in-java/
         // len1+1, len2+1, because finally return dp[len1][len2]
         int[][] dp = new int[length1 + 1][length2 + 1];
 

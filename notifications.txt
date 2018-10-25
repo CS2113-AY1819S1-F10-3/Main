@@ -2,7 +2,7 @@
 Sender ID:hqp
 Read status:true
 Priority:LOW
-Timestamp:12/12/2017 2045:35
+Timestamp:12/12/2017-20:45:35
 Message:This should be last message
 -
 Location:-6.206968,106.751365
@@ -11,7 +11,7 @@ Location:-6.206968,106.751365
 Sender ID:hqp
 Read status:false
 Priority:LOW
-Timestamp:12/12/2017 2145:49
+Timestamp:12/12/2017-21:45:49
 Message:This should be last message
 -
 Location:-6.206968,106.751365
