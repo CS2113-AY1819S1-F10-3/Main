@@ -160,6 +160,7 @@ public class MainWindow {
                     }
                     int i = displayCommand.indexOf("!");
                     display(displayCommand.substring(i + 1));
+                    clearScreen();
                 }
                 else {
                     boolean isHQPFlag = password.isHQPUser();
@@ -174,6 +175,7 @@ public class MainWindow {
                 }
             }
             else{
+                clearScreen();
                 CommandResult result = logic.execute(userCommandText);
                 displayResult(result);
                 clearCommandInput();
