@@ -523,7 +523,7 @@ public class Password {
     }
 
     public static String getID(){
-        String result = null;
+//        String result = null;
         if(isHQP){
 //            result = MESSAGE_HQP;
             return "hqp";
@@ -548,6 +548,6 @@ public class Password {
 //            result = MESSAGE_PO + MESSAGE_FIVE;
             return "po5";
         }
-        return result;
+        return "unknown";
     }
 }

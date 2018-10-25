@@ -23,7 +23,7 @@ public class Inbox {
     //        + "Example: " + COMMAND_WORD;
     //public static final String MESSAGE_PROMPT = "Press 'Enter' to take action for Message 1";
     public static int numUnreadMsgs = -1;
-    protected static TreeSet <Msg> notificationsToPrint = new TreeSet<>();
+    protected static TreeSet<Msg> notificationsToPrint = new TreeSet<>();
     protected static HashMap<Integer, Msg> recordNotifications = new HashMap<>();
     protected static ReadNotification readNotification;
     protected static WriteNotification allMessages; //TODO: Overwrite read status of messages after action taken
