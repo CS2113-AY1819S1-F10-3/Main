@@ -43,10 +43,10 @@ public class Formatter {
         return format(asIndexedList(formattedPersons));
     }
 
-    public String formatForTstamps(List<String> timestamps) {
+    public String formatForStrings(List<String> strings) {
         final List<String> formattedTimestamps = new ArrayList<>();
-        for (String timestamp : timestamps) {
-            formattedTimestamps.add(timestamp);
+        for (String string : strings) {
+            formattedTimestamps.add(string);
         }
         return format(asIndexedList(formattedTimestamps));
     }

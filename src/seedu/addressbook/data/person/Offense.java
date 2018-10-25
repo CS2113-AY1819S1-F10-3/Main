@@ -1,5 +1,5 @@
 package seedu.addressbook.data.person;
-
+//@@author muhdharun
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.inbox.Msg;
 
@@ -9,7 +9,7 @@ public class Offense {
     public static final String EXAMPLE = "theft";
     public static final String MESSAGE_OFFENSE_INVALID = "Offense must be inside the list";
     public static final String NULL_OFFENSE = "none";
-
+//@@author andyrobert3
     private static HashMap<String, Msg.Priority> OFFENSE_LIST = new HashMap<>();
     static {
         OFFENSE_LIST.put("none", Msg.Priority.LOW);
@@ -24,7 +24,7 @@ public class Offense {
         OFFENSE_LIST.put("theft3", Msg.Priority.HIGH);
         OFFENSE_LIST.put("theft4", Msg.Priority.HIGH);
     }
-
+//@@author muhdharun
     private final String offense;
 
     public Offense(){
@@ -56,7 +56,7 @@ public class Offense {
     public String getOffense() {
         return offense;
     }
-
+//@@author andyrobert3
     /**
      * Returns priority for a given offense.
      *
@@ -75,7 +75,7 @@ public class Offense {
     public static int getPriority(Msg.Priority priority) {
         return priority.toInteger();
     }
-
+//@@author muhdharun
     public static Set<Offense> getOffenseSet(Set<String> offenseStringSet) throws IllegalValueException {
         Set<Offense> offenseSet = new HashSet<>();
 

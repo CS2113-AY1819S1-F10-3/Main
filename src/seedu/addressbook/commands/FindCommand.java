@@ -10,7 +10,7 @@ import java.io.IOException;
  * Keyword matching is case sensitive.
  */
 public class FindCommand extends Command {
-
+    //@@author muhdharun -reused
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds person with specified NRIC \n\t"
@@ -29,8 +29,12 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        final ReadOnlyPerson personFound = getPersonWithNric();
-        return new CommandResult(getMessageForPersonShownSummary(personFound));
+        try {
+            final ReadOnlyPerson personFound = getPersonWithNric();
+            return new CommandResult(getMessageForPersonShownSummary(personFound));
+        } catch(IOException ioe) {
+            return new CommandResult("Cannot find person with nric");
+        }
     }
 
 
@@ -39,16 +43,11 @@ public class FindCommand extends Command {
      *
      * @return Persons found, null if no person found
      */
-    public ReadOnlyPerson getPersonWithNric() {
+    public ReadOnlyPerson getPersonWithNric() throws IOException {
         for (ReadOnlyPerson person : relevantPersons) {
             if (person.getNric().getIdentificationNumber().equals(nric)) {
-                addressBook.addPersontoDbAndUpdate(person);
-                try {
-                     addressBook.updateDatabase();
-                } catch (IOException e) {
-                    e.printStackTrace(); // TODO: throws exeception
-                }
-
+                addressBook.addPersonToDbAndUpdate(person);
+                addressBook.updateDatabase();
                 return person;
             }
         }
