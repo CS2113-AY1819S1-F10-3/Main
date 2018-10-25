@@ -11,10 +11,9 @@ import java.util.TreeSet;
 public class WriteNotification {
     private String path;
     private boolean isAppend = false;
-    protected MessageFilePaths msgFilePaths = new MessageFilePaths();
 
     public WriteNotification(String userId){
-        path = msgFilePaths.getFilePathFromUserId(userId);
+        path = MessageFilePaths.getFilePathFromUserId(userId);
         this.isAppend = true;
     }
 
@@ -75,7 +74,7 @@ public class WriteNotification {
             myPrinter.println("Sender ID:" + msg.getSenderId());
             myPrinter.println("Read status:" + msg.isRead);
             myPrinter.println("Priority:" + msg.getPriority());
-            myPrinter.println("Timestamp:" + dateFormatter.outputDATHrs());
+            myPrinter.println("Timestamp:" + dateFormatter.outputDATHrs(msg.getTime()));
             myPrinter.println("Message:" + msg.getMsg());
             if (msg.hasEta())
                 myPrinter.println("ETA:" + msg.getEta());

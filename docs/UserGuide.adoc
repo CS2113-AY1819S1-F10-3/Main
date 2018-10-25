@@ -248,6 +248,15 @@ Examples (as a PO):
 *	'showunread'
 *	Shows any dispatch messages by HQ or response for backup if any
 
+=== Read message : `read`
+
+Updates the status of unread messages to read. Command to be used after `showunread` command
+
+Format: 'read index'
+
+Examples:
+*  read 1
+
 === Exit program : `shutdown`
 
 Shutdown the system
@@ -306,6 +315,10 @@ E.g. dispatch PO2
 *	*Update Password* : 'update password'
 
 *	*Check notifications* : 'showunread'
+
+*   *Read message* : 'read index'
+
+E.g  read 1
 
 *	*Exit* : 'shutdown'
 

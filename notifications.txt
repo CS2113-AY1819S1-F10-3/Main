@@ -1,0 +1,18 @@
+> START OF MESSAGE <
+Sender ID:hqp
+Read status:false
+Priority:MED
+Timestamp:25/10/2018-14:00:39hrs
+Message:This should be second message
+-
+Location:-6.206968,106.751365
+> END OF MESSAGE <
+> START OF MESSAGE <
+Sender ID:hqp
+Read status:true
+Priority:LOW
+Timestamp:25/10/2018-14:00:39hrs
+Message:This should be last message
+-
+Location:-6.206968,106.751365
+> END OF MESSAGE <

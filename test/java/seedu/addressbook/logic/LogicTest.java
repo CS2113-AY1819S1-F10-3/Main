@@ -16,14 +16,13 @@ import seedu.addressbook.timeanddate.TimeAndDate;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static java.lang.Math.abs;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.addressbook.common.Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW;
-import static seedu.addressbook.password.Password.MESSAGE_ENTER_PASSWORD;
-import static seedu.addressbook.password.Password.unlockHQP;
-import static seedu.addressbook.password.Password.unlockPO;
+import static seedu.addressbook.password.Password.*;
 
 
 public class LogicTest {
@@ -99,6 +98,32 @@ public class LogicTest {
         assertEquals(addressBook, saveFile.load());
     }
 
+    //@@author ongweekeong
+
+    /**
+     * Executes the command and confirms that the result message (Timestamp) is correct (within the given tolerance threshold)
+     * @param inputCommand
+     * @param expectedMessage
+     * @param tolerance
+     * @throws Exception
+     */
+    private void assertCommandBehavior(String inputCommand, String expectedMessage, int tolerance) throws Exception {
+        CommandResult r = logic.execute(inputCommand);
+        String[] parts = r.feedbackToUser.split("-", 2);
+        String[] expected = expectedMessage.split("-", 2);
+        String[] inputTime = parts[1].split(":", 4);
+        String[] expectedTime = expected[1].split(":", 4);
+        inputTime[3] = inputTime[3].substring(0, 2);
+        expectedTime[3] = expectedTime[3].substring(0, 2);
+        int difference = abs(Integer.parseInt(inputTime[3]) - Integer.parseInt(expectedTime[3]));
+        if(inputTime[0].equals(expectedTime[0]) && inputTime[1].equals(expectedTime[1]) && inputTime[2].equals(expectedTime[2]) &&
+                (difference <= tolerance) && parts[0].equals(expected[0])){
+            expectedMessage = r.feedbackToUser;
+        }
+        //assertEquals(expected[0], parts[0]);
+        assertEquals(expectedMessage, r.feedbackToUser);
+    }
+
     //@@author iamputradanish
     @Test
     public void execute_unknownCommandWord_forHQP() throws Exception {
@@ -120,7 +145,7 @@ public class LogicTest {
     public void execute_timeCommand() throws Exception {
         String command = DateTimeCommand.COMMAND_WORD;
         TimeAndDate timeAndDate = new TimeAndDate();
-        assertCommandBehavior(command, timeAndDate.outputDATHrs());
+        assertCommandBehavior(command, timeAndDate.outputDATHrs(), 100);
     }
 
     //@@author iamputradanish
@@ -662,12 +687,12 @@ public class LogicTest {
         Person generatePerson(int seed) throws Exception {
             return new Person(
                     new Name("Person " + seed),
-                    new NRIC("g999999" + Math.abs(seed) + "t"),
+                    new NRIC("g999999" + abs(seed) + "t"),
                     new DateOfBirth(Integer.toString(seed + Integer.parseInt("1901"))),
                     new PostalCode("77777" + seed),
                     new Status("xc"),
                     new Offense(),
-                    new HashSet<>(Arrays.asList(new Offense("theft" + Math.abs(seed)), new Offense("theft" + Math.abs(seed + 1))))
+                    new HashSet<>(Arrays.asList(new Offense("theft" + abs(seed)), new Offense("theft" + abs(seed + 1))))
             );
         }
 //@@author muhdharun
