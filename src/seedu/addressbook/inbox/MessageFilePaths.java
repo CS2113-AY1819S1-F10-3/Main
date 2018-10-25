@@ -14,7 +14,6 @@ public class MessageFilePaths {
     public static final String FILEPATH_DEFAULT = "notifications.txt";
 
     public static String getFilePathFromUserId(String userId){
-        String filepath;
         switch(userId) {
             case "hqp":
                 return MessageFilePaths.FILEPATH_HQP_INBOX;

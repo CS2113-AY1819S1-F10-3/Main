@@ -7,6 +7,7 @@ import seedu.addressbook.common.Location;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Offense;
+import seedu.addressbook.inbox.MessageFilePaths;
 import seedu.addressbook.inbox.Msg;
 import seedu.addressbook.inbox.WriteNotification;
 
@@ -16,21 +17,12 @@ import java.util.ArrayList;
 public class DispatchBackup extends Command{
     public static final String COMMAND_WORD = "dispatch";
 
-    public static final String HEADQUARTERS_NOTIFICATION_FILE = "inboxMessages/headquartersInbox";
-    public static final String PO1_NOTIFICATION_FILE = "inboxMessages/PO1";
-    public static final String PO2_NOTIFICATION_FILE = "inboxMessages/PO2";
-    public static final String PO3_NOTIFICATION_FILE = "inboxMessages/PO3";
-    public static final String PO4_NOTIFICATION_FILE = "inboxMessages/PO4";
-    public static final String PO5_NOTIFICATION_FILE = "inboxMessages/PO5";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
             + "Dispatch help from headquarters.\n\t"
             + "Example: " + COMMAND_WORD
             + " PO1 gun PO3";
 
     public static String MESSAGE_REQUEST_SUCCESS = "Dispatch for backup is successful.";
-    public static String MESSAGE_INVALID_POLICE_ID = "Police ID does not exist.";
-
 
     private WriteNotification writeNotificationToBackupOfficer;
     private WriteNotification writeNotificationToRequester;
@@ -38,28 +30,9 @@ public class DispatchBackup extends Command{
     private String requester;
     private String offense;
 
-    private String getNotificationFilePath(String policeId) {
-        switch (policeId) {
-            case "hqp":
-                return HEADQUARTERS_NOTIFICATION_FILE;
-            case "po1":
-                return PO1_NOTIFICATION_FILE;
-            case "po2":
-                return PO2_NOTIFICATION_FILE;
-            case "po3":
-                return PO3_NOTIFICATION_FILE;
-            case "po4":
-                return PO4_NOTIFICATION_FILE;
-            case "po5":
-                return PO5_NOTIFICATION_FILE;
-        }
-
-        return MESSAGE_INVALID_POLICE_ID;
-    }
-
     public DispatchBackup(String backupOfficer, String requester, String caseName) {
-        writeNotificationToBackupOfficer = new WriteNotification(getNotificationFilePath(backupOfficer), true);
-        writeNotificationToRequester = new WriteNotification(getNotificationFilePath(requester), true);
+        writeNotificationToBackupOfficer = new WriteNotification(MessageFilePaths.getFilePathFromUserId(backupOfficer), true);
+        writeNotificationToRequester = new WriteNotification(MessageFilePaths.getFilePathFromUserId(requester), true);
 
         this.offense = caseName;
         this.backupOfficer = backupOfficer;

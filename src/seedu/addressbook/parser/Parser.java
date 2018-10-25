@@ -84,6 +84,7 @@ public class Parser {
         setupLogger();
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
 
+        // TODO: Delete this if not used
         /*if (!matcher.matches()) {
             switch (result) {
                 case AddCommand.COMMAND_WORD:

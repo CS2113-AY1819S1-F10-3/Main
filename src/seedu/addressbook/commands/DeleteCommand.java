@@ -6,7 +6,6 @@ import seedu.addressbook.data.person.NRIC;;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 
-
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  */
@@ -22,10 +21,6 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
     private NRIC toDelete;
-
-    public DeleteCommand(int targetVisibleIndex) {
-        super(targetVisibleIndex);
-    }
 
     public DeleteCommand(NRIC nric) {
         this.toDelete = nric;
@@ -47,13 +42,12 @@ public class DeleteCommand extends Command {
             String nric = toDelete.toString();
             String prediction = checker.checkInputDistance(nric);
 
-            if(!(prediction.equals("none"))) {
+            if(!prediction.equals("none")) {
                 return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK
                         + "\n"
                         + "Did you mean to use "
                         + prediction);
-            }
-            else {
+            } else {
                 return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK );
             }
         }
