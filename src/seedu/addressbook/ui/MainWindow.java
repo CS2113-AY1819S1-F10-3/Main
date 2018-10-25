@@ -5,15 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import seedu.addressbook.autocorrect.CheckDistance;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.data.person.ReadOnlyPerson;
-import seedu.addressbook.autocorrect.EditDistance;
-import seedu.addressbook.autocorrect.Dictionary;
+import seedu.addressbook.commands.Dictionary;
 import seedu.addressbook.password.Password;
 import seedu.addressbook.timeanddate.TimeAndDate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,35 +29,12 @@ public class MainWindow {
     public MainWindow(){
     }
 
-
-
     public void setLogic(Logic logic){
         this.logic = logic;
     }
 
     public void setMainApp(Stoppable mainApp){
         this.mainApp = mainApp;
-    }
-
-
-    public String checkDistance(String commandInput) {
-        Dictionary A = new Dictionary();
-        EditDistance B = new EditDistance();
-        String prediction = "none";
-        ArrayList<String> commandList = Dictionary.getCommands();
-        int distance, check = 0;
-        for (String command : commandList) {
-            distance = EditDistance.computeDistance(commandInput, command);
-            if (distance == 1) {
-                prediction = command;
-                check = 1;
-                break;
-            }
-        }
-        if (check == 0) {
-            prediction = "none";
-        }
-        return prediction;
     }
 
     private Password password = new Password();
@@ -122,61 +98,76 @@ public class MainWindow {
         }
         //@@author ShreyasKp
         else {
+            userCommandText = userCommandText.trim();
+            CheckDistance checker = new CheckDistance();
             Dictionary dict = new Dictionary();
             String arr[] = userCommandText.split(" ", 2);
             String commandWordInput = arr[0];
-            String output = checkDistance(commandWordInput);
-            String displayCommand = "not working";
-            if(!(output.equals("none"))) {
-                clearScreen();
-                display(String.format(dict.getErrorMessage(), output));
-                switch (output) {
-                    case AddCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+            if((checker.checkCommandDistance(commandWordInput)).equals(0)) {
+                String output = checker.checkDistance(commandWordInput);
+                String displayCommand = "not working";
+                if(!(output.equals("none"))) {
+                    clearScreen();
+                    display(String.format(dict.getCommandErrorMessage(), output));
+                    switch (output) {
+                        case AddCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case DeleteCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case DateTimeCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DateTimeCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case EditCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case DeleteCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case ClearCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case EditCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case FindCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case ClearCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case InboxCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, InboxCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case FindCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case ListCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case ListCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case ViewAllCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case ViewAllCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case ExitCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExitCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case ExitCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExitCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case LockCommand.COMMAND_WORD:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE)).feedbackToUser;
-                        break;
+                        case LockCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE)).feedbackToUser;
+                            break;
 
-                    case HelpCommand.COMMAND_WORD: // Fallthrough
-                    default:
-                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE)).feedbackToUser;
+                        case HelpCommand.COMMAND_WORD: // Fallthrough
+                        default:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE)).feedbackToUser;
+                    }
+                    int i = displayCommand.indexOf("!");
+                    display(displayCommand.substring(i + 1));
                 }
-                int i = displayCommand.indexOf("!");
-                display(displayCommand.substring(i+1));
+                else {
+                    boolean isHQPFlag = password.isHQPUser();
+                    if(isHQPFlag) {
+                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_ALL_USAGES)).feedbackToUser;
+                    }
+                    else {
+                        displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_PO_USAGES)).feedbackToUser;
+                    }
+                    clearScreen();
+                    display(displayCommand);
+                }
             }
             else{
                 CommandResult result = logic.execute(userCommandText);
