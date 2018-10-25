@@ -53,10 +53,10 @@ public class WriteNotification {
         }
         else myPrinter.println('-');
 
-        if(message.hasPoliceOfficerId()) {
-            myPrinter.println("Police Officer ID:" + message.getPoliceOfficerId());
-        }
-        else myPrinter.println('-');
+//        if(message.hasPoliceOfficerId()) {
+//            myPrinter.println("Police Officer ID:" + message.getPoliceOfficerId());
+//        }
+//        else myPrinter.println('-');
         myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
 
         myPrinter.close();
@@ -83,10 +83,10 @@ public class WriteNotification {
             if (msg.isLocationAvailable) {
                 myPrinter.println("Location:" + msg.getLatitude() + "," + msg.getLongitude());
             } else myPrinter.println('-');
-            if(msg.hasPoliceOfficerId()) {
-                myPrinter.println("Police Officer ID:" + msg.getPoliceOfficerId());
-            }
-            else myPrinter.println('-');
+//            if(msg.hasPoliceOfficerId()) {
+//                myPrinter.println("Police Officer ID:" + msg.getPoliceOfficerId());
+//            }
+//            else myPrinter.println('-');
 
             myPrinter.println("> END OF MESSAGE <");
         }

@@ -99,7 +99,7 @@ public class Inbox {
         else{
             System.out.println(messageNum + " Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
                     ", message: " + msgToPrint.getMsg() + ", Coordinates: " + msgToPrint.getLatitude() + ", " +
-                    msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + ", Request/Backup Police Officer: " + msgToPrint.getPoliceOfficerId() + ".");
+                    msgToPrint.getLongitude() + ", ETA: " + msgToPrint.getEta() + ".");
         }
     }
     public static void printMessageNoLocation(int messageNum, Msg msgToPrint){
@@ -109,7 +109,7 @@ public class Inbox {
         }
         else{
             System.out.println(messageNum + " Priority: " + msgToPrint.getPriority() + ", Sent: " + msgToPrint.getTime() +
-                    ", message: " + msgToPrint.getMsg() + ", Request/Backup Police Officer: " + msgToPrint.getPoliceOfficerId() + ".");
+                    ", message: " + msgToPrint.getMsg() + ".");
         }
     }
 

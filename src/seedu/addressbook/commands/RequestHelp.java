@@ -29,7 +29,7 @@ public class RequestHelp extends Command {
 
     public RequestHelp(String caseName, String messageString) throws IllegalValueException {
         writeNotification = new WriteNotification(MessageFilePaths.FILEPATH_HQP_INBOX, true);
-        requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, PatrolResourceStatus.getLocation(Password.getID()), Password.getID());
+        requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, PatrolResourceStatus.getLocation(Password.getID()));
     }
 
 

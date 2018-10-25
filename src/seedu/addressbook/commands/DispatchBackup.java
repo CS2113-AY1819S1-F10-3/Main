@@ -79,7 +79,7 @@ public class DispatchBackup extends Command{
         try {
             Msg dispatchMessage = new Msg(Offense.getPriority(offense), "ETA " + etaMessage,
                                             PatrolResourceStatus.getLocation(requester), eta);
-            dispatchMessage.setPoliceOfficerId(requester);
+            //dispatchMessage.setPoliceOfficerId(requester);
             writeNotificationToBackupOfficer.writeToFile(dispatchMessage);
 
 
