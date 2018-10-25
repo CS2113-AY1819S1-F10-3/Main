@@ -90,7 +90,7 @@ public class Logic {
         command.setData(addressBook, lastShownList);
         CommandResult result = command.execute();
         storage.save(addressBook);
-        return result;
+            return result;
     }
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */
