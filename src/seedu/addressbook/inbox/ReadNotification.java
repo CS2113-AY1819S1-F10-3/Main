@@ -104,7 +104,7 @@ public class ReadNotification {
 
 
     public void readMsgTimestamp(String timestamp){
-        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HHmm:ss");
+        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
         Date parsedTimeStamp = new Date();
         try {
             parsedTimeStamp = timeFormatted.parse(timestamp);

@@ -7,7 +7,6 @@ import seedu.addressbook.data.person.*;
 
 import java.util.Set;
 
-
 /**
  * Edits existing person in police records.
  */
@@ -28,7 +27,6 @@ public class EditCommand extends Command {
             + " n/s1234567a p/510247 s/wanted w/murder o/gun";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %s";
-    //public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Police Records";
 
     private void updatePerson() throws IllegalValueException, UniquePersonList.PersonNotFoundException {
         for (Person person : addressBook.getAllPersons()) {

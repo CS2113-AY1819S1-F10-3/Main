@@ -1,3 +1,4 @@
+//@@author ongweekeong
 package seedu.addressbook.commands;
 
 import seedu.addressbook.common.Messages;
@@ -42,9 +43,11 @@ public class InboxCommand extends Command {
                     fullPrintedMessage += concatenateMsg(messageNum, msgToPrint);
                     messageNum++;
                 }
+                allMsgs.clear();
                 return new CommandResult(String.format(fullPrintedMessage, myUnreadMsgs));
             }
             else{
+                allMsgs.clear();
                 return new CommandResult(Messages.MESSAGE_NO_UNREAD_MSGS);
             }
         } catch (IOException e) {

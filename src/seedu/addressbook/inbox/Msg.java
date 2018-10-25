@@ -20,8 +20,6 @@ public class Msg implements Comparable <Msg> {
     private Location location;
     private int eta = -1;
 
-    private String policeOfficerId;
-
     //private String comment;
     protected boolean isRead;
     protected boolean isLocationAvailable;
@@ -64,17 +62,15 @@ public class Msg implements Comparable <Msg> {
         priority = urgency;
         time = new Timestamp(System.currentTimeMillis());
         newMsg = message;
-        this.policeOfficerId = policeOfficerId;
     }
 
-    public Msg(Priority urgency, String message, Location myLocale, String policeOfficerId){ // Constructor for request backup message
+    public Msg(Priority urgency, String message, Location myLocale){ // Constructor for request backup message
         isLocationAvailable = true;
         isRead = MESSAGE_IS_UNREAD;
         priority = urgency;
         time = new Timestamp(System.currentTimeMillis());
         newMsg = message;
         location = myLocale;
-        this.policeOfficerId = policeOfficerId;
     }
 
     public Msg(Priority urgency, String message, Location requesterLocale, int myEta){ // Constructor for request backup message
@@ -148,14 +144,14 @@ public class Msg implements Comparable <Msg> {
        return eta != -1;
     }
 
-    public String getPoliceOfficerId() {
-        return (this.policeOfficerId == null) ? "-" : policeOfficerId;
-    }
-    public void setPoliceOfficerId(String policeOfficerId) { this.policeOfficerId = policeOfficerId; }
-
-    public boolean hasPoliceOfficerId() {
-        return policeOfficerId != null;
-    }
+//    public String getPoliceOfficerId() {
+//        return (this.policeOfficerId == null) ? "-" : policeOfficerId;
+//    }
+//    public void setPoliceOfficerId(String policeOfficerId) { this.policeOfficerId = policeOfficerId; }
+//
+//    public boolean hasPoliceOfficerId() {
+//        return policeOfficerId != null;
+//    }
 
     public void setTime(){
         time = new Timestamp(System.currentTimeMillis()); // Set to current time if no timestamp passed.
