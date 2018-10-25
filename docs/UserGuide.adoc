@@ -46,13 +46,21 @@ image::Ui.png[width="790"]
 	
 === Viewing help : `help`
 
+Lists all the features in a user friendly format for users and how to use them
+
 Format: 'help'
 
-*	Lists all the features in a user friendly format for users and how to use them
 
 image::HelpCommand.png[width="790"]
 
+=== Display date and time : `time`
+
+Shows the current date and time
+
+Format: 'time'
+
 === Adding a person: `add`
+
 Adds a criminal to the database - only by HQP.
 
 Format: 'add NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR o/PASTOFFENSES'

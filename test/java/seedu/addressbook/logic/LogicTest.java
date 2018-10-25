@@ -289,53 +289,7 @@ public class LogicTest {
 
     }
 
-    //@Test
-   /*
-    public void execute_view_onlyShowsNonPrivate() throws Exception {
 
-        TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1);
-        Person p2 = helper.generatePerson(2);
-        List<Person> lastShownList = helper.generatePersonList(p1, p2);
-        AddressBook expectedAB = helper.generateAddressBook(lastShownList);
-        helper.addToAddressBook(addressBook, lastShownList);
-
-        logic.setLastShownList(lastShownList);
-
-        assertCommandBehavior("view 1",
-                              String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextHidePrivate()),
-                              expectedAB,
-                              false,
-                              lastShownList);
-
-        assertCommandBehavior("view 2",
-                              String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p2.getAsTextHidePrivate()),
-                              expectedAB,
-                              false,
-                              lastShownList);
-    }
-*/
-   /*
-   @Test
-    public void execute_tryToViewMissingPerson_errorMessage() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1);
-        Person p2 = helper.generatePerson(2);
-        List<Person> lastShownList = helper.generatePersonList(p1, p2);
-
-        AddressBook expectedAB = new AddressBook();
-        expectedAB.addPerson(p2);
-
-        addressBook.addPerson(p2);
-        logic.setLastShownList(lastShownList);
-
-        assertCommandBehavior("view 1",
-                              Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
-                              expectedAB,
-                              false,
-                              lastShownList);
-    }
-    */
 
     @Test
     public void execute_request_invalidArgsFormat() throws Exception {
@@ -472,6 +426,22 @@ public class LogicTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertCommandBehavior("edit ", expectedMessage);
     }
+
+//    @Test
+//    public void execute_edit_invalidPersonData() throws Exception {
+//        assertCommandBehavior(
+//                "add []\\[;] n/s1234567a d/1980 p/123456 s/clear w/none", Name.MESSAGE_NAME_CONSTRAINTS);
+//        assertCommandBehavior(
+//                "add Valid Name n/s123457a d/1980 p/123456 s/clear w/none", NRIC.MESSAGE_NAME_CONSTRAINTS);
+//        assertCommandBehavior(
+//                "add Valid Name n/s1234567a d/188 p/123456 s/clear w/none", DateOfBirth.MESSAGE_DATE_OF_BIRTH_CONSTRAINTS);
+//        assertCommandBehavior(
+//                "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
+//        assertCommandBehavior(
+//                "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
+//        assertCommandBehavior(
+//                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
+//    }
 //@@author muhdharun -reused
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {

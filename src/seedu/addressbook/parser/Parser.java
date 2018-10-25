@@ -148,10 +148,10 @@ public class Parser {
                 return new ClearCommand();
 
             case FindCommand.COMMAND_WORD:
-                return prepareFindOrCheck(arguments,false);
+                return prepareFind(arguments);
 
             case CheckCommand.COMMAND_WORD:
-                return prepareFindOrCheck(arguments,true);
+                return prepareCheck(arguments);
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
@@ -340,23 +340,30 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the find person command.
+     * Parses arguments in the context of the check or find person command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareFindOrCheck(String args, boolean isChecking) {
-        args = args.trim();
-        try{
-            NRIC keyPerson = new NRIC(args);
 
-            return ((isChecking == true) ? new CheckCommand(args) : new FindCommand(args));
-        }
-        catch (IllegalValueException invalidNric){
+    private Command prepareCheck(String args) {
+        args = args.trim();
+        if (NRIC.isValidNRIC(args)) {
+            return new CheckCommand(args);
+        } else {
             logr.warning("NRIC argument is invalid");
-            return ((isChecking == true) ? new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,CheckCommand.MESSAGE_USAGE)):
-                    new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,FindCommand.MESSAGE_USAGE)));
-         }
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,CheckCommand.MESSAGE_USAGE));
+        }
+    }
+
+    private Command prepareFind(String args) {
+        args = args.trim();
+        if (NRIC.isValidNRIC(args)) {
+            return new FindCommand(args);
+        } else {
+            logr.warning("NRIC argument is invalid");
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
     }
 //@@author
     /**

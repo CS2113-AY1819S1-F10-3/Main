@@ -35,7 +35,7 @@ public class NRIC {
     /**
      * Returns true if a given string is a valid NRIC.
      */
-    private static boolean isValidNRIC(String test) {
+    public static boolean isValidNRIC(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
