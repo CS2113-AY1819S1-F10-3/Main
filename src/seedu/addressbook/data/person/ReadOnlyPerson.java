@@ -8,7 +8,7 @@ import java.util.Set;
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyPerson {
-
+//@@author muhdharun
     Name getName();
     NRIC getNric();
     DateOfBirth getDateOfBirth();
@@ -63,7 +63,7 @@ public interface ReadOnlyPerson {
         }
         return builder.toString();
     }
-
+//@@author muhdharun
     default String getAsTextShowAllInVerticalMode() {
 
         final StringBuilder builder = new StringBuilder();

@@ -1,5 +1,5 @@
 package seedu.addressbook.data.person;
-
+//@@author muhdharun
 import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Status {
 
     public static final String EXAMPLE = "wanted";
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Status should be one of the 3: wanted/xc/clear";
+    private static final String MESSAGE_NAME_CONSTRAINTS = "Status should be one of the 3: wanted/xc/clear";
 
     public static final String WANTED_KEYWORD = "wanted";
     public static final String EXCONVICT_KEYWORD = "xc"; //ex-convict
@@ -20,7 +20,7 @@ public class Status {
 
     private static final String[] STATUS_VALIDATION = {WANTED_KEYWORD,EXCONVICT_KEYWORD,CLEAR_KEYWORD};
 
-    public final String currentStatus;
+    private final String currentStatus;
 
     /**
      * Validates given Status.
@@ -41,7 +41,7 @@ public class Status {
      * Returns true if a given string is a valid Status.
      */
 
-    public static boolean isValidStatus(String test) {
+    private static boolean isValidStatus(String test) {
 
         return Arrays.asList(STATUS_VALIDATION).contains(test);
     }
