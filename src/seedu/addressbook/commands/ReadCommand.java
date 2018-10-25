@@ -15,7 +15,7 @@ public class ReadCommand extends Command {
 
     public static final String COMMAND_WORD = "read";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
-            + "Updates the message read status by index \n\t"
+            + "Marks message as read by index displayed after \"showunread\" command is used. \n\t"
             + "Parameters: Index\n\t"
             + "Example: " + COMMAND_WORD + " 1";
 
