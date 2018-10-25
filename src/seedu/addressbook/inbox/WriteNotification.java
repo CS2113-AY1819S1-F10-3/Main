@@ -25,7 +25,7 @@ public class WriteNotification {
 
 
     /**	Message format should look like this
-     *	Read/Unread (1 or 0) --> for writeToFile function, messages are entered as unread.
+     *	Read/Unread (1 or 0)
      *	Priority of Message
      *	Timestamp of message
      *	Message
@@ -38,6 +38,7 @@ public class WriteNotification {
         FileWriter write = new FileWriter (path, isAppend);
         PrintWriter myPrinter = new PrintWriter(write);
         myPrinter.println("> START OF MESSAGE <");
+        myPrinter.println("Sender ID:" + message.getSenderId());
         myPrinter.println("Read status:" + message.isRead);
         myPrinter.println("Priority:" + message.getPriority());
         myPrinter.println("Timestamp:" + dateFormatter.outputDATHrs());
@@ -63,6 +64,7 @@ public class WriteNotification {
         for(int i = 0; i< numMsg; i++) {
             msg = msgSet.pollFirst();
             myPrinter.println("> START OF MESSAGE <");
+            myPrinter.println("Sender ID:" + msg.getSenderId());
             myPrinter.println("Read status:" + msg.isRead);
             myPrinter.println("Priority:" + msg.getPriority());
             myPrinter.println("Timestamp:" + dateFormatter.outputDATHrs());

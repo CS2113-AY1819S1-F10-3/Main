@@ -111,7 +111,7 @@ public class Inbox {
     /*public static void main(String[] args) throws IOException {
         Msg newMsg = new Msg();
         Location location = new Location(-6.206968,106.751365);
-        newMsg.addMsg("Backup requested");
+        newMsg.setMsg("Backup requested");
         newMsg.setLocation(location);
         newMsg.setPriority(Msg.Priority.HIGH);
         newMsg.setTime();
