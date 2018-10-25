@@ -145,6 +145,23 @@ Examples:
 
 image::CheckCommand.png[width="790"]
 
+=== Get status of POs: `checkstatus`
+
+Shows all POs and their current engagement statuses
+
+Format: 'checkstatus'
+
+=== Update status of PO: `updatestatus`
+
+Updates the PO so that it is not engaged anymore
+
+Format: 'updatestatus PO(ID)'
+
+Examples:
+
+*  updatestatus po2
+*  po2 is now free for dispatch
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the database- only by HQP.
@@ -214,21 +231,21 @@ Examples:
 *	Please select a password to change
 *   User then has to enter old and new alphanumeric password
 
-=== Check notifications: `inbox`
+=== Check notifications: `showunread`
 
 For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp.
 For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders
 
-Format: 'inbox'
+Format: 'showunread'
 
 
 Examples (as a HQP):
 
-*	'inbox'
+*	'showunread'
 *	Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:
 
 Examples (as a PO):
-*	'inbox'
+*	'showunread'
 *	Shows any dispatch messages by HQ or response for backup if any
 
 === Exit program : `shutdown`
@@ -244,6 +261,8 @@ Examples:
 == Commands List
  
 *	*Help* : 'help'
+
+*   *Show time* : 'time'
 
 *	*Add*  : 'add n/NAME n/NRIC d/DATE_OF_BIRTH p/POSTAL_CODE s/STATUS w/WANTED_FOR o/PAST OFFENCES...'
 
@@ -264,6 +283,12 @@ E.g. find s1234567a
 
 E.g. check s1234567a
 
+*   *Get status of POs* : 'checkstatus'
+
+*   *Update status of PO* : 'updatestatus'
+
+E.g  updatestatus po2
+
 *	*Delete* : 'delete NRIC'
 
 E.g. delete g1952866q
@@ -280,7 +305,7 @@ E.g. dispatch PO2
 
 *	*Update Password* : 'update password'
 
-*	*Check notifications* : 'inbox'
+*	*Check notifications* : 'showunread'
 
 *	*Exit* : 'shutdown'
 

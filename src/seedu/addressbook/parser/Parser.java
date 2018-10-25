@@ -154,11 +154,17 @@ public class Parser {
             case CheckCommand.COMMAND_WORD:
                 return prepareCheck(arguments);
 
+            case CheckPOStatusCommand.COMMAND_WORD:
+                return new CheckPOStatusCommand();
+
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
 
             case InboxCommand.COMMAND_WORD:
                 return new InboxCommand();
+
+            case UpdateStatusCommand.COMMAND_WORD:
+                return prepareUpdateStatus(arguments);
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
@@ -364,7 +370,7 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,CheckCommand.MESSAGE_USAGE));
         }
     }
-    
+
     private Command prepareFind(String args) {
         args = args.trim();
         if (NRIC.isValidNRIC(args)) {
@@ -373,6 +379,17 @@ public class Parser {
             logr.warning("NRIC argument is invalid");
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+    }
+
+    private Command prepareUpdateStatus(String args) {
+        args = args.trim();
+        if (!args.equals("")) {
+            return new UpdateStatusCommand(args);
+        } else{
+            logr.warning("PO must be stated");
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE));
+        }
+
     }
 
 //@@author andyrobert3

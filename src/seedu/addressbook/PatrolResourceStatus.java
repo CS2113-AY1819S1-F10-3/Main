@@ -17,6 +17,10 @@ public class PatrolResourceStatus {
         add( new Triplet<>("po5", new Location(1.329393, 103.776169), false) ); // SIM
     }};
 
+    public static ArrayList<Triplet<String, Location, Boolean>> getPatrolResourceStatus() {
+        return patrolResourceStatus;
+    }
+
     // TODO: put into message
     public static Location getLocation(String patrolResource) {
         switch (patrolResource) {
@@ -37,7 +41,7 @@ public class PatrolResourceStatus {
         }
     }
 
-    public void setStatus(String policeOfficerId, Boolean status) {
+    public static void setStatus(String policeOfficerId, Boolean status) {
         for (Triplet<String, Location, Boolean> policeOfficer : patrolResourceStatus) {
             if (policeOfficer.getValue0().equalsIgnoreCase(policeOfficerId)) {
                 policeOfficer.setAt2(status);
