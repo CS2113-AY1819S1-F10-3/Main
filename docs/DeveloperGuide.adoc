@@ -45,6 +45,8 @@ This section describes some of the more important details of certain features im
 
 === 1a. Password Feature
 
+*Current Implementation*
+
 Users and passwords are stored in passwordStorage.txt in the format: USER PASSWORD.
 This is to simplify reading the line by splitting the line using the whitespace.
 Each user and corresponding password are in stored in one line.
@@ -68,6 +70,8 @@ Alternatives considered:
 
 === 1b. Update Password Feature
 
+*Current Implementation*
+
 Headquarters Personnel can update any stored password with the update password command.
 The buffered reader reads the passwordStorage.txt file for the specific password to change.
 Once the user has entered a new password, he is prompted to enter the same password again.
@@ -83,7 +87,11 @@ Alternatives considered:
 * Updating using any password, without validity. Password may be weak.
 * Overwriting passwordStorage.txt . This will cause errors in replacing password.
 
+
+
 === 2a. "find" command (edited)
+
+*Current Implementation*
 
 The new "find" command is revised from the existing "find" command in AB3. Instead of finding a person by name, it finds a person using his NRIC.
 It also implements the following operations:
@@ -105,6 +113,8 @@ Step 4: The person is found and is stored in a matchedPerson list variable. exec
 Step 5: The CommandResult object displays to the user the searched person and his details, all of which in string form.
 
 === 2b. "check" command
+
+*Current Implementation*
 
 Only a HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
 The "check" command makes some use of the "find" command. Every time the "find" command successfully finds a person, a line in the format of:
@@ -229,12 +239,12 @@ to the Parser class. This is to ensure invalid input can be caught by the
 algorithm to give its correction before it is deemed as invalid by the Parser
 during which time all commands will be laid out to the user.
 
-Alternatives considered-
+Alternatives considered:
 
-. Running the algorithm from the Parser- This however will not allow the
+* Running the algorithm from the Parser- This however will not allow the
 prediction to be reported efficiently.
 
-. Include predictions with more than one character changes- This will bring
+* Include predictions with more than one character changes- This will bring
 in ambiguity in the correction algorithm and increases chances of errors.
 
 == Use Cases
