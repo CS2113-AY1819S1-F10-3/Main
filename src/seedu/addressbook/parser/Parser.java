@@ -1,9 +1,11 @@
 package seedu.addressbook.parser;
 
+import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.NRIC;
 import seedu.addressbook.data.person.Offense;
+import seedu.addressbook.password.Password;
 
 import java.io.IOException;
 import java.util.*;
@@ -17,7 +19,7 @@ import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
  * Parses user input.
  */
 public class Parser {
-    private final static Logger logr = Logger.getLogger( Parser.class.getName() );
+      private final static Logger logr = Logger.getLogger( Parser.class.getName() );
 
     public static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
 
@@ -386,16 +388,15 @@ public class Parser {
      * @return the prepared request command
      */
     private Command prepareRequest(String args) {
-        String caseName, message;
-        String[] argParts = args.trim().split(" ", 2);
+        String message, caseName = args.trim();
 
-        if (argParts.length < 2) {
+        if (caseName.length() == 0) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     RequestHelpCommand.MESSAGE_USAGE));
         }
 
-        caseName = argParts[0];
-        message = argParts[1];
+        message = Password.getID().toUpperCase() + " needs help with " + caseName + " at location "  +
+                        PatrolResourceStatus.getLocation(Password.getID()).getGoogleMapsURL();
 
         try {
             return new RequestHelpCommand(caseName, message);
