@@ -43,7 +43,7 @@ image::mainClassDiagram.png[]
 == Implementation
 This section describes some of the more important details of certain features implemented.
 
-*1a. Password Feature*
+=== 1a. Password Feature
 
 Users and passwords are stored in passwordStorage.txt in the format: USER PASSWORD.
 This is to simplify reading the line by splitting the line using the whitespace.
@@ -61,11 +61,12 @@ This is to ensure that the system denies access to anyone who is not authorized.
 The User can enter the lock command at any time to ensure that the device is logged out immediately.
 
 Alternatives considered:
-- using an internal hashmap to store user and passwords. Difficult to observe how many POs are there.
-- Storing password in plaintext . Passwords can be seen in passwordStorage.txt
-- Allowing any number of attempts to unlock device. Can be easily looped to try all passwords.
 
-*1b. Update Password Feature*
+* using an internal hashmap to store user and passwords. Difficult to observe how many POs are there.
+* Storing password in plaintext . Passwords can be seen in passwordStorage.txt
+* Allowing any number of attempts to unlock device. Can be easily looped to try all passwords.
+
+=== 1b. Update Password Feature
 
 Headquarters Personnel can update any stored password with the update password command.
 The buffered reader reads the passwordStorage.txt file for the specific password to change.
@@ -77,11 +78,12 @@ The print writer then loops over the passwordStorage.txt file and places all exi
 The temporary file is renamed to passwordStorage.txt and the original file containing the old password is deleted.
 
 Alternatives considered:
-- Update password one time, without secondary prompt to enter password. This will make the changes permanent even if a mistake is made.
-- Updating using any password, without validity. Password may be weak.
-- Overwriting passwordStorage.txt . This will cause errors in replacing password.
 
-*2a. "find" command (edited)*
+* Update password one time, without secondary prompt to enter password. This will make the changes permanent even if a mistake is made.
+* Updating using any password, without validity. Password may be weak.
+* Overwriting passwordStorage.txt . This will cause errors in replacing password.
+
+=== 2a. "find" command (edited)
 
 The new "find" command is revised from the existing "find" command in AB3. Instead of finding a person by name, it finds a person using his NRIC.
 It also implements the following operations:
@@ -102,7 +104,7 @@ Step 4: The person is found and is stored in a matchedPerson list variable. exec
 
 Step 5: The CommandResult object displays to the user the searched person and his details, all of which in string form.
 
-*2b. "check" command*
+=== 2b. "check" command
 
 Only a HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
 The "check" command makes some use of the "find" command. Every time the "find" command successfully finds a person, a line in the format of:
@@ -121,9 +123,9 @@ Step 4: The list from step 3 gets returned by execute() to create a CommandResul
 
 
 
-*3a. "showunread" command*
+=== 3a. "showunread" command
 
-==== Current Implementation
+*Current Implementation*
 
 Once system is unlocked, regardless of which user you are, you can use this command. This command lists the new/unread messages in your inbox based on the password you used to unlock the system.
 When messages are sent, they are stored inside a text file called "inboxMessages/'userID'", where 'userID' refers to the ID of the intended recipient.
@@ -148,6 +150,7 @@ Step 5: The CommandResult object displays to the user the number of unread messa
 
 
 Alternatives considered:
+
 * Using a List instead of a TreeSet.
 ** Pros: Smaller space complexity.
 ** Cons: Less efficient code as 'sort' function must be called every time a new message is stored to maintain sorted order.
@@ -158,9 +161,9 @@ Eventually, we decided to use TreeSet in our implementation as we felt that the 
 ** Cons: Less efficient as it means more memory is required for storage per message stored (additional information of recipient of message required to be stored in the data structure itself when loaded).
 Eventually, we also used multiple message storage files, each dedicated to a specific user, as this allowed us to increase the time efficiency of the code as the getMessagesFor() method did not need to sort through the messages based on recipient anymore. This benefit becomes especially obvious as well when there is a large number of messages that has to be stored, directed towards multiple users.
 
-*3b. "read" command*
+=== 3b. "read" command
 
-==== Current Implementation
+*Current Implementation*
 
 Once the system is unlocked, you can access unread messages directed to you via the "showunread" command explained above.
 Once action has been taken based on what the message sent to you is about, you can mark the message as read using the "read" command. Messages displayd in "showunread" command is first stored inside a static HashMap, with the key as the message index and the message itself as the value of the HashMap. When the user wishes to mark a message as read, he will type "read 'index'", and the respective message displayed at that specific index will be marked as read and updated in the message storage file of the user.
@@ -180,21 +183,21 @@ Step 5: For the messages to be marked as read, the message itself is updated in 
 
 Step 6: The CommandResult object displays to the user a message indicating that the updating of the read status was successful or not.
 
-*3c. Request Backup feature"*
+=== 3c. Request Backup feature"
 
-==== Current Implementation
-
-
-
-*3d. Dispatch Backup feature"*
-
-==== Current Implementation
+*Current Implementation*
 
 
 
-*4. Autocorrection feature*
+=== 3d. Dispatch Backup feature"
 
-Current Implementation
+*Current Implementation*
+
+
+
+=== 4. Autocorrection feature
+
+*Current Implementation*
 
 The autocorrect mechanism is facilitated by use of dynamic programming.
 The algorithm called EditDistance checks the number of single character
