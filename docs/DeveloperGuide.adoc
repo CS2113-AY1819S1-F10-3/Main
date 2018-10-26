@@ -193,13 +193,13 @@ Step 5: For the messages to be marked as read, the message itself is updated in 
 
 Step 6: The CommandResult object displays to the user a message indicating that the updating of the read status was successful or not.
 
-=== 3c. Request Backup feature"
+=== 3c. Request Backup feature
 
 *Current Implementation*
 
 
 
-=== 3d. Dispatch Backup feature"
+=== 3d. Dispatch Backup feature
 
 *Current Implementation*
 
