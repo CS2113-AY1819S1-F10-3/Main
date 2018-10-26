@@ -22,10 +22,10 @@ public class Password {
     public static final String MESSAGE_HQP = "Headquarters Personnel";
     public static final String MESSAGE_PO = "Police Officer ";
     public static final String MESSAGE_ONE = "Oscar November Echo";
-    private static final String MESSAGE_TWO = "Tango Whiskey Oscar";
-    private static final String MESSAGE_THREE = "Tango Hotel Romeo Echo Echo";
-    private static final String MESSAGE_FOUR = "Foxtrot Oscar Uniform Romeo";
-    private static final String MESSAGE_FIVE = "Foxtrot India Victor Echo";
+    public static final String MESSAGE_TWO = "Tango Whiskey Oscar";
+    public static final String MESSAGE_THREE = "Tango Hotel Romeo Echo Echo";
+    public static final String MESSAGE_FOUR = "Foxtrot Oscar Uniform Romeo";
+    public static final String MESSAGE_FIVE = "Foxtrot India Victor Echo";
     private static final String MESSAGE_ENTER_NEW_PASSWORD = "Please enter new alphanumeric password for ";
     private static final String MESSAGE_ENTER_NEW_PASSWORD_AGAIN = "Please enter new alphanumeric password again: ";
     private static final String MESSAGE_UPDATED_PASSWORD = "You have updated %s password successfully. ";
@@ -523,7 +523,7 @@ public class Password {
     }
 
     public static String getID(){
-        String result = null;
+//        String result = null;
         if(isHQP){
 //            result = MESSAGE_HQP;
             return "hqp";
@@ -548,6 +548,6 @@ public class Password {
 //            result = MESSAGE_PO + MESSAGE_FIVE;
             return "po5";
         }
-        return result;
+        return "unknown";
     }
 }

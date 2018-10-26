@@ -249,7 +249,7 @@ public class MainWindow {
     }
 
     public void displayTimestamps(List<String> history){
-        display(new Formatter().formatForTstamps(history));
+        display(new Formatter().formatForStrings(history));
     }
 
     /**

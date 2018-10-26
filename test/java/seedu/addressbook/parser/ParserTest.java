@@ -82,44 +82,6 @@ public class ParserTest {
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
 
-//    @Test
-//    public void deleteCommand_argsIsNotSingleNumber() {
-//        final String[] inputs = { "delete notAnumber ", "delete 8*wh12", "delete 1 2 3 4 5" };
-//        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-//        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
-//    }
-    
-//    @Test
-//    public void deleteCommand_numericArg_indexParsedCorrectly() {
-//        final int testIndex = 1;
-//        final String input = "delete " + testIndex;
-//        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
-//        assertEquals(result.getTargetIndex(), testIndex);
-//    }
-
-    /*@Test
-    public void viewCommand_noArgs() {
-        final String[] inputs = { "view", "view " };
-        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
-        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
-    }
-
-    @Test
-    public void viewCommand_argsIsNotSingleNumber() {
-        final String[] inputs = { "view notAnumber ", "view 8*wh12", "view 1 2 3 4 5" };
-        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
-        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
-    }
-    
-    @Test
-    public void viewCommand_numericArg_indexParsedCorrectly() {
-        final int testIndex = 2;
-        final String input = "view " + testIndex;
-        final ViewAllCommand result = parseAndAssertCommandType(input, ViewAllCommand.class);
-        assertEquals(result.getTargetIndex(), testIndex);
-    }
-    */
-
     @Test
     public void viewAllCommand_noArgs() {
         final String[] inputs = { "viewall", "viewall " };
@@ -158,11 +120,9 @@ public class ParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
-
+//@@author muhdharun -reused
     @Test
     public void findCommand_validArgs_parsedCorrectly() {
-        //final String[] keywords = { "key1", "key2", "key3" };
-        //final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
         final String keyword = "s1234567a";
         final String input = "find " + keyword;
         final FindCommand result =
@@ -172,13 +132,9 @@ public class ParserTest {
 
     @Test
     public void findCommand_duplicateKeys_parsedCorrectly() {
-//        final String[] keywords = { "key1", "key2", "key3" };
-//        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
         final String keyword = "s1234567a";
         // duplicate every keyword
         final String input = "find " + keyword + " " + keyword;
-//        final FindCommand result =
-//                parseAndAssertCommandType(input, FindCommand.class);
         final String resultMessage =
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, input);
@@ -187,7 +143,7 @@ public class ParserTest {
     /**
      * Test find persons by keyword in name command
      */
-
+//@@author muhdharun
     @Test
     public void checkCommand_invalidArgs() {
         // no keywords
@@ -221,7 +177,7 @@ public class ParserTest {
     /**
      * Test add person command
      */
-    
+    //@@author muhdharun -reused
     @Test
     public void addCommand_invalidArgs() {
         final String[] inputs = {
@@ -287,7 +243,7 @@ public class ParserTest {
             parseAndAssertCommandType(input, IncorrectCommand.class);
         }
     }
-
+//@@author
     @Test
     public void addCommand_validPersonData_parsedCorrectly() {
         final Person testPerson = generateTestPerson();
@@ -308,7 +264,7 @@ public class ParserTest {
         final AddCommand result = parseAndAssertCommandType(input, AddCommand.class);
         assertEquals(result.getPerson(), testPerson);
     }
-
+//@@author muhdharun -reused
     private static Person generateTestPerson() {
         try {
             return new Person(
@@ -338,7 +294,7 @@ public class ParserTest {
         }
         return addCommand;
     }
-
+//@@author
     /**
      * Utility methods
      */

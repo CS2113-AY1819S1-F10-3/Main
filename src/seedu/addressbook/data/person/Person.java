@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
  * Represents a Person in the system.
  * Guarantees: details are present and not null, field values are validated.
  */
+//@@author muhdharun -reused
 public class Person implements ReadOnlyPerson {
 
     private Name name;
@@ -36,10 +37,15 @@ public class Person implements ReadOnlyPerson {
         this.postalCode = postalCode;
         this.status = status;
         this.wantedFor = wantedFor;
-        if ((this.status.getCurrentStatus().equals(this.status.WANTED_KEYWORD)) && ((this.wantedFor.getOffense().equals(this.wantedFor.NULL_OFFENSE)) ||
+        if ((this.status.getCurrentStatus().equals(Status.WANTED_KEYWORD)) && ((this.wantedFor.getOffense().equals(Offense.NULL_OFFENSE)) ||
                 this.wantedFor == null)){
             throw new IllegalValueException(WANTED_FOR_WARNING);
+        }
+
+        else if (!(this.status.getCurrentStatus().equals(Status.WANTED_KEYWORD))){
+
         } else if (!(this.status.getCurrentStatus().equals(this.status.WANTED_KEYWORD))){
+
             this.wantedFor = new Offense();
         } else{
             this.wantedFor = wantedFor;
