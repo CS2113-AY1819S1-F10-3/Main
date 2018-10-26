@@ -160,6 +160,7 @@ public class MainWindow {
                     }
                     int i = displayCommand.indexOf("!");
                     display(displayCommand.substring(i + 1));
+                    clearScreen();
                 }
                 else {
                     boolean isHQPFlag = password.isHQPUser();
