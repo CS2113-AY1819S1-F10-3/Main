@@ -174,6 +174,7 @@ public class MainWindow {
                 }
             }
             else{
+                clearScreen();
                 CommandResult result = logic.execute(userCommandText);
                 displayResult(result);
                 clearCommandInput();
