@@ -269,19 +269,7 @@ public class LogicTest {
                               true,
                               expectedList);
     }
-    /*
-    @Test
-    public void execute_view_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
-        assertCommandBehavior("view ", expectedMessage);
-        assertCommandBehavior("view arg not number", expectedMessage);
-    }
-    */
 
-    /*@Test
-    public void execute_view_invalidIndex() throws Exception {
-        assertInvalidIndexBehaviorForCommand("view");
-    }*/
 
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
@@ -456,21 +444,21 @@ public class LogicTest {
         assertCommandBehavior("edit ", expectedMessage);
     }
 
-//    @Test
-//    public void execute_edit_invalidPersonData() throws Exception {
-//        assertCommandBehavior(
-//                "add []\\[;] n/s1234567a d/1980 p/123456 s/clear w/none", Name.MESSAGE_NAME_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name n/s123457a d/1980 p/123456 s/clear w/none", NRIC.MESSAGE_NAME_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name n/s1234567a d/188 p/123456 s/clear w/none", DateOfBirth.MESSAGE_DATE_OF_BIRTH_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
-//        assertCommandBehavior(
-//                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
-//    }
+    @Test
+    public void execute_edit_invalidPersonData() throws Exception {
+        assertCommandBehavior(
+                "add []\\[;] n/s1234567a d/1980 p/123456 s/clear w/none", Name.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add Valid Name n/s123457a d/1980 p/123456 s/clear w/none", NRIC.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/188 p/123456 s/clear w/none", DateOfBirth.MESSAGE_DATE_OF_BIRTH_CONSTRAINTS);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
+        assertCommandBehavior(
+                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
+    }
 //@@author muhdharun -reused
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {

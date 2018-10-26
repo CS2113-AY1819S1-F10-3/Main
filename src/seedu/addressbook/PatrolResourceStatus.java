@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class PatrolResourceStatus {
     // Triplet<Police Officer ID, Location, isEngaged
-    private static ArrayList<Triplet<String, Location, Boolean>> patrolResourceStatus = new ArrayList<>(){{
+    private static ArrayList<Triplet<String, Location, Boolean>> patrolResourceStatus = new ArrayList<Triplet<String, Location, Boolean>>(){{
         add( new Triplet<>("hqp", new Location(1.294166, 103.770730), false) ); // NUS FASS
         add( new Triplet<>("po1", new Location(1.306935, 103.790564), false) ); // Buona Vista
         add( new Triplet<>("po2", new Location(1.346301, 103.682060), false) ); // NTU
