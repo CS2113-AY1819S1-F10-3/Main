@@ -123,13 +123,16 @@ Step 4: The list from step 3 gets returned by execute() to create a CommandResul
 
 *3a. "showunread" command*
 
+==== Current Implementation
+
 Once system is unlocked, regardless of which user you are, you can use this command. This command lists the new/unread messages in your inbox based on the password you used to unlock the system.
-When messages are sent, they are stored inside a text file called "inboxMessages/'userID'", where 'userID' refers to the individual users.
+When messages are sent, they are stored inside a text file called "inboxMessages/'userID'", where 'userID' refers to the ID of the intended recipient.
+These text files store messages directed to each individual who can log in and access their personalised inbox.
 It also implements the following operations:
 
 . execute() - executes the "showunread" command itself and displays the result to the user.
-. getMessagesFor(String userId) - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).
-. printMessages() - Displays messages on screen if the read status is unread.
+. loadMessages() - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).
+. Loaded messages are then concatenated in a single string as `fullPrintedMessage` and passed to the main window through CommandResult.
 
 The following is an example usage scenario of the "showunread" command:
 
@@ -157,6 +160,8 @@ Eventually, we also used multiple message storage files, each dedicated to a spe
 
 *3b. "read" command*
 
+==== Current Implementation
+
 Once the system is unlocked, you can access unread messages directed to you via the "showunread" command explained above.
 Once action has been taken based on what the message sent to you is about, you can mark the message as read using the "read" command. Messages displayd in "showunread" command is first stored inside a static HashMap, with the key as the message index and the message itself as the value of the HashMap. When the user wishes to mark a message as read, he will type "read 'index'", and the respective message displayed at that specific index will be marked as read and updated in the message storage file of the user.
 The "read" command can only be used after the "showunread" command has been used at least once successfully.
@@ -174,6 +179,18 @@ Step 4: User executes "read 3" command. If 3 is a valid index (i.e. there were a
 Step 5: For the messages to be marked as read, the message itself is updated in the HashMap based on the index, and the message storage text file will be overwritten with the messages stored in the HashMap, effectively updating the read status of the message read.
 
 Step 6: The CommandResult object displays to the user a message indicating that the updating of the read status was successful or not.
+
+*3c. Request Backup feature"*
+
+==== Current Implementation
+
+
+
+*3d. Dispatch Backup feature"*
+
+==== Current Implementation
+
+
 
 *4. Autocorrection feature*
 
@@ -574,7 +591,7 @@ Use case ends.
 +
 Use case ends.
 
-=== Use case: Load messages
+=== Use case: Show unread messages
 
 *MSS*
 
@@ -583,7 +600,7 @@ Use case ends.
 . User enters password.
 . System prompts user to enter his command.
 . User requests to display messages in inbox.
-. System prints the number of unread messages, total messages and list of messages.
+. System prints the number of unread messages and list of messages.
 +
 Use case ends.
 
@@ -599,7 +616,7 @@ Use case ends.
 +
 Use case ends.
 
-=== Use case: Reply messages
+=== Use case: Read messages
 
 *MSS*
 
@@ -607,33 +624,27 @@ Use case ends.
 . System prompts user to enter his password.
 . User enters password.
 . System prompts user to enter his command.
-. User enters the message number he wishes to reply to.
-. System displays the list of possible responses to message.
-. User enters the number of the response he chooses.
-. System updates message read status to 'read' and sends response message to recipient.
+. User enters command to `Show Unread Messages`
+. System finds the text file storing user's messages and displays a numbered list of messages that are unread.
+. User enters the message number he wishes to mark as read.
+. System updates message read status to 'read'.
 +
 Use case ends.
 
 *Extensions*
 
-* 5a. User enters an invalid message number.
-** 5a1. System shows an error message.
+* 7a. User enters an invalid message number.
+** 7a1. System shows an error message and informs user of the valid number range.
 +
 Use case ends.
 
-* 5b. There are no unread messages.
-** 5b1. System informs user that there are no messages to respond to.
+* 7b. There are no unread messages.
+** 7b1. System informs user that there are no unread messages.
 +
 Use case ends.
 
-* 7a. User enters an invalid response number.
-** 7a1. System shows an error message.
-+
-Use case resumes at step 6.
 
-* *a. At anytime, user chooses to cancel response to message.
-** *a1. System requests for user confirmation for cancellation.
-** *a2. User confirms the cancellation.
+* *a. At anytime, user chooses to stop marking messages as read.
 +
 Use case ends.
 
