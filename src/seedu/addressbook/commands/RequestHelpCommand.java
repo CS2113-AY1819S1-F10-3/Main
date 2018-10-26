@@ -27,6 +27,11 @@ public class RequestHelpCommand extends Command {
     private Msg requestHelpMessage;
     private WriteNotification writeNotification;
 
+    /**
+     * Constructor for the Writers to write to headquarters personnel file.
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
     public RequestHelpCommand(String caseName, String messageString) throws IllegalValueException {
         writeNotification = new WriteNotification(MessageFilePaths.FILEPATH_HQP_INBOX, true);
         requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, PatrolResourceStatus.getLocation(Password.getID()));
