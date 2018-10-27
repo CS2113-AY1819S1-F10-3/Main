@@ -85,6 +85,7 @@
     }
 
 
+
 ```
 ###### \java\seedu\addressbook\logic\LogicTest.java
 ``` java
@@ -93,7 +94,6 @@
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("find S1234567A", expectedMessage);
     }
-
 
 
 ```
@@ -236,9 +236,6 @@
                     Collections.singleton(new Offense("riot"))
             );
         }
-    }
-
-}
 ```
 ###### \java\seedu\addressbook\parser\ParserTest.java
 ``` java
