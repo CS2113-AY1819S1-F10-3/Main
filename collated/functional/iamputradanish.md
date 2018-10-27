@@ -574,7 +574,7 @@ public class Password {
 //            result = MESSAGE_PO + MESSAGE_FIVE;
             return "po5";
         }
-        return "unknown";
+        else return "unknown";
     }
 }
 ```

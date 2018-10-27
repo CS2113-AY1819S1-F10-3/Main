@@ -435,7 +435,7 @@ public class Location {
         return GOOGLE_MAPS_BASE_URL + this.getLatitude() + "," + this.getLongitude();
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Location location = new Location(-6.206968,106.751365);
         Location origin = new Location(-6.189482, 106.733902);
         ArrayList<Location> locationList = new ArrayList<>();
@@ -445,7 +445,7 @@ public class Location {
         for (Pair<Integer, String> eta: ETATiming) {
             System.out.println(eta.getValue0() + " " + eta.getValue1());
         }
-    }
+    }*/
 }
 ```
 ###### \seedu\addressbook\data\person\Offense.java
