@@ -6,13 +6,21 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import seedu.addressbook.commands.*;
+import seedu.addressbook.common.Location;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
+import seedu.addressbook.inbox.MessageFilePaths;
+import seedu.addressbook.inbox.Msg;
+import seedu.addressbook.inbox.ReadNotification;
+import seedu.addressbook.inbox.WriteNotification;
 import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.timeanddate.TimeAndDate;
 
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,8 +28,7 @@ import static java.lang.Math.abs;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
-import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.addressbook.common.Messages.MESSAGE_TIMESTAMPS_LISTED_OVERVIEW;
+import static seedu.addressbook.common.Messages.*;
 import static seedu.addressbook.password.Password.*;
 
 
@@ -111,17 +118,25 @@ public class LogicTest {
         CommandResult r = logic.execute(inputCommand);
         String[] parts = r.feedbackToUser.split("-", 2);
         String[] expected = expectedMessage.split("-", 2);
-        String[] inputTime = parts[1].split(":", 4);
-        String[] expectedTime = expected[1].split(":", 4);
-        inputTime[3] = inputTime[3].substring(0, 2);
-        expectedTime[3] = expectedTime[3].substring(0, 2);
-        int difference = abs(Integer.parseInt(inputTime[3]) - Integer.parseInt(expectedTime[3]));
-        if(inputTime[0].equals(expectedTime[0]) && inputTime[1].equals(expectedTime[1]) && inputTime[2].equals(expectedTime[2]) &&
-                (difference <= tolerance) && parts[0].equals(expected[0])){
+        assertEqualsTimestamp(expected[1], parts[1], tolerance);
+
+        if(parts[0].equals(expected[0])){
             expectedMessage = r.feedbackToUser;
         }
-        //assertEquals(expected[0], parts[0]);
         assertEquals(expectedMessage, r.feedbackToUser);
+    }
+
+    private void assertEqualsTimestamp(String time1, String time2, int tolerance){
+        String[] inputTime = time1.split(":", 4);
+        String[] expectedTime = time2.split(":", 4);
+        inputTime[3] = inputTime[3].substring(0, 3);
+        expectedTime[3] = expectedTime[3].substring(0, 3);
+        int difference = abs(Integer.parseInt(inputTime[3]) - Integer.parseInt(expectedTime[3]));
+        if(inputTime[0].equals(expectedTime[0]) && inputTime[1].equals(expectedTime[1]) && inputTime[2].equals(expectedTime[2]) &&
+                (difference <= tolerance)){
+            time2 = time1;
+        }
+        assertEquals(time1, time2);
     }
 
     //@@author iamputradanish
@@ -145,7 +160,7 @@ public class LogicTest {
     public void execute_timeCommand() throws Exception {
         String command = DateTimeCommand.COMMAND_WORD;
         TimeAndDate timeAndDate = new TimeAndDate();
-        assertCommandBehavior(command, timeAndDate.outputDATHrs(), 100);
+        assertCommandBehavior(command, timeAndDate.outputDATHrs(), 200);
     }
 
     //@@author iamputradanish
@@ -655,6 +670,62 @@ public class LogicTest {
         assertFalse(result);
     }
 
+    //@@author ongweekeong
+    @Test
+    public void execute_missingInboxFile() {
+        String result = "";
+        try{
+            ReadNotification testReader = new ReadNotification("Nonsense");
+            TreeSet<Msg> testSet = testReader.ReadFromFile();
+        }
+        catch (IOException e){
+            result = MESSAGE_INBOX_FILE_NOT_FOUND;
+        }
+        assertEquals(MESSAGE_INBOX_FILE_NOT_FOUND, result);
+    }
+    @Test
+    public void execute_checkEmptyInbox() throws Exception{
+        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
+        CommandResult r = logic.execute(InboxCommand.COMMAND_WORD);
+        String expectedResult = Messages.MESSAGE_NO_UNREAD_MSGS;
+        assertEquals(expectedResult, r.feedbackToUser);
+    }
+
+    @Test
+    public void execute_checkInboxWithUnreadMessages() throws Exception{
+        final String testMessage = "This is a test message.";
+        TestDataHelper MessageGenerator = new TestDataHelper();
+        TimeAndDate timeStampParser = new TimeAndDate();
+        int messageNum = 1;
+        Msg testMsg = MessageGenerator.generateUnreadMsgNoLocation(testMessage, Msg.Priority.HIGH);
+        WriteNotification testWriter = new WriteNotification(MessageFilePaths.FILEPATH_DEFAULT);
+        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
+        testWriter.writeToFile(testMsg);
+        CommandResult r = logic.execute(InboxCommand.COMMAND_WORD);
+        String inputTime = parseMsgForTimestamp(r.feedbackToUser);
+        String expectedTime = parseMsgForTimestamp(testMsg.getTimeString());
+
+        assertEqualsTimestamp(inputTime, expectedTime, 100);
+
+        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss:SSS");
+        Date formattedTime = timeFormatted.parse(parseMsgForDateTimeStamp(r.feedbackToUser));
+        Timestamp newTime = new Timestamp(formattedTime.getTime());
+        testMsg.setTime(newTime);
+
+        String expectedResult = String.format(Messages.MESSAGE_UNREAD_MSG_NOTIFICATION, messageNum) + '\n' +
+                InboxCommand.concatenateMsg(messageNum, testMsg);
+        assertEquals(expectedResult, r.feedbackToUser);
+    }
+    String parseMsgForTimestamp(String message){
+        String[] timestamp = message.split("-", 2);
+        String time = timestamp[1].substring(0,12);
+        return time;
+    }
+    String parseMsgForDateTimeStamp (String message){
+        String[] timestamp = message.split("Sent: ",2);
+        String date = timestamp[1].substring(0,23);
+        return date;
+    }
     //@@author
 
     /**
@@ -835,6 +906,25 @@ public class LogicTest {
                     Collections.singleton(new Offense("riot"))
             );
         }
+        //@@author ongweekeong
+
+        /**
+         * Generates a Msg object with given message. Other fields will have some dummy values.
+         * @param message
+         * @return
+         */
+        Msg generateUnreadMsgNoLocation(String message, Msg.Priority urgency){
+             return new Msg(urgency, message);
+        }
+
+        Msg generateUnreadMsgWithLocation(String message, Msg.Priority urgency, Location location){
+            return new Msg(urgency, message, location);
+        }
+
+        Location generateRandomLocation(){
+            return new Location(1.294166, 103.770730);
+        }
+
     }
 
 }
