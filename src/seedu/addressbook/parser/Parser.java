@@ -19,7 +19,7 @@ import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
  * Parses user input.
  */
 public class Parser {
-      private final static Logger logr = Logger.getLogger( Parser.class.getName() );
+    private final static Logger logr = Logger.getLogger( Parser.class.getName() );
 
     public static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
 
@@ -168,7 +168,7 @@ public class Parser {
             case RequestHelpCommand.COMMAND_WORD:
                 return prepareRequest(arguments);
 
-            case DispatchBackup.COMMAND_WORD:
+            case DispatchCommand.COMMAND_WORD:
                 return prepareDispatch(arguments);
 
             case ExitCommand.COMMAND_WORD:
@@ -418,14 +418,14 @@ public class Parser {
 
         if (argParts.length < 3) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    DispatchBackup.MESSAGE_USAGE));
+                    DispatchCommand.MESSAGE_USAGE));
         }
 
         backupOfficer = argParts[0].toLowerCase();
         caseName = argParts[1].toLowerCase();
         dispatchRequester = argParts[2].toLowerCase();
 
-        return new DispatchBackup(backupOfficer, dispatchRequester, caseName);
+        return new DispatchCommand(backupOfficer, dispatchRequester, caseName);
     }
 
 }

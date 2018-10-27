@@ -160,16 +160,17 @@ Example:
 *	clear
 *	Records will now be empty
 
-=== Requesting for assistance : `RA` (ambulance) or `RF` (Fire Brigade) or `RB` (Backup)
+=== Requesting for assistance : 'rb'
 
-Generates GPS coordinates of current location and sends it to HQ. Depending on type of assistance requested, either an ambulance or another patrol resource will be dispatched to said location
+Generates GPS coordinates of current location with current case and sends it to HQP.
+HQP would receive message in inbox.
 
-Format: 'RA' (to call for ambulance) or 'RB' (to call for backup)
+Format: 'rb OFFENSE'
 
 Examples:
 
-*	RB
-*   Returns a set of GPS coordinates to HQ
+*	rb gun
+*   Returns a set of GPS coordinates, Current Case and Google Maps URL location to HQP.
 
 === Dispatch a PO : `dispatch`
 
@@ -182,15 +183,6 @@ Examples:
 *	dispatch PO2
 *	PO2 will receive a dispatch message
 
-=== Battery check : `battery check`
-
-Checks battery level currently
-
-Format: 'battery check'
-
-Examples:
-*	battery check
-*	returns the battery level, for e.g : 50%
 
 === Serial Number Check : `*06`
 

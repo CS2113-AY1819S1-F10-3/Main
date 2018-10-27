@@ -150,8 +150,8 @@ public class MainWindow {
                             displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE)).feedbackToUser;
                             break;
 
-                        case DispatchBackup.COMMAND_WORD:
-                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchBackup.MESSAGE_USAGE)).feedbackToUser;
+                        case DispatchCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchCommand.MESSAGE_USAGE)).feedbackToUser;
                             break;
 
                         case HelpCommand.COMMAND_WORD: // Fallthrough

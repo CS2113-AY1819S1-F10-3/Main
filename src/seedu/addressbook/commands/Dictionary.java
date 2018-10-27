@@ -1,14 +1,12 @@
 //@@author ShreyasKp
 package seedu.addressbook.commands;
 
-import seedu.addressbook.commands.*;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Stores all the commands to be compared with for autocorrect function.
@@ -44,7 +42,7 @@ public class Dictionary extends Command{
             commands.add(ListCommand.COMMAND_WORD);
             commands.add(LockCommand.COMMAND_WORD);
             commands.add(RequestHelpCommand.COMMAND_WORD);
-            commands.add(DispatchBackup.COMMAND_WORD);
+            commands.add(DispatchCommand.COMMAND_WORD);
             //commands.add(UpdatePasswordCommand.COMMAND_WORD);
             commands.add(ViewAllCommand.COMMAND_WORD);
         }
