@@ -10,10 +10,7 @@ import seedu.addressbook.common.Location;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
-import seedu.addressbook.inbox.MessageFilePaths;
-import seedu.addressbook.inbox.Msg;
-import seedu.addressbook.inbox.ReadNotification;
-import seedu.addressbook.inbox.WriteNotification;
+import seedu.addressbook.inbox.*;
 import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.timeanddate.TimeAndDate;
@@ -754,6 +751,15 @@ public class LogicTest {
         }
         assertEquals(MESSAGE_INBOX_FILE_NOT_FOUND, result);
     }
+
+    @Test
+    public void execute_readMsgWithoutShowUnread() throws Exception {
+        Inbox.numUnreadMsgs = -1; // Set numUnreadMsgs to default state before inbox is accessed.
+        String inputCommand = ReadCommand.COMMAND_WORD + " 5";
+        String expected = Inbox.INBOX_NOT_READ_YET;
+        assertCommandBehavior(inputCommand, expected);
+    }
+
     @Test
     public void execute_checkEmptyInbox() throws Exception{
         WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
@@ -793,6 +799,64 @@ public class LogicTest {
     }
 
 
+
+    @Test
+    public void execute_readMsgWithoutUnreadMsgs() throws Exception {
+        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
+        CommandResult r = logic.execute(InboxCommand.COMMAND_WORD);
+        String inputCommand = ReadCommand.COMMAND_WORD + " 3";
+        String expected = Inbox.INBOX_NO_UNREAD_MESSAGES;
+        assertCommandBehavior(inputCommand, expected);
+    }
+
+    @Test
+    public void execute_readMsgWithOutOfBoundsIndex() throws Exception {
+        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
+        Password.lockIsHQP(); Password.lockIsPO(); //Set static boolean flags from other test cases back to original state.
+        Msg testMsg;
+        final int numOfMsgs = 3;
+        for (int i=0; i<numOfMsgs; i++){
+            testMsg = generateMsgInInbox("This is a test message.");
+            Thread.sleep(100);
+        }
+        CommandResult r = logic.execute(InboxCommand.COMMAND_WORD);
+        String input1 = ReadCommand.COMMAND_WORD + " 0";
+        String expected1 = String.format(Inbox.INDEX_OUT_OF_BOUNDS, numOfMsgs);
+        assertCommandBehavior(input1, expected1);
+        String input2 = ReadCommand.COMMAND_WORD + " 4";
+        String expected2 = String.format(Inbox.INDEX_OUT_OF_BOUNDS, numOfMsgs);
+        assertCommandBehavior(input2, expected2);
+    }
+
+    @Test
+    public void execute_readMsgWithInvalidIndex() throws Exception {
+        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
+        Msg testMsg;
+        final int numOfMsgs = 3;
+        for(int i=0; i<numOfMsgs; i++){
+            testMsg = generateMsgInInbox("This is a test message.");
+            Thread.sleep(100);
+        }
+        String inputCommand = ReadCommand.COMMAND_WORD + " a";
+        String expected = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
+        assertCommandBehavior(inputCommand, expected);
+    }
+
+    @Test
+    public void execute_readMsgWithValidIndex() throws Exception {
+        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
+        Msg testMsg;
+        int index = 1;
+        final int numOfMsgs = 3;
+        for(int i=0; i<numOfMsgs; i++){
+            testMsg = generateMsgInInbox("This is a test message. " + index++);
+            Thread.sleep(100);
+        }
+        CommandResult r = logic.execute(InboxCommand.COMMAND_WORD);
+        String inputCommand = ReadCommand.COMMAND_WORD + " " + numOfMsgs;
+        String expected = ReadCommand.MESSAGE_UPDATE_SUCCESS;
+        assertCommandBehavior(inputCommand, expected);
+    }
 
     //@@author
 
