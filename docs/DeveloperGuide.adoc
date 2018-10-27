@@ -43,7 +43,9 @@ image::mainClassDiagram.png[]
 == Implementation
 This section describes some of the more important details of certain features implemented.
 
-*1a. Password Feature*
+=== 1a. Password Feature
+
+*Current Implementation*
 
 Users and passwords are stored in passwordStorage.txt in the format: USER PASSWORD.
 This is to simplify reading the line by splitting the line using the whitespace.
@@ -61,11 +63,14 @@ This is to ensure that the system denies access to anyone who is not authorized.
 The User can enter the lock command at any time to ensure that the device is logged out immediately.
 
 Alternatives considered:
-- using an internal hashmap to store user and passwords. Difficult to observe how many POs are there.
-- Storing password in plaintext . Passwords can be seen in passwordStorage.txt
-- Allowing any number of attempts to unlock device. Can be easily looped to try all passwords.
 
-*1b. Update Password Feature*
+* using an internal hashmap to store user and passwords. Difficult to observe how many POs are there.
+* Storing password in plaintext . Passwords can be seen in passwordStorage.txt
+* Allowing any number of attempts to unlock device. Can be easily looped to try all passwords.
+
+=== 1b. Update Password Feature
+
+*Current Implementation*
 
 Headquarters Personnel can update any stored password with the update password command.
 The buffered reader reads the passwordStorage.txt file for the specific password to change.
@@ -77,11 +82,16 @@ The print writer then loops over the passwordStorage.txt file and places all exi
 The temporary file is renamed to passwordStorage.txt and the original file containing the old password is deleted.
 
 Alternatives considered:
-- Update password one time, without secondary prompt to enter password. This will make the changes permanent even if a mistake is made.
-- Updating using any password, without validity. Password may be weak.
-- Overwriting passwordStorage.txt . This will cause errors in replacing password.
 
-*2a. "find" command (edited)*
+* Update password one time, without secondary prompt to enter password. This will make the changes permanent even if a mistake is made.
+* Updating using any password, without validity. Password may be weak.
+* Overwriting passwordStorage.txt . This will cause errors in replacing password.
+
+
+
+=== 2a. "find" command (edited)
+
+*Current Implementation*
 
 The new "find" command is revised from the existing "find" command in AB3. Instead of finding a person by name, it finds a person using his NRIC.
 It also implements the following operations:
@@ -102,7 +112,9 @@ Step 4: The person is found and is stored in a matchedPerson list variable. exec
 
 Step 5: The CommandResult object displays to the user the searched person and his details, all of which in string form.
 
-*2b. "check" command*
+=== 2b. "check" command
+
+*Current Implementation*
 
 Only a HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
 The "check" command makes some use of the "find" command. Every time the "find" command successfully finds a person, a line in the format of:
@@ -121,21 +133,24 @@ Step 4: The list from step 3 gets returned by execute() to create a CommandResul
 
 
 
-4a. "show unread" command
+=== 3a. "showunread" command
+
+*Current Implementation*
 
 Once system is unlocked, regardless of which user you are, you can use this command. This command lists the new/unread messages in your inbox based on the password you used to unlock the system.
-When messages are sent, they are stored inside a text file called "notifications_<userID>.txt", where 'userID' refers to the individual users.
+When messages are sent, they are stored inside a text file called "inboxMessages/'userID'", where 'userID' refers to the ID of the intended recipient.
+These text files store messages directed to each individual who can log in and access their personalised inbox.
 It also implements the following operations:
 
-. execute() - executes the "show unread" command itself and displays the result to the user.
-. getMessagesFor(String userId) - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).
-. printMessages() - Displays messages on screen if the read status is unread.
+. execute() - executes the "showunread" command itself and displays the result to the user.
+. loadMessages() - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).
+. Loaded messages are then concatenated in a single string as `fullPrintedMessage` and passed to the main window through CommandResult.
 
-The following is an example usage scenario of the "show unread" command:
+The following is an example usage scenario of the "showunread" command:
 
 Step 1: The user input his password and unlocks the system.
 
-Step 2: The user executes "show unread" command. The "show unread" command calls execute() which also calls getMessagesFor() method.
+Step 2: The user executes "showunread" command. The "showunread" command calls execute() which also calls getMessagesFor() method.
 
 Step 3: The getMessagesFor() method searches message storage file for the messages directed to the respective user, if any, and they are stored into a data structure.
 
@@ -145,6 +160,7 @@ Step 5: The CommandResult object displays to the user the number of unread messa
 
 
 Alternatives considered:
+
 * Using a List instead of a TreeSet.
 ** Pros: Smaller space complexity.
 ** Cons: Less efficient code as 'sort' function must be called every time a new message is stored to maintain sorted order.
@@ -155,10 +171,43 @@ Eventually, we decided to use TreeSet in our implementation as we felt that the 
 ** Cons: Less efficient as it means more memory is required for storage per message stored (additional information of recipient of message required to be stored in the data structure itself when loaded).
 Eventually, we also used multiple message storage files, each dedicated to a specific user, as this allowed us to increase the time efficiency of the code as the getMessagesFor() method did not need to sort through the messages based on recipient anymore. This benefit becomes especially obvious as well when there is a large number of messages that has to be stored, directed towards multiple users.
 
+=== 3b. "read" command
 
-*3. Autocorrection feature*
+*Current Implementation*
 
-Current Implementation
+Once the system is unlocked, you can access unread messages directed to you via the "showunread" command explained above.
+Once action has been taken based on what the message sent to you is about, you can mark the message as read using the "read" command. Messages displayd in "showunread" command is first stored inside a static HashMap, with the key as the message index and the message itself as the value of the HashMap. When the user wishes to mark a message as read, he will type "read 'index'", and the respective message displayed at that specific index will be marked as read and updated in the message storage file of the user.
+The "read" command can only be used after the "showunread" command has been used at least once successfully.
+
+The following is an example usage scenario of the "read" command:
+
+Step 1: User inputs his password and unlocks the system.
+
+Step 2: User executes "showunread" command. If "showunread" command is successfully executed, a list of unread messages directed to the user will be displayed.
+
+Step 3: Messages that are read from the user's inbox will also be recorded in a static HashMap called `recordNotifications`, with the message index used as the key.
+
+Step 4: User executes "read 3" command. If 3 is a valid index (i.e. there were at least 3 unread messages that were displayed), the third message displayed will be marked as read.
+
+Step 5: For the messages to be marked as read, the message itself is updated in the HashMap based on the index, and the message storage text file will be overwritten with the messages stored in the HashMap, effectively updating the read status of the message read.
+
+Step 6: The CommandResult object displays to the user a message indicating that the updating of the read status was successful or not.
+
+=== 3c. Request Backup feature
+
+*Current Implementation*
+
+
+
+=== 3d. Dispatch Backup feature
+
+*Current Implementation*
+
+
+
+=== 4. Autocorrection feature
+
+*Current Implementation*
 
 The autocorrect mechanism is facilitated by use of dynamic programming.
 The algorithm called EditDistance checks the number of single character
@@ -190,12 +239,12 @@ to the Parser class. This is to ensure invalid input can be caught by the
 algorithm to give its correction before it is deemed as invalid by the Parser
 during which time all commands will be laid out to the user.
 
-Alternatives considered-
+Alternatives considered:
 
-. Running the algorithm from the Parser- This however will not allow the
+* Running the algorithm from the Parser- This however will not allow the
 prediction to be reported efficiently.
 
-. Include predictions with more than one character changes- This will bring
+* Include predictions with more than one character changes- This will bring
 in ambiguity in the correction algorithm and increases chances of errors.
 
 == Use Cases
@@ -555,7 +604,7 @@ Use case ends.
 +
 Use case ends.
 
-=== Use case: Load messages
+=== Use case: Show unread messages
 
 *MSS*
 
@@ -564,7 +613,7 @@ Use case ends.
 . User enters password.
 . System prompts user to enter his command.
 . User requests to display messages in inbox.
-. System prints the number of unread messages, total messages and list of messages.
+. System prints the number of unread messages and list of messages.
 +
 Use case ends.
 
@@ -580,7 +629,7 @@ Use case ends.
 +
 Use case ends.
 
-=== Use case: Reply messages
+=== Use case: Read messages
 
 *MSS*
 
@@ -588,33 +637,27 @@ Use case ends.
 . System prompts user to enter his password.
 . User enters password.
 . System prompts user to enter his command.
-. User enters the message number he wishes to reply to.
-. System displays the list of possible responses to message.
-. User enters the number of the response he chooses.
-. System updates message read status to 'read' and sends response message to recipient.
+. User enters command to `Show Unread Messages`
+. System finds the text file storing user's messages and displays a numbered list of messages that are unread.
+. User enters the message number he wishes to mark as read.
+. System updates message read status to 'read'.
 +
 Use case ends.
 
 *Extensions*
 
-* 5a. User enters an invalid message number.
-** 5a1. System shows an error message.
+* 7a. User enters an invalid message number.
+** 7a1. System shows an error message and informs user of the valid number range.
 +
 Use case ends.
 
-* 5b. There are no unread messages.
-** 5b1. System informs user that there are no messages to respond to.
+* 7b. There are no unread messages.
+** 7b1. System informs user that there are no unread messages.
 +
 Use case ends.
 
-* 7a. User enters an invalid response number.
-** 7a1. System shows an error message.
-+
-Use case resumes at step 6.
 
-* *a. At anytime, user chooses to cancel response to message.
-** *a1. System requests for user confirmation for cancellation.
-** *a2. User confirms the cancellation.
+* *a. At anytime, user chooses to stop marking messages as read.
 +
 Use case ends.
 
