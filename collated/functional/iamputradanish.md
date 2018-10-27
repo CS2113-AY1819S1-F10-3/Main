@@ -1,11 +1,37 @@
-package seedu.addressbook.password;
+# iamputradanish
+###### \seedu\addressbook\commands\HelpCommand.java
+``` java
+    @Override
+    public CommandResult execute() {
+        Password password = new Password();
+        boolean isHQPFlag = password.isHQPUser();
 
-import seedu.addressbook.common.Messages;
-import seedu.addressbook.readandwrite.ReaderAndWriter;
+        if(isHQPFlag) {
+            return new CommandResult(MESSAGE_ALL_USAGES);
+        }
+        else{
+            return new CommandResult(MESSAGE_PO_USAGES);
+        }
+    }
+}
+```
+###### \seedu\addressbook\commands\LockCommand.java
+``` java
+public class LockCommand extends Command {
+    public static final String COMMAND_WORD = "lock";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Locks the device. No commands are allowed until correct password is entered.\n\t "
+            + "Example: " + COMMAND_WORD ;
+    private static final String MESSAGE_LOCK = "Your device has been locked." + "\n" + "Please enter password:\n";
 
-import java.io.*;
-
-//@@author iamputradanish
+    @Override
+    public CommandResult execute() {
+        Password password  = new Password();
+        password.lockDevice();
+        return new CommandResult(MESSAGE_LOCK); }
+}
+```
+###### \seedu\addressbook\password\Password.java
+``` java
 public class Password {
 
     private static final String MESSAGE_TRY_AGAIN = "Please try again.";
@@ -551,3 +577,118 @@ public class Password {
         else return "unknown";
     }
 }
+```
+###### \seedu\addressbook\readandwrite\ReaderAndWriter.java
+``` java
+public class ReaderAndWriter {
+
+    public File fileToUse (String pathName){
+        File file = new File(pathName);
+        return file;
+    }
+
+    public BufferedReader openReader (File file) throws FileNotFoundException {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        return br;
+    }
+
+    public PrintWriter openWriter (File file) throws IOException {
+        PrintWriter pw = new PrintWriter(file);
+        return pw;
+    }
+
+    public PrintWriter openTempWriter (File file) throws IOException {
+        PrintWriter pw = new PrintWriter(new FileWriter(file));
+        return pw;
+    }
+
+}
+```
+###### \seedu\addressbook\timeanddate\TimeAndDate.java
+``` java
+public class TimeAndDate {
+    private Timestamp currentDAT = new Timestamp(System.currentTimeMillis());
+    private SimpleDateFormat timeStampFormatter = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss:SSS");
+    private String outputDAT = timeStampFormatter.format(currentDAT);
+
+    public String outputDATHrs(){
+        return outputDAT + "hrs";
+    }
+
+    public String outputDATHrs(Timestamp theTime){
+        String outputDAT = timeStampFormatter.format(theTime);
+        return outputDAT + "hrs";
+
+    }
+}
+```
+###### \seedu\addressbook\ui\MainWindow.java
+``` java
+    private void decipherUserCommandText(String userCommandText) throws Exception {
+        if(toCloseApp(userCommandText)){
+            password.lockDevice();
+            mainApp.stop();
+        }
+        else if(isLockCommand(userCommandText)){
+            CommandResult result = logic.execute(userCommandText);
+            clearScreen();
+            displayResult(result);
+        }
+        else if(Password.isLocked()) {
+            String unlockDeviceResult = Password.unlockDevice(userCommandText,password.getWrongPasswordCounter());
+            clearScreen();
+            display(unlockDeviceResult);
+        }
+        else if(canUpdatePassword(userCommandText)){
+            String prepareUpdatePasswordResult = password.prepareUpdatePassword();
+            clearScreen();
+            display(prepareUpdatePasswordResult);
+        }
+        else if(password.isUpdatingPasswordNow()){
+            String updatePasswordResult;
+            if(password.isUpdatePasswordConfirmNow()) {
+                updatePasswordResult = password.updatePasswordFinal(userCommandText);
+            }
+            else{
+                updatePasswordResult = password.updatePassword(userCommandText,password.getWrongPasswordCounter());
+            }
+            clearScreen();
+            display(updatePasswordResult);
+        }
+
+        else if(password.isUnauthorizedAccess(userCommandText)){
+            clearScreen();
+            String unauthorizedCommandResult = password.invalidPOResult(userCommandText);
+            display(unauthorizedCommandResult);
+        }
+```
+###### \seedu\addressbook\ui\MainWindow.java
+``` java
+    private boolean canUpdatePassword(String userCommandText){
+        return password.isHQPUser() && isUpdatePasswordCommand(userCommandText);
+    }
+
+```
+###### \seedu\addressbook\ui\MainWindow.java
+``` java
+    private boolean isUpdatePasswordCommand(String userCommandText) {
+        return userCommandText.equals(Password.UPDATE_PASSWORD_COMMAND_WORD);
+    }
+
+    private boolean toCloseApp(String userCommandText){
+        return isExitCommand(userCommandText) || password.isShutDown();
+    }
+
+    private boolean isLockCommand(String userCommandText) {
+        return userCommandText.equals(LockCommand.COMMAND_WORD);
+    }
+
+```
+###### \seedu\addressbook\ui\MainWindow.java
+``` java
+    private void clearScreen(){
+        clearCommandInput();
+        clearOutputConsole();
+    }
+
+```

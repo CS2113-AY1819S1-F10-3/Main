@@ -8,7 +8,6 @@ import seedu.addressbook.password.Password;
 import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.TreeSet;
 
 public class InboxCommand extends Command {
@@ -20,15 +19,11 @@ public class InboxCommand extends Command {
 
     TimeAndDate dateFormatter = new TimeAndDate();
 
-    public static LinkedHashMap<Integer, Msg> recordedMessages = new LinkedHashMap();
-
     @Override
     public CommandResult execute() {
 
-        //Inbox myInbox = new Inbox();
         Inbox myInbox = new Inbox(Password.getID());
         TreeSet<Msg> allMsgs;
-        recordedMessages.clear();
         int myUnreadMsgs;
         int messageNum = 1;
         Msg msgToPrint;
@@ -39,7 +34,6 @@ public class InboxCommand extends Command {
                 String fullPrintedMessage = Messages.MESSAGE_UNREAD_MSG_NOTIFICATION + '\n';
                 for(int i=0; i<myUnreadMsgs; i++){
                     msgToPrint = allMsgs.pollFirst();
-                    recordedMessages.put(messageNum, msgToPrint);
                     fullPrintedMessage += concatenateMsg(messageNum, msgToPrint);
                     messageNum++;
                 }
@@ -60,18 +54,14 @@ public class InboxCommand extends Command {
         String concatenatedMsg;
         try{
             concatenatedMsg = String.valueOf(messageNum) + ".\t[UNREAD] Sender: " + message.getSenderId() + " Priority: " + message.getPriority() +
-                    ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ", message: " + message.getMsg() + ", Coordinates: " +
+                    ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ",\n\t\tMessage: " + message.getMsg() + ", Coordinates: " +
                     message.getLatitude() + ", " + message.getLongitude() + ", ETA: " + message.getEta() + ".\n";
         }
         catch(Exception e){
             concatenatedMsg = String.valueOf(messageNum) + ".\t[UNREAD] Sender: " + message.getSenderId() + " Priority: " +
-                    message.getPriority() + ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ", message: " + message.getMsg() + ".\n";
+                    message.getPriority() + ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ",\n\t\tMessage: " + message.getMsg() + ".\n";
         }
         return concatenatedMsg;
-    }
-
-    public void recordMessage(Msg message){
-
     }
 
 }

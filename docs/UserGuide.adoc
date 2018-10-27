@@ -46,18 +46,27 @@ image::Ui.png[width="790"]
 	
 === Viewing help : `help`
 
+Lists all the features in a user friendly format for users and how to use them
+
 Format: 'help'
 
-*	Lists all the features in a user friendly format for users and how to use them
 
 image::HelpCommand.png[width="790"]
 
+=== Display date and time : `time`
+
+Shows the current date and time
+
+Format: 'time'
+
 === Adding a person: `add`
+
 Adds a criminal to the database - only by HQP.
 
 Format: 'add NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR o/PASTOFFENSES'
 
 Examples:
+
 
 *	add John Doe n/f1234567p d/1996 p/510246 s/xc w/none o/theft o/drugs"
 *   Displays a message stating the new person being added
@@ -136,6 +145,23 @@ Examples:
 
 image::CheckCommand.png[width="790"]
 
+=== Get status of POs: `checkstatus`
+
+Shows all POs and their current engagement statuses
+
+Format: 'checkstatus'
+
+=== Update status of PO: `updatestatus`
+
+Updates the PO so that it is not engaged anymore
+
+Format: 'updatestatus PO(ID)'
+
+Examples:
+
+*  updatestatus po2
+*  po2 is now free for dispatch
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the database- only by HQP.
@@ -171,51 +197,6 @@ Examples:
 
 *	rb gun
 *   Returns a set of GPS coordinates, Current Case and Google Maps URL location to HQP.
-
-=== Dispatch a PO : `dispatch`
-
-Dispatches a specified PO
-
-Format: 'dispatch PO(ID)'
-
-Examples:
-
-*	dispatch PO2
-*	PO2 will receive a dispatch message
-
-
-=== Serial Number Check : `*06`
-
-Checks the serial number of device against the database. If inside the database, this means the phone is stolen
-
-Format: '*06 PHONE_NUMBER'
-
-Examples:
-*	*06 99999999
-*	Returns true if number exists in the system
-
-=== Vehicle Number Check : `vcheck`
-
-Checks if vehicle is stolen
-
-Format: 'vcheck VEHICLE_NUMBER'
-
-Examples:
-
-*	vcheck SDV1111H
-*	Returns true if SDV1111H is stolen
-
-=== Date and Time Check : `datetime`
-
-Displays current date and time
-
-Format: 'datetime'
-
-Example:
-
-*	'datetime'
-*	15/10/18 1930hrs
-
 === Lock System : `lock`
 
 Locks the system and unlocks with password input
@@ -239,22 +220,31 @@ Examples:
 *	Please select a password to change
 *   User then has to enter old and new alphanumeric password
 
-=== Check notifications: `inbox`
+=== Check notifications: `showunread`
 
 For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp.
 For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders
 
-Format: 'inbox'
+Format: 'showunread'
 
 
 Examples (as a HQP):
 
-*	'inbox'
+*	'showunread'
 *	Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:
 
 Examples (as a PO):
-*	'inbox'
+*	'showunread'
 *	Shows any dispatch messages by HQ or response for backup if any
+
+=== Read message : `read`
+
+Updates the status of unread messages to read. Command to be used after `showunread` command
+
+Format: 'read index'
+
+Examples:
+*  read 1
 
 === Exit program : `shutdown`
 
@@ -269,6 +259,8 @@ Examples:
 == Commands List
  
 *	*Help* : 'help'
+
+*   *Show time* : 'time'
 
 *	*Add*  : 'add n/NAME n/NRIC d/DATE_OF_BIRTH p/POSTAL_CODE s/STATUS w/WANTED_FOR o/PAST OFFENCES...'
 
@@ -289,6 +281,12 @@ E.g. find s1234567a
 
 E.g. check s1234567a
 
+*   *Get status of POs* : 'checkstatus'
+
+*   *Update status of PO* : 'updatestatus'
+
+E.g  updatestatus po2
+
 *	*Delete* : 'delete NRIC'
 
 E.g. delete g1952866q
@@ -301,25 +299,15 @@ E.g. delete g1952866q
 
 E.g. dispatch PO2
 
-*	*Battery Check* : 'battery check'
-
-*	*Serial Number Check* : '*06 PHONE_NUMBER'
-
-E.g. *06 86781234
-
-*	*Vehicle Number Check* : 'vcheck'
-
-Format: vcheck VEHICLE_NUMBER
-
-E.g. vcheck v/SGP0884S
-
-*	*Date and Time Check* : 'datetime'
-
 *	*Lock* : 'lock'
 
 *	*Update Password* : 'update password'
 
-*	*Check notifications* : 'inbox'
+*	*Check notifications* : 'showunread'
+
+*   *Read message* : 'read index'
+
+E.g  read 1
 
 *	*Exit* : 'shutdown'
 

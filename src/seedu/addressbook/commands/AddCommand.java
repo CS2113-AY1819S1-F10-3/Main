@@ -12,7 +12,7 @@ import java.util.Set;
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
-
+    //@@ author muhdharun -reused
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Adds a person to the system. "
             + "Parameters: NAME n/NRIC d/DATEOFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR o/PASTOFFENSES...\n\t"
             + "Example: " + COMMAND_WORD

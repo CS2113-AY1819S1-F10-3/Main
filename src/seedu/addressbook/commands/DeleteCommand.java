@@ -12,7 +12,7 @@ import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
-
+    //@@author muhdharun -reused
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" 
             + "Deletes the person by nric.\n\t"
             + "Parameters: NRIC\n\t"

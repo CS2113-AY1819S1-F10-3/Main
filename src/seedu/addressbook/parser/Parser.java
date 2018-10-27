@@ -25,7 +25,7 @@ public class Parser {
 
     public static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
-
+//@@author muhdharun -reused
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
                     + " n/(?<nric>[^/]+)"
@@ -34,7 +34,7 @@ public class Parser {
                     + " s/(?<status>[^/]+)"
                     + " w/(?<wantedFor>[^/]+)"
                     + "(?<pastOffenseArguments>(?: o/[^/]+)*)"); // variable number of offenses
-
+//@@author
     public static final Pattern EDIT_DATA_ARGS_FORMAT =
             Pattern.compile("n/(?<nric>[^/]+)"
                     + " p/(?<postalCode>[^/]+)"
@@ -151,16 +151,26 @@ public class Parser {
                 return new ClearCommand();
 
             case FindCommand.COMMAND_WORD:
-                return prepareFindOrCheck(arguments,false);
+                return prepareFind(arguments);
 
             case CheckCommand.COMMAND_WORD:
-                return prepareFindOrCheck(arguments,true);
+                return prepareCheck(arguments);
+
+            case CheckPOStatusCommand.COMMAND_WORD:
+                return new CheckPOStatusCommand();
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
 
             case InboxCommand.COMMAND_WORD:
                 return new InboxCommand();
+
+            case UpdateStatusCommand.COMMAND_WORD:
+                return prepareUpdateStatus(arguments);
+
+            case ReadCommand.COMMAND_WORD:
+                return prepareRead(arguments);
+
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
@@ -182,7 +192,7 @@ public class Parser {
                 return new HelpCommand();
         }
     }
-
+//@@author muhdharun -reused
     /**
      * Parses arguments in the context of the add person command.
      *
@@ -209,7 +219,7 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
+//@@author
     /**
      * Checks whether the private prefix of a contact detail in the add command's arguments string is present.
      */
@@ -231,6 +241,9 @@ public class Parser {
         return new HashSet<>(tagStrings);
     }
 
+
+//@@author muhdharun -reused
+
     /**
      * Parses arguments in the context of the delete person command.
      *
@@ -240,10 +253,6 @@ public class Parser {
     private Command prepareDelete(String args){
         try {
             final String nric = parseArgsAsNric(args);
-//            if (Utils.isStringInteger(name)) {
-//                final int targetIndex = parseArgsAsDisplayedIndex(args);
-//                return new DeleteCommand(targetIndex);
-//            }
 
             return new DeleteCommand(new NRIC(nric));
         } catch (ParseException e) {
@@ -259,7 +268,9 @@ public class Parser {
         }
     }
 
-    //@@author andyrobert3
+
+//@@author andyrobert3
+
     /**
      * Parses arguments in the context of the edit person command.
      *
@@ -285,6 +296,20 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
+
+//@@author ongweekeong
+    private Command prepareRead(String args){
+        try{
+            final int targetIndex = parseArgsAsDisplayedIndex(args);
+            return new ReadCommand(targetIndex);
+        }
+        catch (ParseException | NumberFormatException e){
+            logr.log(Level.WARNING, "Invalid read command format.", e);
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ReadCommand.MESSAGE_USAGE));
+        }
+    }
+
 
     //@@author
     /**
@@ -339,7 +364,7 @@ public class Parser {
         }
         return Integer.parseInt(matcher.group("targetIndex"));
     }
-
+//@@author muhdharun
     private String parseArgsAsNric(String args) throws ParseException {
         final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
@@ -350,37 +375,45 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the find person command.
+     * Parses arguments in the context of the check or find person command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareFindOrCheck(String args, boolean isChecking) {
+
+    private Command prepareCheck(String args) {
         args = args.trim();
-        try{
-            NRIC keyPerson = new NRIC(args);
-
-            return ((isChecking == true) ? new CheckCommand(args) : new FindCommand(args));
-        }
-        catch (IllegalValueException invalidNric){
+        if (NRIC.isValidNRIC(args)) {
+            return new CheckCommand(args);
+        } else {
             logr.warning("NRIC argument is invalid");
-            return ((isChecking == true) ? new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,CheckCommand.MESSAGE_USAGE)):
-                    new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,FindCommand.MESSAGE_USAGE)));
-         }
-
-
-//
-//        final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args);
-//        if (!matcher.matches()) {
-//            logr.warning("Argument for finding NRIC is invalid");
-//            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-//                    FindCommand.MESSAGE_USAGE));
-//        }
-
-        //return new FindCommand(args);
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,CheckCommand.MESSAGE_USAGE));
+        }
     }
 
-    //@@author andyrobert3
+    private Command prepareFind(String args) {
+        args = args.trim();
+        if (NRIC.isValidNRIC(args)) {
+            return new FindCommand(args);
+        } else {
+            logr.warning("NRIC argument is invalid");
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+    }
+
+    private Command prepareUpdateStatus(String args) {
+        args = args.trim();
+        if (!args.equals("")) {
+            return new UpdateStatusCommand(args);
+        } else{
+            logr.warning("PO must be stated");
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE));
+        }
+
+    }
+
+//@@author andyrobert3
+
     /**
      * Parses arguments in context of request help command.
      *
