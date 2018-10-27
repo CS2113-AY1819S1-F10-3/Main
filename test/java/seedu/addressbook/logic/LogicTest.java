@@ -129,14 +129,29 @@ public class LogicTest {
     private void assertEqualsTimestamp(String time1, String time2, int tolerance){
         String[] inputTime = time1.split(":", 4);
         String[] expectedTime = time2.split(":", 4);
-        inputTime[3] = inputTime[3].substring(0, 3);
-        expectedTime[3] = expectedTime[3].substring(0, 3);
+        inputTime[3] = inputTime[2] + inputTime[3].substring(0, 3);
+        expectedTime[3] = expectedTime[2] + expectedTime[3].substring(0, 3);
         int difference = abs(Integer.parseInt(inputTime[3]) - Integer.parseInt(expectedTime[3]));
         if(inputTime[0].equals(expectedTime[0]) && inputTime[1].equals(expectedTime[1]) && inputTime[2].equals(expectedTime[2]) &&
                 (difference <= tolerance)){
             time2 = time1;
         }
         assertEquals(time1, time2);
+    }
+
+    private String assertCommandBehavior(String inputCommand, String expectedResult, Msg testMsg, int msgIndex) throws Exception {
+        CommandResult r = logic.execute(inputCommand);
+        String inputTime = parseMsgForTimestamp(r.feedbackToUser);
+        String expectedTime = parseMsgForTimestamp(testMsg.getTimeString());
+
+        assertEqualsTimestamp(inputTime, expectedTime, 300);
+
+        testMsg.setTime(adjustExpectedTimestamp(r.feedbackToUser, msgIndex));
+
+        expectedResult += InboxCommand.concatenateMsg(msgIndex, testMsg);
+
+        assertEquals(String.format(expectedResult, msgIndex), r.feedbackToUser);
+        return expectedResult;
     }
 
     //@@author iamputradanish
@@ -694,22 +709,12 @@ public class LogicTest {
     @Test
     public void execute_checkInboxWithAnUnreadMessage() throws Exception{
         WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
+        String expectedResult = Messages.MESSAGE_UNREAD_MSG_NOTIFICATION+ '\n';
         final String testMessage = "This is a test message.";
         Msg testMsg = generateMsgInInbox(testMessage);
         int messageNum = 1;
 
-        CommandResult r = logic.execute(InboxCommand.COMMAND_WORD);
-        String inputTime = parseMsgForTimestamp(r.feedbackToUser);
-        String expectedTime = parseMsgForTimestamp(testMsg.getTimeString());
-
-        assertEqualsTimestamp(inputTime, expectedTime, 100);
-
-        testMsg.setTime(adjustExpectedTimestamp(r.feedbackToUser, messageNum));
-
-        String expectedResult = String.format(Messages.MESSAGE_UNREAD_MSG_NOTIFICATION, messageNum) + '\n' +
-                InboxCommand.concatenateMsg(messageNum, testMsg);
-
-        assertEquals(expectedResult, r.feedbackToUser);
+        assertCommandBehavior(InboxCommand.COMMAND_WORD, expectedResult, testMsg, messageNum);
     }
 
     @Test
@@ -717,56 +722,21 @@ public class LogicTest {
         WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
         final String testMessage = "This is a test message.";
         Msg testMsg;
-        HashMap<Integer, CommandResult> r = new HashMap<>();
-        
-        String expectedResult = Messages.MESSAGE_UNREAD_MSG_NOTIFICATION + '\n';
-
         int messageNum = 1, numOfMsgs = 3;
-
+        String expectedResult = Messages.MESSAGE_UNREAD_MSG_NOTIFICATION + '\n';
+        //Check that at every additional message added at each loop, the expected result is correct as well.
         while(numOfMsgs!=0) {
             testMsg = generateMsgInInbox(testMessage);
-            r.put(numOfMsgs, logic.execute(InboxCommand.COMMAND_WORD));
-            String inputTime = parseMsgForTimestamp(r.get(numOfMsgs).feedbackToUser);
-            String expectedTime = parseMsgForTimestamp(testMsg.getTimeString());
 
-            assertEqualsTimestamp(inputTime, expectedTime, 350);
+            expectedResult = assertCommandBehavior(InboxCommand.COMMAND_WORD, expectedResult, testMsg, messageNum);
 
-            testMsg.setTime(adjustExpectedTimestamp(r.get(numOfMsgs).feedbackToUser, messageNum));
-
-            expectedResult += InboxCommand.concatenateMsg(messageNum, testMsg);
-
-            assertEquals(String.format(expectedResult, messageNum), r.get(numOfMsgs).feedbackToUser);
             numOfMsgs--;
             messageNum++;
             Thread.sleep(100);
         }
     }
 
-    Timestamp adjustExpectedTimestamp(String message, int msgNum) throws Exception {
-        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss:SSS");
-        Date formattedTime = timeFormatted.parse(parseMsgForDateTimeStamp(message, msgNum));
-        Timestamp newTime = new Timestamp(formattedTime.getTime());
-        return newTime;
-    }
-    Msg generateMsgInInbox(String testMessage) throws Exception {
-        TestDataHelper MessageGenerator = new TestDataHelper();
-        Msg testMsg = MessageGenerator.generateUnreadMsgNoLocation(testMessage, Msg.Priority.HIGH);
-        WriteNotification testWriter = new WriteNotification(MessageFilePaths.FILEPATH_DEFAULT, true);
-        testWriter.writeToFile(testMsg);
-        return testMsg;
-    }
-    String parseMsgForTimestamp(String message){
-        //int limit = 1 + msgNum;
-        String[] timestamp = message.split("-", 2);
-        String time = timestamp[1].substring(0,12);
-        return time;
-    }
-    String parseMsgForDateTimeStamp (String message, int msgNum){
-        int limit = msgNum + 1;
-        String[] timestamp = message.split("Sent: ",limit);
-        String date = timestamp[msgNum].substring(0,23);
-        return date;
-    }
+
 
     //@@author
 
@@ -967,6 +937,33 @@ public class LogicTest {
             return new Location(1.294166, 103.770730);
         }
 
+    }
+
+    //@@author ongweekeong
+    Timestamp adjustExpectedTimestamp(String message, int msgNum) throws Exception {
+        SimpleDateFormat timeFormatted = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss:SSS");
+        Date formattedTime = timeFormatted.parse(parseMsgForDateTimeStamp(message, msgNum));
+        Timestamp newTime = new Timestamp(formattedTime.getTime());
+        return newTime;
+    }
+    Msg generateMsgInInbox(String testMessage) throws Exception {
+        TestDataHelper MessageGenerator = new TestDataHelper();
+        Msg testMsg = MessageGenerator.generateUnreadMsgNoLocation(testMessage, Msg.Priority.HIGH);
+        WriteNotification testWriter = new WriteNotification(MessageFilePaths.FILEPATH_DEFAULT, true);
+        testWriter.writeToFile(testMsg);
+        return testMsg;
+    }
+    String parseMsgForTimestamp(String message){
+        //int limit = 1 + msgNum;
+        String[] timestamp = message.split("-", 2);
+        String time = timestamp[1].substring(0,12);
+        return time;
+    }
+    String parseMsgForDateTimeStamp (String message, int msgNum){
+        int limit = msgNum + 1;
+        String[] timestamp = message.split("Sent: ",limit);
+        String date = timestamp[msgNum].substring(0,23);
+        return date;
     }
 
 }
