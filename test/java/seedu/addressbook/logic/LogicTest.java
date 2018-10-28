@@ -1,11 +1,11 @@
 package seedu.addressbook.logic;
 
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import seedu.addressbook.commands.*;
+import seedu.addressbook.common.HttpRestClient;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
@@ -17,6 +17,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.exp;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -269,6 +270,8 @@ public class LogicTest {
                               true,
                               expectedList);
     }
+
+    // TODO: Delete comments if no longer used
     /*
     @Test
     public void execute_view_invalidArgsFormat() throws Exception {
@@ -315,7 +318,7 @@ public class LogicTest {
     }
 
 
-
+    //@@author andyrobert3
     @Test
     public void execute_request_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelpCommand.MESSAGE_USAGE);
@@ -330,6 +333,29 @@ public class LogicTest {
         assertCommandBehavior("rb crime", expectedMessage);
         assertCommandBehavior("rb tired", expectedMessage);
     }
+
+    //@@author andyrobert3
+    @Test
+    public void execute_dispatch_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchCommand.MESSAGE_USAGE);
+        assertCommandBehavior("dispatch", expectedMessage);
+        assertCommandBehavior("dispatch po1", expectedMessage);
+        assertCommandBehavior("dispatch po1 gun", expectedMessage);
+        assertCommandBehavior("dispatch      ", expectedMessage);
+    }
+
+    //@@author andyrobert3
+    @Test
+    public void execute_httpGetRequest_internetAvailable() throws Exception {
+        String testUrl = "http://requestbin.fullcontact.com/1g739591";
+        HttpRestClient httpRestClient = new HttpRestClient();
+        int statusCode = httpRestClient.requestGetResponse(testUrl)
+                            .getStatusLine().getStatusCode();
+
+        assertTrue(statusCode == 200 || statusCode == 201 || statusCode == 204);
+    }
+
+
 
     //@@author
     @Test

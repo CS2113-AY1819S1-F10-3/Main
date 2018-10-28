@@ -2,6 +2,7 @@
 package seedu.addressbook.commands;
 
 import org.javatuples.Pair;
+import org.json.JSONException;
 import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.common.Location;
 import seedu.addressbook.common.Messages;
@@ -44,12 +45,13 @@ public class DispatchCommand extends Command{
 
         ArrayList<Location> destinationList = new ArrayList<>();
         destinationList.add(PatrolResourceStatus.getLocation(requester));
-        ArrayList<Pair<Integer, String>> etaList = origin.getEtaFrom(destinationList);
-
-        int eta = etaList.get(0).getValue0();
-        String etaMessage = etaList.get(0).getValue1();
-
         try {
+            ArrayList<Pair<Integer, String>> etaList = origin.getEtaFrom(destinationList);
+
+            int eta = etaList.get(0).getValue0();
+            String etaMessage = etaList.get(0).getValue1();
+
+
             String dispatchStringMessage = "ETA " + etaMessage + ", Location of Requester: " +
                                             PatrolResourceStatus.getLocation(backupOfficer).getGoogleMapsURL();
             Msg dispatchMessage = new Msg(Offense.getPriority(offense), dispatchStringMessage,
@@ -63,10 +65,12 @@ public class DispatchCommand extends Command{
             Msg requesterMessage = new Msg(Offense.getPriority(offense), requesterStringMessage,
                                             PatrolResourceStatus.getLocation(backupOfficer), eta);
             writeNotificationToRequester.writeToFile(requesterMessage);
-        } catch(IOException ioe) {
+        } catch (IOException ioe) {
             return new CommandResult(Messages.MESSAGE_SAVE_ERROR);
         } catch (IllegalValueException ioe) {
             return new CommandResult(Messages.MESSAGE_ERROR); // TODO: Find proper message
+        } catch (JSONException jse) {
+            return new CommandResult(Messages.MESSAGE_ERROR); // TODO: JSON parsing problem
         }
 
         return new CommandResult(MESSAGE_REQUEST_SUCCESS);
