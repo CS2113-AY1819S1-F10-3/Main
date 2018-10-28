@@ -14,7 +14,7 @@ import seedu.addressbook.inbox.WriteNotification;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DispatchBackup extends Command{
+public class DispatchCommand extends Command{
     public static final String COMMAND_WORD = "dispatch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
@@ -30,7 +30,7 @@ public class DispatchBackup extends Command{
     private String requester;
     private String offense;
 
-    public DispatchBackup(String backupOfficer, String requester, String caseName) {
+    public DispatchCommand(String backupOfficer, String requester, String caseName) {
         writeNotificationToBackupOfficer = new WriteNotification(MessageFilePaths.getFilePathFromUserId(backupOfficer), true);
         writeNotificationToRequester = new WriteNotification(MessageFilePaths.getFilePathFromUserId(requester), true);
 

@@ -13,7 +13,7 @@ import seedu.addressbook.password.Password;
 import java.io.IOException;
 
 public class RequestHelpCommand extends Command {
-    public static final String COMMAND_WORD = "request";
+    public static final String COMMAND_WORD = "rb";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
             + "Requests help from headquarters.\n\t"
             + "Message from police officer can be appended in text.\n\t"

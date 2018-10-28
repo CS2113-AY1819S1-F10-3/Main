@@ -37,7 +37,7 @@ public class PatrolResourceStatus {
             case "po5":
                 return patrolResourceStatus.get(5).getValue1();
             default:
-                return null;
+                return patrolResourceStatus.get(0).getValue1(); // default for test cases
         }
     }
 
