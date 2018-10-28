@@ -136,5 +136,5 @@ public class Location {
     public String getGoogleMapsURL() {
         return GOOGLE_MAPS_BASE_URL + this.getLatitude() + "," + this.getLongitude();
     }
-    
+
 }
