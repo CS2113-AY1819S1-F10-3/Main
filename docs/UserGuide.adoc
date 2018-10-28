@@ -186,28 +186,17 @@ Example:
 *	clear
 *	Records will now be empty
 
-=== Requesting for assistance : `request`
+=== Requesting for assistance : 'rb'
 
-Generates GPS coordinates of current location and sends it to HQ. Depending on type of assistance requested, either an ambulance or another patrol resource will be dispatched to said location
+Generates GPS coordinates of current location with current case and sends it to HQP.
+HQP would receive message in inbox.
 
-Format: 'request'
-
-Examples:
-
-*	request
-*   Returns a set of GPS coordinates to HQ
-
-=== Dispatch a PO : `dispatch`
-
-Dispatches a specified PO
-
-Format: 'dispatch PO(ID)'
+Format: 'rb OFFENSE'
 
 Examples:
 
-*	dispatch PO2
-*	PO2 will receive a dispatch message
-
+*	rb gun
+*   Returns a set of GPS coordinates, Current Case and Google Maps URL location to HQP.
 === Lock System : `lock`
 
 Locks the system and unlocks with password input
