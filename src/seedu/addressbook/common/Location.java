@@ -101,6 +101,7 @@ public class Location {
 
             return etaList;
         } catch(JSONException jsonE) {
+            // TODO: Handle exception better
             jsonE.printStackTrace();
         }
 
@@ -124,7 +125,7 @@ public class Location {
             if (response != null) {
                 String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
                 etaList = getEtaFromJsonObject(new JSONObject(jsonString));
-            }
+            } // TODO: Change this exception
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,15 +137,4 @@ public class Location {
         return GOOGLE_MAPS_BASE_URL + this.getLatitude() + "," + this.getLongitude();
     }
 
-    /*public static void main(String[] args) {
-        Location location = new Location(-6.206968,106.751365);
-        Location origin = new Location(-6.189482, 106.733902);
-        ArrayList<Location> locationList = new ArrayList<>();
-        locationList.add(origin);
-
-        ArrayList<Pair<Integer, String>> ETATiming = location.getEtaFrom(locationList);
-        for (Pair<Integer, String> eta: ETATiming) {
-            System.out.println(eta.getValue0() + " " + eta.getValue1());
-        }
-    }*/
 }
