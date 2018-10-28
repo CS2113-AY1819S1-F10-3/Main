@@ -319,16 +319,16 @@ public class LogicTest {
     @Test
     public void execute_request_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelpCommand.MESSAGE_USAGE);
-        assertCommandBehavior("request ", expectedMessage);
-        assertCommandBehavior("request gun", expectedMessage);
+        assertCommandBehavior("rb", expectedMessage);
+        assertCommandBehavior("rb    ", expectedMessage);
     }
 
     //@@author andyrobert3
     @Test
     public void execute_request_invalidOffense() throws Exception {
-        String expectedMessage = String.format(Offense.MESSAGE_OFFENSE_INVALID);
-        assertCommandBehavior("request bobo help", expectedMessage);
-        assertCommandBehavior("request lala help", expectedMessage);
+        String expectedMessage =  Offense.MESSAGE_OFFENSE_INVALID;
+        assertCommandBehavior("rb crime", expectedMessage);
+        assertCommandBehavior("rb tired", expectedMessage);
     }
 
     //@@author
