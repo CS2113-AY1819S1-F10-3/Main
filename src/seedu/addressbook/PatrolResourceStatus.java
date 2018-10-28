@@ -2,13 +2,16 @@
 package seedu.addressbook;
 
 import org.javatuples.Triplet;
+import seedu.addressbook.commands.UpdateStatusCommand;
 import seedu.addressbook.common.Location;
+import seedu.addressbook.common.Messages;
+import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.ArrayList;
 
 public class PatrolResourceStatus {
     // Triplet<Police Officer ID, Location, isEngaged
-    private static ArrayList<Triplet<String, Location, Boolean>> patrolResourceStatus = new ArrayList<Triplet<String, Location, Boolean>>(){{
+    private static ArrayList<Triplet<String, Location, Boolean>> patrolResourceStatus = new ArrayList<>(){{
         add( new Triplet<>("hqp", new Location(1.294166, 103.770730), false) ); // NUS FASS
         add( new Triplet<>("po1", new Location(1.306935, 103.790564), false) ); // Buona Vista
         add( new Triplet<>("po2", new Location(1.346301, 103.682060), false) ); // NTU
@@ -41,13 +44,16 @@ public class PatrolResourceStatus {
         }
     }
 
-    public static void setStatus(String policeOfficerId, Boolean status) {
+    public static void setStatus(String policeOfficerId, Boolean status) throws IllegalValueException {
+        int index = 0;
         for (Triplet<String, Location, Boolean> policeOfficer : patrolResourceStatus) {
             if (policeOfficer.getValue0().equalsIgnoreCase(policeOfficerId)) {
-                policeOfficer.setAt2(status);
+                patrolResourceStatus.set(index,Triplet.with(policeOfficer.getValue0(),policeOfficer.getValue1(),status));
                 return;
             }
+            index++;
         }
+        throw new IllegalValueException(Messages.MESSAGE_PO_NOT_FOUND);
     }
 
 }

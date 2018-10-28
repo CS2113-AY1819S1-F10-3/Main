@@ -42,6 +42,7 @@ public class Parser {
 
     public static final Pattern PERSON_NAME_FORMAT = Pattern.compile("(?<name>[^/]+)");
     public static final Pattern PERSON_NRIC_FORMAT = Pattern.compile("(?<nric>[^/]+)");
+    public static final String PO_REGEX = "[Pp][Oo][0-9]+";
 
     /**
      * Signals that the user input could not be parsed.
@@ -401,10 +402,10 @@ public class Parser {
 
     private Command prepareUpdateStatus(String args) {
         args = args.trim();
-        if (!args.equals("")) {
+        if (args.matches(PO_REGEX)) {
             return new UpdateStatusCommand(args);
         } else{
-            logr.warning("PO must be stated");
+            logr.warning("an existing or valid PO must be stated");
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE));
         }
 

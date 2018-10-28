@@ -3,6 +3,7 @@ package seedu.addressbook.parser;
 import org.junit.Before;
 import org.junit.Test;
 import seedu.addressbook.commands.*;
+import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
 
@@ -70,7 +71,36 @@ public class ParserTest {
         final String input = "shutdown";
         parseAndAssertCommandType(input, ExitCommand.class);
     }
+    //@@author muhdharun
+    @Test
+    public void checkPoStatusCommand_parsedCorrectly() {
+        final String input = "checkstatus";
+        parseAndAssertCommandType(input, CheckPOStatusCommand.class);
+    }
+    /**
+     * Test single argument commands
+     */
+    @Test
+    public void updateStatusCommand_parsedCorrectly() {
+        final String input = "updatestatus po1";
+        parseAndAssertCommandType(input,UpdateStatusCommand.class);
+    }
 
+    @Test
+    public void updateStatusCommand_invalidPoArg() {
+        final String input = "updatestatus ppp";
+        String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage,input);
+    }
+
+    @Test
+    public void updateStatusCommand_noArg() {
+        final String input = "updatestatus";
+        String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage,input);
+    }
+
+    //@@author
     /**
      * Test single index argument commands
      */
@@ -141,7 +171,7 @@ public class ParserTest {
     }
 
     /**
-     * Test find persons by keyword in name command
+     * Test check persons by nric command
      */
 //@@author muhdharun
     @Test

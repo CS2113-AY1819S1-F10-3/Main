@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Status {
 
     public static final String EXAMPLE = "wanted";
-    private static final String MESSAGE_NAME_CONSTRAINTS = "Status should be one of the 3: wanted/xc/clear";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Status should be one of the 3: wanted/xc/clear";
 
     public static final String WANTED_KEYWORD = "wanted";
     public static final String EXCONVICT_KEYWORD = "xc"; //ex-convict
