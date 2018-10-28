@@ -4,6 +4,7 @@ package seedu.addressbook.inbox;
 
 import seedu.addressbook.common.Location;
 import seedu.addressbook.password.Password;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.sql.Timestamp;
 
@@ -56,7 +57,7 @@ public class Msg implements Comparable <Msg> {
     // constructor for requester message
     
 
-    public Msg(Priority urgency, String message, String policeOfficerId){
+    public Msg(Priority urgency, String message){
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
         priority = urgency;
@@ -171,6 +172,10 @@ public class Msg implements Comparable <Msg> {
 
     public Timestamp getTime(){
         return this.time;
+    }
+
+    public String getTimeString(){
+        return TimeAndDate.outputDATHrs(this.time);
     }
 
     @Override

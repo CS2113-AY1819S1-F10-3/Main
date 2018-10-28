@@ -5,7 +5,7 @@
     public void execute_timeCommand() throws Exception {
         String command = DateTimeCommand.COMMAND_WORD;
         TimeAndDate timeAndDate = new TimeAndDate();
-        assertCommandBehavior(command, timeAndDate.outputDATHrs(), 100);
+        assertCommandBehavior(command, timeAndDate.outputDATHrs(), 200);
     }
 
 ```

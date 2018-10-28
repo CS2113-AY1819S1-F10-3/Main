@@ -17,7 +17,6 @@ public class InboxCommand extends Command {
             + "Displays all unread messages in the application starting from the most urgent.\n\t"
             + "Example: " + COMMAND_WORD;
 
-    TimeAndDate dateFormatter = new TimeAndDate();
 
     @Override
     public CommandResult execute() {
@@ -50,8 +49,9 @@ public class InboxCommand extends Command {
         }
     }
 
-    public String concatenateMsg(int messageNum, Msg message) throws NullPointerException{
+    public static String concatenateMsg(int messageNum, Msg message) throws NullPointerException{
         String concatenatedMsg;
+        TimeAndDate dateFormatter = new TimeAndDate();
         try{
             concatenatedMsg = String.valueOf(messageNum) + ".\t[UNREAD] Sender: " + message.getSenderId() + " Priority: " + message.getPriority() +
                     ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ",\n\t\tMessage: " + message.getMsg() + ", Coordinates: " +
