@@ -492,8 +492,8 @@ public class LogicTest {
     public void execute_edit_invalidDataFormat() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person adam = helper.generatePersonWithNric("s1234567a");
-        AddressBook expectedAB = new AddressBook();
-        expectedAB.addPerson(adam);
+        AddressBook addressBook = new AddressBook();
+        addressBook.addPerson(adam);
 
         assertCommandBehavior(
                 "edit n/s6789 p/510247 s/wanted w/murder o/gun", NRIC.MESSAGE_NAME_CONSTRAINTS);
@@ -512,12 +512,12 @@ public class LogicTest {
 //
 //        TestDataHelper helper = new TestDataHelper();
 //        Person toBeEdited = helper.generatePersonWithNric(nric);
-//        AddressBook expectedAB = new AddressBook();
-//        expectedAB.addPerson(toBeEdited);
+//        AddressBook addressBook = new AddressBook();
+//        addressBook.addPerson(toBeEdited);
 //
 //        assertCommandBehavior("edit n/s1234567a p/444555 s/xc w/theft o/theft",
 //                                String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, nric),
-//                                expectedAB,
+//                                addressBook,
 //                                false,
 //                                Collections.emptyList());
 //    }
