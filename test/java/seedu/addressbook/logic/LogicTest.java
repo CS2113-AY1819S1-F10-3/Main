@@ -1,10 +1,12 @@
 package seedu.addressbook.logic;
 
 
+import org.javatuples.Triplet;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.Location;
 import seedu.addressbook.common.Messages;
@@ -14,6 +16,7 @@ import seedu.addressbook.inbox.*;
 import seedu.addressbook.password.Password;
 import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.timeanddate.TimeAndDate;
+import seedu.addressbook.ui.Formatter;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -296,19 +299,7 @@ public class LogicTest {
                               true,
                               expectedList);
     }
-    /*
-    @Test
-    public void execute_view_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
-        assertCommandBehavior("view ", expectedMessage);
-        assertCommandBehavior("view arg not number", expectedMessage);
-    }
-    */
 
-    /*@Test
-    public void execute_view_invalidIndex() throws Exception {
-        assertInvalidIndexBehaviorForCommand("view");
-    }*/
 
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
@@ -483,29 +474,6 @@ public class LogicTest {
         assertCommandBehavior("edit ", expectedMessage);
     }
 
-//    @Test
-//    public void execute_edit_invalidPersonData() throws Exception {
-//        assertCommandBehavior(
-//                "add []\\[;] n/s1234567a d/1980 p/123456 s/clear w/none", Name.MESSAGE_NAME_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name n/s123457a d/1980 p/123456 s/clear w/none", NRIC.MESSAGE_NAME_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name n/s1234567a d/188 p/123456 s/clear w/none", DateOfBirth.MESSAGE_DATE_OF_BIRTH_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
-//        assertCommandBehavior(
-//                "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
-//    }
-//@@author muhdharun -reused
-    @Test
-    public void execute_find_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
-        assertCommandBehavior("find S1234567A", expectedMessage);
-    }
-
-
     //@@author andyrobert3
     @Test
     public void execute_edit_invalidCommandFormat() throws Exception {
@@ -517,22 +485,60 @@ public class LogicTest {
     //@@author andyrobert3
     @Test
     public void execute_edit_invalidDataFormat() throws Exception {
+
         TestDataHelper helper = new TestDataHelper();
         Person adam = helper.generatePersonWithNric("s1234567a");
         AddressBook addressBook = new AddressBook();
         addressBook.addPerson(adam);
 
+
         assertCommandBehavior(
-                "edit n/s6789 p/510247 s/wanted w/murder o/gun", NRIC.MESSAGE_NAME_CONSTRAINTS);
+                "edit n/s123456a p/510247 s/wanted w/murder o/gun", NRIC.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "edit n/s1234567a p/100 s/wanted w/murder o/gun", PostalCode.MESSAGE_NAME_CONSTRAINTS);
+                "edit n/s1234567a p/50247 s/wanted w/murder o/gun", PostalCode.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "edit n/s1234567a p/510247 s/clear w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
+                "edit n/s1234567a p/123456 s/c w/none", Status.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandBehavior(
+                "edit n/s1234567a p/133456 s/wanted w/ne", Offense.MESSAGE_OFFENSE_INVALID);
+        assertCommandBehavior(
+                "edit n/s1234567a p/134546 s/xc w/none o/rr", Offense.MESSAGE_OFFENSE_INVALID);
     }
 
 
     // TODO: HARUN HELP!
 //    //@@author andyrobert3
+
+    @Test
+    public void execute_edit_successful() throws Exception {
+        String nric = "s1234567a";
+
+        TestDataHelper helper = new TestDataHelper();
+        Person toBeEdited = helper.generatePersonWithNric(nric);
+        addressBook.addPerson(toBeEdited);
+
+        assertCommandBehavior("edit n/s1234567a p/444555 s/xc w/theft o/theft",
+                                String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, nric),
+                                addressBook,
+                                false,
+                                Collections.emptyList());
+    }
+
+    //@@author andyrobert3
+    @Test
+    public void execute_edit_personNotFound() throws Exception {
+
+        assertCommandBehavior("edit n/s1234567a p/444555 s/clear w/none o/none",
+                                Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
+                                addressBook,
+                                false,
+                                addressBook.getAllPersons().immutableListView());
+
+        assertCommandBehavior("edit n/f3456789b p/444555 s/xc w/drugs o/drugs",
+                                Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
+                                addressBook,
+                                false,
+                                Collections.emptyList());
+
 //    @Test
 //    public void execute_edit_successful() throws Exception {
 //        String nric = "s1234567a";
@@ -572,6 +578,15 @@ public class LogicTest {
 //    }
 
 
+    }
+
+    //@@author muhdharun -reused
+    @Test
+    public void execute_find_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        assertCommandBehavior("find S1234567A", expectedMessage);
+    }
+
     @Test
     public void execute_find_onlyMatchesFullNric() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -600,12 +615,13 @@ public class LogicTest {
         Person p2 = helper.generatePersonWithNric("s1234567e");
 
         List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
-        CommandResult r = logic.execute("find " + "S1234567B");
-        assertEquals(expectedMessage,r.feedbackToUser);
+        assertCommandBehavior("find S1234567C",
+                expectedMessage,
+                addressBook,
+                false,
+                Collections.emptyList());
 
     }
 
@@ -623,14 +639,47 @@ public class LogicTest {
         TestDataHelper helper = new TestDataHelper();
         Person toBeAdded = helper.generateDummyPerson();
         String nric = toBeAdded.getNric().getIdentificationNumber();
-        logic.execute(helper.generateAddCommand(toBeAdded));
-        CommandResult r = logic.execute("check " + nric);
-        String message = r.feedbackToUser.trim();
-        String expectedMessage = String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,nric,0);
-        assertEquals(expectedMessage,message);
-        logic.execute("delete " + nric);
+
+        List<String> emptyTimestamps = new ArrayList<>();
+        Formatter formatter = new Formatter();
+        String result = formatter.formatForStrings(emptyTimestamps);
+
+        String expectedMessage = result + String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,nric,emptyTimestamps.size());
+        addressBook.addPerson(toBeAdded);
+        assertCommandBehavior("check " + nric,
+                expectedMessage,
+                addressBook,
+                false,
+                Collections.emptyList());
 
     }
+
+    @Test
+    public void execute_checkPOStatus_CorrectOutput() throws Exception {
+        List<String> allPos = CheckPOStatusCommand.extractEngagementInformation(PatrolResourceStatus.getPatrolResourceStatus());
+        assertCommandBehavior("checkstatus",
+                                Command.getMessage(allPos));
+    }
+
+    @Test
+    public void execute_updateStatus_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE);
+        assertCommandBehavior("updatestatus 111", expectedMessage);
+        assertCommandBehavior("updatestatus posq", expectedMessage);
+        assertCommandBehavior("updatestatus ", expectedMessage);
+    }
+
+    @Test
+    public void execute_updateStatus_nonexistingPo() throws Exception {
+        String expectedMessage = String.format(Messages.MESSAGE_PO_NOT_FOUND);
+        assertCommandBehavior("updatestatus po1234567890123456788", expectedMessage);
+    }
+
+    @Test
+    public void execute_updateStatus_validPo() throws Exception {
+        assertCommandBehavior("updatestatus po1",String.format(UpdateStatusCommand.MESSAGE_UPDATE_PO_SUCCESS,"po1"));
+    }
+
 //@@author
 //    @Test
 //    public void execute_autocorrect_command() throws Exception {
