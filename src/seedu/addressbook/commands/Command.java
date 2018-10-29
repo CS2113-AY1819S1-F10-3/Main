@@ -45,7 +45,7 @@ public abstract class Command {
      * Constructs a feedback message to summarise an operation that displayed a listing of a person.
      *
      * @param personDisplayed used to generate summary
-     * @return summary message for persons displayed
+     * @return summary message for person displayed
      */
     //@@author muhdharun
     public static String getMessageForPersonShownSummary(ReadOnlyPerson personDisplayed) {
@@ -59,9 +59,10 @@ public abstract class Command {
     }
 
     /**
-     * Constructs a feedback message to summarise an operation that displayed a listing of persons.
+     * Constructs a feedback message to summarise an operation that displayed a listing of timestamps.
      *
      * @param timestampsDisplayed used to generate summary
+     * @param nric to print the specified nric
      * @return summary message for timestamps displayed
      */
 

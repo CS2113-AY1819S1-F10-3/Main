@@ -2,7 +2,7 @@
 Sender ID:test
 Read status:false
 Priority:HIGH
-Timestamp:28/10/2018-22:43:14:237hrs
+Timestamp:29/10/2018-17:48:32:023hrs
 Message:This is a test message.
 -
 -
@@ -11,7 +11,7 @@ Message:This is a test message.
 Sender ID:test
 Read status:false
 Priority:HIGH
-Timestamp:28/10/2018-22:43:14:344hrs
+Timestamp:29/10/2018-17:48:32:130hrs
 Message:This is a test message.
 -
 -
@@ -20,7 +20,7 @@ Message:This is a test message.
 Sender ID:test
 Read status:false
 Priority:HIGH
-Timestamp:28/10/2018-22:43:14:449hrs
+Timestamp:29/10/2018-17:48:32:239hrs
 Message:This is a test message.
 -
 -
