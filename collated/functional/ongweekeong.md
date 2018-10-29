@@ -19,7 +19,6 @@ public class InboxCommand extends Command {
             + "Displays all unread messages in the application starting from the most urgent.\n\t"
             + "Example: " + COMMAND_WORD;
 
-    TimeAndDate dateFormatter = new TimeAndDate();
 
     @Override
     public CommandResult execute() {
@@ -52,8 +51,9 @@ public class InboxCommand extends Command {
         }
     }
 
-    public String concatenateMsg(int messageNum, Msg message) throws NullPointerException{
+    public static String concatenateMsg(int messageNum, Msg message) throws NullPointerException{
         String concatenatedMsg;
+        TimeAndDate dateFormatter = new TimeAndDate();
         try{
             concatenatedMsg = String.valueOf(messageNum) + ".\t[UNREAD] Sender: " + message.getSenderId() + " Priority: " + message.getPriority() +
                     ", Sent: " + dateFormatter.outputDATHrs(message.getTime()) + ",\n\t\tMessage: " + message.getMsg() + ", Coordinates: " +
@@ -341,6 +341,7 @@ package seedu.addressbook.inbox;
 
 import seedu.addressbook.common.Location;
 import seedu.addressbook.password.Password;
+import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.sql.Timestamp;
 
@@ -393,7 +394,7 @@ public class Msg implements Comparable <Msg> {
     // constructor for requester message
     
 
-    public Msg(Priority urgency, String message, String policeOfficerId){
+    public Msg(Priority urgency, String message){
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
         priority = urgency;
@@ -508,6 +509,10 @@ public class Msg implements Comparable <Msg> {
 
     public Timestamp getTime(){
         return this.time;
+    }
+
+    public String getTimeString(){
+        return TimeAndDate.outputDATHrs(this.time);
     }
 
     @Override
@@ -732,10 +737,6 @@ public class WriteNotification {
         }
         else myPrinter.println('-');
 
-//        if(message.hasPoliceOfficerId()) {
-//            myPrinter.println("Police Officer ID:" + message.getPoliceOfficerId());
-//        }
-//        else myPrinter.println('-');
         myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
 
         myPrinter.close();
@@ -773,6 +774,13 @@ public class WriteNotification {
         myPrinter.close();
     }
 
+    public static void clearInbox(String path) throws IOException {
+        FileWriter write = new FileWriter (path, false);
+        PrintWriter myPrinter = new PrintWriter(write);
+        myPrinter = new PrintWriter(write);
+        myPrinter.print("");
+        myPrinter.close();
+    }
 }
 ```
 ###### \seedu\addressbook\parser\Parser.java

@@ -216,8 +216,8 @@ public class Dictionary extends Command{
             commands.add(ReadCommand.COMMAND_WORD);
             commands.add(ListCommand.COMMAND_WORD);
             commands.add(LockCommand.COMMAND_WORD);
-            commands.add(RequestHelp.COMMAND_WORD);
-            commands.add(DispatchBackup.COMMAND_WORD);
+            commands.add(RequestHelpCommand.COMMAND_WORD);
+            commands.add(DispatchCommand.COMMAND_WORD);
             commands.add(CheckPOStatusCommand.COMMAND_WORD);
             commands.add(UpdateStatusCommand.COMMAND_WORD);
             //commands.add(UpdatePasswordCommand.COMMAND_WORD);
@@ -311,8 +311,8 @@ public class Dictionary extends Command{
                             displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE)).feedbackToUser;
                             break;
 
-                        case DispatchBackup.COMMAND_WORD:
-                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchBackup.MESSAGE_USAGE)).feedbackToUser;
+                        case DispatchCommand.COMMAND_WORD:
+                            displayCommand = new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchCommand.MESSAGE_USAGE)).feedbackToUser;
                             break;
 
                         case HelpCommand.COMMAND_WORD: // Fallthrough
@@ -321,6 +321,7 @@ public class Dictionary extends Command{
                     }
                     int i = displayCommand.indexOf("!");
                     display(displayCommand.substring(i + 1));
+                    clearScreen();
                 }
                 else {
                     boolean isHQPFlag = password.isHQPUser();
@@ -335,6 +336,7 @@ public class Dictionary extends Command{
                 }
             }
             else{
+                clearScreen();
                 CommandResult result = logic.execute(userCommandText);
                 displayResult(result);
                 clearCommandInput();

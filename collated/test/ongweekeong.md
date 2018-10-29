@@ -107,7 +107,7 @@
 
             numOfMsgs--;
             messageNum++;
-            Thread.sleep(100);
+            Thread.sleep(50);
         }
     }
 
@@ -224,4 +224,45 @@
     }
 
 }
+```
+###### \java\seedu\addressbook\parser\ParserTest.java
+``` java
+    @Test
+    public void showUnreadCommand_parsedCorrectly(){
+        final String input = "showunread";
+        final InboxCommand result = parseAndAssertCommandType(input, InboxCommand.class);
+    }
+
+    @Test
+    public void readCommand_parsedCorrectly(){
+        final int index = 2;
+        final String input = "read " + index;
+        final ReadCommand result = parseAndAssertCommandType(input, ReadCommand.class);
+    }
+
+    @Test
+    public void readCommand_invalidArgs_parsedIncorrectly(){
+        final String[] index = {
+                "a",
+                "!",
+                "\'",
+                ".",
+                "#",
+                "$"
+        };
+        final String input = "read " + index;
+        final String result = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(result, input);
+    }
+
+    @Test
+    public void readCommand_noArgs_parsedIncorrectly(){
+        final String[] inputs = {
+                "read",
+                "read "
+        };
+        final String result = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(result, inputs);
+    }
+
 ```

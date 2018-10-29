@@ -58,13 +58,18 @@ public class CheckPOStatusCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        List<String> allPos = extractEngagementInformation(PatrolResourceStatus.getPatrolResourceStatus());
+
+        return new CommandResult(getMessage(allPos));
+    }
+
+    public static List<String> extractEngagementInformation(ArrayList<Triplet<String, Location, Boolean>> pos) {
         List<String> allPos = new ArrayList<>();
-        ArrayList<Triplet<String, Location, Boolean>> pos = PatrolResourceStatus.getPatrolResourceStatus();
         for (int i = 0 ; i < pos.size() ; i++){
             String poStatus = pos.get(i).getValue0() + " " + pos.get(i).getValue2();
             allPos.add(poStatus);
         }
-        return new CommandResult(getMessage(allPos));
+        return allPos;
     }
 
 }
@@ -213,8 +218,10 @@ public class CheckPOStatusCommand extends Command {
 ``` java
 
 import seedu.addressbook.PatrolResourceStatus;
+import seedu.addressbook.common.Messages;
+import seedu.addressbook.data.exception.IllegalValueException;
 
-import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 
 public class UpdateStatusCommand extends Command {
 
@@ -222,6 +229,7 @@ public class UpdateStatusCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Updates the 'isEngaged' status of PO to false \n\t"
             + "Parameters: PO ID\n\t"
             + "Example: " + COMMAND_WORD + " po2";
+
 
     private String toUpdate;
 
@@ -231,9 +239,12 @@ public class UpdateStatusCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        PatrolResourceStatus.setStatus(toUpdate,false);
-
-        return new CommandResult(String.format(MESSAGE_UPDATE_PO_SUCCESS,toUpdate));
+        try {
+            PatrolResourceStatus.setStatus(toUpdate,false);
+            return new CommandResult(String.format(MESSAGE_UPDATE_PO_SUCCESS,toUpdate));
+        } catch (IllegalValueException e) {
+            return new CommandResult(String.format(Messages.MESSAGE_PO_NOT_FOUND));
+        }
     }
 
 }
@@ -779,7 +790,7 @@ import java.util.Arrays;
 public class Status {
 
     public static final String EXAMPLE = "wanted";
-    private static final String MESSAGE_NAME_CONSTRAINTS = "Status should be one of the 3: wanted/xc/clear";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Status should be one of the 3: wanted/xc/clear";
 
     public static final String WANTED_KEYWORD = "wanted";
     public static final String EXCONVICT_KEYWORD = "xc"; //ex-convict
@@ -906,11 +917,8 @@ public class Status {
 
             return new DeleteCommand(new NRIC(nric));
         } catch (ParseException e) {
-
             logr.log(Level.WARNING, "Invalid delete command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-
-
 
         } catch (IllegalValueException ive) {
             logr.log(Level.WARNING, "Invalid name/id inputted.", ive);
@@ -960,10 +968,10 @@ public class Status {
 
     private Command prepareUpdateStatus(String args) {
         args = args.trim();
-        if (!args.equals("")) {
+        if (args.matches(PO_REGEX)) {
             return new UpdateStatusCommand(args);
         } else{
-            logr.warning("PO must be stated");
+            logr.warning("an existing or valid PO must be stated");
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE));
         }
 

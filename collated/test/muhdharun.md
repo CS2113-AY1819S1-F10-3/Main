@@ -95,6 +95,43 @@
         assertCommandBehavior("find S1234567A", expectedMessage);
     }
 
+    @Test
+    public void execute_find_onlyMatchesFullNric() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person pTarget1 = helper.generatePersonWithNric("s1234567a");
+        Person pTarget2 = helper.generatePersonWithNric("s1234567b");
+        Person p1 = helper.generatePersonWithNric("s1234567c");
+        Person p2 = helper.generatePersonWithNric("s1234567d");
+
+        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
+        Person expectedPerson = pTarget2;
+        helper.addToAddressBook(addressBook, fourPersons);
+        String inputCommand = "find " + pTarget2.getNric().getIdentificationNumber();
+        CommandResult r = logic.execute(inputCommand);
+
+
+        assertEquals(Command.getMessageForPersonShownSummary(expectedPerson), r.feedbackToUser);
+
+    }
+
+    @Test
+    public void execute_find_isCaseSensitive() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person pTarget1 = helper.generatePersonWithNric("s1234567b");
+        Person pTarget2 = helper.generatePersonWithNric("s1234567c");
+        Person p1 = helper.generatePersonWithNric("s1234567d");
+        Person p2 = helper.generatePersonWithNric("s1234567e");
+
+        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
+        helper.addToAddressBook(addressBook, fourPersons);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        assertCommandBehavior("find S1234567C",
+                expectedMessage,
+                addressBook,
+                false,
+                Collections.emptyList());
+
+    }
 
 ```
 ###### \java\seedu\addressbook\logic\LogicTest.java
@@ -112,14 +149,47 @@
         TestDataHelper helper = new TestDataHelper();
         Person toBeAdded = helper.generateDummyPerson();
         String nric = toBeAdded.getNric().getIdentificationNumber();
-        logic.execute(helper.generateAddCommand(toBeAdded));
-        CommandResult r = logic.execute("check " + nric);
-        String message = r.feedbackToUser.trim();
-        String expectedMessage = String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,nric,0);
-        assertEquals(expectedMessage,message);
-        logic.execute("delete " + nric);
+
+        List<String> emptyTimestamps = new ArrayList<>();
+        Formatter formatter = new Formatter();
+        String result = formatter.formatForStrings(emptyTimestamps);
+
+        String expectedMessage = result + String.format(MESSAGE_TIMESTAMPS_LISTED_OVERVIEW,nric,emptyTimestamps.size());
+        addressBook.addPerson(toBeAdded);
+        assertCommandBehavior("check " + nric,
+                expectedMessage,
+                addressBook,
+                false,
+                Collections.emptyList());
 
     }
+
+    @Test
+    public void execute_checkPOStatus_CorrectOutput() throws Exception {
+        List<String> allPos = CheckPOStatusCommand.extractEngagementInformation(PatrolResourceStatus.getPatrolResourceStatus());
+        assertCommandBehavior("checkstatus",
+                                Command.getMessage(allPos));
+    }
+
+    @Test
+    public void execute_updateStatus_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE);
+        assertCommandBehavior("updatestatus 111", expectedMessage);
+        assertCommandBehavior("updatestatus posq", expectedMessage);
+        assertCommandBehavior("updatestatus ", expectedMessage);
+    }
+
+    @Test
+    public void execute_updateStatus_nonexistingPo() throws Exception {
+        String expectedMessage = String.format(Messages.MESSAGE_PO_NOT_FOUND);
+        assertCommandBehavior("updatestatus po1234567890123456788", expectedMessage);
+    }
+
+    @Test
+    public void execute_updateStatus_validPo() throws Exception {
+        assertCommandBehavior("updatestatus po1",String.format(UpdateStatusCommand.MESSAGE_UPDATE_PO_SUCCESS,"po1"));
+    }
+
 ```
 ###### \java\seedu\addressbook\logic\LogicTest.java
 ``` java
@@ -240,6 +310,37 @@
 ###### \java\seedu\addressbook\parser\ParserTest.java
 ``` java
     @Test
+    public void checkPoStatusCommand_parsedCorrectly() {
+        final String input = "checkstatus";
+        parseAndAssertCommandType(input, CheckPOStatusCommand.class);
+    }
+    /**
+     * Test single argument commands
+     */
+    @Test
+    public void updateStatusCommand_parsedCorrectly() {
+        final String input = "updatestatus po1";
+        parseAndAssertCommandType(input,UpdateStatusCommand.class);
+    }
+
+    @Test
+    public void updateStatusCommand_invalidPoArg() {
+        final String input = "updatestatus ppp";
+        String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage,input);
+    }
+
+    @Test
+    public void updateStatusCommand_noArg() {
+        final String input = "updatestatus";
+        String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage,input);
+    }
+
+```
+###### \java\seedu\addressbook\parser\ParserTest.java
+``` java
+    @Test
     public void findCommand_validArgs_parsedCorrectly() {
         final String keyword = "s1234567a";
         final String input = "find " + keyword;
@@ -259,7 +360,7 @@
     }
 
     /**
-     * Test find persons by keyword in name command
+     * Test check persons by nric command
      */
 ```
 ###### \java\seedu\addressbook\parser\ParserTest.java
