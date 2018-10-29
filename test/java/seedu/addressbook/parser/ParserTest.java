@@ -135,6 +135,7 @@ public class ParserTest {
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
+    //@@author andyrobert3
     @Test
     public void editCommand_noArgs() {
         final String[] inputs = { "edit", "edit "};
@@ -142,6 +143,42 @@ public class ParserTest {
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
 
+    @Test
+    public void editCommand_validArgs_parsedCorrectly() {
+        final String nric = "s1234567a";
+        final String postalCode = "510247";
+        final String status = "wanted";
+        final String wanted = "murder";
+        final String offense = "gun";
+
+        final String keywords = "n/" + nric + " p/" + postalCode + " s/" + status
+                                    +  " w/" + wanted + " o/" + offense;
+        final String input = "edit " + keywords;
+        final EditCommand result =
+                parseAndAssertCommandType(input, EditCommand.class);
+        assertEquals(nric, result.getNric().getIdentificationNumber());
+        assertEquals(postalCode, result.getPostalCode().getPostalCode());
+        assertEquals(status, result.getStatus().getCurrentStatus());
+        assertEquals(wanted, result.getWantedFor().getOffense());
+    }
+
+
+    @Test
+    public void requestCommand_noArgs() {
+        final String[] inputs = { "rb", "rb "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelpCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+    @Test
+    public void dispatchCommand_noArgs() {
+        final String[] inputs = { "dispatch", "dispatch "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+
+    //@@author
     /**
      * Test find persons by keyword in name command
      */
