@@ -988,7 +988,26 @@ public class LogicTest {
         assertEquals(expected, result);
     }
 
-
+    @Test
+    public void execute_msgComparator() throws Exception {
+        final String testMsg = "This is a test message.";
+        Msg msgHigh = new Msg(Msg.Priority.HIGH, testMsg);
+        Msg msgMed = new Msg(Msg.Priority.MED, testMsg);
+        Msg msgLow = new Msg(Msg.Priority.LOW, testMsg);
+        final int expectedHighToLow = -1;
+        assertEquals(expectedHighToLow, msgHigh.compareTo(msgLow));
+        final int expectedHighToMed = -1;
+        assertEquals(expectedHighToMed, msgHigh.compareTo(msgMed));
+        final int expectedMedToLow = -1;
+        assertEquals(expectedMedToLow, msgMed.compareTo(msgLow));
+        final int expectedUnreadLowToReadHigh = -1; //Unread messages should have higher urgency than even read high priority messages.
+        msgHigh.setMsgAsRead();
+        assertEquals(expectedUnreadLowToReadHigh, msgLow.compareTo(msgHigh));
+        final int expectedEarlierToLater = -1; // Messages with same read status and priority will be compared by timestamp.
+        Thread.sleep(500);
+        Msg msgMedLater = new Msg(Msg.Priority.MED, testMsg);
+        assertEquals(expectedEarlierToLater, msgMed.compareTo(msgMedLater));
+    }
     //@@author
 
     /**
