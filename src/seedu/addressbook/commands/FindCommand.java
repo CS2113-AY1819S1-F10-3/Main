@@ -6,8 +6,8 @@ import java.io.IOException;
 
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Finds a particular person with the specified NRIC, used for screening.
+ * Letters in NRIC must be in lower case.
  */
 public class FindCommand extends Command {
     //@@author muhdharun -reused
@@ -39,7 +39,7 @@ public class FindCommand extends Command {
 
 
     /**
-     * Retrieve all persons in the address book whose names contain some of the specified keywords.
+     * Retrieve the person in PRISM whose name contain the specified NRIC.
      *
      * @return Persons found, null if no person found
      */

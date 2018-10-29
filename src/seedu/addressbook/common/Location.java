@@ -101,6 +101,7 @@ public class Location {
 
             return etaList;
         } catch(JSONException jsonE) {
+            // TODO: Handle exception better
             jsonE.printStackTrace();
         }
 
@@ -114,20 +115,22 @@ public class Location {
      * @return ArrayList of Pair<Number of seconds ETA, Text description of ETA>
      */
 
-    public ArrayList<Pair<Integer, String>> getEtaFrom(ArrayList<Location> locations) {
+    public ArrayList<Pair<Integer, String>> getEtaFrom(ArrayList<Location> locations) throws IOException, JSONException{
         ArrayList<Pair<Integer, String>> etaList = new ArrayList<>();
 
-        try {
-            HttpRestClient httpRestClient = new HttpRestClient();
-            HttpResponse response = httpRestClient.requestGetResponse(getMapsDistanceUrl(locations));
+//        try {
+        HttpRestClient httpRestClient = new HttpRestClient();
+        HttpResponse response = httpRestClient.requestGetResponse(getMapsDistanceUrl(locations));
 
-            if (response != null) {
-                String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-                etaList = getEtaFromJsonObject(new JSONObject(jsonString));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (response != null) {
+            String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+            etaList = getEtaFromJsonObject(new JSONObject(jsonString));
+        } // TODO: Change this exception
+//        } catch (IOException ioe) {
+//            ioe.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         return sortEta(etaList);
     }
@@ -136,15 +139,4 @@ public class Location {
         return GOOGLE_MAPS_BASE_URL + this.getLatitude() + "," + this.getLongitude();
     }
 
-    public static void main(String[] args) {
-        Location location = new Location(-6.206968,106.751365);
-        Location origin = new Location(-6.189482, 106.733902);
-        ArrayList<Location> locationList = new ArrayList<>();
-        locationList.add(origin);
-
-        ArrayList<Pair<Integer, String>> ETATiming = location.getEtaFrom(locationList);
-        for (Pair<Integer, String> eta: ETATiming) {
-            System.out.println(eta.getValue0() + " " + eta.getValue1());
-        }
-    }
 }

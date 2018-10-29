@@ -2,7 +2,10 @@
 package seedu.addressbook;
 
 import org.javatuples.Triplet;
+import seedu.addressbook.commands.UpdateStatusCommand;
 import seedu.addressbook.common.Location;
+import seedu.addressbook.common.Messages;
+import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.ArrayList;
 
@@ -21,6 +24,25 @@ public class PatrolResourceStatus {
         return patrolResourceStatus;
     }
 
+    public static Triplet<String, Location, Boolean> getPatrolResource(String patrolResource) {
+        switch (patrolResource) {
+            case "hqp":
+                return patrolResourceStatus.get(0);
+            case "po1":
+                return patrolResourceStatus.get(1);
+            case "po2":
+                return patrolResourceStatus.get(2);
+            case "po3":
+                return patrolResourceStatus.get(3);
+            case "po4":
+                return patrolResourceStatus.get(4);
+            case "po5":
+                return patrolResourceStatus.get(5);
+            default:
+                return patrolResourceStatus.get(0); // default for test cases
+        }
+    }
+
     // TODO: put into message
     public static Location getLocation(String patrolResource) {
         switch (patrolResource) {
@@ -37,17 +59,20 @@ public class PatrolResourceStatus {
             case "po5":
                 return patrolResourceStatus.get(5).getValue1();
             default:
-                return null;
+                return patrolResourceStatus.get(0).getValue1(); // default for test cases
         }
     }
 
-    public static void setStatus(String policeOfficerId, Boolean status) {
+    public static void setStatus(String policeOfficerId, Boolean status) throws IllegalValueException {
+        int index = 0;
         for (Triplet<String, Location, Boolean> policeOfficer : patrolResourceStatus) {
             if (policeOfficer.getValue0().equalsIgnoreCase(policeOfficerId)) {
-                policeOfficer.setAt2(status);
+                patrolResourceStatus.set(index,Triplet.with(policeOfficer.getValue0(),policeOfficer.getValue1(),status));
                 return;
             }
+            index++;
         }
+        throw new IllegalValueException(Messages.MESSAGE_PO_NOT_FOUND);
     }
 
 }

@@ -8,7 +8,13 @@ plugins {
     id 'java'
     id 'org.asciidoctor.convert' version '1.5.6'
 	id 'jacoco'
+    id 'com.github.johnrengelman.shadow' version '2.0.3'
+    id 'application'
 }
+
+
+mainClassName = 'seedu.addressbook.Main'
+
 
 sourceCompatibility = JavaVersion.VERSION_1_9
 targetCompatibility = JavaVersion.VERSION_1_9
@@ -43,9 +49,14 @@ dependencies {
     compile group: 'org.json', name: 'json', version: '20090211'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile group: 'org.javatuples', name: 'javatuples', version: '1.2'
-    compile 'com.google.guava:guava:27.0-jre'
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+shadowJar{
+    archiveName = 'PRISM.jar'
+
+    destinationDir = file("${buildDir}/jar/")
 }
 
 task wrapper(type: Wrapper) {
@@ -84,8 +95,8 @@ asciidoctor {
         idprefix: '',  // for compatibility with GitHub preview
         idseparator: '-',
         'site-root': "${sourceDir}",  // must be the same as sourceDir, do not modify
-        'site-name': 'AddressBook-Level3',
-        'site-githuburl': 'https://github.com/se-edu/addressbook-level3',
+        'site-name': 'main',
+        'site-githuburl': 'https://github.com/CS2113-AY1819S1-F10-3/main',
         'site-seedu': true,  // delete this line if your project is not a fork (not a SE-EDU project)
     ]
 

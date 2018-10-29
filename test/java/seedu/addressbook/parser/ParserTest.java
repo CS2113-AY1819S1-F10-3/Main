@@ -9,7 +9,8 @@ import seedu.addressbook.data.person.*;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 public class ParserTest {
@@ -70,7 +71,36 @@ public class ParserTest {
         final String input = "shutdown";
         parseAndAssertCommandType(input, ExitCommand.class);
     }
+    //@@author muhdharun
+    @Test
+    public void checkPoStatusCommand_parsedCorrectly() {
+        final String input = "checkstatus";
+        parseAndAssertCommandType(input, CheckPOStatusCommand.class);
+    }
+    /**
+     * Test single argument commands
+     */
+    @Test
+    public void updateStatusCommand_parsedCorrectly() {
+        final String input = "updatestatus po1";
+        parseAndAssertCommandType(input,UpdateStatusCommand.class);
+    }
 
+    @Test
+    public void updateStatusCommand_invalidPoArg() {
+        final String input = "updatestatus ppp";
+        String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage,input);
+    }
+
+    @Test
+    public void updateStatusCommand_noArg() {
+        final String input = "updatestatus";
+        String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage,input);
+    }
+
+    //@@author
     /**
      * Test single index argument commands
      */
@@ -105,6 +135,49 @@ public class ParserTest {
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
+    //@@author andyrobert3
+    @Test
+    public void editCommand_noArgs() {
+        final String[] inputs = { "edit", "edit "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+    @Test
+    public void editCommand_validArgs_parsedCorrectly() {
+        final String nric = "s1234567a";
+        final String postalCode = "510247";
+        final String status = "wanted";
+        final String wanted = "murder";
+        final String offense = "gun";
+        final String keywords = String.format("n/%s p/%s s/%s w/%s o/%s", nric, postalCode, status, wanted, offense);
+        final String input = "edit " + keywords;
+
+        final EditCommand result =
+                parseAndAssertCommandType(input, EditCommand.class);
+        assertEquals(nric, result.getNric().getIdentificationNumber());
+        assertEquals(postalCode, result.getPostalCode().getPostalCode());
+        assertEquals(status, result.getStatus().getCurrentStatus());
+        assertEquals(wanted, result.getWantedFor().getOffense());
+    }
+
+
+    @Test
+    public void requestCommand_noArgs() {
+        final String[] inputs = { "rb", "rb "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelpCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+    @Test
+    public void dispatchCommand_noArgs() {
+        final String[] inputs = { "dispatch", "dispatch "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+
+    //@@author
     /**
      * Test find persons by keyword in name command
      */
@@ -120,6 +193,48 @@ public class ParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
+
+//@@author ongweekeong
+    @Test
+    public void showUnreadCommand_parsedCorrectly(){
+        final String input = "showunread";
+        final InboxCommand result = parseAndAssertCommandType(input, InboxCommand.class);
+    }
+
+    @Test
+    public void readCommand_parsedCorrectly(){
+        final int index = 2;
+        final String input = "read " + index;
+        final ReadCommand result = parseAndAssertCommandType(input, ReadCommand.class);
+    }
+
+    @Test
+    public void readCommand_invalidArgs_parsedIncorrectly() {
+        final String[] indices = {
+                "a",
+                "!",
+                "\'",
+                ".",
+                "#",
+                "$"
+        };
+        final String result = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
+        for (String index : indices){
+            String input = "read " + index;
+        parseAndAssertIncorrectWithMessage(result, input);
+        }
+    }
+
+    @Test
+    public void readCommand_noArgs_parsedIncorrectly(){
+        final String[] inputs = {
+                "read",
+                "read "
+        };
+        final String result = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(result, inputs);
+    }
+
 //@@author muhdharun -reused
     @Test
     public void findCommand_validArgs_parsedCorrectly() {
@@ -140,10 +255,11 @@ public class ParserTest {
         parseAndAssertIncorrectWithMessage(resultMessage, input);
     }
 
+
     /**
-     * Test find persons by keyword in name command
+     * Test check persons by nric command
      */
-//@@author muhdharun
+    //@@author muhdharun
     @Test
     public void checkCommand_invalidArgs() {
         // no keywords

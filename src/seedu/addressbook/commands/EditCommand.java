@@ -11,11 +11,28 @@ import java.util.Set;
  * Edits existing person in police records.
  */
 public class EditCommand extends Command {
-    private String nric;
-    private String postalCode;
-    private String status;
-    private String wantedFor;
-    private Set<String> offenses;
+    private NRIC nric;
+    private PostalCode postalCode;
+    private Status status;
+
+    public NRIC getNric() {
+        return nric;
+    }
+
+    public PostalCode getPostalCode() {
+        return postalCode;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Offense getWantedFor() {
+        return wantedFor;
+    }
+
+    private Offense wantedFor;
+    private Set<Offense> offenses;
 
     public static final String COMMAND_WORD = "edit";
 
@@ -28,13 +45,13 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %s";
 
-    private void updatePerson() throws IllegalValueException, UniquePersonList.PersonNotFoundException {
+    private void updatePerson() throws UniquePersonList.PersonNotFoundException {
         for (Person person : addressBook.getAllPersons()) {
-            if (person.getNric().getIdentificationNumber().equals(this.nric)) {
-                person.setPostalCode(new PostalCode(postalCode));
-                person.setWantedFor(new Offense(wantedFor));
-                person.setStatus(new Status(status));
-                person.addPastOffenses(Offense.getOffenseSet(offenses));
+            if (person.getNric().equals(this.nric)) {
+                person.setPostalCode(postalCode);
+                person.setWantedFor(wantedFor);
+                person.setStatus(status);
+                person.addPastOffenses(offenses);
 
                 return;
             }
@@ -47,17 +64,17 @@ public class EditCommand extends Command {
                        String postalCode,
                        String status,
                        String wantedFor,
-                       Set<String> offenses) {
+                       Set<String> offenses) throws IllegalValueException {
 
-        this.nric = nric;
-        this.postalCode = postalCode;
-        this.status = status;
-        this.wantedFor = wantedFor;
-        this.offenses = offenses;
+        this.nric = new NRIC(nric);
+        this.postalCode = new PostalCode(postalCode);
+        this.status = new Status(status);
+        this.wantedFor = new Offense(wantedFor);
+        this.offenses = Offense.getOffenseSet(offenses);
     }
 
     @Override
-    public CommandResult execute() throws IllegalValueException {
+    public CommandResult execute() {
         try {
             this.updatePerson();
             return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, this.nric));

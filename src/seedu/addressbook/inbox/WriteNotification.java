@@ -52,10 +52,6 @@ public class WriteNotification {
         }
         else myPrinter.println('-');
 
-//        if(message.hasPoliceOfficerId()) {
-//            myPrinter.println("Police Officer ID:" + message.getPoliceOfficerId());
-//        }
-//        else myPrinter.println('-');
         myPrinter.println("> END OF MESSAGE <");   // Notate the end of 1 message entry with "---"
 
         myPrinter.close();
@@ -93,4 +89,11 @@ public class WriteNotification {
         myPrinter.close();
     }
 
+    public static void clearInbox(String path) throws IOException {
+        FileWriter write = new FileWriter (path, false);
+        PrintWriter myPrinter = new PrintWriter(write);
+        myPrinter = new PrintWriter(write);
+        myPrinter.print("");
+        myPrinter.close();
+    }
 }

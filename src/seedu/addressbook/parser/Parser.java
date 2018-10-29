@@ -1,9 +1,11 @@
 package seedu.addressbook.parser;
 
+import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.NRIC;
 import seedu.addressbook.data.person.Offense;
+import seedu.addressbook.password.Password;
 
 import java.io.IOException;
 import java.util.*;
@@ -42,6 +44,7 @@ public class Parser {
 
     public static final Pattern PERSON_NAME_FORMAT = Pattern.compile("(?<name>[^/]+)");
     public static final Pattern PERSON_NRIC_FORMAT = Pattern.compile("(?<nric>[^/]+)");
+    public static final String PO_REGEX = "[Pp][Oo][0-9]+";
 
     /**
      * Signals that the user input could not be parsed.
@@ -176,7 +179,7 @@ public class Parser {
             case RequestHelpCommand.COMMAND_WORD:
                 return prepareRequest(arguments);
 
-            case DispatchBackup.COMMAND_WORD:
+            case DispatchCommand.COMMAND_WORD:
                 return prepareDispatch(arguments);
 
             case ExitCommand.COMMAND_WORD:
@@ -254,11 +257,8 @@ public class Parser {
 
             return new DeleteCommand(new NRIC(nric));
         } catch (ParseException e) {
-
             logr.log(Level.WARNING, "Invalid delete command format.", e);
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-
-
 
         } catch (IllegalValueException ive) {
             logr.log(Level.WARNING, "Invalid name/id inputted.", ive);
@@ -308,7 +308,7 @@ public class Parser {
         }
     }
 
-
+    // TODO: @Harun, if no longer needed then delete
     //@@author
     /**
      * Parses arguments in the context of the view command.
@@ -401,10 +401,10 @@ public class Parser {
 
     private Command prepareUpdateStatus(String args) {
         args = args.trim();
-        if (!args.equals("")) {
+        if (args.matches(PO_REGEX)) {
             return new UpdateStatusCommand(args);
         } else{
-            logr.warning("PO must be stated");
+            logr.warning("an existing or valid PO must be stated");
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateStatusCommand.MESSAGE_USAGE));
         }
 
@@ -419,16 +419,15 @@ public class Parser {
      * @return the prepared request command
      */
     private Command prepareRequest(String args) {
-        String caseName, message;
-        String[] argParts = args.trim().split(" ", 2);
+        String message, caseName = args.trim();
 
-        if (argParts.length < 2) {
+        if (caseName.length() == 0) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     RequestHelpCommand.MESSAGE_USAGE));
         }
 
-        caseName = argParts[0];
-        message = argParts[1];
+        message = Password.getID().toUpperCase() + " needs help with " + caseName + " at location "  +
+                        PatrolResourceStatus.getLocation(Password.getID()).getGoogleMapsURL();
 
         try {
             return new RequestHelpCommand(caseName, message);
@@ -446,18 +445,18 @@ public class Parser {
      */
     private Command prepareDispatch(String args) {
         String backupOfficer, dispatchRequester, caseName;
-        String[] argParts = args.trim().split(" ",  3);
+        String[] argParts = args.trim().split("\\s+",  3);
 
         if (argParts.length < 3) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    DispatchBackup.MESSAGE_USAGE));
+                    DispatchCommand.MESSAGE_USAGE));
         }
 
         backupOfficer = argParts[0].toLowerCase();
         caseName = argParts[1].toLowerCase();
         dispatchRequester = argParts[2].toLowerCase();
 
-        return new DispatchBackup(backupOfficer, dispatchRequester, caseName);
+        return new DispatchCommand(backupOfficer, dispatchRequester, caseName);
     }
 
 }

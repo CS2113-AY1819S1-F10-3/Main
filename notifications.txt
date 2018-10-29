@@ -1,18 +1,27 @@
 > START OF MESSAGE <
-Sender ID:hqp
+Sender ID:test
 Read status:false
-Priority:MED
-Timestamp:25/10/2018-14:00:39hrs
-Message:This should be second message
+Priority:HIGH
+Timestamp:29/10/2018-18:33:04:349hrs
+Message:This is a test message.
 -
-Location:-6.206968,106.751365
+-
 > END OF MESSAGE <
 > START OF MESSAGE <
-Sender ID:hqp
-Read status:true
-Priority:LOW
-Timestamp:25/10/2018-14:00:39hrs
-Message:This should be last message
+Sender ID:test
+Read status:false
+Priority:HIGH
+Timestamp:29/10/2018-18:33:04:455hrs
+Message:This is a test message.
 -
-Location:-6.206968,106.751365
+-
+> END OF MESSAGE <
+> START OF MESSAGE <
+Sender ID:test
+Read status:false
+Priority:HIGH
+Timestamp:29/10/2018-18:33:04:569hrs
+Message:This is a test message.
+-
+-
 > END OF MESSAGE <

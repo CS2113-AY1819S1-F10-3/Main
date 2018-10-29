@@ -42,8 +42,8 @@ public class Dictionary extends Command{
             commands.add(ReadCommand.COMMAND_WORD);
             commands.add(ListCommand.COMMAND_WORD);
             commands.add(LockCommand.COMMAND_WORD);
-            commands.add(RequestHelp.COMMAND_WORD);
-            commands.add(DispatchBackup.COMMAND_WORD);
+            commands.add(RequestHelpCommand.COMMAND_WORD);
+            commands.add(DispatchCommand.COMMAND_WORD);
             commands.add(CheckPOStatusCommand.COMMAND_WORD);
             commands.add(UpdateStatusCommand.COMMAND_WORD);
             //commands.add(UpdatePasswordCommand.COMMAND_WORD);

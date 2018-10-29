@@ -4,9 +4,12 @@ package seedu.addressbook.commands;
 import org.javatuples.Triplet;
 import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.common.Location;
-
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Returns a list of all POs and their current engagement status
+ */
 
 public class CheckPOStatusCommand extends Command {
 
@@ -16,13 +19,18 @@ public class CheckPOStatusCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        List<String> allPos = extractEngagementInformation(PatrolResourceStatus.getPatrolResourceStatus());
+
+        return new CommandResult(getMessage(allPos));
+    }
+
+    public static List<String> extractEngagementInformation(ArrayList<Triplet<String, Location, Boolean>> pos) {
         List<String> allPos = new ArrayList<>();
-        ArrayList<Triplet<String, Location, Boolean>> pos = PatrolResourceStatus.getPatrolResourceStatus();
         for (int i = 0 ; i < pos.size() ; i++){
             String poStatus = pos.get(i).getValue0() + " " + pos.get(i).getValue2();
             allPos.add(poStatus);
         }
-        return new CommandResult(getMessage(allPos));
+        return allPos;
     }
 
 }
