@@ -115,20 +115,22 @@ public class Location {
      * @return ArrayList of Pair<Number of seconds ETA, Text description of ETA>
      */
 
-    public ArrayList<Pair<Integer, String>> getEtaFrom(ArrayList<Location> locations) {
+    public ArrayList<Pair<Integer, String>> getEtaFrom(ArrayList<Location> locations) throws IOException, JSONException{
         ArrayList<Pair<Integer, String>> etaList = new ArrayList<>();
 
-        try {
-            HttpRestClient httpRestClient = new HttpRestClient();
-            HttpResponse response = httpRestClient.requestGetResponse(getMapsDistanceUrl(locations));
+//        try {
+        HttpRestClient httpRestClient = new HttpRestClient();
+        HttpResponse response = httpRestClient.requestGetResponse(getMapsDistanceUrl(locations));
 
-            if (response != null) {
-                String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-                etaList = getEtaFromJsonObject(new JSONObject(jsonString));
-            } // TODO: Change this exception
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (response != null) {
+            String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+            etaList = getEtaFromJsonObject(new JSONObject(jsonString));
+        } // TODO: Change this exception
+//        } catch (IOException ioe) {
+//            ioe.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         return sortEta(etaList);
     }

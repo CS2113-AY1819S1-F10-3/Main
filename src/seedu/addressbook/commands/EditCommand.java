@@ -14,6 +14,23 @@ public class EditCommand extends Command {
     private NRIC nric;
     private PostalCode postalCode;
     private Status status;
+
+    public NRIC getNric() {
+        return nric;
+    }
+
+    public PostalCode getPostalCode() {
+        return postalCode;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Offense getWantedFor() {
+        return wantedFor;
+    }
+
     private Offense wantedFor;
     private Set<Offense> offenses;
 
