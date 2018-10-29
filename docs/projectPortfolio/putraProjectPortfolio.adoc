@@ -11,14 +11,13 @@ image::iamputradanish.png[width="150", align="left"]
 
 == Overview
 
-The police database is for police officers(PO) and headquarter personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database.
+The Police Records System is for police officers(PO) and headquarter personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database.
 
 == Summary of contributions
 
 * *Role*: Team Leader
 * *Responsibility* : Deadlines
 * *Major enhancements*: added *log in ability using only passwords* & *the ability for HQP to update any password* 
-** What they do: 
 ** *Password Accessibility* : allows HQP and PO to log into their respective profiles using just a password and without username. Once logged in, PO is not allowed to perform certain commands.
 ** *Update Password* : allows HQP to update any password, including PO passwords to new alphanumeric passwords with minimum length 5 characters.
 ** Justification: Since we don't want POs to alter the records, certain commands are disabled for them. The ability to update passwords regularly allows for greater security. 
