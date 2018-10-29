@@ -7,11 +7,8 @@ import java.util.*;
 
 public class Offense {
     public static final String EXAMPLE = "theft";
-    public static final String MESSAGE_OFFENSE_INVALID = "Offense must be inside the list:";
     public static final String NULL_OFFENSE = "none";
-
     public static final String MESSAGE_OFFENSE_INVALID = "Offense must be inside the list:\n";
-                //+ getOffenseList();
 
 //@@author andyrobert3
     private static HashMap<String, Msg.Priority> OFFENSE_LIST = new HashMap<>();
@@ -110,7 +107,7 @@ public class Offense {
     public static Msg.Priority getPriority(String offense) throws IllegalValueException {
         offense = offense.toLowerCase();
         if (!OFFENSE_LIST.containsKey(offense)) {
-            throw new IllegalValueException("Offense does not exist in database.");
+            throw new IllegalValueException("Offense does not exist in database");
         }
 
         return OFFENSE_LIST.get(offense);
