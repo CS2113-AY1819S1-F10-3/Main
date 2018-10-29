@@ -115,10 +115,6 @@ public class Msg implements Comparable <Msg> {
         this.isRead = MESSAGE_IS_READ;
     }
 
-    public void setMsgAsUnread(){
-        this.isRead = MESSAGE_IS_UNREAD;
-    }
-
     public double getLongitude(){
         return location.getLongitude();
     }
