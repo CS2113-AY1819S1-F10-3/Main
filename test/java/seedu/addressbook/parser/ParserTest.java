@@ -150,10 +150,9 @@ public class ParserTest {
         final String status = "wanted";
         final String wanted = "murder";
         final String offense = "gun";
-
-        final String keywords = "n/" + nric + " p/" + postalCode + " s/" + status
-                                    +  " w/" + wanted + " o/" + offense;
+        final String keywords = String.format("n/%s p/%s s/%s w/%s o/%s", nric, postalCode, status, wanted, offense);
         final String input = "edit " + keywords;
+
         final EditCommand result =
                 parseAndAssertCommandType(input, EditCommand.class);
         assertEquals(nric, result.getNric().getIdentificationNumber());
