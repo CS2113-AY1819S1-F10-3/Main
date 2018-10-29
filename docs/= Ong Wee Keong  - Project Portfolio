@@ -12,6 +12,7 @@
 The purpose of this portfolio is to document the specific contributions that I have made to this project. The project, with the end product being called “Police Records System” (PRS), was done over the course of one semester in National University of Singapore (NUS), under the module CS2113T, which aims to teach Software Engineering principles and Object-Oriented Programming. PRS was done by a team of 5 people including myself, and 4 other course mates. 
 
 === Overview of Project
+
 PRS is a product that was morphed from the original Addressbook Level 3, published by a Github organization called Software Engineering Education (https://github.com/se-edu/addressbook-level3). PRS is an application that is designed to aid Police Officers in their patrolling duties to make screening subjects more efficient and well documented. 
 It also serves as a system for communication between Police Officers (POs) on patrol and the Headquarters Personnel (HQP) in cases where additional manpower resources are required for backup.
 PRS is currently a desktop application, designed specifically for users who are comfortable with using Command-Line Interface (CLI). 
@@ -19,11 +20,11 @@ PRS is currently a desktop application, designed specifically for users who are 
 === Main Features Implemented
 Over the course of the project, my team and I have implemented 5 major features:
 
-.	Password-Lock
-.	Text Prediction and Correction
-.	Screening History
-.	Notification Messages
-.	Editing and Deleting by NRIC of Subjects
+. Password-Lock
+. Text Prediction and Correction
+. Screening History
+. Notification Messages
+. Editing and Deleting by NRIC of Subjects
 
 == Summary of Contributions
 The purpose of this section is to allow readers to get a clearer idea of how the work was divided among the team, and the specific contributions that I have made for the project. The major feature that I was working on in the project is explained below:
