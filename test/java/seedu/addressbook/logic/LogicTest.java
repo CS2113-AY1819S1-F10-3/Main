@@ -239,7 +239,7 @@ public class LogicTest {
         assertCommandBehavior(
                 "add Valid Name n/s1234567a d/1980 p/13456 s/clear w/none", PostalCode.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID);
+                "add Valid Name n/s1234567a d/1980 p/123456 s/xc w/none o/rob", Offense.MESSAGE_OFFENSE_INVALID + "\n" + Offense.getListOfValidOffences());
         assertCommandBehavior(
                 "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
 
@@ -499,9 +499,9 @@ public class LogicTest {
         assertCommandBehavior(
                 "edit n/s1234567a p/123456 s/c w/none", Status.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "edit n/s1234567a p/133456 s/wanted w/ne", Offense.MESSAGE_OFFENSE_INVALID);
+                "edit n/s1234567a p/133456 s/wanted w/ne", Offense.MESSAGE_OFFENSE_INVALID + "\n" + Offense.getListOfValidOffences());
         assertCommandBehavior(
-                "edit n/s1234567a p/134546 s/xc w/none o/rr", Offense.MESSAGE_OFFENSE_INVALID);
+                "edit n/s1234567a p/134546 s/xc w/none o/rr", Offense.MESSAGE_OFFENSE_INVALID + "\n" + Offense.getListOfValidOffences());
     }
 
 

@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Offense {
     public static final String EXAMPLE = "theft";
-    public static final String MESSAGE_OFFENSE_INVALID = "Offense must be inside the list";
+    public static final String MESSAGE_OFFENSE_INVALID = "Offense must be inside the list:";
     public static final String NULL_OFFENSE = "none";
 //@@author andyrobert3
     private static HashMap<String, Msg.Priority> OFFENSE_LIST = new HashMap<>();
@@ -51,10 +51,10 @@ public class Offense {
         String result = "";
         for (HashMap.Entry<String,Msg.Priority> entry : OFFENSE_LIST.entrySet()) {
             if (!entry.getKey().matches(".*\\d+.*")) {
-                result += entry.getKey() + ", ";
+                result += entry.getKey() + "\n";
             }
         }
-        return result;
+        return result + "";
     }
 
     public Offense(){
@@ -70,7 +70,7 @@ public class Offense {
         offense = offense.toLowerCase().trim();
 
         if (!isValidOffense(offense)) {
-            throw new IllegalValueException(MESSAGE_OFFENSE_INVALID);
+            throw new IllegalValueException(MESSAGE_OFFENSE_INVALID + "\n" + getListOfValidOffences());
         }
 
         this.offense = offense;
