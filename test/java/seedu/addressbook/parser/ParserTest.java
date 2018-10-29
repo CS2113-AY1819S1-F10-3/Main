@@ -135,6 +135,49 @@ public class ParserTest {
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
+    //@@author andyrobert3
+    @Test
+    public void editCommand_noArgs() {
+        final String[] inputs = { "edit", "edit "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+    @Test
+    public void editCommand_validArgs_parsedCorrectly() {
+        final String nric = "s1234567a";
+        final String postalCode = "510247";
+        final String status = "wanted";
+        final String wanted = "murder";
+        final String offense = "gun";
+        final String keywords = String.format("n/%s p/%s s/%s w/%s o/%s", nric, postalCode, status, wanted, offense);
+        final String input = "edit " + keywords;
+
+        final EditCommand result =
+                parseAndAssertCommandType(input, EditCommand.class);
+        assertEquals(nric, result.getNric().getIdentificationNumber());
+        assertEquals(postalCode, result.getPostalCode().getPostalCode());
+        assertEquals(status, result.getStatus().getCurrentStatus());
+        assertEquals(wanted, result.getWantedFor().getOffense());
+    }
+
+
+    @Test
+    public void requestCommand_noArgs() {
+        final String[] inputs = { "rb", "rb "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestHelpCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+    @Test
+    public void dispatchCommand_noArgs() {
+        final String[] inputs = { "dispatch", "dispatch "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
+
+    //@@author
     /**
      * Test find persons by keyword in name command
      */
@@ -150,7 +193,7 @@ public class ParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
-//@@author muhdharun -reused
+    //@@author muhdharun -reused
     @Test
     public void findCommand_validArgs_parsedCorrectly() {
         final String keyword = "s1234567a";
@@ -170,10 +213,11 @@ public class ParserTest {
         parseAndAssertIncorrectWithMessage(resultMessage, input);
     }
 
+
     /**
      * Test check persons by nric command
      */
-//@@author muhdharun
+    //@@author muhdharun
     @Test
     public void checkCommand_invalidArgs() {
         // no keywords
