@@ -307,7 +307,7 @@ public class Parser {
         }
     }
 
-
+    // TODO: @Harun, if no longer needed then delete
     //@@author
     /**
      * Parses arguments in the context of the view command.
@@ -444,7 +444,7 @@ public class Parser {
      */
     private Command prepareDispatch(String args) {
         String backupOfficer, dispatchRequester, caseName;
-        String[] argParts = args.trim().split(" ",  3);
+        String[] argParts = args.trim().split("\\s+",  3);
 
         if (argParts.length < 3) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,

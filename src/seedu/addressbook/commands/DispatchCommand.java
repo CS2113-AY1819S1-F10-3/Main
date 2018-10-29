@@ -7,6 +7,7 @@ import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.common.Location;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.exception.PatrolResourceUnavailableException;
 import seedu.addressbook.data.person.Offense;
 import seedu.addressbook.inbox.MessageFilePaths;
 import seedu.addressbook.inbox.Msg;
@@ -27,6 +28,8 @@ public class DispatchCommand extends Command{
 
     private WriteNotification writeNotificationToBackupOfficer;
     private WriteNotification writeNotificationToRequester;
+    private Location origin;
+    private ArrayList<Location> destinationList;
     private String backupOfficer;
     private String requester;
     private String offense;
@@ -38,39 +41,45 @@ public class DispatchCommand extends Command{
         this.offense = caseName;
         this.backupOfficer = backupOfficer;
         this.requester = requester;
+        this.origin = PatrolResourceStatus.getLocation(backupOfficer);
+        this.destinationList = new ArrayList<>();
     }
 
     public CommandResult execute()  {
-        Location origin = PatrolResourceStatus.getLocation(backupOfficer);
-
-        ArrayList<Location> destinationList = new ArrayList<>();
         destinationList.add(PatrolResourceStatus.getLocation(requester));
+
         try {
             ArrayList<Pair<Integer, String>> etaList = origin.getEtaFrom(destinationList);
 
             int eta = etaList.get(0).getValue0();
             String etaMessage = etaList.get(0).getValue1();
 
-
             String dispatchStringMessage = "ETA " + etaMessage + ", Location of Requester: " +
-                                            PatrolResourceStatus.getLocation(backupOfficer).getGoogleMapsURL();
-            Msg dispatchMessage = new Msg(Offense.getPriority(offense), dispatchStringMessage,
-                                            PatrolResourceStatus.getLocation(requester), eta);
-            //dispatchMessage.setPoliceOfficerId(requester);
-            writeNotificationToBackupOfficer.writeToFile(dispatchMessage);
+                    PatrolResourceStatus.getLocation(backupOfficer).getGoogleMapsURL();
 
             String requesterStringMessage = "ETA " + etaMessage + ", Location of Backup: " +
-                                            PatrolResourceStatus.getLocation(backupOfficer).getGoogleMapsURL();
-            // TODO: Backup is not available
+                    PatrolResourceStatus.getLocation(backupOfficer).getGoogleMapsURL();
+
+            Msg dispatchMessage = new Msg(Offense.getPriority(offense), dispatchStringMessage,
+                                            PatrolResourceStatus.getLocation(requester), eta);
+
+            if (PatrolResourceStatus.getPatrolResource(backupOfficer).getValue2()) {
+                throw new PatrolResourceUnavailableException(backupOfficer);
+            }
+            
             Msg requesterMessage = new Msg(Offense.getPriority(offense), requesterStringMessage,
                                             PatrolResourceStatus.getLocation(backupOfficer), eta);
+
             writeNotificationToRequester.writeToFile(requesterMessage);
+            writeNotificationToBackupOfficer.writeToFile(dispatchMessage);
         } catch (IOException ioe) {
             return new CommandResult(Messages.MESSAGE_SAVE_ERROR);
         } catch (IllegalValueException ioe) {
-            return new CommandResult(Messages.MESSAGE_ERROR); // TODO: Find proper message
+            return new CommandResult(Offense.MESSAGE_OFFENSE_INVALID); // TODO: Find proper message
         } catch (JSONException jse) {
             return new CommandResult(Messages.MESSAGE_ERROR); // TODO: JSON parsing problem
+        } catch (PatrolResourceUnavailableException prue) {
+            return new CommandResult(prue.toString());
         }
 
         return new CommandResult(MESSAGE_REQUEST_SUCCESS);

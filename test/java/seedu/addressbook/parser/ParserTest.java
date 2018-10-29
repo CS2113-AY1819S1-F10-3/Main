@@ -105,6 +105,13 @@ public class ParserTest {
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
+    @Test
+    public void editCommand_noArgs() {
+        final String[] inputs = { "edit", "edit "};
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+
     /**
      * Test find persons by keyword in name command
      */
@@ -120,7 +127,7 @@ public class ParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
-//@@author muhdharun -reused
+    //@@author muhdharun -reused
     @Test
     public void findCommand_validArgs_parsedCorrectly() {
         final String keyword = "s1234567a";
@@ -140,10 +147,11 @@ public class ParserTest {
         parseAndAssertIncorrectWithMessage(resultMessage, input);
     }
 
+
     /**
      * Test find persons by keyword in name command
      */
-//@@author muhdharun
+    //@@author muhdharun
     @Test
     public void checkCommand_invalidArgs() {
         // no keywords

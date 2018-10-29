@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.junit.runner.Request;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.HttpRestClient;
 import seedu.addressbook.common.Location;
@@ -353,25 +354,52 @@ public class LogicTest {
         assertCommandBehavior("rb    ", expectedMessage);
     }
 
-    //@@author andyrobert3
     @Test
     public void execute_request_invalidOffense() throws Exception {
-        String expectedMessage =  Offense.MESSAGE_OFFENSE_INVALID;
-        assertCommandBehavior("rb crime", expectedMessage);
-        assertCommandBehavior("rb tired", expectedMessage);
+        String expectedMessage = Offense.MESSAGE_OFFENSE_INVALID;
+        assertCommandBehavior(RequestHelpCommand.COMMAND_WORD + " crime", expectedMessage);
+        assertCommandBehavior(RequestHelpCommand.COMMAND_WORD + " tired", expectedMessage);
     }
 
-    //@@author andyrobert3
+    @Test
+    public void execute_request_successful() throws Exception {
+        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_HQP_INBOX);
+        String expectedMessage = String.format(RequestHelpCommand.MESSAGE_REQUEST_SUCCESS, Password.getID());
+        assertCommandBehavior(RequestHelpCommand.COMMAND_WORD + " gun", expectedMessage);
+        assertCommandBehavior(RequestHelpCommand.COMMAND_WORD + " theft", expectedMessage);
+        assertCommandBehavior(RequestHelpCommand.COMMAND_WORD + " riot", expectedMessage);
+    }
+
+    @Test
+    public void execute_request_successful_checkMsg() throws Exception {
+        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_HQP_INBOX);
+        Password.unlockHQP();
+
+        logic.execute(RequestHelpCommand.COMMAND_WORD + " gun");
+        String expectedUnreadMessagesResult = String.format(Messages.MESSAGE_UNREAD_MSG_NOTIFICATION, 1) + "\n";
+        assertCommandBehavior(InboxCommand.COMMAND_WORD, expectedUnreadMessagesResult, RequestHelpCommand.getRecentMessage(), 1);
+        Password.lockIsHQP();
+    }
+
+
     @Test
     public void execute_dispatch_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DispatchCommand.MESSAGE_USAGE);
-        assertCommandBehavior("dispatch", expectedMessage);
-        assertCommandBehavior("dispatch po1", expectedMessage);
-        assertCommandBehavior("dispatch po1 gun", expectedMessage);
-        assertCommandBehavior("dispatch      ", expectedMessage);
+        assertCommandBehavior(DispatchCommand.COMMAND_WORD, expectedMessage);
+        assertCommandBehavior(DispatchCommand.COMMAND_WORD + " po1", expectedMessage);
+        assertCommandBehavior(DispatchCommand.COMMAND_WORD + " po1 gun", expectedMessage);
+        assertCommandBehavior(DispatchCommand.COMMAND_WORD + "      ", expectedMessage);
+        assertCommandBehavior(DispatchCommand.COMMAND_WORD, expectedMessage);
+
     }
 
-    //@@author andyrobert3
+    @Test
+    public void execute_dispatch_invalidOffense() throws Exception {
+        String expectedMessage = Offense.MESSAGE_OFFENSE_INVALID;
+        assertCommandBehavior("dispatch po1 help po2", expectedMessage);
+        assertCommandBehavior("dispatch po4 backup po1", expectedMessage);
+    }
+
     @Test
     public void execute_httpGetRequest_internetAvailable() throws Exception {
         String testUrl = "http://requestbin.fullcontact.com/1g739591";
@@ -381,8 +409,6 @@ public class LogicTest {
 
         assertTrue(statusCode == 200 || statusCode == 201 || statusCode == 204);
     }
-
-
 
     //@@author
     @Test
@@ -823,8 +849,6 @@ public class LogicTest {
             Thread.sleep(100);
         }
     }
-
-
 
     @Test
     public void execute_readMsgWithoutUnreadMsgs() throws Exception {
