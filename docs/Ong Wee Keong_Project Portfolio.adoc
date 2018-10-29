@@ -54,10 +54,10 @@ The purpose of this section is to allow readers to get a clearer idea of how the
 == Contributions to the User Guide
 The User Guide is written with the end-users as the main target audience. The sections which I contributed to the User Guide are as shown below:
 
-=== 1. Introduction
+=== `1. Introduction`
 The police database is for police officers (PO) and headquarter personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database. Refer to quick start to get started
 
-=== 3.14. Check notifications: showunread
+=== `3.14. Check notifications: showunread`
 For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp. For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders
 Format: 'showunread'
 Examples (as a HQP):
@@ -66,7 +66,7 @@ Examples (as a HQP):
 *	Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:
 Examples (as a PO): * 'showunread' * Shows any dispatch messages by HQ or response for backup if any
 
-=== 3.15. Read message : read
+=== `3.15. Read message : read`
 Updates the status of unread messages to read. Command to be used after showunread command
 Format: 'read index'
 Examples: * read 1
