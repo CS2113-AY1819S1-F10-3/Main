@@ -2,10 +2,16 @@
 :site-section: ProjectPortfolio
 :toc:
 :toc-title:
+:toc-placement: preamble
+:sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
+:xrefstyle: full
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:warning-caption: :warning:
 :experimental:
-
 = PROJECT: Police Records System
 
 == Introduction
@@ -37,10 +43,11 @@ The purpose of this section is to allow readers to get a clearer idea of how the
 
 * Highlights: This enhancement supports communication between users, which is something completely new in this system. This was previously not possible through the code base given to us in Addressbook Level 3. Thus, the implementation was highly challenging as rigorous thinking was required to come up with an appropriate system that allows various users to send and receive specifically from another user, as well as methods for storing the messages sent and received.  
 
-=== Minor Enhancement – Allowed users to mark messages as read
+=== Minor Enhancement – Allows users to mark messages as read
 
 *	This enhancement allows users to respond to the messages that are sent to them and updating the read status of those messages once action has been taken, depending on the nature of the message sent to them.
-Code Contributed:
+
+=== Code Contributed:
 *	Functional code: https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/functional/ongweekeong.md
 *	Test code: https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/test/ongweekeong.md
 
