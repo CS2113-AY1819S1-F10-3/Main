@@ -5,7 +5,7 @@ import seedu.addressbook.data.exception.IllegalValueException;
 import java.util.Calendar;
 
 /**
- * Represents a Person's Date of Birth in the EX-SI-53.
+ * Represents a Person's Date of Birth.
  * Guarantees: immutable; is valid as declared in {@link #isValidDateOfBirth(String)}
  */
 

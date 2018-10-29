@@ -2,6 +2,10 @@
 package seedu.addressbook.commands;
 import seedu.addressbook.timeanddate.TimeAndDate;
 
+/**
+ * Command to display current date and time on screen
+ */
+
 public class DateTimeCommand extends Command {
 
     public static final String COMMAND_WORD = "time";
