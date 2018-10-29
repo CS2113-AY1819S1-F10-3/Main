@@ -574,7 +574,7 @@ public class Password {
 //            result = MESSAGE_PO + MESSAGE_FIVE;
             return "po5";
         }
-        else return "test";
+        else return "unknown";
     }
 }
 ```
@@ -608,14 +608,14 @@ public class ReaderAndWriter {
 ``` java
 public class TimeAndDate {
     private Timestamp currentDAT = new Timestamp(System.currentTimeMillis());
-    private static SimpleDateFormat timeStampFormatter = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss:SSS");
+    private SimpleDateFormat timeStampFormatter = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss:SSS");
     private String outputDAT = timeStampFormatter.format(currentDAT);
 
     public String outputDATHrs(){
         return outputDAT + "hrs";
     }
 
-    public static String outputDATHrs(Timestamp theTime){
+    public String outputDATHrs(Timestamp theTime){
         String outputDAT = timeStampFormatter.format(theTime);
         return outputDAT + "hrs";
 

@@ -20,7 +20,7 @@
     }
 }
 ```
-###### \seedu\addressbook\commands\DispatchCommand.java
+###### \seedu\addressbook\commands\DispatchBackup.java
 ``` java
 package seedu.addressbook.commands;
 
@@ -37,7 +37,7 @@ import seedu.addressbook.inbox.WriteNotification;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DispatchCommand extends Command{
+public class DispatchBackup extends Command{
     public static final String COMMAND_WORD = "dispatch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
@@ -53,7 +53,7 @@ public class DispatchCommand extends Command{
     private String requester;
     private String offense;
 
-    public DispatchCommand(String backupOfficer, String requester, String caseName) {
+    public DispatchBackup(String backupOfficer, String requester, String caseName) {
         writeNotificationToBackupOfficer = new WriteNotification(MessageFilePaths.getFilePathFromUserId(backupOfficer), true);
         writeNotificationToRequester = new WriteNotification(MessageFilePaths.getFilePathFromUserId(requester), true);
 
@@ -73,17 +73,14 @@ public class DispatchCommand extends Command{
         String etaMessage = etaList.get(0).getValue1();
 
         try {
-            String dispatchStringMessage = "ETA " + etaMessage + ", Location of Requester: " +
-                                            PatrolResourceStatus.getLocation(backupOfficer).getGoogleMapsURL();
-            Msg dispatchMessage = new Msg(Offense.getPriority(offense), dispatchStringMessage,
+            Msg dispatchMessage = new Msg(Offense.getPriority(offense), "ETA " + etaMessage,
                                             PatrolResourceStatus.getLocation(requester), eta);
             //dispatchMessage.setPoliceOfficerId(requester);
             writeNotificationToBackupOfficer.writeToFile(dispatchMessage);
 
-            String requesterStringMessage = "ETA " + etaMessage + ", Location of Backup: " +
-                                            PatrolResourceStatus.getLocation(backupOfficer).getGoogleMapsURL();
+
             // TODO: Backup is not available
-            Msg requesterMessage = new Msg(Offense.getPriority(offense), requesterStringMessage,
+            Msg requesterMessage = new Msg(Offense.getPriority(offense), "ETA " + etaMessage,
                                             PatrolResourceStatus.getLocation(backupOfficer), eta);
             writeNotificationToRequester.writeToFile(requesterMessage);
         } catch(IOException ioe) {
@@ -110,11 +107,11 @@ import java.util.Set;
  * Edits existing person in police records.
  */
 public class EditCommand extends Command {
-    private NRIC nric;
-    private PostalCode postalCode;
-    private Status status;
-    private Offense wantedFor;
-    private Set<Offense> offenses;
+    private String nric;
+    private String postalCode;
+    private String status;
+    private String wantedFor;
+    private Set<String> offenses;
 
     public static final String COMMAND_WORD = "edit";
 
@@ -127,13 +124,13 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %s";
 
-    private void updatePerson() throws UniquePersonList.PersonNotFoundException {
+    private void updatePerson() throws IllegalValueException, UniquePersonList.PersonNotFoundException {
         for (Person person : addressBook.getAllPersons()) {
-            if (person.getNric().equals(this.nric)) {
-                person.setPostalCode(postalCode);
-                person.setWantedFor(wantedFor);
-                person.setStatus(status);
-                person.addPastOffenses(offenses);
+            if (person.getNric().getIdentificationNumber().equals(this.nric)) {
+                person.setPostalCode(new PostalCode(postalCode));
+                person.setWantedFor(new Offense(wantedFor));
+                person.setStatus(new Status(status));
+                person.addPastOffenses(Offense.getOffenseSet(offenses));
 
                 return;
             }
@@ -146,17 +143,17 @@ public class EditCommand extends Command {
                        String postalCode,
                        String status,
                        String wantedFor,
-                       Set<String> offenses) throws IllegalValueException {
+                       Set<String> offenses) {
 
-        this.nric = new NRIC(nric);
-        this.postalCode = new PostalCode(postalCode);
-        this.status = new Status(status);
-        this.wantedFor = new Offense(wantedFor);
-        this.offenses = Offense.getOffenseSet(offenses);
+        this.nric = nric;
+        this.postalCode = postalCode;
+        this.status = status;
+        this.wantedFor = wantedFor;
+        this.offenses = offenses;
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws IllegalValueException {
         try {
             this.updatePerson();
             return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, this.nric));
@@ -165,6 +162,55 @@ public class EditCommand extends Command {
         }
 
     }
+}
+```
+###### \seedu\addressbook\commands\RequestHelp.java
+``` java
+package seedu.addressbook.commands;
+
+import seedu.addressbook.PatrolResourceStatus;
+import seedu.addressbook.common.Messages;
+import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.Offense;
+import seedu.addressbook.inbox.MessageFilePaths;
+import seedu.addressbook.inbox.Msg;
+import seedu.addressbook.inbox.WriteNotification;
+import seedu.addressbook.password.Password;
+
+import java.io.IOException;
+
+public class RequestHelp extends Command {
+    public static final String COMMAND_WORD = "request";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
+            + "Requests help from headquarters.\n\t"
+            + "Message from police officer can be appended in text.\n\t"
+            + "Example: " + COMMAND_WORD
+            + " gun "
+            + " Help needed on Jane Street";
+
+
+    public static String MESSAGE_REQUEST_SUCCESS = "Request for backup is successful.";
+
+    private Msg requestHelpMessage;
+    private WriteNotification writeNotification;
+
+    public RequestHelp(String caseName, String messageString) throws IllegalValueException {
+        writeNotification = new WriteNotification(MessageFilePaths.FILEPATH_HQP_INBOX, true);
+        requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, PatrolResourceStatus.getLocation(Password.getID()));
+    }
+
+
+    @Override
+    public CommandResult execute() {
+        try {
+            writeNotification.writeToFile(requestHelpMessage);
+            return new CommandResult(String.format(MESSAGE_REQUEST_SUCCESS));
+        } catch (IOException ioe) {
+            return new CommandResult(Messages.MESSAGE_SAVE_ERROR);
+        }
+    }
+
+
 }
 ```
 ###### \seedu\addressbook\commands\RequestHelpCommand.java
@@ -183,7 +229,7 @@ import seedu.addressbook.password.Password;
 import java.io.IOException;
 
 public class RequestHelpCommand extends Command {
-    public static final String COMMAND_WORD = "rb";
+    public static final String COMMAND_WORD = "request";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
             + "Requests help from headquarters.\n\t"
             + "Message from police officer can be appended in text.\n\t"
@@ -197,11 +243,6 @@ public class RequestHelpCommand extends Command {
     private Msg requestHelpMessage;
     private WriteNotification writeNotification;
 
-    /**
-     * Constructor for the Writers to write to headquarters personnel file.
-     *
-     * @throws IllegalValueException if any of the raw values are invalid
-     */
     public RequestHelpCommand(String caseName, String messageString) throws IllegalValueException {
         writeNotification = new WriteNotification(MessageFilePaths.FILEPATH_HQP_INBOX, true);
         requestHelpMessage = new Msg(Offense.getPriority(caseName), messageString, PatrolResourceStatus.getLocation(Password.getID()));
@@ -359,7 +400,6 @@ public class Location {
 
             return etaList;
         } catch(JSONException jsonE) {
-            // TODO: Handle exception better
             jsonE.printStackTrace();
         }
 
@@ -383,7 +423,7 @@ public class Location {
             if (response != null) {
                 String jsonString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
                 etaList = getEtaFromJsonObject(new JSONObject(jsonString));
-            } // TODO: Change this exception
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -395,6 +435,17 @@ public class Location {
         return GOOGLE_MAPS_BASE_URL + this.getLatitude() + "," + this.getLongitude();
     }
 
+    /*public static void main(String[] args) {
+        Location location = new Location(-6.206968,106.751365);
+        Location origin = new Location(-6.189482, 106.733902);
+        ArrayList<Location> locationList = new ArrayList<>();
+        locationList.add(origin);
+
+        ArrayList<Pair<Integer, String>> ETATiming = location.getEtaFrom(locationList);
+        for (Pair<Integer, String> eta: ETATiming) {
+            System.out.println(eta.getValue0() + " " + eta.getValue1());
+        }
+    }*/
 }
 ```
 ###### \seedu\addressbook\data\person\Offense.java
@@ -475,15 +526,16 @@ public class Location {
      * @return the prepared request command
      */
     private Command prepareRequest(String args) {
-        String message, caseName = args.trim();
+        String caseName, message;
+        String[] argParts = args.trim().split(" ", 2);
 
-        if (caseName.length() == 0) {
+        if (argParts.length < 2) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     RequestHelpCommand.MESSAGE_USAGE));
         }
 
-        message = Password.getID().toUpperCase() + " needs help with " + caseName + " at location "  +
-                        PatrolResourceStatus.getLocation(Password.getID()).getGoogleMapsURL();
+        caseName = argParts[0];
+        message = argParts[1];
 
         try {
             return new RequestHelpCommand(caseName, message);
@@ -507,14 +559,14 @@ public class Location {
 
         if (argParts.length < 3) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    DispatchCommand.MESSAGE_USAGE));
+                    DispatchBackup.MESSAGE_USAGE));
         }
 
         backupOfficer = argParts[0].toLowerCase();
         caseName = argParts[1].toLowerCase();
         dispatchRequester = argParts[2].toLowerCase();
 
-        return new DispatchCommand(backupOfficer, dispatchRequester, caseName);
+        return new DispatchBackup(backupOfficer, dispatchRequester, caseName);
     }
 
 }
@@ -524,10 +576,7 @@ public class Location {
 package seedu.addressbook;
 
 import org.javatuples.Triplet;
-import seedu.addressbook.commands.UpdateStatusCommand;
 import seedu.addressbook.common.Location;
-import seedu.addressbook.common.Messages;
-import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.ArrayList;
 
@@ -562,20 +611,17 @@ public class PatrolResourceStatus {
             case "po5":
                 return patrolResourceStatus.get(5).getValue1();
             default:
-                return patrolResourceStatus.get(0).getValue1(); // default for test cases
+                return null;
         }
     }
 
-    public static void setStatus(String policeOfficerId, Boolean status) throws IllegalValueException {
-        int index = 0;
+    public static void setStatus(String policeOfficerId, Boolean status) {
         for (Triplet<String, Location, Boolean> policeOfficer : patrolResourceStatus) {
             if (policeOfficer.getValue0().equalsIgnoreCase(policeOfficerId)) {
-                patrolResourceStatus.set(index,Triplet.with(policeOfficer.getValue0(),policeOfficer.getValue1(),status));
+                policeOfficer.setAt2(status);
                 return;
             }
-            index++;
         }
-        throw new IllegalValueException(Messages.MESSAGE_PO_NOT_FOUND);
     }
 
 }
