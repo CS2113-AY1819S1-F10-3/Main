@@ -794,7 +794,7 @@ public class LogicTest {
 
             numOfMsgs--;
             messageNum++;
-            Thread.sleep(100);
+            Thread.sleep(50);
         }
     }
 

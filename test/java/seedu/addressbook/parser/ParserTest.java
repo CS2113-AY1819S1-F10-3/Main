@@ -9,7 +9,8 @@ import seedu.addressbook.data.person.*;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 public class ParserTest {
@@ -120,6 +121,46 @@ public class ParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
+
+//@@author ongweekeong
+    @Test
+    public void showUnreadCommand_parsedCorrectly(){
+        final String input = "showunread";
+        final InboxCommand result = parseAndAssertCommandType(input, InboxCommand.class);
+    }
+
+    @Test
+    public void readCommand_parsedCorrectly(){
+        final int index = 2;
+        final String input = "read " + index;
+        final ReadCommand result = parseAndAssertCommandType(input, ReadCommand.class);
+    }
+
+    @Test
+    public void readCommand_invalidArgs_parsedIncorrectly(){
+        final String[] index = {
+                "a",
+                "!",
+                "\'",
+                ".",
+                "#",
+                "$"
+        };
+        final String input = "read " + index;
+        final String result = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(result, input);
+    }
+
+    @Test
+    public void readCommand_noArgs_parsedIncorrectly(){
+        final String[] inputs = {
+                "read",
+                "read "
+        };
+        final String result = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(result, inputs);
+    }
+
 //@@author muhdharun -reused
     @Test
     public void findCommand_validArgs_parsedCorrectly() {
