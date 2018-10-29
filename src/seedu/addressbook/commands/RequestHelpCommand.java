@@ -22,9 +22,9 @@ public class RequestHelpCommand extends Command {
             + " Help needed on Jane Street";
 
 
-    public static String MESSAGE_REQUEST_SUCCESS = "Request for backup is successful.";
+    public static String MESSAGE_REQUEST_SUCCESS = "Request for backup case from %s has been sent to HQP.";
 
-    private Msg requestHelpMessage;
+    private static Msg requestHelpMessage;
     private WriteNotification writeNotification;
 
     /**
@@ -42,10 +42,17 @@ public class RequestHelpCommand extends Command {
     public CommandResult execute() {
         try {
             writeNotification.writeToFile(requestHelpMessage);
-            return new CommandResult(String.format(MESSAGE_REQUEST_SUCCESS));
+            return new CommandResult(String.format(MESSAGE_REQUEST_SUCCESS, Password.getID()));
         } catch (IOException ioe) {
             return new CommandResult(Messages.MESSAGE_SAVE_ERROR);
         }
+    }
+
+    public static Msg getRecentMessage() {
+        if (requestHelpMessage == null) {
+            throw new NullPointerException("Request command was never called");
+        }
+        return requestHelpMessage;
     }
 
 

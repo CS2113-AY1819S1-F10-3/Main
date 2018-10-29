@@ -9,6 +9,10 @@ public class Offense {
     public static final String EXAMPLE = "theft";
     public static final String MESSAGE_OFFENSE_INVALID = "Offense must be inside the list:";
     public static final String NULL_OFFENSE = "none";
+
+    public static final String MESSAGE_OFFENSE_INVALID = "Offense must be inside the list:\n";
+                //+ getOffenseList();
+
 //@@author andyrobert3
     private static HashMap<String, Msg.Priority> OFFENSE_LIST = new HashMap<>();
     static {
@@ -24,6 +28,8 @@ public class Offense {
         OFFENSE_LIST.put("outrage-of-modesty", Msg.Priority.MED);
         OFFENSE_LIST.put("murder", Msg.Priority.HIGH);
         OFFENSE_LIST.put("riot", Msg.Priority.HIGH);
+        OFFENSE_LIST.put("murder", Msg.Priority.MED);
+        OFFENSE_LIST.put("suspect-loose", Msg.Priority.MED);
         OFFENSE_LIST.put("gun", Msg.Priority.HIGH);
         OFFENSE_LIST.put("gunman", Msg.Priority.HIGH);
         OFFENSE_LIST.put("fleeing suspect", Msg.Priority.HIGH);
@@ -75,6 +81,14 @@ public class Offense {
 
         this.offense = offense;
     }
+
+//    private static String getOffenseList() {
+//        String offenseList = "";
+//        for (Map.Entry<String, Msg.Priority> entry : OFFENSE_LIST.entrySet()) {
+//            offenseList += entry.getKey() + "\n";
+//        }
+//        return offenseList;
+//    }
 
     /**
      * Returns true if a given string is a valid tag name.

@@ -18,15 +18,8 @@ public class HttpRestClient {
         httpClient = HttpClientBuilder.create().build();
     }
 
-    public HttpResponse requestGetResponse(String url) {
-        try {
-            HttpGet request = new HttpGet(url);
-            HttpResponse response = httpClient.execute(request);
-            return response;
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-
-        return null;
+    public HttpResponse requestGetResponse(String url) throws IOException {
+        HttpGet request = new HttpGet(url);
+        return httpClient.execute(request);
     }
 }

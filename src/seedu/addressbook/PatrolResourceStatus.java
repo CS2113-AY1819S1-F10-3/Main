@@ -24,6 +24,25 @@ public class PatrolResourceStatus {
         return patrolResourceStatus;
     }
 
+    public static Triplet<String, Location, Boolean> getPatrolResource(String patrolResource) {
+        switch (patrolResource) {
+            case "hqp":
+                return patrolResourceStatus.get(0);
+            case "po1":
+                return patrolResourceStatus.get(1);
+            case "po2":
+                return patrolResourceStatus.get(2);
+            case "po3":
+                return patrolResourceStatus.get(3);
+            case "po4":
+                return patrolResourceStatus.get(4);
+            case "po5":
+                return patrolResourceStatus.get(5);
+            default:
+                return patrolResourceStatus.get(0); // default for test cases
+        }
+    }
+
     // TODO: put into message
     public static Location getLocation(String patrolResource) {
         switch (patrolResource) {
