@@ -34,6 +34,8 @@ Over the course of the project, my team and I have implemented 5 major features:
 == Summary of Contributions
 The purpose of this section is to allow readers to get a clearer idea of how the work was divided among the team, and the specific contributions that I have made for the project. The major feature that I was working on in the project is explained below
 
+* Role: Developer 
+
 === Major Enhancement – Notification Messages System
 
 * What it does: This feature allows you as a system user to send specific messages to other users, and read unread messages that other uses may have sent to you. To read unread messages that have been sent to you, type “showunread” in the CLI. Messages will appear with the most urgent message appearing at the top.
@@ -50,6 +52,10 @@ The purpose of this section is to allow readers to get a clearer idea of how the
 *	Functional code: https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/functional/ongweekeong.md
 *	Test code: https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/test/ongweekeong.md
 
+=== Other Contributions:
+*	Edited `build.gradle` file to enable jar file generation via using shadowJar
+*	Enhancements to existing features:
+**	Wrote additional tests for implemented features to increase code coverage from 40.7% to 51.38% (Pull request https://github.com/CS2113-AY1819S1-F10-3/main/pull/155[#155])
 
 == Contributions to the User Guide
 The User Guide is written with the end-users as the main target audience. The sections which I contributed to the User Guide are as shown below:
