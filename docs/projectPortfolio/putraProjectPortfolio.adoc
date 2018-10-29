@@ -11,7 +11,7 @@ image::iamputradanish.png[width="150", align="left"]
 
 == Overview
 
-The police database is for police officers(PO) and headquarter personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database. Refer to quick start to get started
+The police database is for police officers(PO) and headquarter personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database.
 
 == Summary of contributions
 
@@ -28,22 +28,22 @@ The ability to lock anytime also helps to increase security in times of emergenc
 
 * *Minor enhancement*: added a lock command that allows any user to lock (log out) the device immediately at any time.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/functional/iamputradanish.md[Functional code]] [https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/test/iamputradanish.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed all project releases `v1.1` - `v1.4` (4 releases) on GitHub
-*** Managed all versions of product, and dissemination of all issues to team members
+*** Managed project pre-releases `v1.1` - `v1.2` and project release 'v1.3' on GitHub
+*** Managed all versions of product, and disseminated almost all issues to team members
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for implemented features to increase coverage from 30% to 35% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Updated the GUI color scheme (Pull requests https://github.com/CS2113-AY1819S1-F10-3/main/pull/98[#98])
+*** Wrote additional tests for implemented features to increase coverage from 30% to 33% (Pull request https://github.com/CS2113-AY1819S1-F10-3/main/pull/129[#129])
 ** Documentation:
 *** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
-*** Added use cases for implemented features in Developer Guide : https//github.com[#15]
+*** Added use cases and implementation for implemented features in Developer Guide : Pull requests https://github.com/CS2113-AY1819S1-F10-3/main/pull/129[#129] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/23[#23]
 ** Community:
-*** PRs reviewed : https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** PRs reviewed : https://github.com/CS2113-AY1819S1-F10-3/main/pull/21[#21], https://github.com/CS2113-AY1819S1-F10-3/main/pull/24[#24], https://github.com/CS2113-AY1819S1-F10-3/main/pull/26[#26], https://github.com/CS2113-AY1819S1-F10-3/main/pull/48[#48] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/99[#99] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/108[#108] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/111[#111] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/113[#113] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/117[#117] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/120[#120] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/128[#128] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/138[#138] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/140[#140] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/142[#142] , https://github.com/CS2113-AY1819S1-F10-3/main/pull/161[#161] 
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3]) *todo on friday*
 
 == Contributions to the User Guide
 
@@ -59,4 +59,4 @@ include::../UserGuide.adoc[tag=password]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=use cases]
+include::../DeveloperGuide.adoc[tag=password , lock , ]
