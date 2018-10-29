@@ -2,7 +2,10 @@
 package seedu.addressbook;
 
 import org.javatuples.Triplet;
+import seedu.addressbook.commands.UpdateStatusCommand;
 import seedu.addressbook.common.Location;
+import seedu.addressbook.common.Messages;
+import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.ArrayList;
 
@@ -60,13 +63,16 @@ public class PatrolResourceStatus {
         }
     }
 
-    public static void setStatus(String policeOfficerId, Boolean status) {
+    public static void setStatus(String policeOfficerId, Boolean status) throws IllegalValueException {
+        int index = 0;
         for (Triplet<String, Location, Boolean> policeOfficer : patrolResourceStatus) {
             if (policeOfficer.getValue0().equalsIgnoreCase(policeOfficerId)) {
-                policeOfficer.setAt2(status);
+                patrolResourceStatus.set(index,Triplet.with(policeOfficer.getValue0(),policeOfficer.getValue1(),status));
                 return;
             }
+            index++;
         }
+        throw new IllegalValueException(Messages.MESSAGE_PO_NOT_FOUND);
     }
 
 }
