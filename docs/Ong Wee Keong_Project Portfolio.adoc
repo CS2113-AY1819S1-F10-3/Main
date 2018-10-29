@@ -2,7 +2,6 @@
 :site-section: ProjectPortfolio
 :toc:
 :toc-title:
-:toc-placement: preamble
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
