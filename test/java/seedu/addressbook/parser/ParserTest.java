@@ -3,7 +3,6 @@ package seedu.addressbook.parser;
 import org.junit.Before;
 import org.junit.Test;
 import seedu.addressbook.commands.*;
-import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
 
@@ -167,8 +166,8 @@ public class ParserTest {
     }
 
     @Test
-    public void readCommand_invalidArgs_parsedIncorrectly(){
-        final String[] index = {
+    public void readCommand_invalidArgs_parsedIncorrectly() {
+        final String[] indices = {
                 "a",
                 "!",
                 "\'",
@@ -176,9 +175,11 @@ public class ParserTest {
                 "#",
                 "$"
         };
-        final String input = "read " + index;
         final String result = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
+        for (String index : indices){
+            String input = "read " + index;
         parseAndAssertIncorrectWithMessage(result, input);
+        }
     }
 
     @Test
