@@ -10,6 +10,8 @@
 
 == Introduction
 The purpose of this portfolio is to document the specific contributions that I have made to this project. The project, with the end product being called “Police Records System” (PRS), was done over the course of one semester in National University of Singapore (NUS), under the module CS2113T, which aims to teach Software Engineering principles and Object-Oriented Programming. PRS was done by a team of 5 people including myself, and 4 other course mates. 
+
+
 === Overview of Project
 PRS is a product that was morphed from the original Addressbook Level 3, published by a Github organization called Software Engineering Education (https://github.com/se-edu/addressbook-level3). PRS is an application that is designed to aid Police Officers in their patrolling duties to make screening subjects more efficient and well documented. 
 It also serves as a system for communication between Police Officers (POs) on patrol and the Headquarters Personnel (HQP) in cases where additional manpower resources are required for backup.
@@ -17,22 +19,26 @@ PRS is currently a desktop application, designed specifically for users who are 
 
 === Main Features Implemented
 Over the course of the project, my team and I have implemented 5 major features:
-.	Password-Lock
-.	Text Prediction and Correction
-.	Screening History
-.	Notification Messages
-.	Editing and Deleting by NRIC of Subjects
+
+. Password-Lock
+. Text Prediction and Correction
+. Screening History
+. Notification Messages
+. Editing and Deleting by NRIC of Subjects
 
 == Summary of Contributions
-The purpose of this section is to allow readers to get a clearer idea of how the work was divided among the team, and the specific contributions that I have made for the project. The major feature that I was working on in the project is explained below:
+The purpose of this section is to allow readers to get a clearer idea of how the work was divided among the team, and the specific contributions that I have made for the project. The major feature that I was working on in the project is explained below
+
 === Major Enhancement – Notification Messages System
-*	What it does: This feature allows you as a system user to send specific messages to other users, and read unread messages that other uses may have sent to you. To read unread messages that have been sent to you, type “showunread” in the CLI. Messages will appear with the most urgent message appearing at the top.
 
-*	Justification/Significance: This feature is highly significant in the product, as it is the pipeline that enables communication between different system users to happen. This is the feature that enables POs to request for backup when required, and for HQP to dispatch backup as required. 
+* What it does: This feature allows you as a system user to send specific messages to other users, and read unread messages that other uses may have sent to you. To read unread messages that have been sent to you, type “showunread” in the CLI. Messages will appear with the most urgent message appearing at the top.
 
-*	Highlights: This enhancement supports communication between users, which is something completely new in this system. This was previously not possible through the code base given to us in Addressbook Level 3. Thus, the implementation was highly challenging as rigorous thinking was required to come up with an appropriate system that allows various users to send and receive specifically from another user, as well as methods for storing the messages sent and received.  
+* Justification/Significance: This feature is highly significant in the product, as it is the pipeline that enables communication between different system users to happen. This is the feature that enables POs to request for backup when required, and for HQP to dispatch backup as required. 
+
+* Highlights: This enhancement supports communication between users, which is something completely new in this system. This was previously not possible through the code base given to us in Addressbook Level 3. Thus, the implementation was highly challenging as rigorous thinking was required to come up with an appropriate system that allows various users to send and receive specifically from another user, as well as methods for storing the messages sent and received.  
 
 === Minor Enhancement – Allowed users to mark messages as read
+
 *	This enhancement allows users to respond to the messages that are sent to them and updating the read status of those messages once action has been taken, depending on the nature of the message sent to them.
 Code Contributed:
 *	Functional code: https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/functional/ongweekeong.md
@@ -40,7 +46,8 @@ Code Contributed:
 
 
 == Contributions to the User Guide
-The User Guide is written with the end-users as the main target audience. The sections which I contributed to the User Guide are as shown below.
+The User Guide is written with the end-users as the main target audience. The sections which I contributed to the User Guide are as shown below:
+
 === 1. Introduction
 The police database is for police officers (PO) and headquarter personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database. Refer to quick start to get started
 
@@ -48,10 +55,12 @@ The police database is for police officers (PO) and headquarter personnel(HQP). 
 For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp. For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders
 Format: 'showunread'
 Examples (as a HQP):
+
 *	'showunread'
 *	Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:
 Examples (as a PO): * 'showunread' * Shows any dispatch messages by HQ or response for backup if any
-3.15. Read message : read
+
+=== 3.15. Read message : read
 Updates the status of unread messages to read. Command to be used after showunread command
 Format: 'read index'
 Examples: * read 1
@@ -60,6 +69,7 @@ Examples: * read 1
 
 == Contributions to the Developer Guide
 The Developer Guide is written for developers who wish to contribute to the project or adapt it for their own use, to get a better understanding of the software. The sections below are my contributions to the Developer Guide:
+
 === Introduction
 The purpose of this Developer Guide is to provide useful information to software developers who desire to contribute to the project (e.g. optimizing of code, adding test cases, etc.), including an overview of the software architecture, design as well as current implementations and intended functionality of current features. The police database is for police officers(PO) and headquarters personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database. Refer to quick start to get started.
 
