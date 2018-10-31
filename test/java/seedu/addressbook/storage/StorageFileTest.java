@@ -1,21 +1,26 @@
 package seedu.addressbook.storage;
 
-import static org.junit.Assert.assertEquals;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-
+import junit.framework.TestCase;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
-
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.inbox.Msg;
+import seedu.addressbook.inbox.ReadNotification;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
+
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.TreeSet;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.addressbook.common.Messages.MESSAGE_INBOX_FILE_NOT_FOUND;
 import static seedu.addressbook.util.TestUtil.assertTextFilesEqual;
 
 public class StorageFileTest {
@@ -108,4 +113,19 @@ public class StorageFileTest {
                                 new HashSet<>(Arrays.asList(new Offense("theft"), new Offense("riot")))));
         return ab;
     }
+
+    //@@author ongweekeong
+    @Test
+    public void load_missingInboxFile() {
+        String result = "";
+        try{
+            ReadNotification testReader = new ReadNotification("Nonsense");
+            TreeSet<Msg> testSet = testReader.ReadFromFile();
+        }
+        catch (IOException e){
+            result = MESSAGE_INBOX_FILE_NOT_FOUND;
+        }
+        TestCase.assertEquals(MESSAGE_INBOX_FILE_NOT_FOUND, result);
+    }
+
 }
