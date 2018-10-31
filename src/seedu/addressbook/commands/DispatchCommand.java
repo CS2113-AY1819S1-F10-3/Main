@@ -9,7 +9,6 @@ import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.exception.PatrolResourceUnavailableException;
 import seedu.addressbook.data.person.Offense;
-import seedu.addressbook.inbox.MessageFilePaths;
 import seedu.addressbook.inbox.Msg;
 import seedu.addressbook.inbox.WriteNotification;
 
@@ -35,8 +34,8 @@ public class DispatchCommand extends Command{
     private String offense;
 
     public DispatchCommand(String backupOfficer, String requester, String caseName) {
-        writeNotificationToBackupOfficer = new WriteNotification(MessageFilePaths.getFilePathFromUserId(backupOfficer), true);
-        writeNotificationToRequester = new WriteNotification(MessageFilePaths.getFilePathFromUserId(requester), true);
+        writeNotificationToBackupOfficer = new WriteNotification(backupOfficer);
+        writeNotificationToRequester = new WriteNotification(requester);
 
         this.offense = caseName;
         this.backupOfficer = backupOfficer;
