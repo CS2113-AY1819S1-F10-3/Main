@@ -392,7 +392,7 @@ public class LogicTest {
 
     @Test
     public void execute_httpGetRequest_internetAvailable() throws Exception {
-        String testUrl = "http://requestbin.fullcontact.com/1g739591";
+        String testUrl = "http://google.com";
         HttpRestClient httpRestClient = new HttpRestClient();
         int statusCode = httpRestClient.requestGetResponse(testUrl)
                             .getStatusLine().getStatusCode();
@@ -556,8 +556,8 @@ public class LogicTest {
     }
 
 
-    // TODO: HARUN HELP!
-//    //@@author andyrobert3
+
+    //@@author andyrobert3
 
     @Test
     public void execute_edit_successful() throws Exception {
@@ -729,6 +729,13 @@ public class LogicTest {
     @Test
     public void execute_updateStatus_validPo() throws Exception {
         assertCommandBehavior("updatestatus po1",String.format(UpdateStatusCommand.MESSAGE_UPDATE_PO_SUCCESS,"po1"));
+    }
+
+    @Test
+    public void execute_getMessageForPersonShownSummary_NullInput() throws Exception {
+        String expectedMessage = Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK;
+        String actualMessage = Command.getMessageForPersonShownSummary(null);
+        assertEquals(expectedMessage,actualMessage);
     }
 
 //@@author

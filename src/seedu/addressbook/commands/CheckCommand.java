@@ -17,6 +17,7 @@ public class CheckCommand extends Command {
             + "Example: " + COMMAND_WORD + " s1234567a";
 
     private String nricKeyword;
+    private String FILE_NOT_FOUND_ERROR = "File not found";
 
     public CheckCommand(String nricToFind)
     {
@@ -29,8 +30,14 @@ public class CheckCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        final List<String> screeningHistory = getPersonWithNric(nricKeyword);
-        return new CommandResult(getMessageForScreeningHistoryShownSummary(screeningHistory,nricKeyword));
+        final List<String> screeningHistory;
+        try {
+            screeningHistory = getPersonWithNric(nricKeyword);
+            return new CommandResult(getMessageForScreeningHistoryShownSummary(screeningHistory,nricKeyword));
+        } catch (IOException e) {
+            return new CommandResult(FILE_NOT_FOUND_ERROR);
+        }
+
     }
 
     /**
@@ -39,13 +46,10 @@ public class CheckCommand extends Command {
      * @return list of timestamps converted to strings
      */
 
-    private List<String> getPersonWithNric(String nric){
-        List<String> screeningHistory = new ArrayList<>();
-        try {
-            screeningHistory = addressBook.readDatabase(nric);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private List<String> getPersonWithNric(String nric) throws IOException{
+        List<String> screeningHistory;
+        screeningHistory = addressBook.readDatabase(nric);
+
         return screeningHistory;
     }
 
