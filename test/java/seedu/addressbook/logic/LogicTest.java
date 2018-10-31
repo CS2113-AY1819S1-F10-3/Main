@@ -389,7 +389,7 @@ public class LogicTest {
 
     @Test
     public void execute_httpGetRequest_internetAvailable() throws Exception {
-        String testUrl = "http://requestbin.fullcontact.com/1g739591";
+        String testUrl = "http://google.com";
         HttpRestClient httpRestClient = new HttpRestClient();
         int statusCode = httpRestClient.requestGetResponse(testUrl)
                             .getStatusLine().getStatusCode();
