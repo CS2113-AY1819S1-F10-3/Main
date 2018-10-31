@@ -4,9 +4,12 @@ package seedu.addressbook.commands;
 import org.javatuples.Triplet;
 import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.common.Location;
-
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Returns a list of all POs and their current engagement status
+ */
 
 public class CheckPOStatusCommand extends Command {
 
