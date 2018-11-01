@@ -18,7 +18,7 @@ public class Password {
     public static final String MESSAGE_ATTEMPT_LEFT = "You have %1$d attempt left. ";
     public static final String MESSAGE_SHUTDOWN_WARNING = "System will shut down if password is incorrect. ";
     public static final String MESSAGE_SHUTDOWN = "Password is incorrect. System will shut down. ";
-    private static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
+    public static final String MESSAGE_ENTER_PASSWORD_TO_CHANGE = "Please enter current password to change: ";
     public static final String MESSAGE_HQP = "Headquarters Personnel";
     public static final String MESSAGE_PO = "Police Officer ";
     public static final String MESSAGE_ONE = "Oscar November Echo";
@@ -104,7 +104,13 @@ public class Password {
         lockUpdatePasswordConfirm();
         lockUpdatingPassword();
     }
-    private boolean isUpdatingPassword = false;
+    private static boolean isUpdatingPassword = false;
+    public static boolean getIsUpdatingPassword(){
+        return isUpdatingPassword;
+    }
+    public static void unprepareUpdatePassword(){
+        isUpdatingPassword = false;
+    }
     public boolean isUpdatePasswordConfirmNow() {
         return isUpdatePasswordConfirm;
     }
@@ -235,37 +241,38 @@ public class Password {
         wrongPasswordCounter--;
     }
 
-    private static boolean correctPassword(String storedCurrPassword, int hashedEnteredPassword){
+    public static boolean correctPassword(String storedCurrPassword, int hashedEnteredPassword){
         return storedCurrPassword.equals(Integer.toString(hashedEnteredPassword));
     }
 
-    private static boolean correctHQP(String user, String storedCurrPassword, int hashedEnteredPassword){
+    public static boolean correctHQP(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("hqp") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
 
-    private static boolean correctPO1(String user, String storedCurrPassword, int hashedEnteredPassword){
+    public static boolean correctPO1(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po1") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
-    private static boolean correctPO2(String user, String storedCurrPassword, int hashedEnteredPassword){
+    public static boolean correctPO2(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po2") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
-    private static boolean correctPO3(String user, String storedCurrPassword, int hashedEnteredPassword){
+    public static boolean correctPO3(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po3") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
-    private static boolean correctPO4(String user, String storedCurrPassword, int hashedEnteredPassword){
+    public static boolean correctPO4(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po4") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
-    private static boolean correctPO5(String user, String storedCurrPassword, int hashedEnteredPassword){
+    public static boolean correctPO5(String user, String storedCurrPassword, int hashedEnteredPassword){
         return user.equals("po5") && correctPassword(storedCurrPassword, hashedEnteredPassword);
     }
 
-    public String prepareUpdatePassword(){
+    public static String prepareUpdatePassword(){
         isUpdatingPassword = true;
         setWrongPasswordCounter(5);
         return MESSAGE_ENTER_PASSWORD_TO_CHANGE;
     }
 
-    public String updatePassword(String userCommandText,int number) throws Exception {
+
+    public String updatePassword(String userCommandText, int number) throws Exception {
 
         String result = null;
 
