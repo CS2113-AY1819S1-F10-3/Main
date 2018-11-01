@@ -15,13 +15,11 @@ import java.sql.Timestamp;
 
 public class Msg implements Comparable <Msg> {
     private String senderId = Password.getID();
-    protected String receiverId;
     private String newMsg;
     private Priority priority;
     private Location location;
     private int eta = -1;
 
-    //private String comment;
     protected boolean isRead;
     protected boolean isLocationAvailable;
     private Timestamp time;
@@ -51,10 +49,6 @@ public class Msg implements Comparable <Msg> {
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
     }
-
-    // constructor for dispatcher message
-
-    // constructor for requester message
     
 
     public Msg(Priority urgency, String message){
@@ -117,20 +111,8 @@ public class Msg implements Comparable <Msg> {
         return location;
     }
 
-    public void setLongitude(double x){
-        location.setLongitude(x);
-    }
-
-    public void setLatitude(double y){
-        location.setLatitude(y);
-    }
-
     public void setMsgAsRead(){
         this.isRead = MESSAGE_IS_READ;
-    }
-
-    public void setMsgAsUnread(){
-        this.isRead = MESSAGE_IS_UNREAD;
     }
 
     public double getLongitude(){
@@ -153,14 +135,6 @@ public class Msg implements Comparable <Msg> {
        return eta != -1;
     }
 
-//    public String getPoliceOfficerId() {
-//        return (this.policeOfficerId == null) ? "-" : policeOfficerId;
-//    }
-//    public void setPoliceOfficerId(String policeOfficerId) { this.policeOfficerId = policeOfficerId; }
-//
-//    public boolean hasPoliceOfficerId() {
-//        return policeOfficerId != null;
-//    }
 
     public void setTime(){
         time = new Timestamp(System.currentTimeMillis()); // Set to current time if no timestamp passed.
