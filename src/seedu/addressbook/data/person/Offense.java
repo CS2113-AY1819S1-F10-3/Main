@@ -5,6 +5,10 @@ import seedu.addressbook.inbox.Msg;
 
 import java.util.*;
 
+/**
+ * Represents a person's offense
+ */
+
 public class Offense {
     public static final String EXAMPLE = "theft";
     public static final String NULL_OFFENSE = "none";

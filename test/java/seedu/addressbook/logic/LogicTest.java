@@ -247,6 +247,16 @@ public class LogicTest {
                 "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
 
     }
+    //@@author muhdharun
+
+    @Test
+    public void execute_CopyConstructorPerson() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        ReadOnlyPerson test = helper.adam();
+        Person duplicateAdam = new Person(test);
+        assertEquals(test,duplicateAdam);
+    }
+
 //@@author
     @Test
     public void execute_add_successful() throws Exception {
@@ -557,8 +567,8 @@ public class LogicTest {
     }
 
 
-    // TODO: HARUN HELP!
-//    //@@author andyrobert3
+
+    //@@author andyrobert3
 
     @Test
     public void execute_edit_successful() throws Exception {
@@ -730,6 +740,13 @@ public class LogicTest {
     @Test
     public void execute_updateStatus_validPo() throws Exception {
         assertCommandBehavior("updatestatus po1",String.format(UpdateStatusCommand.MESSAGE_UPDATE_PO_SUCCESS,"po1"));
+    }
+
+    @Test
+    public void execute_getMessageForPersonShownSummary_NullInput() throws Exception {
+        String expectedMessage = Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK;
+        String actualMessage = Command.getMessageForPersonShownSummary(null);
+        assertEquals(expectedMessage,actualMessage);
     }
 
 //@@author
