@@ -2,10 +2,11 @@
 *.class
 
 # Default data file
-notification.txt
+notifications.txt
 policeRecords.txt
 ScreeningHistory.txt
 requestList.txt
+inboxMessages/
 
 # Logger files
 /config.json
