@@ -3,7 +3,7 @@ package seedu.addressbook.data.person;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
- * Represents a Person's identification number(NRIC or FIN) in the EX-SI-53.
+ * Represents a Person's identification number(NRIC or FIN).
  * Guarantees: immutable; is valid as declared in {@link #isValidNRIC(String)}
  */
 

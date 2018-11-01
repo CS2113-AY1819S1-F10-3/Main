@@ -42,7 +42,8 @@ public class Formatter {
         }
         return format(asIndexedList(formattedPersons));
     }
-
+//@@author muhdharun
+    /** Formats given list of strings to the user. */
     public String formatForStrings(List<String> strings) {
         final List<String> formattedTimestamps = new ArrayList<>();
         for (String string : strings) {
@@ -50,7 +51,7 @@ public class Formatter {
         }
         return format(asIndexedList(formattedTimestamps));
     }
-
+//@@author
     /** Formats a list of strings as an indexed list. */
     private static String asIndexedList(List<String> listItems) {
         final StringBuilder formatted = new StringBuilder();

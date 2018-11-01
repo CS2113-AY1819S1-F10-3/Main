@@ -117,7 +117,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Replaces this person's tags with the tags in {@code newPastOffenses}.
+     * Replaces this person's offenses with the offenses in {@code newPastOffenses}.
      */
     public void addPastOffenses(Set<Offense> newPastOffenses) {
         pastOffenses.addAll(newPastOffenses);
