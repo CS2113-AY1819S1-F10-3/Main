@@ -1109,13 +1109,13 @@ public class LogicTest {
         assertCommandBehavior(ClearInboxCommand.COMMAND_WORD, expected);
     }
 //TODO
-    /*@Test
+    @Test
     public void execute_unsuccessfulClearInboxCommand() throws Exception {
         String expected = ClearInboxCommand.MESSAGE_CLEARINBOX_UNSUCCESSFUL;
         Command input = new ClearInboxCommand("This file path does not exist");
         CommandResult r = input.execute();
         assertEquals(expected, r.feedbackToUser);
-    }*/
+    }
     //@@author
 
     /**

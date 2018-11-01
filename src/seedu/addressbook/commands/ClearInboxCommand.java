@@ -29,9 +29,9 @@ public class ClearInboxCommand extends Command {
     public ClearInboxCommand(){
 
     }
-    /*public ClearInboxCommand(String filepath){
+    public ClearInboxCommand(String filepath){
         myInbox = filepath;
-    }*/
+    }
 
     @Override
     public CommandResult execute() {
