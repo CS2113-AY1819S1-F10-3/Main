@@ -2,10 +2,10 @@
 *.class
 
 # Default data file
-notifications.txt
+notifications\.txt
 policeRecords\.txt
 ScreeningHistory\.txt
-requestList.txt
+requestList\.txt
 inboxMessages/
 
 # Logger files
