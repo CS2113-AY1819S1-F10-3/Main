@@ -1102,6 +1102,20 @@ public class LogicTest {
         Msg msgMedLater = new Msg(Msg.Priority.MED, testMsg);
         assertEquals(expectedEarlierToLater, msgMed.compareTo(msgMedLater));
     }
+
+    @Test
+    public void execute_clearInboxCommand() throws Exception {
+        String expected = ClearInboxCommand.MESSAGE_CLEARINBOX_SUCCESSFUL;
+        assertCommandBehavior(ClearInboxCommand.COMMAND_WORD, expected);
+    }
+//TODO
+    /*@Test
+    public void execute_unsuccessfulClearInboxCommand() throws Exception {
+        String expected = ClearInboxCommand.MESSAGE_CLEARINBOX_UNSUCCESSFUL;
+        Command input = new ClearInboxCommand("This file path does not exist");
+        CommandResult r = input.execute();
+        assertEquals(expected, r.feedbackToUser);
+    }*/
     //@@author
 
     /**
