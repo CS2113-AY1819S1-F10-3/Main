@@ -27,6 +27,11 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
 //@@author muhdharun
+    /**
+     * Signals that an operation adding a person in the list would fail because
+     * it would result in duplicate NRICs.
+     */
+
     public static class DuplicateNricException extends DuplicateDataException {
         protected DuplicateNricException() {
             super("Operation would result in duplicate NRIC");
@@ -45,6 +50,11 @@ public class UniquePersonList implements Iterable<Person> {
      * Constructs empty person list.
      */
     public UniquePersonList() {}
+
+    /**
+     * Checks if a person in PRISM has the specified NRIC
+     *
+     */
 
 //@@author muhdharun
     public boolean containNric(Person toCheck) {

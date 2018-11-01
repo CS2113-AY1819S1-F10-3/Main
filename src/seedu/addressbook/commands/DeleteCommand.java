@@ -33,9 +33,7 @@ public class DeleteCommand extends Command {
             final ReadOnlyPerson target = (toDelete == null) ? getTargetPerson() : getTargetPerson(toDelete);
             addressBook.removePerson(target);
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, target));
-        } catch (IndexOutOfBoundsException ie) {
-            return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        } catch (PersonNotFoundException pnfe) {
+        }  catch (PersonNotFoundException pnfe) {
             //@@author ShreyasKp
             CheckDistance checker = new CheckDistance();
 

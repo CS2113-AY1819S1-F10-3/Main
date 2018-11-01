@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Represents the entire address book. Contains the data of the address book.
+ * Represents PRISM. Contains the data of PRISM.
  */
 public class AddressBook {
 
@@ -34,23 +34,23 @@ public class AddressBook {
     }
 
     /**
-     * Creates an empty address book.
+     * Creates an empty PRISM system.
      */
     public AddressBook() {
         allPersons = new UniquePersonList();
     }
 
     /**
-     * Constructs an address book with the given data.
+     * Constructs a PRISM system with the given data.
      *
-     * @param persons external changes to this will not affect this address book
+     * @param persons external changes to this will not affect PRISM
      */
     public AddressBook(UniquePersonList persons) {
         this.allPersons = new UniquePersonList(persons);
     }
 
     /**
-     * Adds a person to the address book.
+     * Adds a person to PRISM.
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
@@ -58,11 +58,19 @@ public class AddressBook {
         allPersons.add(toAdd);
     }
 //@@author muhdharun
+
+    /**
+     * Sets the timestamp of screening, as well as the NRIC to be added
+     */
     public void addPersonToDbAndUpdate(ReadOnlyPerson toAdd) {
         TimeAndDate timeAndDate = new TimeAndDate();
         tempNric = toAdd.getNric().getIdentificationNumber();
         tempTimestamp = timeAndDate.outputDATHrs();
     }
+
+    /**
+     * Reads the txt file to get the timestamps for the specified NRIC
+     */
 
     public List<String> readDatabase(String nric) throws IOException {
         List<String> data = new ArrayList<>();
@@ -86,6 +94,10 @@ public class AddressBook {
         br.close();
         return data;
     }
+
+    /**
+     * Adds the timestamp, the respective NRIC and the PO who screened the person (using 'find' command)
+     */
 
     public void updateDatabase() throws IOException {
         String line;
@@ -117,7 +129,7 @@ public class AddressBook {
     }
 //@@author
     /**
-     * Checks if an equivalent person exists in the address book.
+     * Checks if an equivalent person exists in PRISM.
      */
     public boolean containsPerson(ReadOnlyPerson key) {
         return allPersons.contains(key);
@@ -125,7 +137,7 @@ public class AddressBook {
 
 
     /**
-     * Removes the equivalent person from the address book.
+     * Removes the equivalent person from PRISM.
      *
      * @throws PersonNotFoundException if no such Person could be found.
      */
@@ -134,7 +146,7 @@ public class AddressBook {
     }
 
     /**
-     * Edits the equivalent person from the address book with new data fields.
+     * Edits the equivalent person from PRISM with new data fields.
      *
      * @throws PersonNotFoundException if no such Person could be found.
      * @throws DuplicatePersonException if an equivalent person already exists.
@@ -145,14 +157,14 @@ public class AddressBook {
 //    }
 
     /**
-     * Clears all persons from the address book.
+     * Clears all persons from PRISM.
      */
     public void clear() {
         allPersons.clear();
     }
 
     /**
-     * Defensively copied UniquePersonList of all persons in the address book at the time of the call.
+     * Defensively copied UniquePersonList of all persons in PRISM at the time of the call.
      */
     public UniquePersonList getAllPersons() {
         return new UniquePersonList(allPersons);
