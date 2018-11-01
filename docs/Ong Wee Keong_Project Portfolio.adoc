@@ -6,7 +6,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
-ifdef::env-github[]
+
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :warning-caption: :warning:
