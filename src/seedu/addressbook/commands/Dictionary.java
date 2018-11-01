@@ -39,6 +39,7 @@ public class Dictionary extends Command{
             commands.add(FindCommand.COMMAND_WORD);
             commands.add(HelpCommand.COMMAND_WORD);
             commands.add(InboxCommand.COMMAND_WORD);
+            commands.add(ClearInboxCommand.COMMAND_WORD);
             commands.add(ReadCommand.COMMAND_WORD);
             commands.add(ListCommand.COMMAND_WORD);
             commands.add(LockCommand.COMMAND_WORD);

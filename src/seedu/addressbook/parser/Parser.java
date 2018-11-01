@@ -166,12 +166,14 @@ public class Parser {
             case InboxCommand.COMMAND_WORD:
                 return new InboxCommand();
 
+            case ClearInboxCommand.COMMAND_WORD:
+                return new ClearInboxCommand();
+
             case UpdateStatusCommand.COMMAND_WORD:
                 return prepareUpdateStatus(arguments);
 
             case ReadCommand.COMMAND_WORD:
                 return prepareRead(arguments);
-
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
