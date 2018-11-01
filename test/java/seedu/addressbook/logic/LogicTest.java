@@ -247,6 +247,16 @@ public class LogicTest {
                 "add Valid Name n/s1234567a d/1980 p/123456 s/wanted w/none o/none", Person.WANTED_FOR_WARNING);
 
     }
+    //@@author muhdharun
+
+    @Test
+    public void execute_CopyConstructorPerson() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        ReadOnlyPerson test = helper.adam();
+        Person duplicateAdam = new Person(test);
+        assertEquals(test,duplicateAdam);
+    }
+
 //@@author
     @Test
     public void execute_add_successful() throws Exception {
