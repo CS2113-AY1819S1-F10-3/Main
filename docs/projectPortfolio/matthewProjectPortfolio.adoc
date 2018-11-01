@@ -1,0 +1,76 @@
+= Matthew Alexander - Project Portfolio
+:site-section: AboutUs
+:stylesDir: ../stylesheets
+
+== PROJECT: Police Records System
+
+---
+
+== Overview
+
+The Addressbook is morphed to a police records database with two types of users, Police Officers (PO) & Headquarter Personnel (HQP).
+Users have their own access levels with HQP having higher authorization compared to PO.
+Police officers can screen civilians during duty with their respective NRIC, their criminal history and status would be shown to the police officers.
+POs can also request for backup when needed, HQP would dispatch other POs at their discretion based on estimated time of arrival.
+Refer to Quick Start guide to get started.
+
+== Summary
+* *Role*: Developer
+* *Responsibility*: Integration
+* *Major enhancements*:
+** *Edit Command*
+*** What it does: Allows HQP to update a civilian’s postal code, offense list, wanted status.
+*** Justification: : Individual data in Police Records System would need to be updated as people change addresses, commit crimes, serve their sentence.
+*** Highlights: Due to each NRIC being assigned to a specific individual for their whole lives, they cannot be changed.
+
+** *Request Command*
+*** What it does: Allows PO to request backup to HQP’s inbox. HQP would then be able to view request messages with the PO’s id, case, urgency and his/her location.
+*** Justification: POs may not be able to handle a case alone especially when it involves multiple criminals or dangerous scenarios.
+He/she would then need backup to take handle the scenario.
+*** 	Highlights: HQP can view the requests with most urgent based on case.
+
+** *Dispatch Command*
+*** What it does: Allows HQP to dispatch backup according to the dispatchers’ requests.
+HQP can dispatch other ‘free’ POs to help the POs who requested for backup. PO who requested backup is then given a return message with ETA & Google Maps URL to pinpoint the location of the backup personnel.
+For PO who is being dispatched, he also given an ETA & Google Maps URL to pinpoint the requester.
+*** Justification: After POs request backup, HQP should be able to dispatch backup to help them in their case.
+Hence, location of the requester and backup officer along with ETA are crucial.
+Location is important, so backup officer knows where to travel to & ETA is crucial so that the requester knows how much time he/she needs to hold off the suspects on his own before backup arrives.
+*** Highlights: ETA is real time with Google Maps Distance API. Location is displayed in a Google Maps URL to allow PO to navigate.
+
+* *Minor enhancements*:
+** Able to delete a person from a record without listing beforehand
+
+* *Code contributed*:
+[https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}
+
+* *Other contributions*:
+** Project management:
+*** Guided team for proper coding standards and practices.
+*** Refactored teammates code
+
+** Community:
+*** PRs reviewed (with non-trivial review comments):
+https://github.com/CS2113-AY1819S1-F10-3/main/pull/160[#160],
+https://github.com/CS2113-AY1819S1-F10-3/main/pull/140[#140],
+https://github.com/CS2113-AY1819S1-F10-3/main/pull/94[#94],
+https://github.com/CS2113-AY1819S1-F10-3/main/pull/93[#93],
+https://github.com/CS2113-AY1819S1-F10-3/main/pull/66[#66],
+https://github.com/CS2113-AY1819S1-F10-3/main/pull/44[#44],
+https://github.com/CS2113-AY1819S1-F10-3/main/pull/25[#25]
+
+** Tools:
+*** Integrated a third-party REST API (Google Maps API) to the project.
+*** Integrated a third-party library (HttpClient Apache) to the project as a Http Client to communicate with Google Maps REST API.
+*** Integrated a third-party library (Commons IO) to convert buffer data into String.
+*** Integrated a third-party library (JSON Org) to parse Google Maps API data.
+
+== Contributions to the User Guide
+|===
+|For the https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/docs/UserGuide.adoc[User Guide], I added the content that were relevant for me which included Edit Command, Request Command & Dispatch Command.
+|===
+
+== Contributions to the
+|===
+|For the https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/docs/DeveloperGuide.adoc[Developer Guide], I added the commands that were relevant for me which included Edit Command, Request Command & Dispatch Command.
+|===

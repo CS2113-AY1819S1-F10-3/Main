@@ -403,6 +403,7 @@ public class LogicTest {
     @Test
     public void execute_httpGetRequest_internetAvailable() throws Exception {
         String testUrl = "http://google.com";
+
         HttpRestClient httpRestClient = new HttpRestClient();
         int statusCode = httpRestClient.requestGetResponse(testUrl)
                             .getStatusLine().getStatusCode();
@@ -854,6 +855,111 @@ public class LogicTest {
         boolean result = Password.isPO();
         assertFalse(result);
     }
+
+    @Test
+    public void execute_matchPassword_wrongPassword(){
+        boolean result = Password.correctPassword("-795402416" , 1092381);
+        assertFalse(result);
+    }
+
+    @Test
+    public void execute_matchPassword_correctPassword(){
+        boolean result = Password.correctPassword("-795402416" , -795402416);
+        assertTrue(result);
+    }
+
+
+    @Test
+    public void execute_wrongHQP(){
+        boolean result = correctHQP("hqp","-795402416" , 123);
+        assertFalse(result);
+    }
+
+    @Test
+    public void execute_wrongPO1(){
+        boolean result = correctPO1("po1","-795402416" , 123);
+        assertFalse(result);
+    }
+    @Test
+    public void execute_wrongPO2(){
+        boolean result = correctPO2("po2","-795402416" , 123);
+        assertFalse(result);
+    }
+
+    @Test
+    public void execute_wrongPO3(){
+        boolean result = correctPO3("po3","-795402416" , 123);
+        assertFalse(result);
+    }
+    @Test
+    public void execute_wrongPO4(){
+        boolean result = correctPO4("po4","-795402416" , 123);
+        assertFalse(result);
+    }
+
+    @Test
+    public void execute_wrongPO5(){
+        boolean result = correctPO5("po5","-795402416" , 123);
+        assertFalse(result);
+    }
+
+    @Test
+    public void execute_correctHQP(){
+        boolean result = correctHQP("hqp","-795402416" , -795402416);
+        assertTrue(result);
+    }
+
+    @Test
+    public void execute_correctPO1(){
+        boolean result = correctPO1("po1","-795402416" , -795402416);
+        assertTrue(result);
+    }
+    @Test
+    public void execute_correctPO2(){
+        boolean result = correctPO2("po2","-795402416" , -795402416);
+        assertTrue(result);
+    }
+
+    @Test
+    public void execute_correctPO3(){
+        boolean result = correctPO3("po3","-795402416" , -795402416);
+        assertTrue(result);
+    }
+    @Test
+    public void execute_correctPO4(){
+        boolean result = correctPO4("po4","-795402416" , -795402416);
+        assertTrue(result);
+    }
+
+    @Test
+    public void execute_correctPO5(){
+        boolean result = correctPO5("po5","-795402416" , -795402416);
+        assertTrue(result);
+    }
+
+    @Test
+    public void execute_prepareUpdatePassword(){
+        String result = Password.prepareUpdatePassword();
+        assertEquals(Password.MESSAGE_ENTER_PASSWORD_TO_CHANGE, result);
+        assertTrue(Password.getIsUpdatingPassword());
+        assertEquals(5, Password.getWrongPasswordCounter());
+        Password.unprepareUpdatePassword();
+    }
+
+    /*
+    @Test
+    /*
+    public void execute_updatePassword(){
+        Password.unlockHQP();
+        Password.prepareUpdatePassword();
+        String result = Password.updatePassword("thisiswrong", 5);
+        assertEquals(Password.MESSAGE_INCORRECT_PASSWORD
+                + "\n" + String.format(Password.MESSAGE_ATTEMPTS_LEFT, 5)
+                + "\n" + MESSAGE_ENTER_PASSWORD,result);
+        Password.lockIsHQP();
+    }
+    */
+
 
     //@@author ongweekeong
 
