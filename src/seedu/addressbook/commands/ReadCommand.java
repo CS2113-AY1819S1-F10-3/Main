@@ -4,9 +4,6 @@ package seedu.addressbook.commands;
 import seedu.addressbook.inbox.Inbox;
 import seedu.addressbook.password.Password;
 
-
-
-
 /**
  * Updates read status of message identified using it's last displayed index from the user's inbox.
  */
@@ -29,8 +26,6 @@ public class ReadCommand extends Command {
 
     public Inbox myInbox = new Inbox(Password.getID());
 
-    //TODO: Decide if Inbox data structures should be set to static? since that will allow me to access those data structures from other inbox objects in another class
-    @Override
     public CommandResult execute() {
         String result = myInbox.markMsgAsRead(index);
         if(result.equals(myInbox.MESSAGE_READ_STATUS_UPDATED)) {

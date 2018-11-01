@@ -962,8 +962,6 @@ public class LogicTest {
 
 
     //@@author ongweekeong
-
-
     @Test
     public void execute_readMsgWithoutShowUnread() throws Exception {
         Inbox.numUnreadMsgs = -1; // Set numUnreadMsgs to default state before inbox is accessed.
@@ -990,25 +988,6 @@ public class LogicTest {
 
         assertCommandBehavior(InboxCommand.COMMAND_WORD, expectedResult, testMsg, messageNum);
     }
-//TODO: Wee keong, time fix
-//    @Test
-//    public void execute_checkInboxWithMultipleUnreadMessages() throws Exception {
-//        WriteNotification.clearInbox(MessageFilePaths.FILEPATH_DEFAULT);
-//        final String testMessage = "This is a test message.";
-//        Msg testMsg;
-//        int messageNum = 1, numOfMsgs = 3;
-//        String expectedResult = Messages.MESSAGE_UNREAD_MSG_NOTIFICATION + '\n';
-//        //Check that at every additional message added at each loop, the expected result is correct as well.
-//        while(numOfMsgs!=0) {
-//            testMsg = generateMsgInInbox(testMessage);
-//
-//            expectedResult = assertCommandBehavior(InboxCommand.COMMAND_WORD, expectedResult, testMsg, messageNum);
-//
-//            numOfMsgs--;
-//            messageNum++;
-//            Thread.sleep(50);
-//        }
-//    }
 
     @Test
     public void execute_readMsgWithoutUnreadMsgs() throws Exception {

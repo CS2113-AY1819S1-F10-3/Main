@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 public class WriteNotification {
     private String path;
-    private boolean isAppend = false;
+    private boolean isAppend;
 
     public WriteNotification(String userId){
         path = MessageFilePaths.getFilePathFromUserId(userId);
@@ -21,7 +21,6 @@ public class WriteNotification {
         path = filePath;
         isAppend = appendValue;
     }
-
 
     /**	Message format should look like this
      *	Read/Unread (1 or 0)
@@ -106,7 +105,6 @@ public class WriteNotification {
     private static void clearInboxFromPath(String myPath) throws IOException {
         FileWriter write = new FileWriter(myPath, false);
         PrintWriter myPrinter = new PrintWriter(write);
-        myPrinter = new PrintWriter(write);
         myPrinter.print("");
         myPrinter.close();
     }

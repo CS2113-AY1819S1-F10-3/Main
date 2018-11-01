@@ -10,6 +10,12 @@ import seedu.addressbook.timeanddate.TimeAndDate;
 import java.io.IOException;
 import java.util.TreeSet;
 
+/** Prints out all unread notifications ordered by read status, priority, then timestamp
+ * (earlier message has higher priority).
+ *
+ * @return messages to be printed out on the main window.
+ */
+
 public class InboxCommand extends Command {
     public static final String COMMAND_WORD = "showunread";
 

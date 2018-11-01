@@ -19,7 +19,7 @@ public class Inbox {
     protected static TreeSet<Msg> notificationsToPrint = new TreeSet<>();
     protected static HashMap<Integer, Msg> recordNotifications = new HashMap<>();
     protected static ReadNotification readNotification;
-    protected static WriteNotification allMessages; //TODO: Overwrite read status of messages after action taken
+    protected static WriteNotification allMessages;
     int messageIndex = 1;
 
     static WriteNotification newMessages;
@@ -47,7 +47,6 @@ public class Inbox {
             if((index < 1) || (index > numUnreadMsgs)){
                 throw new IndexOutOfBoundsException();
             }
-//            notificationsToPrint.remove(recordNotifications.get(index));
             recordNotifications.get(index).setMsgAsRead();
             for(int i = 1; i <= recordNotifications.size(); i++) {
                 notificationsToPrint.add(recordNotifications.get(i));
@@ -70,11 +69,6 @@ public class Inbox {
         }
         return MESSAGE_READ_STATUS_UPDATED;
     }
-
-    /** Prints out all unread notifications ordered by priority, then timestamp (earlier first).
-     *
-     * @return messages to be printed out on the main window.
-     */
 
     public int checkNumUnreadMessages(){
         return numUnreadMsgs;

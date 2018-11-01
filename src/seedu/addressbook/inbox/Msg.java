@@ -8,8 +8,9 @@ import seedu.addressbook.timeanddate.TimeAndDate;
 
 import java.sql.Timestamp;
 
-/** Msg has the following attributes:
- *  @params Read Status, Priority, timestamp, message, location (x,y coordinates) and ETA.
+/** Stores information on notifications that are sent from one user to another.
+ *  @params SenderID, Read Status, Priority, timestamp, message are compulsory fields.
+ * @params location (x,y coordinates) and ETA are non-compulsory fields.
  */
 
 
@@ -25,8 +26,6 @@ public class Msg implements Comparable <Msg> {
     private Timestamp time;
     public static final boolean MESSAGE_IS_READ = true;
     public static final boolean MESSAGE_IS_UNREAD = false;
-
-
 
     public enum Priority {
         HIGH(3),   // For messages that require HPQ intervention
@@ -49,7 +48,6 @@ public class Msg implements Comparable <Msg> {
         isLocationAvailable = false;
         isRead = MESSAGE_IS_UNREAD;
     }
-    
 
     public Msg(Priority urgency, String message){
         isLocationAvailable = false;
@@ -135,7 +133,6 @@ public class Msg implements Comparable <Msg> {
        return eta != -1;
     }
 
-
     public void setTime(){
         time = new Timestamp(System.currentTimeMillis()); // Set to current time if no timestamp passed.
     }
@@ -154,22 +151,19 @@ public class Msg implements Comparable <Msg> {
 
     @Override
     public int compareTo(Msg other) {
-        int otherInt = other.isRead? 1 : 0;
-        int myInt = this.isRead? 1 : 0;
-        int compare = Integer.compare(myInt, otherInt);
-        if(compare == 0){ // If same read status, compare priorities.
+        int otherReadState = other.isRead? 1 : 0;
+        int myReadState = this.isRead? 1 : 0;
+        int compare = Integer.compare(myReadState, otherReadState);
+        if(compare == 0) { // If same read status, compare priorities.
             compare = compareByPriority(other);
-            if(compare == 0){ // If priority is the same, compare by timestamp.
+        }
+        if(compare == 0){ // If priority is the same, compare by timestamp.
                 compare = compareByTimestamp(other);
-            }
-            return compare;
         }
-        else{
-            return compare;
-        }
+
+        return compare;
     }
 
-    // TODO:
     public int compareByPriority(Msg other){
         return Integer.compare(other.getPriority().toInteger(), this.getPriority().toInteger());
     }

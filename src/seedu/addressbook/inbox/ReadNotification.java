@@ -56,15 +56,12 @@ public class ReadNotification {
                     else if (msgType.equals("Message")) {
                         readMsgMessage(parts[1]);
                     }
-                    else if (msgType.equals("ETA")) {
+                    /*else if (msgType.equals("ETA")) {
                         readMsgEta(parts[1]);
-                    }
+                    }*/
                     else if (msgType.equals("Location")) {
                         readMsgLocation(parts[1]);
                     }
-//                    else if (msgType.equals("Police Officer ID")) {
-//                        readMsgPO(parts[1]);
-//                    }
                 }
 
             }
@@ -129,9 +126,5 @@ public class ReadNotification {
                 Double.parseDouble(coordinates[1]));
         this.returnMsg.setLocation(myLocation);
     }
-//
-//    public void readMsgPO(String poId) {
-//        this.returnMsg.setPoliceOfficerId(poId);
-//    }
 
 }
