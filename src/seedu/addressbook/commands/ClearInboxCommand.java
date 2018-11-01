@@ -37,7 +37,7 @@ public class ClearInboxCommand extends Command {
     public CommandResult execute() {
 
         try {
-            if(myInbox.isEmpty()) {
+            if(myInbox == null) {
                 myInbox = MessageFilePaths.getFilePathFromUserId(Password.getID());
             }
             ReadNotification dummyReader = new ReadNotification(myInbox);
