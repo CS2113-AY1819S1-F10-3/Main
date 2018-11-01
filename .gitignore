@@ -3,8 +3,8 @@
 
 # Default data file
 notifications.txt
-policeRecords.txt
-ScreeningHistory.txt
+policeRecords\.txt
+ScreeningHistory\.txt
 requestList.txt
 inboxMessages/
 
@@ -29,8 +29,6 @@ publish.sh
 .gradle/
 build/
 parserLog\.log\.1
-
-notifications\.txt
 
 Todo List\.txt
 

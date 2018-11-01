@@ -7,8 +7,10 @@
 :stylesDir: stylesheets
 :xrefstyle: full
 
+ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+endif::[]
 :warning-caption: :warning:
 :experimental:
 = PROJECT: Police Records System
