@@ -1,0 +1,180 @@
+= Ong Wee Keong  - Project Portfolio
+:site-section: ProjectPortfolio
+:toc:
+:toc-title:
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:xrefstyle: full
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:warning-caption: :warning:
+:experimental:
+= PROJECT: Police Records System
+
+== Introduction
+The purpose of this portfolio is to document the specific contributions that I have made to this project. The project, with the end product being called “Police Records System” (PRS), was done over the course of one semester in National University of Singapore (NUS), under the module CS2113T, which aims to teach Software Engineering principles and Object-Oriented Programming. PRS was done by a team of 5 people including myself, and 4 other course mates. 
+
+
+=== Overview of Project
+PRS is a product that was morphed from the original Addressbook Level 3, published by a Github organization called Software Engineering Education (https://github.com/se-edu/addressbook-level3). PRS is an application that is designed to aid Police Officers in their patrolling duties to make screening subjects more efficient and well documented. 
+It also serves as a system for communication between Police Officers (POs) on patrol and the Headquarters Personnel (HQP) in cases where additional manpower resources are required for backup.
+PRS is currently a desktop application, designed specifically for users who are comfortable with using Command-Line Interface (CLI). 
+
+=== Main Features Implemented
+Over the course of the project, my team and I have implemented 5 major features:
+
+. Password-Lock
+. Text Prediction and Correction
+. Screening History
+. Notification Messages
+. Editing and Deleting by NRIC of Subjects
+
+== Summary of Contributions
+The purpose of this section is to allow readers to get a clearer idea of how the work was divided among the team, and the specific contributions that I have made for the project. The major feature that I was working on in the project is explained below
+
+* Role: Developer 
+
+=== Major Enhancement – Notification Messages System
+
+* What it does: This feature allows you as a system user to send specific messages to other users, and read unread messages that other uses may have sent to you. To read unread messages that have been sent to you, type “showunread” in the CLI. Messages will appear with the most urgent message appearing at the top.
+
+* Justification/Significance: This feature is highly significant in the product, as it is the pipeline that enables communication between different system users to happen. This is the feature that enables POs to request for backup when required, and for HQP to dispatch backup as required. 
+
+* Highlights: This enhancement supports communication between users, which is something completely new in this system. This was previously not possible through the code base given to us in Addressbook Level 3. Thus, the implementation was highly challenging as rigorous thinking was required to come up with an appropriate system that allows various users to send and receive specifically from another user, as well as methods for storing the messages sent and received.  
+
+=== Minor Enhancement – Allows users to mark messages as read
+
+*	This enhancement allows users to respond to the messages that are sent to them and updating the read status of those messages once action has been taken, depending on the nature of the message sent to them.
+
+=== Code Contributed:
+*	Functional code: https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/functional/ongweekeong.md
+*	Test code: https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/test/ongweekeong.md
+
+=== Other Contributions:
+*	Edited `build.gradle` file to enable jar file generation via using shadowJar
+*	Enhancements to existing features:
+**	Wrote additional tests for implemented features to increase code coverage from 40.7% to 51.38% (Pull request https://github.com/CS2113-AY1819S1-F10-3/main/pull/155[#155])
+
+== Contributions to the User Guide
+The User Guide is written with the end-users as the main target audience. The sections which I contributed to the User Guide are as shown below:
+
+=== `1. Introduction`
+The police database is for police officers (PO) and headquarter personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database. Refer to quick start to get started
+
+=== `3.14. Check notifications: showunread`
+For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp. For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders
+Format: 'showunread'
+Examples (as a HQP):
+
+*	'showunread'
+*	Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:
+Examples (as a PO): * 'showunread' * Shows any dispatch messages by HQ or response for backup if any
+
+=== `3.15. Read message : read`
+Updates the status of unread messages to read. Command to be used after showunread command
+Format: 'read index'
+Examples: read 1
+
+
+
+== Contributions to the Developer Guide
+The Developer Guide is written for developers who wish to contribute to the project or adapt it for their own use, to get a better understanding of the software. The sections below are my contributions to the Developer Guide:
+
+=== `Introduction`
+The purpose of this Developer Guide is to provide useful information to software developers who desire to contribute to the project (e.g. optimizing of code, adding test cases, etc.), including an overview of the software architecture, design as well as current implementations and intended functionality of current features. The police database is for police officers(PO) and headquarters personnel(HQP). Both groups will have varying access and authorization levels to this database. POs would be able to read from the database after screening someone while on patrol and choose his course of action base on the status/threat level of subject. HQP would have the added functions of adding and removing people from the database. Refer to quick start to get started.
+
+=== `Setting up`
+To set up the project successfully on your computer, follow the steps below.
+
+==== Prerequisites
+In order to start the setup, you are required to install the following:
+
+* JDK 9 or later
+* IntelliJ IDE
+
+==== Importing the project into IntelliJ
+
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+. Set up the correct JDK version
+.. Click `Configure` > `Project Defaults` > `Project Structure`
+.. If JDK 9 is listed in the drop down, select it. If it is not, click `New...` and select the directory where you installed JDK 9
+.. Click `OK`
+. Click `Import Project`
+. Locate the `build.gradle` file and select it. Click `OK`
+. Click `Open as Project`
+. Click `OK` to accept the default settings
+. Run the `seedu.addressbook.Main` class (right-click the `Main` class and click `Run Main.main()`) and try executing a few commands
+. Run all the tests (right-click the `test` folder, and click `Run 'All Tests'`) and ensure that they pass
+. Open the `StorageFile` file and check for any code errors
+.. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
+.. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=java.xml.bind' to module compiler options`
+
+=== `Design`
+The diagram below shows a high level architecture design of the current classes that are used in the project.
+
+image::mainClassDiagram.png[]
+
+=== `Implementation`
+This section describes some of the more important details of certain features implemented.
+
+==== 3a. "showunread" command
+
+*Current Implementation*
+
+Once system is unlocked, regardless of which user you are, you can use this command. This command lists the new/unread messages in your inbox based on the password you used to unlock the system.
+When messages are sent, they are stored inside a text file called "inboxMessages/'userID'", where 'userID' refers to the ID of the intended recipient.
+These text files store messages directed to each individual who can log in and access their personalised inbox.
+It also implements the following operations:
+
+. execute() - executes the "showunread" command itself and displays the result to the user.
+. loadMessages() - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).
+. Loaded messages are then concatenated in a single string as `fullPrintedMessage` and passed to the main window through CommandResult.
+
+The following is an example usage scenario of the "showunread" command:
+
+Step 1: The user input his password and unlocks the system.
+
+Step 2: The user executes "showunread" command. The "showunread" command calls execute() which also calls getMessagesFor() method.
+
+Step 3: The getMessagesFor() method searches message storage file for the messages directed to the respective user, if any, and they are stored into a data structure.
+
+Step 4: The messages that are found and are stored in a TreeSet, split by its read status, message priority, timestamp, and the message itself for sorting purposes. execute() returns a CommandResult using the messages list as its argument.
+
+Step 5: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.
+
+
+Alternatives considered:
+
+* Using a List instead of a TreeSet.
+** Pros: Smaller space complexity.
+** Cons: Less efficient code as 'sort' function must be called every time a new message is stored to maintain sorted order.
+Eventually, we decided to use TreeSet in our implementation as we felt that the pros outweighed the cons. This becomes more obvious when the amount of data stored gets larger.
+
+* Using a single text file for storing messages, storing the userID of the recipient in the text file.
+** Pros: Fewer files to manage and filepaths to traverse.
+** Cons: Less efficient as it means more memory is required for storage per message stored (additional information of recipient of message required to be stored in the data structure itself when loaded).
+Eventually, we also used multiple message storage files, each dedicated to a specific user, as this allowed us to increase the time efficiency of the code as the getMessagesFor() method did not need to sort through the messages based on recipient anymore. This benefit becomes especially obvious as well when there is a large number of messages that has to be stored, directed towards multiple users.
+
+==== 3b. "read" command
+
+*Current Implementation*
+
+Once the system is unlocked, you can access unread messages directed to you via the "showunread" command explained above.
+Once action has been taken based on what the message sent to you is about, you can mark the message as read using the "read" command. Messages displayd in "showunread" command is first stored inside a static HashMap, with the key as the message index and the message itself as the value of the HashMap. When the user wishes to mark a message as read, he will type "read 'index'", and the respective message displayed at that specific index will be marked as read and updated in the message storage file of the user.
+The "read" command can only be used after the "showunread" command has been used at least once successfully.
+
+The following is an example usage scenario of the "read" command:
+
+Step 1: User inputs his password and unlocks the system.
+
+Step 2: User executes "showunread" command. If "showunread" command is successfully executed, a list of unread messages directed to the user will be displayed.
+
+Step 3: Messages that are read from the user's inbox will also be recorded in a static HashMap called `recordNotifications`, with the message index used as the key.
+
+Step 4: User executes "read 3" command. If 3 is a valid index (i.e. there were at least 3 unread messages that were displayed), the third message displayed will be marked as read.
+
+Step 5: For the messages to be marked as read, the message itself is updated in the HashMap based on the index, and the message storage text file will be overwritten with the messages stored in the HashMap, effectively updating the read status of the message read.
+
+Step 6: The CommandResult object displays to the user a message indicating that the updating of the read status was successful or not.

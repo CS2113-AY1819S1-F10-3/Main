@@ -221,7 +221,7 @@ public class ParserTest {
         final String result = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReadCommand.MESSAGE_USAGE);
         for (String index : indices){
             String input = "read " + index;
-        parseAndAssertIncorrectWithMessage(result, input);
+            parseAndAssertIncorrectWithMessage(result, input);
         }
     }
 

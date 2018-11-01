@@ -1,12 +1,10 @@
 package seedu.addressbook.logic;
 
 
-import org.javatuples.Triplet;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.junit.runner.Request;
 import seedu.addressbook.PatrolResourceStatus;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.common.HttpRestClient;
@@ -27,7 +25,6 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.exp;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -973,6 +970,61 @@ public class LogicTest {
         assertCommandBehavior(inputCommand, expected);
     }
 
+    @Test
+    public void execute_returnMessageFilePaths(){
+        String result = MessageFilePaths.getFilePathFromUserId("hqp");
+        String expected = MessageFilePaths.FILEPATH_HQP_INBOX;
+        assertEquals(expected, result);
+
+        result = MessageFilePaths.getFilePathFromUserId("hqp");
+        expected = MessageFilePaths.FILEPATH_HQP_INBOX;
+        assertEquals(expected, result);
+
+        result = MessageFilePaths.getFilePathFromUserId("po1");
+        expected = MessageFilePaths.FILEPATH_PO1_INBOX;
+        assertEquals(expected, result);
+
+        result = MessageFilePaths.getFilePathFromUserId("po2");
+        expected = MessageFilePaths.FILEPATH_PO2_INBOX;
+        assertEquals(expected, result);
+
+        result = MessageFilePaths.getFilePathFromUserId("po3");
+        expected = MessageFilePaths.FILEPATH_PO3_INBOX;
+        assertEquals(expected, result);
+
+        result = MessageFilePaths.getFilePathFromUserId("po4");
+        expected = MessageFilePaths.FILEPATH_PO4_INBOX;
+        assertEquals(expected, result);
+
+        result = MessageFilePaths.getFilePathFromUserId("po5");
+        expected = MessageFilePaths.FILEPATH_PO5_INBOX;
+        assertEquals(expected, result);
+
+        result = MessageFilePaths.getFilePathFromUserId("nonsense");
+        expected = MessageFilePaths.FILEPATH_DEFAULT;
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void execute_msgComparator() throws Exception {
+        final String testMsg = "This is a test message.";
+        Msg msgHigh = new Msg(Msg.Priority.HIGH, testMsg);
+        Msg msgMed = new Msg(Msg.Priority.MED, testMsg);
+        Msg msgLow = new Msg(Msg.Priority.LOW, testMsg);
+        final int expectedHighToLow = -1;
+        assertEquals(expectedHighToLow, msgHigh.compareTo(msgLow));
+        final int expectedHighToMed = -1;
+        assertEquals(expectedHighToMed, msgHigh.compareTo(msgMed));
+        final int expectedMedToLow = -1;
+        assertEquals(expectedMedToLow, msgMed.compareTo(msgLow));
+        final int expectedUnreadLowToReadHigh = -1; //Unread messages should have higher urgency than even read high priority messages.
+        msgHigh.setMsgAsRead();
+        assertEquals(expectedUnreadLowToReadHigh, msgLow.compareTo(msgHigh));
+        final int expectedEarlierToLater = -1; // Messages with same read status and priority will be compared by timestamp.
+        Thread.sleep(500);
+        Msg msgMedLater = new Msg(Msg.Priority.MED, testMsg);
+        assertEquals(expectedEarlierToLater, msgMed.compareTo(msgMedLater));
+    }
     //@@author
 
     /**
