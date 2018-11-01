@@ -308,25 +308,6 @@ public class Parser {
         }
     }
 
-    // TODO: @Harun, if no longer needed then delete
-    //@@author
-    /**
-     * Parses arguments in the context of the view command.
-     *
-     * @param args full command args string
-     * @return the prepared command
-     */
-    private Command prepareView(String args) {
-        try {
-            final int targetIndex = parseArgsAsDisplayedIndex(args);
-            return new ViewAllCommand(targetIndex);
-        } catch (ParseException | NumberFormatException e) {
-            logr.log(Level.WARNING, "Invalid view command format.", e);
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ViewAllCommand.MESSAGE_USAGE));
-        }
-    }
-
     //@@author
     /**
      * Parses arguments in the context of the view all command.
@@ -363,6 +344,13 @@ public class Parser {
         return Integer.parseInt(matcher.group("targetIndex"));
     }
 //@@author muhdharun
+    /**
+     * Parses argument string as an NRIC
+     *
+     * @param args argument string to parse as NRIC
+     * @return the prepared NRIC
+     */
+
     private String parseArgsAsNric(String args) throws ParseException {
         final Matcher matcher = PERSON_NRIC_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
@@ -398,6 +386,13 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
     }
+
+    /**
+     * Parses arguments in the context of updating a PO's status.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
 
     private Command prepareUpdateStatus(String args) {
         args = args.trim();
