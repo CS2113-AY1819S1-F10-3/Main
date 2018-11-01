@@ -31,21 +31,21 @@ public class Dictionary extends Command{
         } finally {
             commands.add(AddCommand.COMMAND_WORD);
             commands.add(CheckCommand.COMMAND_WORD);
+            commands.add(CheckPOStatusCommand.COMMAND_WORD);
             commands.add(ClearCommand.COMMAND_WORD);
             commands.add(DateTimeCommand.COMMAND_WORD);
             commands.add(DeleteCommand.COMMAND_WORD);
+            commands.add(DispatchCommand.COMMAND_WORD);
             commands.add(EditCommand.COMMAND_WORD);
             commands.add(ExitCommand.COMMAND_WORD);
             commands.add(FindCommand.COMMAND_WORD);
             commands.add(HelpCommand.COMMAND_WORD);
             commands.add(InboxCommand.COMMAND_WORD);
             commands.add(ClearInboxCommand.COMMAND_WORD);
-            commands.add(ReadCommand.COMMAND_WORD);
             commands.add(ListCommand.COMMAND_WORD);
             commands.add(LockCommand.COMMAND_WORD);
+            commands.add(ReadCommand.COMMAND_WORD);
             commands.add(RequestHelpCommand.COMMAND_WORD);
-            commands.add(DispatchCommand.COMMAND_WORD);
-            commands.add(CheckPOStatusCommand.COMMAND_WORD);
             commands.add(UpdateStatusCommand.COMMAND_WORD);
             //commands.add(UpdatePasswordCommand.COMMAND_WORD);
             commands.add(ViewAllCommand.COMMAND_WORD);

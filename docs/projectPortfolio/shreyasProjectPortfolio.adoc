@@ -1,0 +1,76 @@
+= Shreyas Kuthanoor Prakash - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images/
+:stylesDir: ../stylesheets
+
+image::shreyaskp.png[width="150", align="left"]
+
+== PROJECT: Police Records and Intelligence System (PRISM)
+
+---
+
+== Overview
+
+1. Try to personalise
+2. Must be in PDF and follow required number of pages
+3. Refer to marking rubric
+4. DO IT WELL
+
+This document serves to showcase my contributions towards the CS2113T Software Engineering Project, as well as the role I served.
+My team and I have built PRISM using AddressBook - Level 3, provided by the se-edu team as a base.
+
+The Police Records and Intelligence System (PRISM) is a desktop application catered towards the needs of the Police. The System
+has two types of users- Police Officers and Headquarters Personnel, each with different levels of access. As a Police
+Officer on patrol, you can screen someone using the system. You can then choose a course of action based on the status
+and criminal history of the subject screened. On the other hand, as a Headquarters Personnel, you can not only perform all
+actions that can be performed by a Police Officer, but also perform additional functionalities such as adding, removing and
+editing subjects currently present in the database, and dispatching other Police Officers, when need be. Both types of users
+interact with the System using a CLI (Command-Line Interface). The application is written in Java, and it has a minimalistic
+GUI (Graphical User Interface) created with JavaFX.
+
+The main features of the project are - Password, AutoCorrection, Screening History, Notifications and Editing by NRIC. Please refer to the Quick Start guide to get started.
+
+== Summary of contributions
+
+This section summarizes my contributions towards the project and the role I played.
+
+* *Role*: Developer
+* *Responsibility*: Code Quality
+* *Major enhancement*: *AutoCorrect functionality*
+** What it does: Provides suggestions when the user, either Police Officer or Headquarters Personnel, types in an incorrect input.
+** Justification: Human beings tend to make mistakes sometimes. This is especially true in the case of the Police force because they have to respond to critical situations by taking the least possible time.
+Thus, the AutoCorrect feature is extremely useful in cases where minute errors are made, as the application suggests the right implementation of the otherwise invalid input.
+** Highlights: This enhancement covers all commands as well as the unique NRICs of subjects stored in the System database. It will also cover all subjects to be added in the future. The implementation was challenging as it required changes to every command which uses NRIC as input.
+** Credits: The Dynamic Programming algorithm that checks the number of single character changes needed to convert one string to another was reused from- https://www.programcreek.com/2013/12/edit-distance-in-java/
+
+* *Minor enhancement*: The user can view the current local time and date using the time command. This is useful especially for providing backup as well as meeting deadlines.
+
+* *Code contributed*: [https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/functional/ShreyasKp.md[Functional code]] https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/test/ShreyasKp.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Ensured team maintains code quality, according to the https://oss-generic.github.io/process/codingStandards/CodingStandard-Java.html[Java Coding Standard]
+** Documentation:
+*** Added user stories relevant to our project in the Developer Guide: https://github.com/CS2113-AY1819S1-F10-3/main/pull/4[#4]
+*** Added use cases for features implemented in the Developer Guide: https://github.com/CS2113-AY1819S1-F10-3/main/pull/111[#111]
+*** Cleaned up Developer Guide: https://github.com/CS2113-AY1819S1-F10-3/main/pull/111[#111], https://github.com/CS2113-AY1819S1-F10-3/main/pull/126[#126]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2113-AY1819S1-F10-3/main/pull/115[#115], https://github.com/CS2113-AY1819S1-F10-3/main/pull/110[#110], https://github.com/CS2113-AY1819S1-F10-3/main/pull/130[#130], https://github.com/CS2113-AY1819S1-F10-3/main/pull/93[#93], https://github.com/CS2113-AY1819S1-F10-3/main/pull/98[#98]
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.For the User Guide, I added information on the AutoCorrect functionality._
+|===
+
+include::../UserGuide.adoc[tag=password]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.For the Developer Guide, I added the user stories, implementation and use cases of AutoCorrect feature and helped clean the whole document._
+|===
+
+include::../DeveloperGuide.adoc[tag=use cases]
+
