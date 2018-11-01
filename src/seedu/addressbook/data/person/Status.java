@@ -5,8 +5,8 @@ import seedu.addressbook.data.exception.IllegalValueException;
 import java.util.Arrays;
 
 /**
- * Represents a Person's criminal status (if any) in EX-SI-53.
- * Guarantees: mutable; is valid as declared in {@link #isValidStatus(String)}
+ * Represents a Person's criminal status (if any).
+ * Guarantees: mutable only for "clear" and "wanted"; is valid as declared in {@link #isValidStatus(String)}
  */
 
 public class Status {

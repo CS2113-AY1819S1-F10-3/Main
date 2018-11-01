@@ -4,7 +4,7 @@ import java.util.Set;
 
 
 /**
- * A read-only immutable interface for a Person in the addressbook.
+ * A read-only immutable interface for a Person in PRISM.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyPerson {
@@ -22,10 +22,7 @@ public interface ReadOnlyPerson {
      */
     Set<Offense> getPastOffenses();
 
-    /**
-     * TODO: Feel in command
-     */
-    Set<String> getStringOffenses();
+
 
     /**
      * Returns true if the values inside this object is same as those of the other (Note: interfaces cannot override .equals)
@@ -64,6 +61,9 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 //@@author muhdharun
+    /**
+     * Formats the person as text, showing all details vertically for better readability.
+     */
     default String getAsTextShowAllInVerticalMode() {
 
         final StringBuilder builder = new StringBuilder();
