@@ -273,7 +273,7 @@ searched, which in this case is "s1234567a" (all letter are lower cased). The "f
 <div class="paragraph">
 <p>Only a HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
 The "check" command makes some use of the "find" command. Every time the "find" command successfully finds a person, a line in the format of:
-"NRIC timestamp" is printed in a text file called "ScreeningHistory.txt". The "check" command will read this file and retrieve the timestamps
+"NRIC timestamp" is printed in a text file called "screeningHistory.txt". The "check" command will read this file and retrieve the timestamps
 corresponding to the specified NRIC. Below is an example of its usage:</p>
 </div>
 <div class="paragraph">
@@ -283,7 +283,7 @@ corresponding to the specified NRIC. Below is an example of its usage:</p>
 <p>Step 2: The user executes "check s1234567a" where the first argument is the command word "check" and the second is the NRIC to be checked which in is "s1234567a".</p>
 </div>
 <div class="paragraph">
-<p>Step 3: The "check" command calls execute() which calls the getPersonWithNric() method. This method will read the ScreeningHistory.txt line by line, where each line
+<p>Step 3: The "check" command calls execute() which calls the getPersonWithNric() method. This method will read the screeningHistory.txt line by line, where each line
 is in the format of "NRIC timestamp", for example "s1234567a 18/10/2018-20:38:42". Each line is split into the NRIC and timestamp. If line[0] is the NRIC specified,
 the corresponding timestamp is stored in a list.</p>
 </div>
@@ -1961,4 +1961,4 @@ case + requester police officer ID.</p>
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-06 16:32:01 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-07 02:15:42 UTC</div></div></div></body></html>
