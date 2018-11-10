@@ -28,11 +28,12 @@
 <li><a href="#dispatch-assistance-for-requester-code-dispatch-code-hqp-only">3.13. Dispatch assistance for requester: <code>dispatch</code> (HQP only)</a></li>
 <li><a href="#lock-system-code-lock-code-hqp-po">3.14. Lock System : <code>lock</code> (HQP &amp; PO)</a></li>
 <li><a href="#update-password-code-update-password-code-hqp">3.15. Update Password : <code>update password</code> (HQP)</a></li>
-<li><a href="#check-notifications-code-showunread-code-hqp-po">3.16. Check notifications: <code>showunread</code> (HQP &amp; PO)</a></li>
-<li><a href="#read-message-code-read-code-hqp-po">3.17. Read message : <code>read</code>(HQP &amp; PO)</a></li>
-<li><a href="#clear-inbox-code-clearinbox-code">3.18. Clear inbox: <code>clearinbox</code></a></li>
-<li><a href="#shutdown-program-code-shutdown-code-hqp-po">3.19. Shutdown program : <code>shutdown</code> (HQP &amp; PO)</a></li>
-<li><a href="#autocorrect-feature">3.20. AutoCorrect feature</a></li>
+<li><a href="#check-unread-notifications-code-showunread-code-hqp-po">3.16. Check unread notifications: <code>showunread</code> (HQP &amp; PO)</a></li>
+<li><a href="#check-all-notifications-code-inbox-code-hqp-po">3.17. Check all notifications: <code>inbox</code> (HQP &amp; PO)</a></li>
+<li><a href="#read-message-code-read-code-hqp-po">3.18. Read message : <code>read</code>(HQP &amp; PO)</a></li>
+<li><a href="#clear-inbox-code-clearinbox-code">3.19. Clear inbox: <code>clearinbox</code></a></li>
+<li><a href="#shutdown-program-code-shutdown-code-hqp-po">3.20. Shutdown program : <code>shutdown</code> (HQP &amp; PO)</a></li>
+<li><a href="#autocorrect-feature">3.21. AutoCorrect feature</a></li>
 </ul>
 </li>
 <li><a href="#commands-list">4. Commands List</a></li>
@@ -579,10 +580,10 @@ to backup officer and vice-versa.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="check-notifications-code-showunread-code-hqp-po"><a class="link" href="#check-notifications-code-showunread-code-hqp-po">3.16. Check notifications: <code>showunread</code> (HQP &amp; PO)</a></h3>
+<h3 id="check-unread-notifications-code-showunread-code-hqp-po"><a class="link" href="#check-unread-notifications-code-showunread-code-hqp-po">3.16. Check unread notifications: <code>showunread</code> (HQP &amp; PO)</a></h3>
 <div class="paragraph">
-<p>For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp.
-For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders</p>
+<p>For HQPs: Check inbox to see a list of backup requests made by POs, and are sorted based on severity first, and then time stamp.
+For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if there are any dispatch orders</p>
 </div>
 <div class="paragraph">
 <p>Format: 'showunread'</p>
@@ -603,16 +604,44 @@ For POs: Check inbox to see who is responding to request for backup/ambulance/fi
 <div class="paragraph">
 <p>Examples (as a PO):
 *	'showunread'
+*	Shows any backup messages by HQ or response for backup if any</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="check-all-notifications-code-inbox-code-hqp-po"><a class="link" href="#check-all-notifications-code-inbox-code-hqp-po">3.17. Check all notifications: <code>inbox</code> (HQP &amp; PO)</a></h3>
+<div class="paragraph">
+<p>For HQPs: Check inbox to see a list of backup requests made by POs, and are sorted based on severity first, and then time stamp.
+For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if there are any dispatch orders</p>
+</div>
+<div class="paragraph">
+<p>Format: 'inbox'</p>
+</div>
+<div class="paragraph">
+<p>Examples (as a HQP):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>'inbox'</p>
+</li>
+<li>
+<p>Shows a list of backup requests (sorted by severity then timestamp) made by POs on the ground:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Examples (as a PO):
+*	'inbox'
 *	Shows any dispatch messages by HQ or response for backup if any</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="read-message-code-read-code-hqp-po"><a class="link" href="#read-message-code-read-code-hqp-po">3.17. Read message : <code>read</code>(HQP &amp; PO)</a></h3>
+<h3 id="read-message-code-read-code-hqp-po"><a class="link" href="#read-message-code-read-code-hqp-po">3.18. Read message : <code>read</code>(HQP &amp; PO)</a></h3>
 <div class="paragraph">
-<p>Updates the status of unread messages to read. Command to be used after <code>showunread</code> command</p>
+<p>Updates the status of unread messages to read. Command to be used after <code>showunread</code> or <code>inbox</code> command</p>
 </div>
 <div class="paragraph">
-<p>Format: 'read index'</p>
+<p>Format: 'read INDEX'</p>
 </div>
 <div class="paragraph">
 <p>Examples:
@@ -620,7 +649,7 @@ For POs: Check inbox to see who is responding to request for backup/ambulance/fi
 </div>
 </div>
 <div class="sect2">
-<h3 id="clear-inbox-code-clearinbox-code"><a class="link" href="#clear-inbox-code-clearinbox-code">3.18. Clear inbox: <code>clearinbox</code></a></h3>
+<h3 id="clear-inbox-code-clearinbox-code"><a class="link" href="#clear-inbox-code-clearinbox-code">3.19. Clear inbox: <code>clearinbox</code></a></h3>
 <div class="paragraph">
 <p>Clears the text file containing all the messages (both read and unread) for the user.</p>
 </div>
@@ -629,7 +658,7 @@ For POs: Check inbox to see who is responding to request for backup/ambulance/fi
 </div>
 </div>
 <div class="sect2">
-<h3 id="shutdown-program-code-shutdown-code-hqp-po"><a class="link" href="#shutdown-program-code-shutdown-code-hqp-po">3.19. Shutdown program : <code>shutdown</code> (HQP &amp; PO)</a></h3>
+<h3 id="shutdown-program-code-shutdown-code-hqp-po"><a class="link" href="#shutdown-program-code-shutdown-code-hqp-po">3.20. Shutdown program : <code>shutdown</code> (HQP &amp; PO)</a></h3>
 <div class="paragraph">
 <p>Shutdown the system</p>
 </div>
@@ -643,7 +672,7 @@ For POs: Check inbox to see who is responding to request for backup/ambulance/fi
 </div>
 </div>
 <div class="sect2">
-<h3 id="autocorrect-feature"><a class="link" href="#autocorrect-feature">3.20. AutoCorrect feature</a></h3>
+<h3 id="autocorrect-feature"><a class="link" href="#autocorrect-feature">3.21. AutoCorrect feature</a></h3>
 <div class="paragraph">
 <p>AutoCorrect feature predicts expected input when the user enters invalid input.
 Currently all commands are covered by the feature.</p>
@@ -736,12 +765,12 @@ E.g. add Bob n/g1234567a d/1996 p/111111 s/clear w/none</p>
 <p><strong>Request for backup</strong> : 'RB'</p>
 </li>
 <li>
-<p><strong>Dispatch</strong> : 'dispatch PO(ID)'</p>
+<p><strong>Dispatch</strong> : 'dispatch PO(ID) CASE PO(ID)'</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>E.g. dispatch PO2</p>
+<p>E.g. dispatch po2 gun po4</p>
 </div>
 <div class="ulist">
 <ul>
@@ -752,13 +781,13 @@ E.g. add Bob n/g1234567a d/1996 p/111111 s/clear w/none</p>
 <p><strong>Update Password</strong> : 'update password'</p>
 </li>
 <li>
-<p><strong>Check notifications</strong> : 'showunread'</p>
+<p><strong>Check unread notifications</strong> : 'showunread'</p>
 </li>
 <li>
-<p><strong>Read message</strong> : 'read index'</p>
+<p><strong>Check all notifications</strong> : 'inbox'</p>
 </li>
 <li>
-<p><strong>Clear Inbox</strong>  : 'clearinbox'</p>
+<p><strong>Read message</strong> : 'read INDEX'</p>
 </li>
 </ul>
 </div>
@@ -768,9 +797,12 @@ E.g. add Bob n/g1234567a d/1996 p/111111 s/clear w/none</p>
 <div class="ulist">
 <ul>
 <li>
+<p><strong>Clear Inbox</strong>  : 'clearinbox'</p>
+</li>
+<li>
 <p><strong>Shutdown</strong> : 'shutdown'</p>
 </li>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 08:18:15 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 08:25:04 UTC</div></div></div></body></html>

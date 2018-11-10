@@ -17,9 +17,11 @@
 <li><a href="#2b-check-command">2b. "check" command</a></li>
 <li><a href="#2c-edit-command">2c. "edit" command</a></li>
 <li><a href="#3a-showunread-command">3a. "showunread" command</a></li>
-<li><a href="#3b-read-command">3b. "read" command</a></li>
-<li><a href="#3c-rb-command">3c. "rb" command</a></li>
-<li><a href="#3d-dispatch-command">3d. "dispatch" command</a></li>
+<li><a href="#3b-inbox-command">3b. "inbox" command</a></li>
+<li><a href="#3c-read-command">3c. "read" command</a></li>
+<li><a href="#3d-clearinbox-command">3d. "clearinbox" command</a></li>
+<li><a href="#3e-rb-command">3e. "rb" command</a></li>
+<li><a href="#3f-dispatch-command">3f. "dispatch" command</a></li>
 <li><a href="#4-autocorrection-feature">4. Autocorrection feature</a></li>
 </ul>
 </li>
@@ -39,6 +41,8 @@
 <li><a href="#use-case-check">Use case: Check</a></li>
 <li><a href="#use-case-autocorrection">Use case: Autocorrection</a></li>
 <li><a href="#use-case-show-unread-messages">Use case: Show unread messages</a></li>
+<li><a href="#use-case-show-all-messages">Use case: Show all messages</a></li>
+<li><a href="#use-case-clear-inbox">Use case: Clear Inbox</a></li>
 <li><a href="#use-case-read-messages">Use case: Read messages</a></li>
 <li><a href="#use-case-request-backup">Use Case: Request Backup</a></li>
 <li><a href="#use-case-dispatch-backup">Use Case: Dispatch Backup</a></li>
@@ -353,10 +357,10 @@ It also implements the following operations:</p>
 <p>execute() - executes the "showunread" command itself and displays the result to the user.</p>
 </li>
 <li>
-<p>loadMessages() - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).</p>
+<p>loadMessages() - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was sent).</p>
 </li>
 <li>
-<p>Loaded messages are then concatenated in a single string as <code>fullPrintedMessage</code> and passed to the main window through CommandResult.</p>
+<p>concatenateMsg() - Loaded messages are then concatenated in a single string as <code>fullPrintedMessage</code> and passed to the main window through CommandResult.</p>
 </li>
 </ol>
 </div>
@@ -370,13 +374,19 @@ It also implements the following operations:</p>
 <p>Step 2: The user executes "showunread" command. The "showunread" command calls execute() which also calls getMessagesFor() method.</p>
 </div>
 <div class="paragraph">
-<p>Step 3: The getMessagesFor() method searches message storage file for the messages directed to the respective user, if any, and they are stored into a data structure.</p>
+<p>Step 3: The loadMessages() method searches message storage file for the messages directed to the respective user, if any, and they are stored into a data structure.</p>
 </div>
 <div class="paragraph">
-<p>Step 4: The messages that are found and are stored in a TreeSet, split by its read status, message priority, timestamp, and the message itself for sorting purposes. execute() returns a CommandResult using the messages list as its argument.</p>
+<p>Step 4: The messages that are found and are stored in a TreeSet, split by its read status, message priority, timestamp, and the message itself for sorting purposes.</p>
 </div>
 <div class="paragraph">
-<p>Step 5: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.</p>
+<p>Step 5: The concatenateMsg() method will then append all unread messages in sorted order to a string to be passed to the CommandResult object later.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: execute() returns a CommandResult using the concatenated string as its argument.</p>
+</div>
+<div class="paragraph">
+<p>Step 7: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.</p>
 </div>
 <div class="paragraph">
 <p>Alternatives considered:</p>
@@ -415,7 +425,15 @@ Eventually, we also used multiple message storage files, each dedicated to a spe
 </div>
 </div>
 <div class="sect2">
-<h3 id="3b-read-command"><a class="link" href="#3b-read-command">3b. "read" command</a></h3>
+<h3 id="3b-inbox-command"><a class="link" href="#3b-inbox-command">3b. "inbox" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong>
+Inbox command has the same implementation as the "showunread" command - except that it shows you all the messages that are in your inbox (both read and unread).
+This is to allow you to access the messages that you have previously marked as read.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="3c-read-command"><a class="link" href="#3c-read-command">3c. "read" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -431,7 +449,7 @@ The "read" command can only be used after the "showunread" command has been used
 <p>Step 1: User inputs his password and unlocks the system.</p>
 </div>
 <div class="paragraph">
-<p>Step 2: User executes "showunread" command. If "showunread" command is successfully executed, a list of unread messages directed to the user will be displayed.</p>
+<p>Step 2: User executes "showunread" OR "inbox" command. If command is successfully executed, a list of unread messages directed to the user will be displayed.</p>
 </div>
 <div class="paragraph">
 <p>Step 3: Messages that are read from the user&#8217;s inbox will also be recorded in a static HashMap called <code>recordNotifications</code>, with the message index used as the key.</p>
@@ -447,7 +465,47 @@ The "read" command can only be used after the "showunread" command has been used
 </div>
 </div>
 <div class="sect2">
-<h3 id="3c-rb-command"><a class="link" href="#3c-rb-command">3c. "rb" command</a></h3>
+<h3 id="3d-clearinbox-command"><a class="link" href="#3d-clearinbox-command">3d. "clearinbox" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>Once the system is unlocked, you can clear your own inbox should there be too many messages stored in it using this command.
+Once the command has been entered, ReadNotification object will first be generated to attempt reading from the text file storing messages in your inbox.
+This is to check that the file exists in the first place. If it reads from the text file successfully, a WriteNotification object will then be generated, instantiating a PrintWriter that overwrites the contents in the
+text file storing the messages in your inbox.</p>
+</div>
+<div class="paragraph">
+<p>It also implements the following methods:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "clearinbox" command and displays the result to the user.</p>
+</li>
+<li>
+<p>readFromFile() - method from ReadNotification object that attempts to access the contents of the text file.</p>
+</li>
+<li>
+<p>clearInbox() - method from WriteNotification object that clears the content in the text file storing the user&#8217;s messages.</p>
+</li>
+<li>
+<p>clearInboxRecords() - clears any records of messages displayed to ensure that all traces of existing messages are also cleared.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "clearinbox" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User inputs his password and unlocks the system.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: User executes "clearinbox" command. If command is successfully executed, the feedback "Inbox cleared!" will be displayed to the user.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="3e-rb-command"><a class="link" href="#3e-rb-command">3e. "rb" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -506,7 +564,7 @@ The filepath for HQP&#8217;s message is ./inboxMessages/headquartersInbox</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="3d-dispatch-command"><a class="link" href="#3d-dispatch-command">3d. "dispatch" command</a></h3>
+<h3 id="3f-dispatch-command"><a class="link" href="#3f-dispatch-command">3f. "dispatch" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -1573,10 +1631,10 @@ HQP- Headquarters Personnel</p>
 <p>System prompts user to enter his command.</p>
 </li>
 <li>
-<p>User requests to display messages in inbox.</p>
+<p>User requests to display unread messages in inbox.</p>
 </li>
 <li>
-<p>System prints the number of unread messages and list of messages.</p>
+<p>System prints the number of unread messages and list of unread messages.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1606,7 +1664,148 @@ HQP- Headquarters Personnel</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5b1. System informs user that there are no unread messages and prints the last 5 messages stored.</p>
+<p>5b1. System informs user that there are no unread messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5c. File containing user&#8217;s inbox messages is missing.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5c1. System informs user that there was an error loading messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-show-all-messages"><a class="link" href="#use-case-show-all-messages">Use case: Show all messages</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User requests to display all messages in inbox.</p>
+</li>
+<li>
+<p>System prints the total number of messages, number of unread messages and full list of messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>5a. There are no messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System informs user that there are no messages available.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5b. There are no unread messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5b1. System informs user of his total number of messages, that there are 0 unread messages and the full list of messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-clear-inbox"><a class="link" href="#use-case-clear-inbox">Use case: Clear Inbox</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User enters command to clear his inbox.</p>
+</li>
+<li>
+<p>System informs user that his inbox has been cleared.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>5a. There are no messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System informs user that inbox has been cleared.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>6a. File storing user&#8217;s inbox messages cannot be found.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>6a1. System informs user that inbox clearance has been unsuccessful and that the storage file is missing.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1659,11 +1858,11 @@ HQP- Headquarters Personnel</p>
 <div class="ulist">
 <ul>
 <li>
-<p>7a. User enters an invalid message number.</p>
+<p>7a. User enters an invalid index.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>7a1. System shows an error message and informs user of the valid number range.</p>
+<p>7a1. System shows an error message and informs user of the valid index range.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1672,11 +1871,21 @@ HQP- Headquarters Personnel</p>
 </div>
 </li>
 <li>
-<p>7b. There are no unread messages.</p>
+<p>7b. User enters an extremely large number for the index.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>7b1. System informs user that there are no unread messages.</p>
+<p>7b1. System informs user that the index entered is too large.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>7c. There are no unread messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>7c1. System informs user that there are no unread messages.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1960,4 +2169,4 @@ case + requester police officer ID.</p>
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 08:18:15 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 08:25:04 UTC</div></div></div></body></html>
