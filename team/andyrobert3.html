@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Matthew Alexander - Project Portfolio</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="../images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link active" href="../index.html">AB-3</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level4">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">main</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="navitem"><a class="nav-link" href="https://github.com/CS2113-AY1819S1-F10-3/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Matthew Alexander - Project Portfolio</h1></div><div id="content"><div class="sect1">
-<h2 id="project-police-records-system"><a class="link" href="#project-police-records-system">PROJECT: Police Records System</a></h2>
+<h2 id="project-police-records-and-intelligent-system-prism"><a class="link" href="#project-police-records-and-intelligent-system-prism">PROJECT: Police Records and Intelligent System (PRISM)</a></h2>
 <div class="sectionbody">
 <hr>
 </div>
@@ -10,7 +10,7 @@
 <h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Addressbook is morphed to a police records database with two types of users, Police Officers (PO) &amp; Headquarter Personnel (HQP).
+<p>The Addressbook is morphed to a police records system called PRISM with two types of users, Police Officers (PO) &amp; Headquarter Personnel (HQP).
 Users have their own access levels with HQP having higher authorization compared to PO.
 Police officers can screen civilians during duty with their respective NRIC, their criminal history and status would be shown to the police officers.
 POs can also request for backup when needed, HQP would dispatch other POs at their discretion based on estimated time of arrival.
@@ -115,7 +115,10 @@ Location is important, so backup officer knows where to travel to &amp; ETA is c
 <p>Guided team for proper coding standards and practices.</p>
 </li>
 <li>
-<p>Refactored teammates code</p>
+<p>Created sequence diagrams for the product&#8217;s features.</p>
+</li>
+<li>
+<p>Refactored teammates code that did not follow OOP style.</p>
 </li>
 </ul>
 </div>
@@ -172,14 +175,117 @@ Location is important, so backup officer knows where to travel to &amp; ETA is c
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For the <a href="https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/docs/UserGuide.adoc">User Guide</a>, I added the content that were relevant for me which included Edit Command, Request Command &amp; Dispatch Command.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
 </tr>
 </tbody>
 </table>
+<div class="sect2">
+<h3 id="edit"><a class="link" href="#edit">Editing a person : <code>edit</code> (HQP only)</a></h3>
+<div class="paragraph">
+<p>Edit specified parameter(s) of an existing person in the Police Records - only by HQP.</p>
+</div>
+<div class="paragraph">
+<p>Format: 'edit n/NRIC p/[POSTAL_CODE] s/[STATUS] w/[WANTED_FOR] o/[PAST_OFFENCES]'</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The NRIC tag 'n/' is required</p>
+</li>
+<li>
+<p>The other tags are optional, but at least one of them must be filled</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Edits the person with the specified NRIC.</p>
+</li>
+<li>
+<p>At least one of the optional fields must be provided.</p>
+</li>
+<li>
+<p>Existing values will be updated to the input values.</p>
+</li>
+<li>
+<p>Offenses can only be added not replaced.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>edit g1952866Q p/510246</p>
+</li>
+<li>
+<p>Edits the postal code of the person with the specified NRIC to be 510246
+=== Requesting for assistance : <code>rb</code> (HQP &amp; PO)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Generates GPS coordinates of current location with current case and sends it to HQP.
+HQP would receive message in inbox.</p>
+</div>
+<div class="paragraph">
+<p>Format: 'rb OFFENSE'</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>rb gun</p>
+</li>
+<li>
+<p>Sends a set of GPS coordinates, Current Case and Google Maps URL location to HQP.
+=== Dispatch assistance for requester: <code>dispatch</code> (HQP only)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Generates message to dispatch an officer to backup a requesting officer
+Message would be sent to requester &amp; backup officer which includes ETA(Real Time) &amp; Location (Google Maps URL).</p>
+</div>
+<div class="paragraph">
+<p>Format: 'dispatch (BACKUP OFFICER) (OFFENSE) (REQUESTER OFFICER)'</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>dispatch po1 gun po3</p>
+</li>
+<li>
+<p>Sends a set of GPS coordinates, current case, ETA and Google Maps URL location of requester
+to backup officer and vice-versa.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="contributions-to-the"><a class="link" href="#contributions-to-the">Contributions to the</a></h2>
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer GUide</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -187,9 +293,531 @@ Location is important, so backup officer knows where to travel to &amp; ETA is c
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For the <a href="https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/docs/DeveloperGuide.adoc">Developer Guide</a>, I added the commands that were relevant for me which included Edit Command, Request Command &amp; Dispatch Command.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
 </tr>
 </tbody>
 </table>
+<div class="sect2">
+<h3 id="edit"><a class="link" href="#edit">2c. "edit" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 11:38:29 UTC</div></div></div></body></html>
+<div class="paragraph">
+<p>Only a HQP may use this command. This command allows HQP to update their chosen parameters which include the status, offense, postal code
+and wanted attributes of a specific NRIC. It is similar to the "find" command in the sense that
+it searches for the person in the addressBook list by NRIC.</p>
+</div>
+<div class="paragraph">
+<p>It also implements these methods:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "edit" command itself and displays result to user</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This is an example scenario of "edit" command</p>
+</div>
+<div class="paragraph">
+<p>Step 1: The user inputs HQP password and logs in as HQP.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user types "edit n/s1234567a p/510247 s/wanted w/murder o/gun" and executes it.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: Parser class determines the command word and runs the prepareEdit method</p>
+</div>
+<div class="paragraph">
+<p>Step 4: prepareEdit method in Parser class would parse each non-empty input such as NRIC, Postal Code, Status, Wanted &amp; Offense
+        from the input text to instantiate the EditCommand class.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: Logic class then calls the execute method on EditCommand Object.
+        Person with NRIC "s1234567a" is searched for in the addressbook. If he/she exists,
+        then the person&#8217;s attributes get updated accordingly.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: CommandResult with successful message is returned to Logic class, which then displays
+        to user: "Edited person: s1234567a".</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="edit"><a class="link" href="#edit">Use case: Edit person</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User keys in edit command with NRIC and new details of person to change</p>
+</li>
+<li>
+<p>System edits the person’s respective details.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>5a. User enters invalid NRIC format</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System shows an error message stating that NRIC has a certain alphanumeric format.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5b. User enters NRIC of a person that does not exist in the police records</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5b1. System shows an error message stating that person could not be found.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5c. User enters edit command with only NRIC tag without other details to change.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5c1. System shows an error message stating that format is invalid</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>8a. User enters person&#8217;s details with invalid format.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>8a1. System shows an error message suggesting the correct usage of the command.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="request"><a class="link" href="#request">3e. "rb" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>The rb command is an abbreviation of request backup.
+Both PO &amp; HQP can use this command as anyone can request for help.
+When the command is executed, a Msg object is generated.
+Inside this Msg object, several fields exist which include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Priority of offense</p>
+</li>
+<li>
+<p>Patrol resource ID of requester</p>
+</li>
+<li>
+<p>Patrol resource respective Google Maps URL Location.</p>
+</li>
+<li>
+<p>Current case patrol resource needs help with</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Then the Msg object is passed to the writeNotifcation object to be written into the HQP&#8217;s message file.
+The filepath for HQP&#8217;s message is ./inboxMessages/headquartersInbox</p>
+</div>
+<div class="paragraph">
+<p>It also implements these following methods:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "RequestHelpCommand" command and displays result to user.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "rb" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User inputs PO1 password and logs in as PO1.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: User executes "rb gun".</p>
+</div>
+<div class="paragraph">
+<p>Step 3: Parser class identifies user command as "rb" and runs prepareRequest method.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: prepareRequest method identifies offense &amp; current user ID session.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: RequestHelpCommand class is instantiated with message template consisting  &amp; case
+        which in this case is 'gun'.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: WriteNotification is instantiated to write the message the HQP inbox file.</p>
+</div>
+<div class="paragraph">
+<p>Step 7: CommandResult with successful message is returned to Logic class, which then displays
+                to user: "Request for backup case from po1 has been sent to HQP."</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="request"><a class="link" href="#request">Use Case: Request Backup</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts User to enter his password.</p>
+</li>
+<li>
+<p>User enters his password.</p>
+</li>
+<li>
+<p>System prompts User to key in command.</p>
+</li>
+<li>
+<p>User types in to request backup with pre-defined case types.</p>
+</li>
+<li>
+<p>System adds message into Headquarters inbox.</p>
+</li>
+<li>
+<p>User will be notified with success message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3a. User enters an invalid password.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a1. System shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes in step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5a. User enters an invalid input with invalid command format.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System shows error message and prompts correct format for request feature.</p>
+<div class="paragraph">
+<p>Use case resumes from step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5b. User enters an invalid case type.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5b1. System shows an error message and prompts user with list of offences.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dispatch"><a class="link" href="#dispatch">3f. "dispatch" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>Only HQP has access to the "dispatch" command.
+Dispatch command sends a message to both the designated requester &amp; backup officers.
+The system creates two WriteNotification classes, the first writes to the requester
+inbox and the second writes to the backup officer inbox.</p>
+</div>
+<div class="paragraph">
+<p>The message sent to the requester&#8217;s inbox includes the ETA for the backup officer
+with his/her location both in raw longitude &amp; latitude form and Google Maps URL format.</p>
+</div>
+<div class="paragraph">
+<p>It is similar for the message sent to the backup&#8217;s inbox which includes the ETA that
+he/she should arrive within &amp; Google Maps URL location of the requester&#8217;s Location.</p>
+</div>
+<div class="paragraph">
+<p>It also implements these following methods:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes "dispatch" command and displays result to user</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "dispatch" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User inputs HQP password and logs in as HQP.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: User executes "dispatch PO1 gun PO3".</p>
+</div>
+<div class="paragraph">
+<p>Step 3: Parser class identifies user command as "dispatch" and runs prepareDispatch method.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: prepareDispatch method identifies PO1 as backup officer, gun as case &amp; PO3 as requester officer.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: DispatchCommand class is instantiated with 2 different WriteNotification classes for two different files.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: DispatchCommand object is executed,
+        Msg for requester &amp; backup officer are generated to include content explained above.</p>
+</div>
+<div class="paragraph">
+<p>Step 7: Both Msg objects are passed to WriteNotification class to be written to the respective recipient files.</p>
+</div>
+<div class="paragraph">
+<p>Step 8: CommandResult with successful message is returned to Logic class, which then displays
+        to user: "Dispatch for PO3 backup is successful."</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dispatch"><a class="link" href="#dispatch">Use Case: Dispatch Backup</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts User to enter his password.</p>
+</li>
+<li>
+<p>User enters his password.</p>
+</li>
+<li>
+<p>System prompts User to key in command.</p>
+</li>
+<li>
+<p>User keys in backup officer to assist requester with case type.</p>
+</li>
+<li>
+<p>System adds new message with ETA &amp; location of backup officer and case type in requester inbox.</p>
+</li>
+<li>
+<p>System adds new message with ETA &amp; location of requester and case type in backup officer inbox.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0a. User keys in invalid command format.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>0a1. System shows error message and prompts correct format for dispatch feature.</p>
+<div class="paragraph">
+<p>Use case resumes from step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3a. The entered password is invalid.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a1. System shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes in step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5a. User is not a Headquarter Personnel.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System shows an error message stating invalid credentials.</p>
+<div class="paragraph">
+<p>Use case resumes in step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>7a. User enters an engaged police officer as backup.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>7a1. System shows an error message stating that the police officer entered is engaged.</p>
+<div class="paragraph">
+<p>Use case resumes in step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>7b. User enters an invalid case type.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>7b1.  System shows an error message and prompts user with list of offences.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="non-functional-requirements"><a class="link" href="#non-functional-requirements">Appendix A: Non Functional Requirements</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java 9 or higher installed.</p>
+</li>
+<li>
+<p>Should be able to hold up to 1000 persons.</p>
+</li>
+<li>
+<p>Should come with automated unit tests and open source code.</p>
+</li>
+<li>
+<p>Should favor DOS style commands over Unix-style commands.</p>
+</li>
+<li>
+<p>Business/domain rules:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Device should accept any more input after 9 characters when PO is inputting NRIC</p>
+</li>
+<li>
+<p>Device will constantly remind PO to charge if battery level goes below a certain level.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Accessibility: Different levels of access for POs and HQPs and drivers (ambulance,fire truck).</p>
+</li>
+<li>
+<p>Performance requirements: The system should respond within two seconds.</p>
+</li>
+<li>
+<p>Security requirements: The system should be password locked.</p>
+</li>
+<li>
+<p>Data requirements:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Data should be constant, not volatile.</p>
+</li>
+<li>
+<p>Data should be recoverable from last save point</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="glossary"><a class="link" href="#glossary">Appendix B: Glossary</a></h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><a id="mainstream-os"></a> Mainstream OS</dt>
+<dd>
+<p>Windows, Linux, Unix, OS-X</p>
+</dd>
+<dt class="hdlist1"><a id="private-contact-detail"></a> Private contact detail</dt>
+<dd>
+<p>A contact detail that is not meant to be shared with others.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 15:00:37 UTC</div></div></div></body></html>

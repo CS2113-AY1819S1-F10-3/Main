@@ -16,7 +16,7 @@
 <li><a href="#viewing-help-code-help-code-hqp-po">3.1. Viewing help : <code>help</code> (HQP &amp; PO)</a></li>
 <li><a href="#display-date-and-time-code-time-code-hqp-po">3.2. Display date and time : <code>time</code> (HQP &amp; PO)</a></li>
 <li><a href="#adding-a-person-code-add-code-hqp-only">3.3. Adding a person: <code>add</code> (HQP only)</a></li>
-<li><a href="#editing-a-person-code-edit-code-hqp-only">3.4. Editing a person : <code>edit</code> (HQP only)</a></li>
+<li><a href="#edit">3.4. Editing a person : <code>edit</code> (HQP only)</a></li>
 <li><a href="#display-a-list-of-all-persons-code-list-code-hqp-po">3.5. Display a list of all persons : <code>list</code> (HQP &amp; PO)</a></li>
 <li><a href="#find-a-person-by-nric-code-find-code-hqp-po">3.6. Find a person by NRIC : <code>find</code> (HQP &amp; PO)</a></li>
 <li><a href="#get-screening-history-of-a-person-code-check-code-hqp">3.7. Get screening history of a person: <code>check</code> (HQP)</a></li>
@@ -24,8 +24,8 @@
 <li><a href="#update-status-of-po-code-updatestatus-code-hqp-only">3.9. Update status of PO: <code>updatestatus</code> (HQP only)</a></li>
 <li><a href="#deleting-a-person-code-delete-code-hqp-only">3.10. Deleting a person : <code>delete</code> (HQP only)</a></li>
 <li><a href="#clear-records-code-clear-code-hqp-only">3.11. Clear records : <code>clear</code> (HQP only)</a></li>
-<li><a href="#requesting-for-assistance-code-rb-code-hqp-po">3.12. Requesting for assistance : <code>rb</code> (HQP &amp; PO)</a></li>
-<li><a href="#dispatch-assistance-for-requester-code-dispatch-code-hqp-only">3.13. Dispatch assistance for requester: <code>dispatch</code> (HQP only)</a></li>
+<li><a href="#request">3.12. Requesting for assistance : <code>rb</code> (HQP &amp; PO)</a></li>
+<li><a href="#dispatch">3.13. Dispatch assistance for requester: <code>dispatch</code> (HQP only)</a></li>
 <li><a href="#lock-system-code-lock-code-hqp-po">3.14. Lock System : <code>lock</code> (HQP &amp; PO)</a></li>
 <li><a href="#update-password-code-update-password-code-hqp">3.15. Update Password : <code>update password</code> (HQP)</a></li>
 <li><a href="#check-unread-notifications-code-showunread-code-hqp-po">3.16. Check unread notifications: <code>showunread</code> (HQP &amp; PO)</a></li>
@@ -256,9 +256,9 @@ A person can have 0 or more past offenses
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-a-person-code-edit-code-hqp-only"><a class="link" href="#editing-a-person-code-edit-code-hqp-only">3.4. Editing a person : <code>edit</code> (HQP only)</a></h3>
+<h3 id="edit"><a class="link" href="#edit">3.4. Editing a person : <code>edit</code> (HQP only)</a></h3>
 <div class="paragraph">
-<p>Edit a specified parameter of an existing person in the Police Records - only by HQP</p>
+<p>Edit specified parameter(s) of an existing person in the Police Records - only by HQP.</p>
 </div>
 <div class="paragraph">
 <p>Format: 'edit n/NRIC p/[POSTAL_CODE] s/[STATUS] w/[WANTED_FOR] o/[PAST_OFFENCES]'</p>
@@ -296,6 +296,9 @@ A person can have 0 or more past offenses
 </li>
 <li>
 <p>Existing values will be updated to the input values.</p>
+</li>
+<li>
+<p>Offenses can only be added not replaced.</p>
 </li>
 </ul>
 </div>
@@ -489,7 +492,7 @@ A person can have 0 or more past offenses
 </div>
 </div>
 <div class="sect2">
-<h3 id="requesting-for-assistance-code-rb-code-hqp-po"><a class="link" href="#requesting-for-assistance-code-rb-code-hqp-po">3.12. Requesting for assistance : <code>rb</code> (HQP &amp; PO)</a></h3>
+<h3 id="request"><a class="link" href="#request">3.12. Requesting for assistance : <code>rb</code> (HQP &amp; PO)</a></h3>
 <div class="paragraph">
 <p>Generates GPS coordinates of current location with current case and sends it to HQP.
 HQP would receive message in inbox.</p>
@@ -512,7 +515,7 @@ HQP would receive message in inbox.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="dispatch-assistance-for-requester-code-dispatch-code-hqp-only"><a class="link" href="#dispatch-assistance-for-requester-code-dispatch-code-hqp-only">3.13. Dispatch assistance for requester: <code>dispatch</code> (HQP only)</a></h3>
+<h3 id="dispatch"><a class="link" href="#dispatch">3.13. Dispatch assistance for requester: <code>dispatch</code> (HQP only)</a></h3>
 <div class="paragraph">
 <p>Generates message to dispatch an officer to backup a requesting officer
 Message would be sent to requester &amp; backup officer which includes ETA(Real Time) &amp; Location (Google Maps URL).</p>
@@ -805,4 +808,4 @@ E.g. add Bob n/g1234567a d/1996 p/111111 s/clear w/none</p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 11:38:29 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 15:00:37 UTC</div></div></div></body></html>
