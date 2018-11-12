@@ -14,17 +14,19 @@
 <ul class="sectlevel2">
 <li><a href="#password">1a. Password feature</a></li>
 <li><a href="#1b-update-password-feature">1b. Update Password Feature</a></li>
-<li><a href="#2a-find-command-edited">2a. "find" command (edited)</a></li>
+<li><a href="#find">2a. "find" command (edited)</a></li>
 <li><a href="#2b-check-command">2b. "check" command</a></li>
 <li><a href="#edit">2c. "edit" command</a></li>
+<li><a href="#delete">2d. "delete" command</a></li>
 <li><a href="#wkFeatures">3a. "showunread" command</a></li>
 <li><a href="#3b-inbox-command">3b. "inbox" command</a></li>
 <li><a href="#3c-read-command">3c. "read" command</a></li>
 <li><a href="#3d-clearinbox-command">3d. "clearinbox" command</a></li>
 <li><a href="#request">3e. "rb" command</a></li>
 <li><a href="#dispatch">3f. "dispatch" command</a></li>
-<li><a href="#4a-updatestatus-command">4a. "updatestatus" command</a></li>
-<li><a href="#4b-checkstatus-command">4b. "checkstatus" command</a></li>
+<li><a href="#updatestatus">4a. "updatestatus" command</a></li>
+<li><a href="#checkstatus">4b. "checkstatus" command</a></li>
+<li><a href="#4c-time-command">4c. "time" command</a></li>
 <li><a href="#logout">5. "logout" command</a></li>
 <li><a href="#autocorrect">6. Autocorrection feature</a></li>
 <li><a href="#shutdown">7. "shutdown" command</a></li>
@@ -57,10 +59,10 @@
 <li><a href="#use-case-add-person">Use case: Add person</a></li>
 <li><a href="#use-case-delete-person">Use case: Delete person</a></li>
 <li><a href="#edit">Use case: Edit person</a></li>
-<li><a href="#use-case-find-person">Use case: Find person</a></li>
-<li><a href="#use-case-check-person">Use case: Check person</a></li>
-<li><a href="#use-case-update-status-of-a-po">Use case: Update status of a PO</a></li>
-<li><a href="#use-case-check-status-of-all-pos">Use case: Check status of all POs</a></li>
+<li><a href="#find">Use case: Find person</a></li>
+<li><a href="#check">Use case: Check person</a></li>
+<li><a href="#updatestatus">Use case: Update status of a PO</a></li>
+<li><a href="#checkstatus">Use case: Check status of all POs</a></li>
 <li><a href="#usecase">Use case: Autocorrection of commands</a></li>
 <li><a href="#use-case-autocorrection-of-nrics">Use case: Autocorrection of NRICs</a></li>
 <li><a href="#inbox">Use case: Show unread messages</a></li>
@@ -73,6 +75,32 @@
 </li>
 <li><a href="#nfr">Appendix C: Non Functional Requirements</a></li>
 <li><a href="#glossary">Appendix D: Glossary</a></li>
+<li><a href="#instructions-for-manual-testing">Appendix E: Instructions for Manual Testing</a>
+<ul class="sectlevel2">
+<li><a href="#launch">Launch</a></li>
+<li><a href="#accounts-for-both-hqp-and-pos">Accounts for both HQP and POs</a></li>
+<li><a href="#saving-data">Saving Data</a></li>
+<li><a href="#update-password">Update password</a></li>
+<li><a href="#viewing-help">Viewing Help</a></li>
+<li><a href="#check-time">Check time</a></li>
+<li><a href="#reading-notifications-from-inbox-code-showunread-code-code-inbox-code">Reading notifications from inbox (<code>showunread</code> &amp; <code>inbox</code>)</a></li>
+<li><a href="#marking-notifications-as-read">Marking notifications as read</a></li>
+<li><a href="#clearing-your-inbox">Clearing your inbox</a></li>
+<li><a href="#request-backup-for-specific-case">Request backup for specific case</a></li>
+<li><a href="#dispatch-police-officer-for-specific-case-to-requester">Dispatch police officer for specific case to requester</a></li>
+<li><a href="#adding-a-person">Adding a person</a></li>
+<li><a href="#list-all-persons">List all persons</a></li>
+<li><a href="#finding-a-person-in-the-police-records">Finding a person in the Police Records</a></li>
+<li><a href="#checking-a-person-s-screening-history">Checking a person&#8217;s screening history</a></li>
+<li><a href="#update-a-po-s-engagement-status-to-free">Update a PO&#8217;s engagement status to free</a></li>
+<li><a href="#check-engagement-status-of-all-pos">Check engagement status of all POs</a></li>
+<li><a href="#edit-a-person-s-details">Edit a person&#8217;s details</a></li>
+<li><a href="#delete-a-person">Delete a person</a></li>
+<li><a href="#clear">Clear</a></li>
+<li><a href="#autocorrect-2">Autocorrect</a></li>
+<li><a href="#shutdown-2">Shutdown</a></li>
+</ul>
+</li>
 </ul></div></div><div id="content"><div class="sect1">
 <h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
 <div class="sectionbody">
@@ -243,6 +271,11 @@
 </div>
 <div class="sect2">
 <h3 id="password"><a class="link" href="#password">1a. Password feature</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/Password.PNG" alt="Password">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -319,6 +352,11 @@
 </div>
 <div class="sect2">
 <h3 id="1b-update-password-feature"><a class="link" href="#1b-update-password-feature">1b. Update Password Feature</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/updatePassword.png" alt="updatePassword">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -409,7 +447,12 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="2a-find-command-edited"><a class="link" href="#2a-find-command-edited">2a. "find" command (edited)</a></h3>
+<h3 id="find"><a class="link" href="#find">2a. "find" command (edited)</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/FindCommand_Sequence.png" alt="FindCommand Sequence">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -423,7 +466,7 @@ It also implements the following operations:</p>
 <p>execute() - executes the "find" command itself and displays the result to the user.</p>
 </li>
 <li>
-<p>getPersonWithNric() - Searches the addressbook to retrieve the person with the specified NRIC.</p>
+<p>getPersonWithNric() - Searches the Police Records to retrieve the person with the specified NRIC.</p>
 </li>
 </ol>
 </div>
@@ -446,7 +489,7 @@ It also implements the following operations:</p>
 <p>Step 5: Logic class calls the execute() method on the FindCommand object.</p>
 </div>
 <div class="paragraph">
-<p>Step 6: The getPersonWithNric() method called in execute() searches the addressbook for the person with "s1234567a" if he exists and person is stored in a list.</p>
+<p>Step 6: The getPersonWithNric() method called in execute() searches the Police Records for the person with "s1234567a" if he exists and person is stored in a list.</p>
 </div>
 <div class="paragraph">
 <p>Step 7: The person is found and is stored in a matchedPerson list variable. execute() returns a CommandResult using the matchedPerson list as its argument.</p>
@@ -493,6 +536,11 @@ It also implements the following operations:</p>
 </div>
 <div class="sect2">
 <h3 id="2b-check-command"><a class="link" href="#2b-check-command">2b. "check" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/CheckCommand_Sequence.png" alt="CheckCommand Sequence">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -511,7 +559,7 @@ corresponding to the specified NRIC.</p>
 <p>execute() - executes the "check" command itself and displays the result to the user.</p>
 </li>
 <li>
-<p>getPersonWithNric() - Searches the addressbook to retrieve the person with the specified NRIC.</p>
+<p>getPersonWithNric() - Searches the Police Records to retrieve the person with the specified NRIC.</p>
 </li>
 </ol>
 </div>
@@ -580,13 +628,18 @@ the corresponding timestamp is stored in a list.</p>
 </div>
 <div class="sect2">
 <h3 id="edit"><a class="link" href="#edit">2c. "edit" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/EditCommand.png" alt="EditCommand">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
 <div class="paragraph">
 <p>Only a HQP may use this command. This command allows HQP to update their chosen parameters which include the status, offense, postal code
 and wanted attributes of a specific NRIC. It is similar to the "find" command in the sense that
-it searches for the person in the addressBook list by NRIC.</p>
+it searches for the person in the Police Records list by NRIC. At least one parameter must be updated. Offenses are added not replaced.</p>
 </div>
 <div class="paragraph">
 <p>It also implements these methods:</p>
@@ -616,7 +669,7 @@ it searches for the person in the addressBook list by NRIC.</p>
 </div>
 <div class="paragraph">
 <p>Step 5: Logic class then calls the execute method on EditCommand Object.
-        Person with NRIC "s1234567a" is searched for in the addressbook. If he/she exists,
+        Person with NRIC "s1234567a" is searched for in the Police Records. If he/she exists,
         then the person&#8217;s attributes get updated accordingly.</p>
 </div>
 <div class="paragraph">
@@ -661,7 +714,83 @@ it searches for the person in the addressBook list by NRIC.</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="delete"><a class="link" href="#delete">2d. "delete" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/DeleteCommand_Sequence.png" alt="DeleteCommand Sequence">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>Only a HQP may use this command. A person&#8217;s data is allowed to be deleted from the Police Records. It also
+implements the following methods:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "delete" command itself and displays the success or error message to the user</p>
+</li>
+<li>
+<p>resultDeletePrediction() - In the event that the user inputs an NRIC that does not exists, this method will check the Police Records and try to return any person with a similar NRIC to what was given by the user</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "delete" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: The user(a HQP) input his password and unlocks the system.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user executes "delete s1234567a"</p>
+</div>
+<div class="paragraph">
+<p>Step 3: Parser class determines the command word and runs prepareDelete method.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: prepareDelete determines string is a valid nric, then instantiates a new DeleteCommand.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: Logic class calls the execute() method on the DeleteCommand object.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: In execute(), the Police Records will be iterated through to see if the person with the said NRIC exists.
+If not, resultDeletePrediction() will be called to check if any person has an NRIC close to the input.</p>
+</div>
+<div class="paragraph">
+<p>Step 7: Once the person is deleted, a success message will be displayed to the user using a CommandResult object,
+else it would be an error message stating the person with said NRIC does not exist</p>
+</div>
+<div class="paragraph">
+<p>Alternatives considered:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Delete by name parameter</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Much more readable to user to delete a name than an NRIC</p>
+</li>
+<li>
+<p>Cons: There can be more than 1 person with the same name, so deleting should use a more unique parameter</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
 <h3 id="wkFeatures"><a class="link" href="#wkFeatures">3a. "showunread" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/inboxCommand.png" alt="inboxCommand">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -755,6 +884,11 @@ This is to allow you to access the messages that you have previously marked as r
 </div>
 <div class="sect2">
 <h3 id="3c-read-command"><a class="link" href="#3c-read-command">3c. "read" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/ReadCommand_Sequence.png" alt="ReadCommand Sequence">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -787,6 +921,11 @@ The "read" command can only be used after the "showunread" command has been used
 </div>
 <div class="sect2">
 <h3 id="3d-clearinbox-command"><a class="link" href="#3d-clearinbox-command">3d. "clearinbox" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/ClearInboxCommand_Sequence.png" alt="ClearInboxCommand Sequence">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -827,6 +966,11 @@ text file storing the messages in your inbox.</p>
 </div>
 <div class="sect2">
 <h3 id="request"><a class="link" href="#request">3e. "rb" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/RequestCommand.PNG" alt="RequestCommand">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -931,6 +1075,11 @@ The filepath for HQP&#8217;s message is ./inboxMessages/headquartersInbox</p>
 </div>
 <div class="sect2">
 <h3 id="dispatch"><a class="link" href="#dispatch">3f. "dispatch" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/DispatchCommand.PNG" alt="DispatchCommand">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -998,11 +1147,33 @@ he/she should arrive within &amp; Google Maps URL location of the requester&#821
 </li>
 </ul>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Alternatives considered: Chat Client API</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Allows real time system with remote access so police officers can view in real time</p>
+</li>
+<li>
+<p>Cons: Chat Client does not store messages after closing application (data does not persist), not much API documentation for beginners</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="4a-updatestatus-command"><a class="link" href="#4a-updatestatus-command">4a. "updatestatus" command</a></h3>
+<h3 id="updatestatus"><a class="link" href="#updatestatus">4a. "updatestatus" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/UpdateStatus_Sequence.png" alt="UpdateStatus Sequence">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -1079,7 +1250,12 @@ It also implements the following methods:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="4b-checkstatus-command"><a class="link" href="#4b-checkstatus-command">4b. "checkstatus" command</a></h3>
+<h3 id="checkstatus"><a class="link" href="#checkstatus">4b. "checkstatus" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/CheckStatus_Sequence.png" alt="CheckStatus Sequence">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -1130,6 +1306,40 @@ It also implements the following methods:</p>
 </ul>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4c-time-command"><a class="link" href="#4c-time-command">4c. "time" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>This command displays the current time to both HQP &amp; PO.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "DateTimeCommand" command</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "time" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User inputs password and unlocks the system.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: User types "time" and executes it.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: Parser class identifies command as "time" and returns a DateTimeCommand object.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: Logic class calls the execute() method in the DateTimeCommand object.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: execute() calls</p>
 </div>
 </div>
 <div class="sect2">
@@ -1207,6 +1417,11 @@ It also implements the following methods:</p>
 </div>
 <div class="sect2">
 <h3 id="autocorrect"><a class="link" href="#autocorrect">6. Autocorrection feature</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/AutoCorrectSequence.png" alt="AutoCorrectSequence">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -2208,11 +2423,24 @@ HQP- Headquarters Personnel</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5a. User enters invalid NRIC format</p>
+<p>3a. User enters an invalid password.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5a1. System shows an error message stating that NRIC has a certain alphanumeric format.</p>
+<p>3a1. System shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4a. User enters invalid NRIC format</p>
+<div class="ulist">
+<ul>
+<li>
+<p>4a1. System shows an error message stating that NRIC has a certain alphanumeric format.</p>
 <div class="paragraph">
 <p>Use case resumes at step 4.</p>
 </div>
@@ -2221,11 +2449,11 @@ HQP- Headquarters Personnel</p>
 </div>
 </li>
 <li>
-<p>5b. User enters NRIC of a person that does not exist in the police records</p>
+<p>4b. User enters NRIC of a person that does not exist in the police records</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5b1. System shows an error message stating that person could not be found.</p>
+<p>4b1. System shows an error message stating that person could not be found.</p>
 <div class="paragraph">
 <p>Use case resumes at step 4.</p>
 </div>
@@ -2234,11 +2462,53 @@ HQP- Headquarters Personnel</p>
 </div>
 </li>
 <li>
-<p>5c. User enters edit command with only NRIC tag without other details to change.</p>
+<p>4c. User enters edit command with only NRIC tag without other details to change.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5c1. System shows an error message stating that format is invalid</p>
+<p>4c1. System shows an error message stating that format is invalid</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4d. User enters edit command with proper NRIC format and Postal Code that is not 6 digits long.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>4d1. System shows an error message stating that Postal Code must be 6 digits long.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4e. User enters edit command with proper NRIC and wanted status that is invalid.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>4e1. System shows an error message stating that wanted status should be only of 3 types.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4f. User enters edit command with proper NRIC and invalid offense.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>4f1. System shows an error message stating offense is not in the list.</p>
+</li>
+<li>
+<p>4f2. System shows list of valid offenses</p>
 <div class="paragraph">
 <p>Use case resumes at step 4.</p>
 </div>
@@ -2263,7 +2533,7 @@ HQP- Headquarters Personnel</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-find-person"><a class="link" href="#use-case-find-person">Use case: Find person</a></h3>
+<h3 id="find"><a class="link" href="#find">Use case: Find person</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -2359,7 +2629,7 @@ HQP- Headquarters Personnel</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-check-person"><a class="link" href="#use-case-check-person">Use case: Check person</a></h3>
+<h3 id="check"><a class="link" href="#check">Use case: Check person</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -2468,7 +2738,7 @@ HQP- Headquarters Personnel</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-update-status-of-a-po"><a class="link" href="#use-case-update-status-of-a-po">Use case: Update status of a PO</a></h3>
+<h3 id="updatestatus"><a class="link" href="#updatestatus">Use case: Update status of a PO</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -2551,7 +2821,7 @@ HQP- Headquarters Personnel</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-check-status-of-all-pos"><a class="link" href="#use-case-check-status-of-all-pos">Use case: Check status of all POs</a></h3>
+<h3 id="checkstatus"><a class="link" href="#checkstatus">Use case: Check status of all POs</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -3204,11 +3474,11 @@ HQP- Headquarters Personnel</p>
 </div>
 </li>
 <li>
-<p>7a. User enters an engaged police officer as backup.</p>
+<p>5b. User enters an engaged police officer as backup.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>7a1. System shows an error message stating that the police officer entered is engaged.</p>
+<p>5b1. System shows an error message stating that the police officer entered is engaged.</p>
 <div class="paragraph">
 <p>Use case resumes in step 4.</p>
 </div>
@@ -3217,13 +3487,26 @@ HQP- Headquarters Personnel</p>
 </div>
 </li>
 <li>
-<p>7b. User enters an invalid case type.</p>
+<p>5c. User enters an invalid case type.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>7b1.  System shows an error message and prompts user with list of offences.</p>
+<p>5c1.  System shows an error message and prompts user with list of offences.</p>
 <div class="paragraph">
 <p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5d. User enters same officer for backup &amp; requester.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5d1.  System shows an error message stating that backup &amp; requester is same officer.</p>
+<div class="paragraph">
+<p>Use Case resumes at step 4.</p>
 </div>
 </li>
 </ul>
@@ -3336,4 +3619,665 @@ It is also used to describe a subject, should he have a criminal record: wanted,
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:20:56 UTC</div></div></div></body></html>
+</div>
+<div class="sect1">
+<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix E: Instructions for Manual Testing</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Given below are instructions to test the app manually.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+These instructions only provide a starting point for testers to work on; testers are expected to do more <em>exploratory</em> testing.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you want to work with pre-populated data, do not tamper with any of the text files. Should they be tampered accidentally, delete the text file that was tampered and relaunch the jar file to regenerate the text file.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="launch"><a class="link" href="#launch">Launch</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Initial launch</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Download the jar file and copy into an empty folder</p>
+</li>
+<li>
+<p>Double-click the jar file<br>
+Expected: Shows the GUI with a set of sample persons. The window size may not be optimum. Input "list" command after logging to check if the data is loaded successfully</p>
+</li>
+<li>
+<p>Resize the window if needed</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="accounts-for-both-hqp-and-pos"><a class="link" href="#accounts-for-both-hqp-and-pos">Accounts for both HQP and POs</a></h3>
+<div class="paragraph">
+<p>There are a total of 6 accounts (1 HQP and 5 POs) available in the sample data:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 50%;">
+<colgroup>
+<col style="width: 52.3809%;">
+<col style="width: 47.6191%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">User</th>
+<th class="tableblock halign-left valign-top">Password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HQP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">papa123</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo5</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="saving-data"><a class="link" href="#saving-data">Saving Data</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dealing with missing/corrupted data files</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>As mentioned earlier, if the jar file is run with any of the data files missing, the jar file will auto-generate the required data files with pre-populated data for the purpose of testing.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="update-password"><a class="link" href="#update-password">Update password</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Updates password of a user</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Enter existing password to be updated, for e.g: 'popo1'</p>
+</li>
+<li>
+<p>Enter new alphanumeric password (at least 5 characters long) for example 'police1'</p>
+</li>
+<li>
+<p>Enter same password again, i.e 'police1'</p>
+</li>
+<li>
+<p>Expected: Success message shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="viewing-help"><a class="link" href="#viewing-help">Viewing Help</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Displays a list of commands available for the current user</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'help'<br>
+Expected: Shows list of available commands</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="check-time"><a class="link" href="#check-time">Check time</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Shows the current time</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'time'<br>
+Expected: Shows current time</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="reading-notifications-from-inbox-code-showunread-code-code-inbox-code"><a class="link" href="#reading-notifications-from-inbox-code-showunread-code-code-inbox-code">Reading notifications from inbox (<code>showunread</code> &amp; <code>inbox</code>)</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Prerequisites: Logged in as either HQP or PO.</p>
+</li>
+<li>
+<p>Dealing with missing data files</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If data files are missing while the application is running, the application will generate the required data files. However if for some reason that doesn&#8217;t happen, the command would throw an exception, indicating to the user that data file for user&#8217;s inbox cannot be found.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Reading an inbox with no messages</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>showunread</code> A feedback will be displayed to the user indicating that there are no unread messages.</p>
+</li>
+<li>
+<p><code>inbox</code> A feedback will be displayed to the user indicating the total number of messages in the inbox, and 0 unread messages.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="marking-notifications-as-read"><a class="link" href="#marking-notifications-as-read">Marking notifications as read</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Prerequisites: Logged in as either HQP or PO. Inbox must have been opened (use of <code>inbox</code> or <code>showunread</code> command) as well.</p>
+</li>
+<li>
+<p>Dealing with an unopened inbox</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If you have not used <code>showunread</code> or <code>inbox</code> command, a feedback will be displayed ot user indicating that inbox is not opened yet.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dealing with an unopened inbox after logging out and logging in again</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If you open your inbox and log out (<code>logout</code>) without exiting the application, you will still need to re-open your inbox before using <code>read</code> command. Otherwise, the system will display a feedback that you have not opened your inbox.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dealing with no (unread) messages in inbox</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>A feedback will be displayed to you indicating that there are no unread messages.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dealing with invalid indices</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If you enter a negative number, or a number larger than the number of unread messages, a feedback will be displayed indicating what the valid range of indices are.</p>
+</li>
+<li>
+<p>If you enter a nonsense value such as a character or symbol, a feedback will be displayed indicating that you have entered the command with an invalid format.</p>
+</li>
+<li>
+<p>If you enter a positive number for the index that is bigger than the threshold set, a feedback will be displayed indicating that the index entered was too large.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clearing-your-inbox"><a class="link" href="#clearing-your-inbox">Clearing your inbox</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dealing with missing data files</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If data files are missing while the application is running, the application will generate the required data files. However if for some reason that doesn&#8217;t happen, the command would throw an exception, indicating to the user that data file for user&#8217;s inbox cannot be found.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="request-backup-for-specific-case"><a class="link" href="#request-backup-for-specific-case">Request backup for specific case</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sends a message to HQP inbox with case, patrol resource ID &amp; location in Google Maps URL</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'rb gun'<br>
+Expected:  Success message will be displayed to the user stating request sent</p>
+</li>
+<li>
+<p>Test case: 'rb bob'<br>
+Expected: Invalid offense message error shwon, valid offenses will be presented in a list</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dispatch-police-officer-for-specific-case-to-requester"><a class="link" href="#dispatch-police-officer-for-specific-case-to-requester">Dispatch police officer for specific case to requester</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sends a message to backup officer &amp; requester with Case, Location &amp; Estimated Time of Arrival</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP only</p>
+</li>
+<li>
+<p>Test case: 'dispatch po1 riot po3'<br>
+Expected: Success message will be displayed to the user stating backup successful</p>
+</li>
+<li>
+<p>Test case: 'dispatch po1 bob po3'<br>
+Expected: Invalid offense message error shown</p>
+</li>
+<li>
+<p>Test case: 'dispatch po1 gun po3' (po1 engaged already)
+Expected: Error message shown</p>
+</li>
+<li>
+<p>Test case: 'dispatch po1 gun po1'<br>
+Expected: Error message shown</p>
+</li>
+<li>
+<p>Test case: 'dispatch bobo gun po1'<br>
+Expected: Error message shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-a-person"><a class="link" href="#adding-a-person">Adding a person</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Adds a person to the Police records</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'add John Doe n/s1234567a d/1996 p/510246 s/wanted w/none o/theft o/drugs<br>
+Expected: If wanted, wantedFor parameter cannot be none, error message shown</p>
+</li>
+<li>
+<p>Test case: 'add John Doe n/s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs'<br>
+Expected: If person is not found, success message will be shown, else, a duplicate person error message will be shown instead</p>
+</li>
+<li>
+<p>Test case: 'add John Doe s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs' (or any other missing prefixes)<br>
+Expected: Invalid command format, error message is shown</p>
+</li>
+<li>
+<p>Test case: 'add John Doe n/s123a d/1996 p/510246 s/xc w/none o/theft o/drugs (or any other invalid data)
+Expected: Error message for invalid data format will be shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="list-all-persons"><a class="link" href="#list-all-persons">List all persons</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Displays a list of all persons</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>PrerequisitesL Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'list'<br>
+Expected: List of persons, if any, is shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="finding-a-person-in-the-police-records"><a class="link" href="#finding-a-person-in-the-police-records">Finding a person in the Police Records</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Finds a person using the NRIC parameter to see his/her details</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'find s1234567a' (Assuming person with this NRIC exists)<br>
+Expected: Person&#8217;s details will be displayed</p>
+</li>
+<li>
+<p>Test case: 'find s1234567a' (If person does not exist in the Police Records)<br>
+Expected: Error message stating person not found will be shown</p>
+</li>
+<li>
+<p>Test case: 'find ' or 'find 11111'<br>
+Expected: Invalid command format, error message will be shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="checking-a-person-s-screening-history"><a class="link" href="#checking-a-person-s-screening-history">Checking a person&#8217;s screening history</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Check a person&#8217;s screening history in the form of timestamps</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'check s1234567a' (Assuming person with this NRIC exists)<br>
+Expected: A list of timestamps and the number of times person was screened will be displayed</p>
+</li>
+<li>
+<p>Test case: 'check s1234567a' (If person does not exist in the Police Records)<br>
+Expected: Error message stating person not found will be shown</p>
+</li>
+<li>
+<p>Test case: 'check ' or 'check 11111'<br>
+Expected: Invalid command format, error message will be shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="update-a-po-s-engagement-status-to-free"><a class="link" href="#update-a-po-s-engagement-status-to-free">Update a PO&#8217;s engagement status to free</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sets the PO&#8217;s isEngaged boolean value to false (so PO is free for dispatch)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'updatestatus po1' (Assuming PO with such ID exists)<br>
+Expected: A success message will be shown</p>
+</li>
+<li>
+<p>Test case: 'updatestatus po20'<br>
+Expected: No such PO exists, an error message will be shown</p>
+</li>
+<li>
+<p>Test case: 'updatestatus ' or 'updatestatus asdf'<br>
+Expected: Invalid command format, error message will be shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="check-engagement-status-of-all-pos"><a class="link" href="#check-engagement-status-of-all-pos">Check engagement status of all POs</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Displays all the engagement status of all POs in a list</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'checkstatus'<br>
+Expected: List of POs and their engagement statuses</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="edit-a-person-s-details"><a class="link" href="#edit-a-person-s-details">Edit a person&#8217;s details</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edits the details, only selected parameters, of a person. At least one optional parameter has to be filled</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'edit n/s1234567a p/111111 s/xc w/none o/theft<br>
+Expected: If person exists, success message is shown, else, error message is shown</p>
+</li>
+<li>
+<p>Test case: 'edit n/s1234567a 111111' (or any missing prefix or parameters)<br>
+Expected: Invalid command format, person&#8217;s details are not edited, error message shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="delete-a-person"><a class="link" href="#delete-a-person">Delete a person</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deletes a person from the Police Records</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'Delete s1234567a' (Assuming person with this NRIC exists)<br>
+Expected: Success message will be shown</p>
+</li>
+<li>
+<p>Test case: 'Delete s1234567a' (If person does not exist)<br>
+Expected: Person does not exist, error message is shown</p>
+</li>
+<li>
+<p>Test case: 'Delete ' or 'Delete 1111'<br>
+Expected: Invalid command format, error message shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clear"><a class="link" href="#clear">Clear</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clears the entire Police Records</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'clear'<br>
+   Expected: Success message is shown
+=== Logout</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Logout from system so that another password can be entered</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisite: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'logout'<br>
+Expected: Startup screen is shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="autocorrect-2"><a class="link" href="#autocorrect-2">Autocorrect</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Autocorrects an input if the input has a similar spelling to other commands</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'lost'<br>
+Expected: Message stating if you meant 'list'</p>
+</li>
+<li>
+<p>Test case: 'exit'<br>
+Expected: Message stating if you meant 'edit'</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shutdown-2"><a class="link" href="#shutdown-2">Shutdown</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Shuts down the system</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO or not at all</p>
+</li>
+<li>
+<p>Test case: 'shutdown'<br>
+Expected: System closes</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:35:36 UTC</div></div></div></body></html>

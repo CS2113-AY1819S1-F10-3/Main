@@ -1,9 +1,21 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Matthew Alexander - Project Portfolio</title><link rel="stylesheet" href="./gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="./coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="../images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link active" href="../index.html">AB-3</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level4">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">main</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="navitem"><a class="nav-link" href="https://github.com/CS2113-AY1819S1-F10-3/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Matthew Alexander - Project Portfolio</h1></div><div id="content"><div class="sect1">
-<h2 id="project-police-records-and-intelligent-system-prism"><a class="link" href="#project-police-records-and-intelligent-system-prism">PROJECT: Police Records and Intelligent System (PRISM)</a></h2>
+<h2 id="project-police-records-intelligent-system-prism"><a class="link" href="#project-police-records-intelligent-system-prism">PROJECT: Police Records Intelligent System (PRISM)</a></h2>
 <div class="sectionbody">
 <hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This portfolio was written to showcase my abilities to contribute to the project from a technical perspective
+such as features &amp; code, notwithstanding communication abilities that include documentation of the code.
+The project is centered on building a "Police Records Intelligent System" (PRISM) that was done in CS2113T (Software Engineering &amp; Object Oriented Programming)
+at the National University of Singapore in Semester 1 of the 2018/2019 Academic year.
+It was a team based effort that included (me) Matthew Alexander, Putra Danish, Muhammad Harun, Ong Wee Keong &amp; Shreyas.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -101,7 +113,7 @@ Location is important, so backup officer knows where to travel to &amp; ETA is c
 </li>
 <li>
 <p><strong>Code contributed</strong>:
-[<a href="https://github.com">Functional code</a>] [<a href="https://github.com">Test code</a>] _{give links to collated code files}</p>
+<a href="https://nuscs2113-ay1819s1.github.io/dashboard/#=undefined&amp;search=matthew%20alexander&amp;sort=displayName&amp;since=2018-09-12&amp;until=2018-10-30&amp;timeframe=day&amp;reverse=false&amp;repoSort=true">Functional code &amp; Test code</a></p>
 </li>
 <li>
 <p><strong>Other contributions</strong>:</p>
@@ -191,7 +203,7 @@ Location is important, so backup officer knows where to travel to &amp; ETA is c
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 <div class="ulist">
@@ -272,7 +284,7 @@ HQP would receive message in inbox.</p>
 Message would be sent to requester &amp; backup officer which includes ETA(Real Time) &amp; Location (Google Maps URL).</p>
 </div>
 <div class="paragraph">
-<p>Format: 'dispatch BACKUP OFFICER OFFENSE REQUESTER OFFICER'</p>
+<p>Format: 'dispatch BACKUP_OFFICER OFFENSE REQUESTER_OFFICER'</p>
 </div>
 <div class="ulist">
 <ul>
@@ -303,13 +315,18 @@ to backup officer and vice-versa.</p>
 </table>
 <div class="sect2">
 <h3 id="edit"><a class="link" href="#edit">2c. "edit" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/EditCommand.png" alt="EditCommand">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
 <div class="paragraph">
 <p>Only a HQP may use this command. This command allows HQP to update their chosen parameters which include the status, offense, postal code
 and wanted attributes of a specific NRIC. It is similar to the "find" command in the sense that
-it searches for the person in the addressBook list by NRIC.</p>
+it searches for the person in the Police Records list by NRIC. At least one parameter must be updated. Offenses are added not replaced.</p>
 </div>
 <div class="paragraph">
 <p>It also implements these methods:</p>
@@ -339,7 +356,7 @@ it searches for the person in the addressBook list by NRIC.</p>
 </div>
 <div class="paragraph">
 <p>Step 5: Logic class then calls the execute method on EditCommand Object.
-        Person with NRIC "s1234567a" is searched for in the addressbook. If he/she exists,
+        Person with NRIC "s1234567a" is searched for in the Police Records. If he/she exists,
         then the person&#8217;s attributes get updated accordingly.</p>
 </div>
 <div class="paragraph">
@@ -419,11 +436,24 @@ it searches for the person in the addressBook list by NRIC.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5a. User enters invalid NRIC format</p>
+<p>3a. User enters an invalid password.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5a1. System shows an error message stating that NRIC has a certain alphanumeric format.</p>
+<p>3a1. System shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4a. User enters invalid NRIC format</p>
+<div class="ulist">
+<ul>
+<li>
+<p>4a1. System shows an error message stating that NRIC has a certain alphanumeric format.</p>
 <div class="paragraph">
 <p>Use case resumes at step 4.</p>
 </div>
@@ -432,11 +462,11 @@ it searches for the person in the addressBook list by NRIC.</p>
 </div>
 </li>
 <li>
-<p>5b. User enters NRIC of a person that does not exist in the police records</p>
+<p>4b. User enters NRIC of a person that does not exist in the police records</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5b1. System shows an error message stating that person could not be found.</p>
+<p>4b1. System shows an error message stating that person could not be found.</p>
 <div class="paragraph">
 <p>Use case resumes at step 4.</p>
 </div>
@@ -445,11 +475,53 @@ it searches for the person in the addressBook list by NRIC.</p>
 </div>
 </li>
 <li>
-<p>5c. User enters edit command with only NRIC tag without other details to change.</p>
+<p>4c. User enters edit command with only NRIC tag without other details to change.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5c1. System shows an error message stating that format is invalid</p>
+<p>4c1. System shows an error message stating that format is invalid</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4d. User enters edit command with proper NRIC format and Postal Code that is not 6 digits long.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>4d1. System shows an error message stating that Postal Code must be 6 digits long.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4e. User enters edit command with proper NRIC and wanted status that is invalid.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>4e1. System shows an error message stating that wanted status should be only of 3 types.</p>
+<div class="paragraph">
+<p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4f. User enters edit command with proper NRIC and invalid offense.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>4f1. System shows an error message stating offense is not in the list.</p>
+</li>
+<li>
+<p>4f2. System shows list of valid offenses</p>
 <div class="paragraph">
 <p>Use case resumes at step 4.</p>
 </div>
@@ -475,6 +547,11 @@ it searches for the person in the addressBook list by NRIC.</p>
 </div>
 <div class="sect2">
 <h3 id="request"><a class="link" href="#request">3e. "rb" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/RequestCommand.PNG" alt="RequestCommand">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -657,6 +734,11 @@ The filepath for HQP&#8217;s message is ./inboxMessages/headquartersInbox</p>
 </div>
 <div class="sect2">
 <h3 id="dispatch"><a class="link" href="#dispatch">3f. "dispatch" command</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/DispatchCommand.PNG" alt="DispatchCommand">
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -805,11 +887,11 @@ he/she should arrive within &amp; Google Maps URL location of the requester&#821
 </div>
 </li>
 <li>
-<p>7a. User enters an engaged police officer as backup.</p>
+<p>5b. User enters an engaged police officer as backup.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>7a1. System shows an error message stating that the police officer entered is engaged.</p>
+<p>5b1. System shows an error message stating that the police officer entered is engaged.</p>
 <div class="paragraph">
 <p>Use case resumes in step 4.</p>
 </div>
@@ -818,13 +900,26 @@ he/she should arrive within &amp; Google Maps URL location of the requester&#821
 </div>
 </li>
 <li>
-<p>7b. User enters an invalid case type.</p>
+<p>5c. User enters an invalid case type.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>7b1.  System shows an error message and prompts user with list of offences.</p>
+<p>5c1.  System shows an error message and prompts user with list of offences.</p>
 <div class="paragraph">
 <p>Use case resumes at step 4.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5d. User enters same officer for backup &amp; requester.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5d1.  System shows an error message stating that backup &amp; requester is same officer.</p>
+<div class="paragraph">
+<p>Use Case resumes at step 4.</p>
 </div>
 </li>
 </ul>
@@ -937,4 +1032,665 @@ It is also used to describe a subject, should he have a criminal record: wanted,
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:20:56 UTC</div></div></div></body></html>
+</div>
+<div class="sect1">
+<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix C: Instructions for Manual Testing</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Given below are instructions to test the app manually.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title=":information_source:"></i>
+</td>
+<td class="content">
+These instructions only provide a starting point for testers to work on; testers are expected to do more <em>exploratory</em> testing.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title=":information_source:"></i>
+</td>
+<td class="content">
+If you want to work with pre-populated data, do not tamper with any of the text files. Should they be tampered accidentally, delete the text file that was tampered and relaunch the jar file to regenerate the text file.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="launch"><a class="link" href="#launch">Launch</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Initial launch</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Download the jar file and copy into an empty folder</p>
+</li>
+<li>
+<p>Double-click the jar file<br>
+Expected: Shows the GUI with a set of sample persons. The window size may not be optimum. Input "list" command after logging to check if the data is loaded successfully</p>
+</li>
+<li>
+<p>Resize the window if needed</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="accounts-for-both-hqp-and-pos"><a class="link" href="#accounts-for-both-hqp-and-pos">Accounts for both HQP and POs</a></h3>
+<div class="paragraph">
+<p>There are a total of 6 accounts (1 HQP and 5 POs) available in the sample data:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 50%;">
+<colgroup>
+<col style="width: 52.3809%;">
+<col style="width: 47.6191%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">User</th>
+<th class="tableblock halign-left valign-top">Password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HQP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">papa123</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PO5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">popo5</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="saving-data"><a class="link" href="#saving-data">Saving Data</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dealing with missing/corrupted data files</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>As mentioned earlier, if the jar file is run with any of the data files missing, the jar file will auto-generate the required data files with pre-populated data for the purpose of testing.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="update-password"><a class="link" href="#update-password">Update password</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Updates password of a user</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Enter existing password to be updated, for e.g: 'popo1'</p>
+</li>
+<li>
+<p>Enter new alphanumeric password (at least 5 characters long) for example 'police1'</p>
+</li>
+<li>
+<p>Enter same password again, i.e 'police1'</p>
+</li>
+<li>
+<p>Expected: Success message shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="viewing-help"><a class="link" href="#viewing-help">Viewing Help</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Displays a list of commands available for the current user</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'help'<br>
+Expected: Shows list of available commands</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="check-time"><a class="link" href="#check-time">Check time</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Shows the current time</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'time'<br>
+Expected: Shows current time</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="reading-notifications-from-inbox-code-showunread-code-code-inbox-code"><a class="link" href="#reading-notifications-from-inbox-code-showunread-code-code-inbox-code">Reading notifications from inbox (<code>showunread</code> &amp; <code>inbox</code>)</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Prerequisites: Logged in as either HQP or PO.</p>
+</li>
+<li>
+<p>Dealing with missing data files</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If data files are missing while the application is running, the application will generate the required data files. However if for some reason that doesn&#8217;t happen, the command would throw an exception, indicating to the user that data file for user&#8217;s inbox cannot be found.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Reading an inbox with no messages</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>showunread</code> A feedback will be displayed to the user indicating that there are no unread messages.</p>
+</li>
+<li>
+<p><code>inbox</code> A feedback will be displayed to the user indicating the total number of messages in the inbox, and 0 unread messages.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="marking-notifications-as-read"><a class="link" href="#marking-notifications-as-read">Marking notifications as read</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Prerequisites: Logged in as either HQP or PO. Inbox must have been opened (use of <code>inbox</code> or <code>showunread</code> command) as well.</p>
+</li>
+<li>
+<p>Dealing with an unopened inbox</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If you have not used <code>showunread</code> or <code>inbox</code> command, a feedback will be displayed ot user indicating that inbox is not opened yet.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dealing with an unopened inbox after logging out and logging in again</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If you open your inbox and log out (<code>logout</code>) without exiting the application, you will still need to re-open your inbox before using <code>read</code> command. Otherwise, the system will display a feedback that you have not opened your inbox.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dealing with no (unread) messages in inbox</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>A feedback will be displayed to you indicating that there are no unread messages.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dealing with invalid indices</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If you enter a negative number, or a number larger than the number of unread messages, a feedback will be displayed indicating what the valid range of indices are.</p>
+</li>
+<li>
+<p>If you enter a nonsense value such as a character or symbol, a feedback will be displayed indicating that you have entered the command with an invalid format.</p>
+</li>
+<li>
+<p>If you enter a positive number for the index that is bigger than the threshold set, a feedback will be displayed indicating that the index entered was too large.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clearing-your-inbox"><a class="link" href="#clearing-your-inbox">Clearing your inbox</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dealing with missing data files</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If data files are missing while the application is running, the application will generate the required data files. However if for some reason that doesn&#8217;t happen, the command would throw an exception, indicating to the user that data file for user&#8217;s inbox cannot be found.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="request-backup-for-specific-case"><a class="link" href="#request-backup-for-specific-case">Request backup for specific case</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sends a message to HQP inbox with case, patrol resource ID &amp; location in Google Maps URL</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'rb gun'<br>
+Expected:  Success message will be displayed to the user stating request sent</p>
+</li>
+<li>
+<p>Test case: 'rb bob'<br>
+Expected: Invalid offense message error shwon, valid offenses will be presented in a list</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dispatch-police-officer-for-specific-case-to-requester"><a class="link" href="#dispatch-police-officer-for-specific-case-to-requester">Dispatch police officer for specific case to requester</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sends a message to backup officer &amp; requester with Case, Location &amp; Estimated Time of Arrival</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP only</p>
+</li>
+<li>
+<p>Test case: 'dispatch po1 riot po3'<br>
+Expected: Success message will be displayed to the user stating backup successful</p>
+</li>
+<li>
+<p>Test case: 'dispatch po1 bob po3'<br>
+Expected: Invalid offense message error shown</p>
+</li>
+<li>
+<p>Test case: 'dispatch po1 gun po3' (po1 engaged already)
+Expected: Error message shown</p>
+</li>
+<li>
+<p>Test case: 'dispatch po1 gun po1'<br>
+Expected: Error message shown</p>
+</li>
+<li>
+<p>Test case: 'dispatch bobo gun po1'<br>
+Expected: Error message shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-a-person"><a class="link" href="#adding-a-person">Adding a person</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Adds a person to the Police records</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'add John Doe n/s1234567a d/1996 p/510246 s/wanted w/none o/theft o/drugs<br>
+Expected: If wanted, wantedFor parameter cannot be none, error message shown</p>
+</li>
+<li>
+<p>Test case: 'add John Doe n/s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs'<br>
+Expected: If person is not found, success message will be shown, else, a duplicate person error message will be shown instead</p>
+</li>
+<li>
+<p>Test case: 'add John Doe s1234567a d/1996 p/510246 s/xc w/none o/theft o/drugs' (or any other missing prefixes)<br>
+Expected: Invalid command format, error message is shown</p>
+</li>
+<li>
+<p>Test case: 'add John Doe n/s123a d/1996 p/510246 s/xc w/none o/theft o/drugs (or any other invalid data)
+Expected: Error message for invalid data format will be shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="list-all-persons"><a class="link" href="#list-all-persons">List all persons</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Displays a list of all persons</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>PrerequisitesL Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'list'<br>
+Expected: List of persons, if any, is shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="finding-a-person-in-the-police-records"><a class="link" href="#finding-a-person-in-the-police-records">Finding a person in the Police Records</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Finds a person using the NRIC parameter to see his/her details</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'find s1234567a' (Assuming person with this NRIC exists)<br>
+Expected: Person&#8217;s details will be displayed</p>
+</li>
+<li>
+<p>Test case: 'find s1234567a' (If person does not exist in the Police Records)<br>
+Expected: Error message stating person not found will be shown</p>
+</li>
+<li>
+<p>Test case: 'find ' or 'find 11111'<br>
+Expected: Invalid command format, error message will be shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="checking-a-person-s-screening-history"><a class="link" href="#checking-a-person-s-screening-history">Checking a person&#8217;s screening history</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Check a person&#8217;s screening history in the form of timestamps</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'check s1234567a' (Assuming person with this NRIC exists)<br>
+Expected: A list of timestamps and the number of times person was screened will be displayed</p>
+</li>
+<li>
+<p>Test case: 'check s1234567a' (If person does not exist in the Police Records)<br>
+Expected: Error message stating person not found will be shown</p>
+</li>
+<li>
+<p>Test case: 'check ' or 'check 11111'<br>
+Expected: Invalid command format, error message will be shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="update-a-po-s-engagement-status-to-free"><a class="link" href="#update-a-po-s-engagement-status-to-free">Update a PO&#8217;s engagement status to free</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sets the PO&#8217;s isEngaged boolean value to false (so PO is free for dispatch)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'updatestatus po1' (Assuming PO with such ID exists)<br>
+Expected: A success message will be shown</p>
+</li>
+<li>
+<p>Test case: 'updatestatus po20'<br>
+Expected: No such PO exists, an error message will be shown</p>
+</li>
+<li>
+<p>Test case: 'updatestatus ' or 'updatestatus asdf'<br>
+Expected: Invalid command format, error message will be shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="check-engagement-status-of-all-pos"><a class="link" href="#check-engagement-status-of-all-pos">Check engagement status of all POs</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Displays all the engagement status of all POs in a list</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'checkstatus'<br>
+Expected: List of POs and their engagement statuses</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="edit-a-person-s-details"><a class="link" href="#edit-a-person-s-details">Edit a person&#8217;s details</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edits the details, only selected parameters, of a person. At least one optional parameter has to be filled</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'edit n/s1234567a p/111111 s/xc w/none o/theft<br>
+Expected: If person exists, success message is shown, else, error message is shown</p>
+</li>
+<li>
+<p>Test case: 'edit n/s1234567a 111111' (or any missing prefix or parameters)<br>
+Expected: Invalid command format, person&#8217;s details are not edited, error message shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="delete-a-person"><a class="link" href="#delete-a-person">Delete a person</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deletes a person from the Police Records</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'Delete s1234567a' (Assuming person with this NRIC exists)<br>
+Expected: Success message will be shown</p>
+</li>
+<li>
+<p>Test case: 'Delete s1234567a' (If person does not exist)<br>
+Expected: Person does not exist, error message is shown</p>
+</li>
+<li>
+<p>Test case: 'Delete ' or 'Delete 1111'<br>
+Expected: Invalid command format, error message shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clear"><a class="link" href="#clear">Clear</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clears the entire Police Records</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP</p>
+</li>
+<li>
+<p>Test case: 'clear'<br>
+   Expected: Success message is shown
+=== Logout</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Logout from system so that another password can be entered</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisite: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'logout'<br>
+Expected: Startup screen is shown</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="autocorrect"><a class="link" href="#autocorrect">Autocorrect</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Autocorrects an input if the input has a similar spelling to other commands</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO</p>
+</li>
+<li>
+<p>Test case: 'lost'<br>
+Expected: Message stating if you meant 'list'</p>
+</li>
+<li>
+<p>Test case: 'exit'<br>
+Expected: Message stating if you meant 'edit'</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shutdown"><a class="link" href="#shutdown">Shutdown</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Shuts down the system</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Logged in as HQP or PO or not at all</p>
+</li>
+<li>
+<p>Test case: 'shutdown'<br>
+Expected: System closes</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:35:36 UTC</div></div></div></body></html>
