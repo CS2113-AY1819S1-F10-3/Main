@@ -20,8 +20,10 @@
 <li><a href="#contributions-to-the-user-guide">3. Contributions to the User Guide</a>
 <ul class="sectlevel2">
 <li><a href="#code-1-introduction-code">3.1. <code>1. Introduction</code></a></li>
-<li><a href="#code-3-14-check-notifications-showunread-code">3.2. <code>3.14. Check notifications: showunread</code></a></li>
-<li><a href="#code-3-15-read-message-read-code">3.3. <code>3.15. Read message : read</code></a></li>
+<li><a href="#code-3-16-check-unread-notifications-showunread-hqp-po-code">3.2. <code>3.16 Check unread notifications: 'showunread' (HQP &amp; PO)</code></a></li>
+<li><a href="#code-3-17-check-all-notifications-inbox-hqp-po-code">3.3. <code>3.17 Check all notifications: 'inbox' (HQP &amp; PO)</code></a></li>
+<li><a href="#code-3-18-read-message-read-hqp-po-code">3.4. <code>3.18 Read message : 'read'(HQP &amp; PO)</code></a></li>
+<li><a href="#code-3-19-clear-inbox-clearinbox-hqp-po-code">3.5. <code>3.19 Clear inbox: 'clearinbox' (HQP &amp; PO)</code></a></li>
 </ul>
 </li>
 <li><a href="#contributions-to-the-developer-guide">4. Contributions to the Developer Guide</a>
@@ -30,6 +32,7 @@
 <li><a href="#code-setting-up-code">4.2. <code>Setting up</code></a></li>
 <li><a href="#code-design-code">4.3. <code>Design</code></a></li>
 <li><a href="#code-implementation-code">4.4. <code>Implementation</code></a></li>
+<li><a href="#code-use-cases-code">4.5. <code>Use Cases</code></a></li>
 </ul>
 </li>
 </ul>
@@ -130,14 +133,37 @@ PRS is currently a desktop application, designed specifically for users who are 
 <div class="ulist">
 <ul>
 <li>
-<p>Edited <code>build.gradle</code> file to enable jar file generation via using shadowJar</p>
-</li>
-<li>
 <p>Enhancements to existing features:</p>
 <div class="ulist">
 <ul>
 <li>
 <p>Wrote additional tests for implemented features to increase code coverage from 40.7% to 51.38% (Pull request <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/155">#155</a>)</p>
+</li>
+<li>
+<p>Actively tested the end product to find and fix bugs (See issues <a href="https://github.com/CS2113-AY1819S1-F10-3/main/issues/134">#134</a>, <a href="https://github.com/CS2113-AY1819S1-F10-3/main/issues/165">#165</a> and pull requests <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/219">#219</a>, <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/229">#229</a>, <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/234">#234</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Standardized formatting in developer guide (Pull Request <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/120">#120</a>)</p>
+</li>
+<li>
+<p>Helped the team to collate code contribution for each team member (Pull request <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/153">#153</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Miscellaneous:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Edited <code>build.gradle</code> file to enable jar file generation using shadowJar</p>
 </li>
 </ul>
 </div>
@@ -160,11 +186,16 @@ PRS is currently a desktop application, designed specifically for users who are 
 </div>
 </div>
 <div class="sect2">
-<h3 id="code-3-14-check-notifications-showunread-code"><a class="link" href="#code-3-14-check-notifications-showunread-code">3.2. <code>3.14. Check notifications: showunread</code></a></h3>
+<h3 id="code-3-16-check-unread-notifications-showunread-hqp-po-code"><a class="link" href="#code-3-16-check-unread-notifications-showunread-hqp-po-code">3.2. <code>3.16 Check unread notifications: 'showunread' (HQP &amp; PO)</code></a></h3>
 <div class="paragraph">
-<p>For HQPs: Check inbox to see a list of dispatch requests made by POs, and are sorted based on severity first, and then time stamp. For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if have any dispatch orders
-Format: 'showunread'
-Examples (as a HQP):</p>
+<p>For HQPs: Check inbox to see a list of backup requests made by POs, and are sorted based on severity first, and then time stamp.
+For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if there are any dispatch orders</p>
+</div>
+<div class="paragraph">
+<p>Format: 'showunread'</p>
+</div>
+<div class="paragraph">
+<p>Examples (as a HQP):</p>
 </div>
 <div class="ulist">
 <ul>
@@ -172,18 +203,64 @@ Examples (as a HQP):</p>
 <p>'showunread'</p>
 </li>
 <li>
-<p>Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:
-Examples (as a PO): * 'showunread' * Shows any dispatch messages by HQ or response for backup if any</p>
+<p>Shows a list of dispatch requests (sorted by severity then timestamp) made by POs on the ground:</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Examples (as a PO):
+*	'showunread'
+*	Shows any backup messages by HQ or response for backup if any</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="code-3-15-read-message-read-code"><a class="link" href="#code-3-15-read-message-read-code">3.3. <code>3.15. Read message : read</code></a></h3>
+<h3 id="code-3-17-check-all-notifications-inbox-hqp-po-code"><a class="link" href="#code-3-17-check-all-notifications-inbox-hqp-po-code">3.3. <code>3.17 Check all notifications: 'inbox' (HQP &amp; PO)</code></a></h3>
 <div class="paragraph">
-<p>Updates the status of unread messages to read. Command to be used after showunread command
-Format: 'read index'
-Examples: read 1</p>
+<p>For HQPs: Check inbox to see a list of backup requests made by POs, and are sorted based on severity first, and then time stamp.
+For POs: Check inbox to see who is responding to request for backup/ambulance/fire truck or to see if there are any dispatch orders</p>
+</div>
+<div class="paragraph">
+<p>Format: 'inbox'</p>
+</div>
+<div class="paragraph">
+<p>Examples (as a HQP):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>'inbox'</p>
+</li>
+<li>
+<p>Shows a list of backup requests (sorted by severity then timestamp) made by POs on the ground:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Examples (as a PO):
+*	'inbox'
+*	Shows any dispatch messages by HQ or response for backup if any</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="code-3-18-read-message-read-hqp-po-code"><a class="link" href="#code-3-18-read-message-read-hqp-po-code">3.4. <code>3.18 Read message : 'read'(HQP &amp; PO)</code></a></h3>
+<div class="paragraph">
+<p>Updates the status of unread messages to read. Command to be used after <code>showunread</code> or <code>inbox</code> command</p>
+</div>
+<div class="paragraph">
+<p>Format: 'read INDEX'</p>
+</div>
+<div class="paragraph">
+<p>Examples:
+*  read 1</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="code-3-19-clear-inbox-clearinbox-hqp-po-code"><a class="link" href="#code-3-19-clear-inbox-clearinbox-hqp-po-code">3.5. <code>3.19 Clear inbox: 'clearinbox' (HQP &amp; PO)</code></a></h3>
+<div class="paragraph">
+<p>Clears the text file containing all the messages (both read and unread) for the user.</p>
+</div>
+<div class="paragraph">
+<p>Format: 'clearinbox'</p>
 </div>
 </div>
 </div>
@@ -312,10 +389,10 @@ It also implements the following operations:</p>
 <p>execute() - executes the "showunread" command itself and displays the result to the user.</p>
 </li>
 <li>
-<p>loadMessages() - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was written).</p>
+<p>loadMessages() - Searches the text file storing messages for the specific police officer identified by the userID and loads it into a data structure, sorting the messages according to how urgent they should be attended to (sorted first by read status, followed by priority and then the time the message was sent).</p>
 </li>
 <li>
-<p>Loaded messages are then concatenated in a single string as <code>fullPrintedMessage</code> and passed to the main window through CommandResult.</p>
+<p>concatenateMsg() - Loaded messages are then concatenated in a single string as <code>fullPrintedMessage</code> and passed to the main window through CommandResult.</p>
 </li>
 </ol>
 </div>
@@ -329,13 +406,19 @@ It also implements the following operations:</p>
 <p>Step 2: The user executes "showunread" command. The "showunread" command calls execute() which also calls getMessagesFor() method.</p>
 </div>
 <div class="paragraph">
-<p>Step 3: The getMessagesFor() method searches message storage file for the messages directed to the respective user, if any, and they are stored into a data structure.</p>
+<p>Step 3: The loadMessages() method searches message storage file for the messages directed to the respective user, if any, and they are stored into a data structure.</p>
 </div>
 <div class="paragraph">
-<p>Step 4: The messages that are found and are stored in a TreeSet, split by its read status, message priority, timestamp, and the message itself for sorting purposes. execute() returns a CommandResult using the messages list as its argument.</p>
+<p>Step 4: The messages that are found and are stored in a TreeSet, split by its read status, message priority, timestamp, and the message itself for sorting purposes.</p>
 </div>
 <div class="paragraph">
-<p>Step 5: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.</p>
+<p>Step 5: The concatenateMsg() method will then append all unread messages in sorted order to a string to be passed to the CommandResult object later.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: execute() returns a CommandResult using the concatenated string as its argument.</p>
+</div>
+<div class="paragraph">
+<p>Step 7: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.</p>
 </div>
 <div class="paragraph">
 <p>Alternatives considered:</p>
@@ -374,7 +457,15 @@ Eventually, we also used multiple message storage files, each dedicated to a spe
 </div>
 </div>
 <div class="sect3">
-<h4 id="3b-read-command"><a class="link" href="#3b-read-command">4.4.2. 3b. "read" command</a></h4>
+<h4 id="3b-inbox-command"><a class="link" href="#3b-inbox-command">4.4.2. 3b. "inbox" command</a></h4>
+<div class="paragraph">
+<p><strong>Current Implementation</strong>
+Inbox command has the same implementation as the "showunread" command - except that it shows you all the messages that are in your inbox (both read and unread).
+This is to allow you to access the messages that you have previously marked as read.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="3c-read-command"><a class="link" href="#3c-read-command">4.4.3. 3c. "read" command</a></h4>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -390,7 +481,7 @@ The "read" command can only be used after the "showunread" command has been used
 <p>Step 1: User inputs his password and unlocks the system.</p>
 </div>
 <div class="paragraph">
-<p>Step 2: User executes "showunread" command. If "showunread" command is successfully executed, a list of unread messages directed to the user will be displayed.</p>
+<p>Step 2: User executes "showunread" OR "inbox" command. If command is successfully executed, a list of unread messages directed to the user will be displayed.</p>
 </div>
 <div class="paragraph">
 <p>Step 3: Messages that are read from the user&#8217;s inbox will also be recorded in a static HashMap called <code>recordNotifications</code>, with the message index used as the key.</p>
@@ -405,6 +496,340 @@ The "read" command can only be used after the "showunread" command has been used
 <p>Step 6: The CommandResult object displays to the user a message indicating that the updating of the read status was successful or not.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="3d-clearinbox-command"><a class="link" href="#3d-clearinbox-command">4.4.4. 3d. "clearinbox" command</a></h4>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>Once the system is unlocked, you can clear your own inbox should there be too many messages stored in it using this command.
+Once the command has been entered, ReadNotification object will first be generated to attempt reading from the text file storing messages in your inbox.
+This is to check that the file exists in the first place. If it reads from the text file successfully, a WriteNotification object will then be generated, instantiating a PrintWriter that overwrites the contents in the
+text file storing the messages in your inbox.</p>
+</div>
+<div class="paragraph">
+<p>It also implements the following methods:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "clearinbox" command and displays the result to the user.</p>
+</li>
+<li>
+<p>readFromFile() - method from ReadNotification object that attempts to access the contents of the text file.</p>
+</li>
+<li>
+<p>clearInbox() - method from WriteNotification object that clears the content in the text file storing the user&#8217;s messages.</p>
+</li>
+<li>
+<p>clearInboxRecords() - clears any records of messages displayed to ensure that all traces of existing messages are also cleared.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "clearinbox" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User inputs his password and unlocks the system.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: User executes "clearinbox" command. If command is successfully executed, the feedback "Inbox cleared!" will be displayed to the user.</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 07:32:05 UTC</div></div></div></body></html>
+</div>
+<div class="sect2">
+<h3 id="code-use-cases-code"><a class="link" href="#code-use-cases-code">4.5. <code>Use Cases</code></a></h3>
+<div class="sect3">
+<h4 id="use-case-show-unread-messages"><a class="link" href="#use-case-show-unread-messages">4.5.1. Use case: Show unread messages</a></h4>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User requests to display unread messages in inbox.</p>
+</li>
+<li>
+<p>System prints the number of unread messages and list of unread messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>5a. There are no messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System informs user that there are no messages available.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5b. There are no unread messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5b1. System informs user that there are no unread messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5c. File containing user&#8217;s inbox messages is missing.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5c1. System informs user that there was an error loading messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="use-case-show-all-messages"><a class="link" href="#use-case-show-all-messages">4.5.2. Use case: Show all messages</a></h4>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User requests to display all messages in inbox.</p>
+</li>
+<li>
+<p>System prints the total number of messages, number of unread messages and full list of messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>5a. There are no messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System informs user that there are no messages available.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5b. There are no unread messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5b1. System informs user of his total number of messages, that there are 0 unread messages and the full list of messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="use-case-clear-inbox"><a class="link" href="#use-case-clear-inbox">4.5.3. Use case: Clear Inbox</a></h4>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User enters command to clear his inbox.</p>
+</li>
+<li>
+<p>System informs user that his inbox has been cleared.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>5a. There are no messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System informs user that inbox has been cleared.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>6a. File storing user&#8217;s inbox messages cannot be found.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>6a1. System informs user that inbox clearance has been unsuccessful and that the storage file is missing.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="use-case-read-messages"><a class="link" href="#use-case-read-messages">4.5.4. Use case: Read messages</a></h4>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User enters command to <code>Show Unread Messages</code></p>
+</li>
+<li>
+<p>System finds the text file storing user&#8217;s messages and displays a numbered list of messages that are unread.</p>
+</li>
+<li>
+<p>User enters the message number he wishes to mark as read.</p>
+</li>
+<li>
+<p>System updates message read status to 'read'.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>7a. User enters an invalid index.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>7a1. System shows an error message and informs user of the valid index range.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>7b. User enters an extremely large number for the index.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>7b1. System informs user that the index entered is too large.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>7c. There are no unread messages.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>7c1. System informs user that there are no unread messages.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>*a. At anytime, user chooses to stop marking messages as read.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 07:42:34 UTC</div></div></div></body></html>
