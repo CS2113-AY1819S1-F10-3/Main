@@ -16,7 +16,7 @@
 <li><a href="#1b-update-password-feature">1b. Update Password Feature</a></li>
 <li><a href="#2a-find-command-edited">2a. "find" command (edited)</a></li>
 <li><a href="#2b-check-command">2b. "check" command</a></li>
-<li><a href="#2c-edit-command">2c. "edit" command</a></li>
+<li><a href="#edit">2c. "edit" command</a></li>
 <li><a href="#wkFeatures">3a. "showunread" command</a></li>
 <li><a href="#3b-inbox-command">3b. "inbox" command</a></li>
 <li><a href="#3c-read-command">3c. "read" command</a></li>
@@ -27,6 +27,8 @@
 <li><a href="#4b-checkstatus-command">4b. "checkstatus" command</a></li>
 <li><a href="#logout">5. "logout" command</a></li>
 <li><a href="#autocorrect">6. Autocorrection feature</a></li>
+<li><a href="#shutdown">7. "shutdown" command</a></li>
+<li><a href="#implementation-2">Implementation</a></li>
 <li><a href="#7a-help-command">7a. "help" command</a></li>
 <li><a href="#7b-add-command">7b. "add" command</a></li>
 <li><a href="#logging">Logging</a></li>
@@ -48,7 +50,7 @@
 <li><a href="#stories">Appendix A: User Stories</a></li>
 <li><a href="#use-cases-2">Appendix B: Use Cases</a>
 <ul class="sectlevel2">
-<li><a href="#use-case-enter-headquarters-personnel-password">Use case: Enter Headquarters Personnel password</a></li>
+<li><a href="#pwUse">Use case: Enter Headquarters Personnel password</a></li>
 <li><a href="#use-case-enter-police-officer-password">Use case: Enter Police Officer password</a></li>
 <li><a href="#use-case-logout">Use case: Logout</a></li>
 <li><a href="#use-case-update-any-password">Use case: Update any password</a></li>
@@ -270,7 +272,7 @@
 <p>Step 4: The user input, userCommandText, is then hashcoded using userCommandText.hashCode().</p>
 </div>
 <div class="paragraph">
-<p>Step 5: Using a Buffered reader from the readAndWrite class, a loop through passwordStorage.txt tries to match the hashcoded input with an existing password.</p>
+<p>Step 5: Using a Buffered reader from the ReaderAndWriter class, a loop through passwordStorage.txt tries to match the hashcoded input with an existing password.</p>
 </div>
 <div class="paragraph">
 <p>Step 6: The user and password are stored in passwordStorage.txt in this format : "userID (hashcoded)password".</p>
@@ -305,7 +307,7 @@
 <p>Pros: Can use a hashmap for quick look up, with the userID as key and hashcoded password as the value</p>
 </li>
 <li>
-<p>Cons: More input from user, and difficult to store in an external text file.</p>
+<p>Cons: More input from user, and difficult to store in an external text file</p>
 </li>
 </ul>
 </div>
@@ -361,36 +363,42 @@
 <p>Step 8: The user enters the same new password. It matches with the oneTimePassword.</p>
 </div>
 <div class="paragraph">
-<p>Step 9: The Buffered reader then reads reads through passwordStorage.txt, and a Print writer from the ReadAndWrite class writes existing passwords to a temporary file, while writing the new password in place of the old password to change.</p>
+<p>Step 9: The Buffered reader then reads reads through passwordStorage.txt, and a Print writer from the ReaderAndWriter class writes existing passwords to a temporary file, while writing the new password in place of the old password that has been requested to be updated.</p>
+</div>
+<div class="paragraph">
+<p>Step 10: The temporary file is renamed to passwordStorage.txt and deleting the old passwordStorage.txt file.</p>
+</div>
+<div class="paragraph">
+<p>Step 11: The System returns a message that update password is successful.</p>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-how-password-feature-is-implemented-2"><a class="link" href="#aspect-how-password-feature-is-implemented-2">Aspect: How password feature is implemented</a></h5>
+<h5 id="aspect-how-update-password-feature-is-implemented"><a class="link" href="#aspect-how-update-password-feature-is-implemented">Aspect: How update password feature is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Using a password with no need for username</p>
+<p><strong>Alternative 1 (current choice):</strong> writing to a temporary file then renaming</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Reduce user&#8217;s keyboard input</p>
+<p>Pros: No conflicts when writing to a new file</p>
 </li>
 <li>
-<p>Cons: Slow buffered reader has to loop through all passwords in the text file</p>
+<p>Cons: Space is required for the new file before deleting original file</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Using username and password</p>
+<p><strong>Alternative 2:</strong> Overwriting current passwordStorage.txt file</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Can use a hashmap for quick look up, with the userID as key and hashcoded password as the value</p>
+<p>Pros: Maintain space usage</p>
 </li>
 <li>
-<p>Cons: More input from user, and difficult to store in an external text file.</p>
+<p>Cons: Many errors when overwriting</p>
 </li>
 </ul>
 </div>
@@ -446,25 +454,41 @@ It also implements the following operations:</p>
 <div class="paragraph">
 <p>Step 8: The CommandResult object displays to the user the searched person and his details, all of which in string form.</p>
 </div>
-<div class="paragraph">
-<p>Alternatives considered:</p>
-</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-find-command-is-implemented"><a class="link" href="#aspect-how-find-command-is-implemented">Aspect: How find command is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Continue to use the original way of finding by name</p>
+<p><strong>Alternative 1 (current choice):</strong> Finding using NRIC</p>
 <div class="ulist">
 <ul>
 <li>
-<p>However, there could be multiple people with the same name</p>
+<p>Pros: Using nric to find people would be better as each person has a unique nric</p>
 </li>
 <li>
-<p>Using nric to find people would be better as each person has a unique nric</p>
+<p>Cons: Difficult to implement</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Finding by name</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Use current implementation</p>
+</li>
+<li>
+<p>Cons: There could be multiple people with the same name</p>
 </li>
 </ul>
 </div>
 </li>
 </ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -517,20 +541,31 @@ the corresponding timestamp is stored in a list.</p>
 <div class="paragraph">
 <p>Step 7: The list from step 6 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user.</p>
 </div>
-<div class="paragraph">
-<p>Alternatives considered:</p>
-</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-check-command-is-implemented"><a class="link" href="#aspect-how-check-command-is-implemented">Aspect: How check command is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Having a text file for each person, stored in a 'persons' folder</p>
+<p><strong>Alternative 1 (current choice):</strong> All timestamps are stored in one file</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Each timestamp would then be stored in the respective text file</p>
+<p>Pros: Maintains space usage</p>
 </li>
 <li>
-<p>Pros: Retrieving timestamps would be much more efficient</p>
+<p>Cons: Slow to retrieve timestamps as have to loop through whole file</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Having a text file for each person, stored in a 'persons' folder</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Each timestamp would then be stored in the respective text file, Retrieving timestamps would be much more efficient</p>
 </li>
 <li>
 <p>Cons: Space complexity would increase especially if the number of persons increased drastically</p>
@@ -541,8 +576,10 @@ the corresponding timestamp is stored in a list.</p>
 </ul>
 </div>
 </div>
+</div>
+</div>
 <div class="sect2">
-<h3 id="2c-edit-command"><a class="link" href="#2c-edit-command">2c. "edit" command</a></h3>
+<h3 id="edit"><a class="link" href="#edit">2c. "edit" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -585,6 +622,42 @@ it searches for the person in the addressBook list by NRIC.</p>
 <div class="paragraph">
 <p>Step 6: CommandResult with successful message is returned to Logic class, which then displays
         to user: "Edited person: s1234567a".</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-edit-command-is-implemented"><a class="link" href="#aspect-how-edit-command-is-implemented">Aspect: How edit command is implemented</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Can set attributes for read-only person</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Editable persons</p>
+</li>
+<li>
+<p>Cons: Should ot edit read only person</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Maintain person as read-only</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Attributes are protected</p>
+</li>
+<li>
+<p>Cons: Cannot edit persons easily</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -635,40 +708,41 @@ It also implements the following operations:</p>
 <div class="paragraph">
 <p>Step 7: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.</p>
 </div>
-<div class="paragraph">
-<p>Alternatives considered:</p>
-</div>
+<div class="sect3">
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-showunread-command-is-implemented"><a class="link" href="#aspect-how-showunread-command-is-implemented">Aspect: How showunread command is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Using a List instead of a TreeSet.</p>
+<p><strong>Alternative 1 (current choice):</strong> Using a TreeSet</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Smaller space complexity.</p>
+<p>Pros: Auto-sorts by read-status, priority then timestamp</p>
 </li>
 <li>
-<p>Cons: Less efficient code as 'sort' function must be called every time a new message is stored to maintain sorted order.
-Eventually, we decided to use TreeSet in our implementation as we felt that the pros outweighed the cons. This becomes more obvious when the amount of data stored gets larger.</p>
+<p>Cons: Difficult to implement</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Using a single text file for storing messages, storing the userID of the recipient in the text file.</p>
+<p><strong>Alternative 2:</strong> Using a List</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Fewer files to manage and filepaths to traverse.</p>
+<p>Pros: Smaller time complexity</p>
 </li>
 <li>
-<p>Cons: Less efficient as it means more memory is required for storage per message stored (additional information of recipient of message required to be stored in the data structure itself when loaded).
-Eventually, we also used multiple message storage files, each dedicated to a specific user, as this allowed us to increase the time efficiency of the code as the getMessagesFor() method did not need to sort through the messages based on recipient anymore. This benefit becomes especially obvious as well when there is a large number of messages that has to be stored, directed towards multiple users.</p>
+<p>Cons: Does not auto-sort</p>
 </li>
 </ul>
 </div>
 </li>
 </ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -818,6 +892,42 @@ The filepath for HQP&#8217;s message is ./inboxMessages/headquartersInbox</p>
 <p>Step 7: CommandResult with successful message is returned to Logic class, which then displays
                 to user: "Request for backup case from po1 has been sent to HQP."</p>
 </div>
+<div class="sect3">
+<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-rb-command-is-implemented"><a class="link" href="#aspect-how-rb-command-is-implemented">Aspect: How rb command is implemented</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Writes using ReaderAndWriter class</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Data is maintained across multiple sessions</p>
+</li>
+<li>
+<p>Cons: External text files can be tempered</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Using chat client API</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Safe and reliable real time support</p>
+</li>
+<li>
+<p>Cons: Data is not maintained across multiple sessions</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="dispatch"><a class="link" href="#dispatch">3f. "dispatch" command</a></h3>
@@ -877,6 +987,19 @@ he/she should arrive within &amp; Google Maps URL location of the requester&#821
 <p>Step 8: CommandResult with successful message is returned to Logic class, which then displays
         to user: "Dispatch for PO3 backup is successful."</p>
 </div>
+<div class="sect3">
+<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-dispatch-command-is-implemented"><a class="link" href="#aspect-how-dispatch-command-is-implemented">Aspect: How dispatch command is implemented</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternatives: </strong> Similar considerations as rb command.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="4a-updatestatus-command"><a class="link" href="#4a-updatestatus-command">4a. "updatestatus" command</a></h3>
@@ -918,13 +1041,27 @@ It also implements the following methods:</p>
 <div class="paragraph">
 <p>Step 7: A CommandResult object with the successful message is created to be displayed to the user.</p>
 </div>
-<div class="paragraph">
-<p>Alternatives considered:</p>
-</div>
+<div class="sect3">
+<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-updatestatus-command-is-implemented"><a class="link" href="#aspect-how-updatestatus-command-is-implemented">Aspect: How updatestatus command is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Using a text file to store the statuses of the POs</p>
+<p><strong>Alternative 1 (current choice):</strong> Internally implemented statuses of POS</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Faster to look up statuses of POs</p>
+</li>
+<li>
+<p>Cons: The statuses reset after you exit the program</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Using a text file to store the statuses of POs</p>
 <div class="ulist">
 <ul>
 <li>
@@ -937,6 +1074,8 @@ It also implements the following methods:</p>
 </div>
 </li>
 </ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -979,25 +1118,18 @@ It also implements the following methods:</p>
 <div class="paragraph">
 <p>Step 6: A CommandResult object is created and displays the list to the user.</p>
 </div>
-<div class="paragraph">
-<p>Alternatives considered:</p>
-</div>
+<div class="sect3">
+<h4 id="design-considerations-10"><a class="link" href="#design-considerations-10">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-updatestatus-command-is-implemented-2"><a class="link" href="#aspect-how-updatestatus-command-is-implemented-2">Aspect: How updatestatus command is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Similar to what was mentioned in "updatestatus" command section, use a text file for each PO and store their status</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Easier to identify a PO, just look for the text file with their ID</p>
-</li>
-<li>
-<p>Cons: Space would be an issue especially when there are many POs to manage</p>
+<p><strong>Alternative :</strong> Similar considerations as updatestatus</p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1011,7 +1143,7 @@ It also implements the following methods:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>execute() - executes the "logout" command and returns all boolean flags related to passwords are set to false.</p>
+<p>execute() - executes the "logout" command , all boolean flags related to passwords are set to false and clears the message inboxes.</p>
 </li>
 </ol>
 </div>
@@ -1031,12 +1163,15 @@ It also implements the following methods:</p>
 <p>Step 4: isUpdatePasswordConfirm and isUpdatingPassword flags are also set to false through lockUpdatePasswordConfirm() and lockUpdatingPassword() in the Password class is also set to false.</p>
 </div>
 <div class="paragraph">
-<p>Step 5: A CommandResult object is created and displays a message that the user is logged out of the System and prompts for a password.</p>
+<p>Step 5: resetInboxWhenLogout() in the Inbox class clears all records of displayed messages and resets the number of unread messages to default value of -1.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: A CommandResult object is created and displays a message that the user is logged out of the System and prompts for a password.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<h4 id="design-considerations-11"><a class="link" href="#design-considerations-11">Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-how-logout-executes"><a class="link" href="#aspect-how-logout-executes">Aspect: How logout executes</a></h5>
+<h5 id="aspect-how-logout-command-is-implemented"><a class="link" href="#aspect-how-logout-command-is-implemented">Aspect: How logout command is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1124,21 +1259,78 @@ to the Parser class. This is to ensure invalid input can be caught by the
 algorithm to give its correction before it is deemed as invalid by the Parser
 during which time all commands will be laid out to the user.</p>
 </div>
-<div class="paragraph">
-<p>Alternatives considered:</p>
-</div>
+<div class="sect3">
+<h4 id="design-considerations-12"><a class="link" href="#design-considerations-12">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-autocorrect-feature-is-implemented"><a class="link" href="#aspect-how-autocorrect-feature-is-implemented">Aspect: How autocorrect feature is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Running the algorithm from the Parser- This however will not allow the
-prediction to be reported efficiently.</p>
+<p><strong>Alternative 1 (current choice):</strong> Using user input directly from MainWindow class</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Able to autocorrect raw input</p>
 </li>
 <li>
-<p>Include predictions with more than one character changes- This will bring
-in ambiguity in the correction algorithm and increases chances of errors.</p>
+<p>Cons: More front-end coding through MainWindow class</p>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Running the algorithm from the Parser class</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Implementing new code with existing code</p>
+</li>
+<li>
+<p>Cons: Difficult to run autocorrect through parser</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shutdown"><a class="link" href="#shutdown">7. "shutdown" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>This command shuts down the System.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "shutdown" command and returns all boolean flags related to passwords are set to false.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "logout" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User executes "shutdown".</p>
+</div>
+<div class="paragraph">
+<p>Step 2: Boolean flags for isHQP, isPO1, isPO2, isPO3, isPO4, isPO5 in the Password class is set to false. This is done using the lockIsHqp() and lockIsPo() methods in the Password class.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: isUpdatePasswordConfirm and isUpdatingPassword flags are also set to false through lockUpdatePasswordConfirm() and lockUpdatingPassword() in the Password class is also set to false.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: mainApp.stop() in MainWindow class shuts down the system</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h3>
+<hr>
 </div>
 <div class="sect2">
 <h3 id="7a-help-command"><a class="link" href="#7a-help-command">7a. "help" command</a></h3>
@@ -1224,7 +1416,7 @@ and optional past offences.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">[Implementation-Configuration]</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>Parser.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1577,7 +1769,7 @@ HQP- Headquarters Personnel</p>
 <p>(For all use cases below, the <strong>System</strong> is the <code>Police Records</code> and the <strong>User</strong> is either the `Police Officer (PO)' or 'Headquarters Personnel (HQP)', unless specified otherwise)</p>
 </div>
 <div class="sect2">
-<h3 id="use-case-enter-headquarters-personnel-password"><a class="link" href="#use-case-enter-headquarters-personnel-password">Use case: Enter Headquarters Personnel password</a></h3>
+<h3 id="pwUse"><a class="link" href="#pwUse">Use case: Enter Headquarters Personnel password</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -3144,4 +3336,4 @@ It is also used to describe a subject, should he have a criminal record: wanted,
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:14:19 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:20:56 UTC</div></div></div></body></html>

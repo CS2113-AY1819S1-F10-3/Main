@@ -366,20 +366,41 @@ to the Parser class. This is to ensure invalid input can be caught by the
 algorithm to give its correction before it is deemed as invalid by the Parser
 during which time all commands will be laid out to the user.</p>
 </div>
-<div class="paragraph">
-<p>Alternatives considered:</p>
-</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-autocorrect-feature-is-implemented"><a class="link" href="#aspect-how-autocorrect-feature-is-implemented">Aspect: How autocorrect feature is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Running the algorithm from the Parser- This however will not allow the
-prediction to be reported efficiently.</p>
+<p><strong>Alternative 1 (current choice):</strong> Using user input directly from MainWindow class</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Able to autocorrect raw input</p>
 </li>
 <li>
-<p>Include predictions with more than one character changes- This will bring
-in ambiguity in the correction algorithm and increases chances of errors.</p>
+<p>Cons: More front-end coding through MainWindow class</p>
 </li>
 </ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Running the algorithm from the Parser class</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Implementing new code with existing code</p>
+</li>
+<li>
+<p>Cons: Difficult to run autocorrect through parser</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -524,4 +545,4 @@ in ambiguity in the correction algorithm and increases chances of errors.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:14:19 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:20:56 UTC</div></div></div></body></html>

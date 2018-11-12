@@ -9,12 +9,23 @@
 <li><a href="#other-contributions">3.2. Other Contributions:</a></li>
 </ul>
 </li>
-<li><a href="#contributions-to-the-user-guide">4. Contributions to the User Guide</a></li>
+<li><a href="#contributions-to-the-user-guide">4. Contributions to the User Guide</a>
+<ul class="sectlevel2">
+<li><a href="#logout">4.1. Logout : <code>logout</code> (HQP &amp; PO)</a></li>
+<li><a href="#update-password-code-update-password-code-hqp">4.2. Update Password : <code>update password</code> (HQP)</a></li>
+<li><a href="#shutdown">4.3. Shutdown program : <code>shutdown</code> (HQP &amp; PO)</a></li>
+</ul>
+</li>
 <li><a href="#contributions-to-the-developer-guide">5. Contributions to the Developer Guide</a>
 <ul class="sectlevel2">
 <li><a href="#password">5.1. 1a. Password feature</a></li>
 <li><a href="#1b-update-password-feature">5.2. 1b. Update Password Feature</a></li>
 <li><a href="#logout">5.3. 5. "logout" command</a></li>
+<li><a href="#shutdown">5.4. 7. "shutdown" command</a></li>
+<li><a href="#pwUse">5.5. Use case: Enter Headquarters Personnel password</a></li>
+<li><a href="#use-case-enter-police-officer-password">5.6. Use case: Enter Police Officer password</a></li>
+<li><a href="#use-case-logout">5.7. Use case: Logout</a></li>
+<li><a href="#use-case-update-any-password">5.8. Use case: Update any password</a></li>
 </ul>
 </li>
 </ul></div></div><div id="content"><div class="sect1">
@@ -155,6 +166,129 @@ The ability to lock anytime also helps to increase security in times of emergenc
 </tr>
 </tbody>
 </table>
+<div id="password" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title=":information_source:"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The text box is located at the bottom of the screen, and is grey in colour</p>
+</li>
+<li>
+<p>Throughout the list of features, each command will indicate if its available for HQP, PO or both</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Type the password in the text box below and press <kbd>Enter</kbd> to enter system as a specific user.</p>
+</li>
+<li>
+<p>Defaults passwords for the users (Passwords are Case Sensitive):</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>HQP: papa123</p>
+</li>
+<li>
+<p>PO1: popo1</p>
+</li>
+<li>
+<p>PO2: popo2</p>
+</li>
+<li>
+<p>PO3: popo3</p>
+</li>
+<li>
+<p>PO4: popo4</p>
+</li>
+<li>
+<p>PO5: popo5</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Type a command in the same text box and press <kbd>Enter</kbd> to excecute it.</p>
+</li>
+<li>
+<p>To display the full list of commands and a summary of their functions in the application, type 'help' and press <kbd>Enter</kbd>.</p>
+</li>
+<li>
+<p>Refer to Section 3, “Features” for details of each feature.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="logout"><a class="link" href="#logout">4.1. Logout : <code>logout</code> (HQP &amp; PO)</a></h3>
+<div class="paragraph">
+<p>Logs the user out from the system.</p>
+</div>
+<div class="paragraph">
+<p>Format: 'logout'</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>logout</p>
+</li>
+<li>
+<p>Any user must enter their respective password to log in</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="update-password-code-update-password-code-hqp"><a class="link" href="#update-password-code-update-password-code-hqp">4.2. Update Password : <code>update password</code> (HQP)</a></h3>
+<div class="paragraph">
+<p>Updates password of any existing user - only HQP can change the user&#8217;s password</p>
+</div>
+<div class="paragraph">
+<p>Format: 'update password'</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>update password</p>
+</li>
+<li>
+<p>Please enter a password to change</p>
+</li>
+<li>
+<p>User then has to enter existing password and new alphanumeric password of minimum length 5</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shutdown"><a class="link" href="#shutdown">4.3. Shutdown program : <code>shutdown</code> (HQP &amp; PO)</a></h3>
+<div class="paragraph">
+<p>Shutdown the system</p>
+</div>
+<div class="paragraph">
+<p>Format: 'shutdown'</p>
+</div>
+<div class="paragraph">
+<p>Examples:
+*   shutdown
+*   Police Records System shuts down</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -201,7 +335,7 @@ The ability to lock anytime also helps to increase security in times of emergenc
 <p>Step 4: The user input, userCommandText, is then hashcoded using userCommandText.hashCode().</p>
 </div>
 <div class="paragraph">
-<p>Step 5: Using a Buffered reader from the readAndWrite class, a loop through passwordStorage.txt tries to match the hashcoded input with an existing password.</p>
+<p>Step 5: Using a Buffered reader from the ReaderAndWriter class, a loop through passwordStorage.txt tries to match the hashcoded input with an existing password.</p>
 </div>
 <div class="paragraph">
 <p>Step 6: The user and password are stored in passwordStorage.txt in this format : "userID (hashcoded)password".</p>
@@ -236,7 +370,7 @@ The ability to lock anytime also helps to increase security in times of emergenc
 <p>Pros: Can use a hashmap for quick look up, with the userID as key and hashcoded password as the value</p>
 </li>
 <li>
-<p>Cons: More input from user, and difficult to store in an external text file.</p>
+<p>Cons: More input from user, and difficult to store in an external text file</p>
 </li>
 </ul>
 </div>
@@ -292,36 +426,42 @@ The ability to lock anytime also helps to increase security in times of emergenc
 <p>Step 8: The user enters the same new password. It matches with the oneTimePassword.</p>
 </div>
 <div class="paragraph">
-<p>Step 9: The Buffered reader then reads reads through passwordStorage.txt, and a Print writer from the ReadAndWrite class writes existing passwords to a temporary file, while writing the new password in place of the old password to change.</p>
+<p>Step 9: The Buffered reader then reads reads through passwordStorage.txt, and a Print writer from the ReaderAndWriter class writes existing passwords to a temporary file, while writing the new password in place of the old password that has been requested to be updated.</p>
+</div>
+<div class="paragraph">
+<p>Step 10: The temporary file is renamed to passwordStorage.txt and deleting the old passwordStorage.txt file.</p>
+</div>
+<div class="paragraph">
+<p>Step 11: The System returns a message that update password is successful.</p>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">5.2.1. Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-how-password-feature-is-implemented-2"><a class="link" href="#aspect-how-password-feature-is-implemented-2">Aspect: How password feature is implemented</a></h5>
+<h5 id="aspect-how-update-password-feature-is-implemented"><a class="link" href="#aspect-how-update-password-feature-is-implemented">Aspect: How update password feature is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Using a password with no need for username</p>
+<p><strong>Alternative 1 (current choice):</strong> writing to a temporary file then renaming</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Reduce user&#8217;s keyboard input</p>
+<p>Pros: No conflicts when writing to a new file</p>
 </li>
 <li>
-<p>Cons: Slow buffered reader has to loop through all passwords in the text file</p>
+<p>Cons: Space is required for the new file before deleting original file</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Using username and password</p>
+<p><strong>Alternative 2:</strong> Overwriting current passwordStorage.txt file</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Can use a hashmap for quick look up, with the userID as key and hashcoded password as the value</p>
+<p>Pros: Maintain space usage</p>
 </li>
 <li>
-<p>Cons: More input from user, and difficult to store in an external text file.</p>
+<p>Cons: Many errors when overwriting</p>
 </li>
 </ul>
 </div>
@@ -342,7 +482,7 @@ The ability to lock anytime also helps to increase security in times of emergenc
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>execute() - executes the "logout" command and returns all boolean flags related to passwords are set to false.</p>
+<p>execute() - executes the "logout" command , all boolean flags related to passwords are set to false and clears the message inboxes.</p>
 </li>
 </ol>
 </div>
@@ -362,12 +502,15 @@ The ability to lock anytime also helps to increase security in times of emergenc
 <p>Step 4: isUpdatePasswordConfirm and isUpdatingPassword flags are also set to false through lockUpdatePasswordConfirm() and lockUpdatingPassword() in the Password class is also set to false.</p>
 </div>
 <div class="paragraph">
-<p>Step 5: A CommandResult object is created and displays a message that the user is logged out of the System and prompts for a password.</p>
+<p>Step 5: resetInboxWhenLogout() in the Inbox class clears all records of displayed messages and resets the number of unread messages to default value of -1.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: A CommandResult object is created and displays a message that the user is logged out of the System and prompts for a password.</p>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">5.3.1. Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-how-logout-executes"><a class="link" href="#aspect-how-logout-executes">Aspect: How logout executes</a></h5>
+<h5 id="aspect-how-logout-command-is-implemented"><a class="link" href="#aspect-how-logout-command-is-implemented">Aspect: How logout command is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -401,5 +544,268 @@ The ability to lock anytime also helps to increase security in times of emergenc
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="shutdown"><a class="link" href="#shutdown">5.4. 7. "shutdown" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:14:19 UTC</div></div></div></body></html>
+<div class="paragraph">
+<p>This command shuts down the System.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "shutdown" command and returns all boolean flags related to passwords are set to false.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "logout" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User executes "shutdown".</p>
+</div>
+<div class="paragraph">
+<p>Step 2: Boolean flags for isHQP, isPO1, isPO2, isPO3, isPO4, isPO5 in the Password class is set to false. This is done using the lockIsHqp() and lockIsPo() methods in the Password class.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: isUpdatePasswordConfirm and isUpdatingPassword flags are also set to false through lockUpdatePasswordConfirm() and lockUpdatingPassword() in the Password class is also set to false.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: mainApp.stop() in MainWindow class shuts down the system</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pwUse"><a class="link" href="#pwUse">5.5. Use case: Enter Headquarters Personnel password</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts User to enter his password.</p>
+</li>
+<li>
+<p>User enters HQP password.</p>
+</li>
+<li>
+<p>System displays message "Welcome Headquarters Personnel" and System prompts User for a command. Only HQP commands are set to accessible.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3a. User enters invalid password.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a maximum of 5 attempts.</p>
+<div class="paragraph">
+<p>Use case resumes at step 1.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. The number of attempts reaches zero.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3b1. System shuts down.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-enter-police-officer-password"><a class="link" href="#use-case-enter-police-officer-password">5.6. Use case: Enter Police Officer password</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts User to enter his password.</p>
+</li>
+<li>
+<p>User enters Police Officer password.</p>
+</li>
+<li>
+<p>Only Police Officer commands are set to accessible, System displays message "Welcome Police Officer" and System prompts User for a command.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3a. User enters invalid password.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a maximum of 5 attempts.</p>
+<div class="paragraph">
+<p>Use case resumes at step 1.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. The number of attempts reaches zero.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3b1. System shuts down.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-logout"><a class="link" href="#use-case-logout">5.7. Use case: Logout</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User logs out of the System at any point.</p>
+</li>
+<li>
+<p>System sets all commands to inaccessible, displays System logout message and prompts User for password.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-update-any-password"><a class="link" href="#use-case-update-any-password">5.8. Use case: Update any password</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to update password.</p>
+</li>
+<li>
+<p>System prompts User for current password to change.</p>
+</li>
+<li>
+<p>User enters existing password.</p>
+</li>
+<li>
+<p>System prompts User to enter new password.</p>
+</li>
+<li>
+<p>User enters new alphanumeric password.</p>
+</li>
+<li>
+<p>System prompts User to enter new password again.</p>
+</li>
+<li>
+<p>User enters same new alphanumeric password.</p>
+</li>
+<li>
+<p>System updates password to change to the new alphanumeric password and displays update password success message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3a. User enters invalid password.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a1. System displays an error message and allows one less attempt for User at entering a correct password, with a a maximum of 5 attempts.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. The number of attempts reaches zero.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3b1. System shuts down.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5a or 7a. User enters new password without a number.</p>
+</li>
+<li>
+<p>5a1 or 7a1. System shows error message to include at least one number and prompts User to enter new alphanumeric password again.</p>
+<div class="paragraph">
+<p>Use case resumes at step 5.</p>
+</div>
+</li>
+<li>
+<p>5b or 7b. User enters new password without a letter.</p>
+</li>
+<li>
+<p>5b1 or 7b1. System shows error message to include at least one letter and prompts User to enter new alphanumeric password again.</p>
+<div class="paragraph">
+<p>Use case resumes at step 5.</p>
+</div>
+</li>
+<li>
+<p>5c or 7c. User enters new password without a letter nor a number.</p>
+</li>
+<li>
+<p>5c1 or 7c1. System shows error message for invalid new password.</p>
+<div class="paragraph">
+<p>Use case resumes at step 5.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:20:56 UTC</div></div></div></body></html>

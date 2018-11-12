@@ -431,40 +431,41 @@ It also implements the following operations:</p>
 <div class="paragraph">
 <p>Step 7: The CommandResult object displays to the user the number of unread messages he has, and the list of unread messages sorted according to their urgency.</p>
 </div>
-<div class="paragraph">
-<p>Alternatives considered:</p>
-</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">4.5.1. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-showunread-command-is-implemented"><a class="link" href="#aspect-how-showunread-command-is-implemented">Aspect: How showunread command is implemented</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Using a List instead of a TreeSet.</p>
+<p><strong>Alternative 1 (current choice):</strong> Using a TreeSet</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Smaller space complexity.</p>
+<p>Pros: Auto-sorts by read-status, priority then timestamp</p>
 </li>
 <li>
-<p>Cons: Less efficient code as 'sort' function must be called every time a new message is stored to maintain sorted order.
-Eventually, we decided to use TreeSet in our implementation as we felt that the pros outweighed the cons. This becomes more obvious when the amount of data stored gets larger.</p>
+<p>Cons: Difficult to implement</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Using a single text file for storing messages, storing the userID of the recipient in the text file.</p>
+<p><strong>Alternative 2:</strong> Using a List</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Fewer files to manage and filepaths to traverse.</p>
+<p>Pros: Smaller time complexity</p>
 </li>
 <li>
-<p>Cons: Less efficient as it means more memory is required for storage per message stored (additional information of recipient of message required to be stored in the data structure itself when loaded).
-Eventually, we also used multiple message storage files, each dedicated to a specific user, as this allowed us to increase the time efficiency of the code as the getMessagesFor() method did not need to sort through the messages based on recipient anymore. This benefit becomes especially obvious as well when there is a large number of messages that has to be stored, directed towards multiple users.</p>
+<p>Cons: Does not auto-sort</p>
 </li>
 </ul>
 </div>
 </li>
 </ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -894,4 +895,4 @@ It is also used to describe a subject, should he have a criminal record: wanted,
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:14:19 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:20:56 UTC</div></div></div></body></html>
