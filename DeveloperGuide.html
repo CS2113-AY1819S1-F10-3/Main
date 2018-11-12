@@ -32,7 +32,7 @@
 <ul class="sectlevel2">
 <li><a href="#use-case-enter-headquarters-personnel-password">Use case: Enter Headquarters Personnel password</a></li>
 <li><a href="#use-case-enter-police-officer-password">Use case: Enter Police Officer password</a></li>
-<li><a href="#use-case-lock-system">Use case: Lock System</a></li>
+<li><a href="#use-case-logout">Use case: Logout</a></li>
 <li><a href="#use-case-update-any-password">Use case: Update any password</a></li>
 <li><a href="#use-case-add-person">Use case: Add person</a></li>
 <li><a href="#use-case-delete-person">Use case: Delete person</a></li>
@@ -205,7 +205,7 @@ This is to ensure that the system denies access to anyone who is not authorized.
 <div class="paragraph">
 <p>Headquarters Personnel can update any existing password with the update password command.
 The buffered reader reads the passwordStorage.txt file for the specific password to update.
-Once the user has entered a new password, the user is prompted to enter the same password again.
+Once the user has entered a new password (stage 1), the user is prompted to enter the same password again(stage 2).
 This is to ensure that the new password typed is accurate.
 However, the new password must be alphanumeric and at least 5 characters long.
 This is to ensure a strong password.
@@ -921,17 +921,17 @@ HQP- Headquarters Personnel</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-lock-system"><a class="link" href="#use-case-lock-system">Use case: Lock System</a></h3>
+<h3 id="use-case-logout"><a class="link" href="#use-case-logout">Use case: Logout</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User locks the System at any point.</p>
+<p>User logs out of the System at any point.</p>
 </li>
 <li>
-<p>System sets all commands to inaccessible, displays System lock message and prompts User for password.</p>
+<p>System sets all commands to inaccessible, displays System logout message and prompts User for password.</p>
 </li>
 </ol>
 </div>
@@ -2179,4 +2179,4 @@ HQP- Headquarters Personnel</p>
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 08:46:20 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 09:29:08 UTC</div></div></div></body></html>
