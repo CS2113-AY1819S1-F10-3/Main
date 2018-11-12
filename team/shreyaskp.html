@@ -322,7 +322,7 @@ HQP- Headquarters Personnel</p>
 The algorithm called EditDistance checks the number of single character
 changes to be made to convert an invalid input into one expected by the
 system. Currently, changes involving one single character can be corrected
-by the system.
+by the system for commands and changes involving one or two single characters can be corrected by the system for NRICs.
 It implements the following operations:</p>
 </div>
 <div class="olist arabic">
@@ -334,16 +334,10 @@ changes (either addition of a character, deletion of a character or changing
 a character) to convert invalid user input into its most probable correct
 implementation.</p>
 </li>
-<li>
-<p>getCommands() - This function returns the list of possible commands that
-the user can input.</p>
-</li>
 </ol>
 </div>
 <div class="paragraph">
-<p>The following is an example usage scenario of the autocorrection feature:</p>
-</div>
-<div class="paragraph">
+<div class="title">The following is an example usage scenario of the autocorrection feature for commands:</div>
 <p>Step 1: The user inputs his password and unlocks the system.</p>
 </div>
 <div class="paragraph">
@@ -351,8 +345,20 @@ the user can input.</p>
 </div>
 <div class="paragraph">
 <p>Step 3: The system predicts the most probable intended command the user
-would have wanted to input, based on a threshold and then prompts the user
+would have wanted to input and then prompts the user
 to use the prediction given in its valid format.</p>
+</div>
+<div class="paragraph">
+<div class="title">The following is an example usage scenario of the autocorrection feature for NRICs:</div>
+<p>Step 1: The user inputs his password and unlocks the system.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user tries to edit, delete or check an invalid NRIC.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: The system predicts the most probable intended NRIC the user
+would have wanted to input and then prompts the user
+to use the prediction given in the valid format of the command.</p>
 </div>
 <div class="paragraph">
 <p>The input is checked by the algorithm in the MainWindow before it is sent
@@ -377,7 +383,7 @@ in ambiguity in the correction algorithm and increases chances of errors.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="usecase"><a class="link" href="#usecase">Use case: Autocorrection</a></h3>
+<h3 id="usecase"><a class="link" href="#usecase">Use case: Autocorrection of commands</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -396,10 +402,10 @@ in ambiguity in the correction algorithm and increases chances of errors.</p>
 <p>System prompts user to enter his command.</p>
 </li>
 <li>
-<p>User enters invalid input.</p>
+<p>User enters invalid command.</p>
 </li>
 <li>
-<p>System predicts what the user would have wanted to type and displays the list of valid inputs, if any.</p>
+<p>System predicts what command the user would have wanted to type if it finds a correction and displays the valid implementation of the command.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -425,40 +431,11 @@ in ambiguity in the correction algorithm and increases chances of errors.</p>
 </div>
 </li>
 <li>
-<p>5a. User enters an invalid input which is an invalid command.</p>
+<p>6a. User enters an invalid command for which the system cannot find a prediction.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>5a1. System also displays the valid usage of the command.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>5b. User enters an invalid input for which the system cannot find a prediction.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>5b1. System shows error message.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>*a. At any time, user chooses to cancel the delete action.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>*a1. System requests confirmation to cancel.</p>
-</li>
-<li>
-<p>*a2. User confirms the cancellation.</p>
+<p>6a1. System shows error message.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -469,5 +446,82 @@ in ambiguity in the correction algorithm and increases chances of errors.</p>
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="use-case-autocorrection-of-nrics"><a class="link" href="#use-case-autocorrection-of-nrics">Use case: Autocorrection of NRICs</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 13:57:32 UTC</div></div></div></body></html>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User enters delete, edit or check command with invalid NRIC.</p>
+</li>
+<li>
+<p>System predicts the NRIC the user would have wanted to type if it finds a correction and displays the valid implementation of the command.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3a. User enters an invalid password.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a1. System shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5a. User enters an invalid delete, edit or check command.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System displays the valid usage of the command.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>6a. User enters an invalid NRIC for which the system cannot find a prediction.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>6a1. System shows error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:14:19 UTC</div></div></div></body></html>
