@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Ong Wee Keong  - Project Portfolio</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="../images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link active" href="../index.html">AB-3</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level4">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">main</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="navitem"><a class="nav-link" href="https://github.com/CS2113-AY1819S1-F10-3/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Ong Wee Keong  - Project Portfolio</h1><div id="toc" class="toc"><div id="toctitle"></div><ul class="sectlevel0">
-<li><a href="#project-police-records-system">PROJECT: Police Records System</a>
+<li><a href="#project-police-records-intelligent-system-prism">PROJECT: Police Records Intelligent System (PRISM)</a>
 <ul class="sectlevel1">
 <li><a href="#introduction">1. Introduction</a>
 <ul class="sectlevel2">
@@ -32,12 +32,22 @@
 <li><a href="#code-setting-up-code">4.2. <code>Setting up</code></a></li>
 <li><a href="#code-design-code">4.3. <code>Design</code></a></li>
 <li><a href="#code-implementation-code">4.4. <code>Implementation</code></a></li>
-<li><a href="#code-use-cases-code">4.5. <code>Use Cases</code></a></li>
+<li><a href="#wkFeatures">4.5. 3a. "showunread" command</a></li>
+<li><a href="#3b-inbox-command">4.6. 3b. "inbox" command</a></li>
+<li><a href="#3c-read-command">4.7. 3c. "read" command</a></li>
+<li><a href="#3d-clearinbox-command">4.8. 3d. "clearinbox" command</a></li>
+<li><a href="#code-use-cases-code">4.9. <code>Use Cases</code></a></li>
+<li><a href="#inbox">4.10. Use case: Show unread messages</a></li>
+<li><a href="#use-case-show-all-messages">4.11. Use case: Show all messages</a></li>
+<li><a href="#use-case-clear-inbox">4.12. Use case: Clear Inbox</a></li>
+<li><a href="#use-case-read-messages">4.13. Use case: Read messages</a></li>
+<li><a href="#code-glossary-code">4.14. <code>Glossary</code></a></li>
 </ul>
 </li>
+<li><a href="#glossary">5. Glossary</a></li>
 </ul>
 </li>
-</ul></div></div><div id="content"><h1 id="project-police-records-system" class="sect0"><a class="link" href="#project-police-records-system">PROJECT: Police Records System</a></h1>
+</ul></div></div><div id="content"><h1 id="project-police-records-intelligent-system-prism" class="sect0"><a class="link" href="#project-police-records-intelligent-system-prism">PROJECT: Police Records Intelligent System (PRISM)</a></h1>
 <div class="sect1">
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
@@ -123,7 +133,7 @@ PRS is currently a desktop application, designed specifically for users who are 
 <div class="ulist">
 <ul>
 <li>
-<p>Functional &amp; test code: <a href="https://nuscs2113-ay1819s1.github.io/dashboard/#=undefined&amp;search=ong&#8230;&#8203;ong&amp;sort=displayName&amp;since=2018-09-12&amp;until=2018-10-30&amp;timeframe=day&amp;reverse=false&amp;repoSort=true" class="bare">https://nuscs2113-ay1819s1.github.io/dashboard/#=undefined&amp;search=ong&#8230;&#8203;ong&amp;sort=displayName&amp;since=2018-09-12&amp;until=2018-10-30&amp;timeframe=day&amp;reverse=false&amp;repoSort=true</a></p>
+<p><a href="https://nuscs2113-ay1819s1.github.io/dashboard/#=undefined&amp;search=keong&amp;sort=displayName&amp;since=2018-09-12&amp;until=2018-10-30&amp;timeframe=day&amp;reverse=false&amp;repoSort=true">Functional &amp; Test code</a></p>
 </li>
 </ul>
 </div>
@@ -363,7 +373,7 @@ For POs: Check inbox to see who is responding to request for backup/ambulance/fi
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/mainClassDiagram.png" alt="mainClassDiagram">
+<img src="../images/mainClassDiagramFULLEdited.png" alt="mainClassDiagramFULLEdited">
 </div>
 </div>
 </div>
@@ -372,8 +382,9 @@ For POs: Check inbox to see who is responding to request for backup/ambulance/fi
 <div class="paragraph">
 <p>This section describes some of the more important details of certain features implemented.</p>
 </div>
-<div class="sect3">
-<h4 id="3a-showunread-command"><a class="link" href="#3a-showunread-command">4.4.1. 3a. "showunread" command</a></h4>
+</div>
+<div class="sect2">
+<h3 id="wkFeatures"><a class="link" href="#wkFeatures">4.5. 3a. "showunread" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -456,16 +467,16 @@ Eventually, we also used multiple message storage files, each dedicated to a spe
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="3b-inbox-command"><a class="link" href="#3b-inbox-command">4.4.2. 3b. "inbox" command</a></h4>
+<div class="sect2">
+<h3 id="3b-inbox-command"><a class="link" href="#3b-inbox-command">4.6. 3b. "inbox" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong>
 Inbox command has the same implementation as the "showunread" command - except that it shows you all the messages that are in your inbox (both read and unread).
 This is to allow you to access the messages that you have previously marked as read.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="3c-read-command"><a class="link" href="#3c-read-command">4.4.3. 3c. "read" command</a></h4>
+<div class="sect2">
+<h3 id="3c-read-command"><a class="link" href="#3c-read-command">4.7. 3c. "read" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -496,8 +507,8 @@ The "read" command can only be used after the "showunread" command has been used
 <p>Step 6: The CommandResult object displays to the user a message indicating that the updating of the read status was successful or not.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="3d-clearinbox-command"><a class="link" href="#3d-clearinbox-command">4.4.4. 3d. "clearinbox" command</a></h4>
+<div class="sect2">
+<h3 id="3d-clearinbox-command"><a class="link" href="#3d-clearinbox-command">4.8. 3d. "clearinbox" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -536,11 +547,12 @@ text file storing the messages in your inbox.</p>
 <p>Step 2: User executes "clearinbox" command. If command is successfully executed, the feedback "Inbox cleared!" will be displayed to the user.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="code-use-cases-code"><a class="link" href="#code-use-cases-code">4.9. <code>Use Cases</code></a></h3>
+
 </div>
 <div class="sect2">
-<h3 id="code-use-cases-code"><a class="link" href="#code-use-cases-code">4.5. <code>Use Cases</code></a></h3>
-<div class="sect3">
-<h4 id="use-case-show-unread-messages"><a class="link" href="#use-case-show-unread-messages">4.5.1. Use case: Show unread messages</a></h4>
+<h3 id="inbox"><a class="link" href="#inbox">4.10. Use case: Show unread messages</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -616,8 +628,8 @@ text file storing the messages in your inbox.</p>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="use-case-show-all-messages"><a class="link" href="#use-case-show-all-messages">4.5.2. Use case: Show all messages</a></h4>
+<div class="sect2">
+<h3 id="use-case-show-all-messages"><a class="link" href="#use-case-show-all-messages">4.11. Use case: Show all messages</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -680,8 +692,8 @@ text file storing the messages in your inbox.</p>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="use-case-clear-inbox"><a class="link" href="#use-case-clear-inbox">4.5.3. Use case: Clear Inbox</a></h4>
+<div class="sect2">
+<h3 id="use-case-clear-inbox"><a class="link" href="#use-case-clear-inbox">4.12. Use case: Clear Inbox</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -744,8 +756,8 @@ text file storing the messages in your inbox.</p>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="use-case-read-messages"><a class="link" href="#use-case-read-messages">4.5.4. Use case: Read messages</a></h4>
+<div class="sect2">
+<h3 id="use-case-read-messages"><a class="link" href="#use-case-read-messages">4.13. Use case: Read messages</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -830,6 +842,56 @@ text file storing the messages in your inbox.</p>
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="code-glossary-code"><a class="link" href="#code-glossary-code">4.14. <code>Glossary</code></a></h3>
+
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 10:18:23 UTC</div></div></div></body></html>
+</div>
+<div class="sect1">
+<h2 id="glossary"><a class="link" href="#glossary">5. Glossary</a></h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><a id="HeadquartersPersonnel"></a> Headquarters Personnel (HQP)</dt>
+<dd>
+<p>A PO with a high level of authorised access (read and write) to the information of subjects.</p>
+</dd>
+<dt class="hdlist1"><a id="ID"></a> ID</dt>
+<dd>
+<p>Refers to the identity of the user of the program based on the password he uses the log in. Currently, there can be 6 possible users - 1 HQP and 5 POs.</p>
+</dd>
+<dt class="hdlist1"><a id="mainstream-os"></a> Mainstream OS</dt>
+<dd>
+<p>Windows, Linux, Unix, OS-X</p>
+</dd>
+<dt class="hdlist1"><a id="NRIC"></a> NRIC</dt>
+<dd>
+<p>Stands for National Registration Identity Card. It is a 7-digit number preceded and succeeded by a letter. This forms a sequence of characters unique to each person and is used for identification purposes.</p>
+</dd>
+<dt class="hdlist1"><a id="PoliceOfficer"></a> Police Officer (PO)</dt>
+<dd>
+<p>A police officer that is on patrol duty. Has low level of authorised access (read only) to subject&#8217;s information.</p>
+</dd>
+<dt class="hdlist1"><a id="PoliceRecords"></a> Police Records</dt>
+<dd>
+<p>Refers to the database of information that the system has of people, which includes their NRIC, name, address, past offences and status.</p>
+</dd>
+<dt class="hdlist1"><a id="Status"></a> Status</dt>
+<dd>
+<p>A status that is used to describe the engagement level of POs on duty.
+He can either be engaged (true) or free (false).
+It is also used to describe a subject, should he have a criminal record: wanted, xc (ex-convict), and clear.</p>
+</dd>
+<dt class="hdlist1"><a id="Subject"></a> Subject</dt>
+<dd>
+<p>A person that is being screened by a PO.</p>
+</dd>
+<dt class="hdlist1"><a id="System"></a> System</dt>
+<dd>
+<p>Refers to the <code>PRISM</code> Application itself (i.e. when a user exits the system, he closes the application).</p>
+</dd>
+</dl>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 13:36:32 UTC</div></div></div></body></html>

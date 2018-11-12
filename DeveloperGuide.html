@@ -16,7 +16,7 @@
 <li><a href="#1b-update-password-feature">1b. Update Password Feature</a></li>
 <li><a href="#2a-find-command-edited">2a. "find" command (edited)</a></li>
 <li><a href="#2b-check-command">2b. "check" command</a></li>
-<li><a href="#3a-showunread-command">3a. "showunread" command</a></li>
+<li><a href="#wkFeatures">3a. "showunread" command</a></li>
 <li><a href="#3b-inbox-command">3b. "inbox" command</a></li>
 <li><a href="#3c-read-command">3c. "read" command</a></li>
 <li><a href="#3d-clearinbox-command">3d. "clearinbox" command</a></li>
@@ -44,7 +44,7 @@
 <li><a href="#use-case-update-status-of-a-po">Use case: Update status of a PO</a></li>
 <li><a href="#use-case-check-status-of-all-pos">Use case: Check status of all POs</a></li>
 <li><a href="#usecase">Use case: Autocorrection</a></li>
-<li><a href="#use-case-show-unread-messages">Use case: Show unread messages</a></li>
+<li><a href="#inbox">Use case: Show unread messages</a></li>
 <li><a href="#use-case-show-all-messages">Use case: Show all messages</a></li>
 <li><a href="#use-case-clear-inbox">Use case: Clear Inbox</a></li>
 <li><a href="#use-case-read-messages">Use case: Read messages</a></li>
@@ -479,7 +479,7 @@ it searches for the person in the addressBook list by NRIC.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="3a-showunread-command"><a class="link" href="#3a-showunread-command">3a. "showunread" command</a></h3>
+<h3 id="wkFeatures"><a class="link" href="#wkFeatures">3a. "showunread" command</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -2004,7 +2004,7 @@ HQP- Headquarters Personnel</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-show-unread-messages"><a class="link" href="#use-case-show-unread-messages">Use case: Show unread messages</a></h3>
+<h3 id="inbox"><a class="link" href="#inbox">Use case: Show unread messages</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -2526,7 +2526,7 @@ HQP- Headquarters Personnel</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Data should be constant, not volatile.</p>
+<p>Data should persist, and not volatile.</p>
 </li>
 <li>
 <p>Data should be recoverable from last save point</p>
@@ -2543,15 +2543,45 @@ HQP- Headquarters Personnel</p>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1"><a id="HeadquartersPersonnel"></a> Headquarters Personnel (HQP)</dt>
+<dd>
+<p>A PO with a high level of authorised access (read and write) to the information of subjects.</p>
+</dd>
+<dt class="hdlist1"><a id="ID"></a> ID</dt>
+<dd>
+<p>Refers to the identity of the user of the program based on the password he uses the log in. Currently, there can be 6 possible users - 1 HQP and 5 POs.</p>
+</dd>
 <dt class="hdlist1"><a id="mainstream-os"></a> Mainstream OS</dt>
 <dd>
 <p>Windows, Linux, Unix, OS-X</p>
 </dd>
-<dt class="hdlist1"><a id="private-contact-detail"></a> Private contact detail</dt>
+<dt class="hdlist1"><a id="NRIC"></a> NRIC</dt>
 <dd>
-<p>A contact detail that is not meant to be shared with others.</p>
+<p>Stands for National Registration Identity Card. It is a 7-digit number preceded and succeeded by a letter. This forms a sequence of characters unique to each person and is used for identification purposes.</p>
+</dd>
+<dt class="hdlist1"><a id="PoliceOfficer"></a> Police Officer (PO)</dt>
+<dd>
+<p>A police officer that is on patrol duty. Has low level of authorised access (read only) to subject&#8217;s information.</p>
+</dd>
+<dt class="hdlist1"><a id="PoliceRecords"></a> Police Records</dt>
+<dd>
+<p>Refers to the database of information that the system has of people, which includes their NRIC, name, address, past offences and status.</p>
+</dd>
+<dt class="hdlist1"><a id="Status"></a> Status</dt>
+<dd>
+<p>A status that is used to describe the engagement level of POs on duty.
+He can either be engaged (true) or free (false).
+It is also used to describe a subject, should he have a criminal record: wanted, xc (ex-convict), and clear.</p>
+</dd>
+<dt class="hdlist1"><a id="Subject"></a> Subject</dt>
+<dd>
+<p>A person that is being screened by a PO.</p>
+</dd>
+<dt class="hdlist1"><a id="System"></a> System</dt>
+<dd>
+<p>Refers to the <code>PRISM</code> Application itself (i.e. when a user exits the system, he closes the application).</p>
 </dd>
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 10:18:23 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 13:36:32 UTC</div></div></div></body></html>
