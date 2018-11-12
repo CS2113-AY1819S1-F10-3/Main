@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link active" href="index.html">AB-3</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level4">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">main</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" href="UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="LearningOutcomes.html">LOs</a></li><li class="navitem"><a class="nav-link" href="https://github.com/CS2113-AY1819S1-F10-3/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Police Records and Intelligence Syetem - User Guide</h1></div><div id="content"><div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>Team F10-3</code>      Since: `Aug 2018'</p>
+<p>By: <code>Team F10-3</code>      Since: <code>Aug 2018</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -14,7 +14,7 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code-hqp-po">3.1. Viewing help : <code>help</code> (HQP &amp; PO)</a></li>
-<li><a href="#display-date-and-time-code-time-code-hqp-po">3.2. Display date and time : <code>time</code> (HQP &amp; PO)</a></li>
+<li><a href="#time">3.2. Display date and time : <code>time</code> (HQP &amp; PO)</a></li>
 <li><a href="#adding-a-person-code-add-code-hqp-only">3.3. Adding a person: <code>add</code> (HQP only)</a></li>
 <li><a href="#edit">3.4. Editing a person : <code>edit</code> (HQP only)</a></li>
 <li><a href="#display-a-list-of-all-persons-code-list-code-hqp-po">3.5. Display a list of all persons : <code>list</code> (HQP &amp; PO)</a></li>
@@ -33,7 +33,7 @@
 <li><a href="#read-message-code-read-code-hqp-po">3.18. Read message : <code>read</code>(HQP &amp; PO)</a></li>
 <li><a href="#clear-inbox-code-clearinbox-code-hqp-po">3.19. Clear inbox: <code>clearinbox</code> (HQP &amp; PO)</a></li>
 <li><a href="#shutdown-program-code-shutdown-code-hqp-po">3.20. Shutdown program : <code>shutdown</code> (HQP &amp; PO)</a></li>
-<li><a href="#autocorrect-feature">3.21. AutoCorrect feature</a></li>
+<li><a href="#autocorrect">3.21. AutoCorrect feature (HQP &amp; PO)</a></li>
 </ul>
 </li>
 <li><a href="#commands-list">4. Commands List</a></li>
@@ -129,7 +129,7 @@
 <p>To display the full list of commands and a summary of their functions in the application, type 'help' and press <kbd>Enter</kbd>.</p>
 </li>
 <li>
-<p>Refer to Section 3, “Features” for details of each command.</p>
+<p>Refer to Section 3, “Features” for details of each feature.</p>
 </li>
 </ol>
 </div>
@@ -164,7 +164,7 @@
 <div class="sect2">
 <h3 id="viewing-help-code-help-code-hqp-po"><a class="link" href="#viewing-help-code-help-code-hqp-po">3.1. Viewing help : <code>help</code> (HQP &amp; PO)</a></h3>
 <div class="paragraph">
-<p>Lists all the features in a user friendly format for users and how to use them.</p>
+<p>Lists all the commands in a user friendly format for users and how to use them.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -178,6 +178,9 @@
 <li>
 <p>You will be unable to see the list of available commands until logged in, due to the sensitivity of the data</p>
 </li>
+<li>
+<p>You will be shown a different set of commands depending on the type of access to the system- HQP or PO</p>
+</li>
 </ul>
 </div>
 </td>
@@ -187,14 +190,40 @@
 <div class="paragraph">
 <p>Format: 'help'</p>
 </div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>help</p>
+</li>
+<li>
+<p>Displays all commands which can be used by the user</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
-<h3 id="display-date-and-time-code-time-code-hqp-po"><a class="link" href="#display-date-and-time-code-time-code-hqp-po">3.2. Display date and time : <code>time</code> (HQP &amp; PO)</a></h3>
+<h3 id="time"><a class="link" href="#time">3.2. Display date and time : <code>time</code> (HQP &amp; PO)</a></h3>
 <div class="paragraph">
-<p>Shows the current date and time.</p>
+<p>Shows the current System date and time.</p>
 </div>
 <div class="paragraph">
 <p>Format: 'time'</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>time</p>
+</li>
+<li>
+<p>Displays the current date, and time in hrs</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -310,7 +339,7 @@ A person can have 0 or more past offenses
 <div class="ulist">
 <ul>
 <li>
-<p>edit g1952866Q p/510246</p>
+<p>edit n/g1952866q p/510246</p>
 </li>
 <li>
 <p>Edits the postal code of the person with the specified NRIC to be 510246</p>
@@ -675,10 +704,67 @@ For POs: Check inbox to see who is responding to request for backup/ambulance/fi
 </div>
 </div>
 <div class="sect2">
-<h3 id="autocorrect-feature"><a class="link" href="#autocorrect-feature">3.21. AutoCorrect feature</a></h3>
+<h3 id="autocorrect"><a class="link" href="#autocorrect">3.21. AutoCorrect feature (HQP &amp; PO)</a></h3>
 <div class="paragraph">
-<p>AutoCorrect feature predicts expected input when the user enters invalid input.
-Currently all commands are covered by the feature.</p>
+<p>Predicts expected input when the user enters invalid input that is close to input expected by the Police Records System.
+Currently all non-password commands and NRICs are covered by the feature.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The feature predicts correction for commands that are a single character away from valid command</p>
+</li>
+<li>
+<p>The feature predicts correction for NRICs that are one or two characters away from valid NRIC</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>The feature works differently depending on the type of user.</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For HQP, all commands as well as NRICs under edit, check and delete command are covered by the feature.</p>
+</li>
+<li>
+<p>For POs, only commands they are authorized to use are covered by the feature.</p>
+</li>
+<li>
+<p>The autocorrect feature does not cover the update password command, and NRICs under commands accessible by POs to
+maintain security.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>lost</p>
+</li>
+<li>
+<p>Predicts that the user meant to use the command <code>list</code> and shows valid implementation of the list command</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -808,4 +894,4 @@ E.g. add Bob n/g1234567a d/1996 p/111111 s/clear w/none</p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 09:41:14 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 10:12:56 UTC</div></div></div></body></html>

@@ -6,6 +6,7 @@
 <ul class="sectlevel2">
 <li><a href="#prerequisites">Prerequisites</a></li>
 <li><a href="#importing-the-project-into-intellij">Importing the project into IntelliJ</a></li>
+<li><a href="#configurations-to-do-before-writing-code">Configurations to do before writing code</a></li>
 </ul>
 </li>
 <li><a href="#design">Design</a></li>
@@ -22,12 +23,12 @@
 <li><a href="#3d-clearinbox-command">3d. "clearinbox" command</a></li>
 <li><a href="#request">3e. "rb" command</a></li>
 <li><a href="#dispatch">3f. "dispatch" command</a></li>
-<li><a href="#4-autocorrection-feature">4. Autocorrection feature</a></li>
+<li><a href="#autocorrect">4. Autocorrection feature</a></li>
 </ul>
 </li>
 <li><a href="#use-cases">Use Cases</a></li>
 <li><a href="#testing">Testing</a></li>
-<li><a href="#user-stories">Appendix A: User Stories</a></li>
+<li><a href="#stories">Appendix A: User Stories</a></li>
 <li><a href="#use-cases-2">Appendix B: Use Cases</a>
 <ul class="sectlevel2">
 <li><a href="#use-case-enter-headquarters-personnel-password">Use case: Enter Headquarters Personnel password</a></li>
@@ -39,7 +40,7 @@
 <li><a href="#edit">Use case: Edit person</a></li>
 <li><a href="#use-case-find-person">Use case: Find person</a></li>
 <li><a href="#use-case-check">Use case: Check</a></li>
-<li><a href="#use-case-autocorrection">Use case: Autocorrection</a></li>
+<li><a href="#usecase">Use case: Autocorrection</a></li>
 <li><a href="#use-case-show-unread-messages">Use case: Show unread messages</a></li>
 <li><a href="#use-case-show-all-messages">Use case: Show all messages</a></li>
 <li><a href="#use-case-clear-inbox">Use case: Clear Inbox</a></li>
@@ -48,7 +49,7 @@
 <li><a href="#dispatch">Use Case: Dispatch Backup</a></li>
 </ul>
 </li>
-<li><a href="#non-functional-requirements">Appendix C: Non Functional Requirements</a></li>
+<li><a href="#nfr">Appendix C: Non Functional Requirements</a></li>
 <li><a href="#glossary">Appendix D: Glossary</a></li>
 </ul></div></div><div id="content"><div class="sect1">
 <h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
@@ -135,6 +136,66 @@
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configurations-to-do-before-writing-code"><a class="link" href="#configurations-to-do-before-writing-code">Configurations to do before writing code</a></h3>
+<div class="sect3">
+<h4 id="configuring-the-coding-style"><a class="link" href="#configuring-the-coding-style">Configuring the coding style</a></h4>
+<div class="paragraph">
+<p>This project follows <a href="https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc">oss-generic coding standards</a>. IntelliJ&#8217;s default style is mostly compliant with ours but it uses a different import order from ours. To rectify,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to <code>File</code> &gt; <code>Settings&#8230;&#8203;</code> (Windows/Linux), or <code>IntelliJ IDEA</code> &gt; <code>Preferences&#8230;&#8203;</code> (macOS)</p>
+</li>
+<li>
+<p>Select <code>Editor</code> &gt; <code>Code Style</code> &gt; <code>Java</code></p>
+</li>
+<li>
+<p>Click on the <code>Imports</code> tab to set the order</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For <code>Class count to use import with '*'</code> and <code>Names count to use static import with '*'</code>: Set to <code>999</code> to prevent IntelliJ from contracting the import statements</p>
+</li>
+<li>
+<p>For <code>Import Layout</code>: The order is <code>import static all other imports</code>, <code>import java.*</code>, <code>import javax.*</code>, <code>import org.*</code>, <code>import com.*</code>, <code>import all other imports</code>. Add a <code>&lt;blank line&gt;</code> between each <code>import</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Optionally, you can follow the <a href="UsingCheckstyle.html">UsingCheckstyle.adoc</a> document to configure Intellij to check style-compliance as you write code.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="updating-documentation-to-match-your-fork"><a class="link" href="#updating-documentation-to-match-your-fork">Updating documentation to match your fork</a></h4>
+<div class="paragraph">
+<p>After forking the repo, the documentation will still have the SE-EDU branding and refer to the <code>se-edu/addressbook-level3</code> repo.</p>
+</div>
+<div class="paragraph">
+<p>If you plan to develop this fork as a separate product (i.e. instead of contributing to <code>se-edu/addressbook-level3</code>), you should do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Configure the <a href="#Docs-SiteWideDocSettings">site-wide documentation settings</a> in <a href="{repoURL}/build.gradle"><code>build.gradle</code></a>, such as the <code>site-name</code>, to suit your own project.</p>
+</li>
+<li>
+<p>Replace the URL in the attribute <code>repoURL</code> in <a href="{repoURL}/docs/DeveloperGuide.adoc"><code>DeveloperGuide.adoc</code></a> and <a href="{repoURL}/docs/UserGuide.adoc"><code>UserGuide.adoc</code></a> with the URL of your fork.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="setting-up-ci"><a class="link" href="#setting-up-ci">Setting up CI</a></h4>
+<div class="paragraph">
+<p>Set up Travis to perform Continuous Integration (CI) for your fork. See <a href="UsingTravis.html">UsingTravis.adoc</a> to learn how to set it up.</p>
+</div>
 </div>
 </div>
 </div>
@@ -632,7 +693,7 @@ he/she should arrive within &amp; Google Maps URL location of the requester&#821
 </div>
 </div>
 <div class="sect2">
-<h3 id="4-autocorrection-feature"><a class="link" href="#4-autocorrection-feature">4. Autocorrection feature</a></h3>
+<h3 id="autocorrect"><a class="link" href="#autocorrect">4. Autocorrection feature</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -721,7 +782,7 @@ in ambiguity in the correction algorithm and increases chances of errors.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="user-stories"><a class="link" href="#user-stories">Appendix A: User Stories</a></h2>
+<h2 id="stories"><a class="link" href="#stories">Appendix A: User Stories</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Priorities: High (must have) - <code>* * *</code>, Medium (nice to have) - <code>* *</code>, Low (unlikely to have) - <code>*</code></p>
@@ -1536,7 +1597,7 @@ HQP- Headquarters Personnel</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-autocorrection"><a class="link" href="#use-case-autocorrection">Use case: Autocorrection</a></h3>
+<h3 id="usecase"><a class="link" href="#usecase">Use case: Autocorrection</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -2108,7 +2169,7 @@ HQP- Headquarters Personnel</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="non-functional-requirements"><a class="link" href="#non-functional-requirements">Appendix C: Non Functional Requirements</a></h2>
+<h2 id="nfr"><a class="link" href="#nfr">Appendix C: Non Functional Requirements</a></h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
@@ -2179,4 +2240,4 @@ HQP- Headquarters Personnel</p>
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 09:41:14 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 10:12:56 UTC</div></div></div></body></html>
