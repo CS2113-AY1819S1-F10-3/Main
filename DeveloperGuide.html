@@ -16,14 +16,15 @@
 <li><a href="#1b-update-password-feature">1b. Update Password Feature</a></li>
 <li><a href="#2a-find-command-edited">2a. "find" command (edited)</a></li>
 <li><a href="#2b-check-command">2b. "check" command</a></li>
-<li><a href="#edit">2c. "edit" command</a></li>
 <li><a href="#3a-showunread-command">3a. "showunread" command</a></li>
 <li><a href="#3b-inbox-command">3b. "inbox" command</a></li>
 <li><a href="#3c-read-command">3c. "read" command</a></li>
 <li><a href="#3d-clearinbox-command">3d. "clearinbox" command</a></li>
 <li><a href="#request">3e. "rb" command</a></li>
 <li><a href="#dispatch">3f. "dispatch" command</a></li>
-<li><a href="#autocorrect">4. Autocorrection feature</a></li>
+<li><a href="#4a-updatestatus-command">4a. "updatestatus" command</a></li>
+<li><a href="#4b-checkstatus-command">4b. "checkstatus" command</a></li>
+<li><a href="#autocorrect">5. Autocorrection feature</a></li>
 </ul>
 </li>
 <li><a href="#use-cases">Use Cases</a></li>
@@ -39,7 +40,9 @@
 <li><a href="#use-case-delete-person">Use case: Delete person</a></li>
 <li><a href="#edit">Use case: Edit person</a></li>
 <li><a href="#use-case-find-person">Use case: Find person</a></li>
-<li><a href="#use-case-check">Use case: Check</a></li>
+<li><a href="#use-case-check-person">Use case: Check person</a></li>
+<li><a href="#use-case-update-status-of-a-po">Use case: Update status of a PO</a></li>
+<li><a href="#use-case-check-status-of-all-pos">Use case: Check status of all POs</a></li>
 <li><a href="#usecase">Use case: Autocorrection</a></li>
 <li><a href="#use-case-show-unread-messages">Use case: Show unread messages</a></li>
 <li><a href="#use-case-show-all-messages">Use case: Show all messages</a></li>
@@ -316,17 +319,45 @@ It also implements the following operations:</p>
 <p>Step 1: The user input his password and unlocks the system.</p>
 </div>
 <div class="paragraph">
-<p>Step 2: The user executes "find s1234567a" command where the first argument is the command word "find" and the second argument is the NRIC to be
-searched, which in this case is "s1234567a" (all letter are lower cased). The "find" command calls execute() which also calls getPersonWithNric() method.</p>
+<p>Step 2: The user executes "find s1234567a" command.</p>
 </div>
 <div class="paragraph">
-<p>Step 3: The getPersonWithNric() method searches the addressbook for the person with "s1234567a" if he exists and person is stored in a list.</p>
+<p>Step 3: Parser class determines the command word and runs prepareFind method.</p>
 </div>
 <div class="paragraph">
-<p>Step 4: The person is found and is stored in a matchedPerson list variable. execute() returns a CommandResult using the matchedPerson list as its argument.</p>
+<p>Step 4: prepareFind determines string is a valid nric, then instantiates a new FindCommand.</p>
 </div>
 <div class="paragraph">
-<p>Step 5: The CommandResult object displays to the user the searched person and his details, all of which in string form.</p>
+<p>Step 5: Logic class calls the execute() method on the FindCommand object.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: The getPersonWithNric() method called in execute() searches the addressbook for the person with "s1234567a" if he exists and person is stored in a list.</p>
+</div>
+<div class="paragraph">
+<p>Step 7: The person is found and is stored in a matchedPerson list variable. execute() returns a CommandResult using the matchedPerson list as its argument.</p>
+</div>
+<div class="paragraph">
+<p>Step 8: The CommandResult object displays to the user the searched person and his details, all of which in string form.</p>
+</div>
+<div class="paragraph">
+<p>Alternatives considered:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Continue to use the original way of finding by name</p>
+<div class="ulist">
+<ul>
+<li>
+<p>However, there could be multiple people with the same name</p>
+</li>
+<li>
+<p>Using nric to find people would be better as each person has a unique nric</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -335,28 +366,74 @@ searched, which in this case is "s1234567a" (all letter are lower cased). The "f
 <p><strong>Current Implementation</strong></p>
 </div>
 <div class="paragraph">
-<p>Only a HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
+<p>Only HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
 The "check" command makes some use of the "find" command. Every time the "find" command successfully finds a person, a line in the format of:
 "NRIC timestamp" is printed in a text file called "screeningHistory.txt". The "check" command will read this file and retrieve the timestamps
-corresponding to the specified NRIC. Below is an example of its usage:</p>
+corresponding to the specified NRIC.</p>
+</div>
+<div class="paragraph">
+<p>It also implements the following operations:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "check" command itself and displays the result to the user.</p>
+</li>
+<li>
+<p>getPersonWithNric() - Searches the addressbook to retrieve the person with the specified NRIC.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Below is an example of its usage:</p>
 </div>
 <div class="paragraph">
 <p>Step 1: The user(a HQP) input his password and unlocks the system.</p>
 </div>
 <div class="paragraph">
-<p>Step 2: The user executes "check s1234567a" where the first argument is the command word "check" and the second is the NRIC to be checked which in is "s1234567a".</p>
+<p>Step 2: The user executes "check s1234567a"</p>
 </div>
 <div class="paragraph">
-<p>Step 3: The "check" command calls execute() which calls the getPersonWithNric() method. This method will read the screeningHistory.txt line by line, where each line
-is in the format of "NRIC timestamp", for example "s1234567a 18/10/2018-20:38:42". Each line is split into the NRIC and timestamp. If line[0] is the NRIC specified,
+<p>Step 3: Parser class determines the command word and runs prepareCheck method.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: prepareCheck determines string is a valid nric, then instantiates a new CheckCommand.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: Logic class calls the execute() method on the CheckCommand object.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: execute() also calls the getPersonWithNric() method. This method will read the screeningHistory.txt line by line, where each line
+is in the format of "NRIC timestamp", for example "s1234567a 18/10/2018-2038hrs by hqp". Each line is split into the NRIC and timestamp. If line[0] is the NRIC specified,
 the corresponding timestamp is stored in a list.</p>
 </div>
 <div class="paragraph">
-<p>Step 4: The list from step 3 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user.</p>
+<p>Step 7: The list from step 6 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user.</p>
 </div>
+<div class="paragraph">
+<p>Alternatives considered:</p>
 </div>
-<div class="sect2">
-<h3 id="edit"><a class="link" href="#edit">2c. "edit" command</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Having a text file for each person, stored in a 'persons' folder</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Each timestamp would then be stored in the respective text file</p>
+</li>
+<li>
+<p>Pros: Retrieving timestamps would be much more efficient</p>
+</li>
+<li>
+<p>Cons: Space complexity would increase especially if the number of persons increased drastically
+=== 2c. "edit" command</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -693,7 +770,129 @@ he/she should arrive within &amp; Google Maps URL location of the requester&#821
 </div>
 </div>
 <div class="sect2">
-<h3 id="autocorrect"><a class="link" href="#autocorrect">4. Autocorrection feature</a></h3>
+<h3 id="4a-updatestatus-command"><a class="link" href="#4a-updatestatus-command">4a. "updatestatus" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>Only HQP can use this command. This command sets the engagement status(the "isEngaged" boolean) of a PO to false.
+It also implements the following methods:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "updatestatus po[id]" command, sets the isEngaged boolean to false and displays the result to the user</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "updatestatus" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User inputs password and unlocks the system</p>
+</div>
+<div class="paragraph">
+<p>Step 2: User executes "updatestatus po1" (example PO here is "po1")</p>
+</div>
+<div class="paragraph">
+<p>Step 3: Parser class identifies command as "updatestatus" and runs prepareUpdateStatus method.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: prepareUpdateStatus checks is po1 is a valid PO ID through a regex expression and instantiates a new UpdateStatus command.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: Logic class calls the execute() method in the UpdateStatusCommand object.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: execute() also calls for the setStatus() method in PatrolResourceStatus class sets the isEngaged boolean of "po1", in this case, to false.</p>
+</div>
+<div class="paragraph">
+<p>Step 7: A CommandResult object with the successful message is created to be displayed to the user.</p>
+</div>
+<div class="paragraph">
+<p>Alternatives considered:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Using a text file to store the statuses of the POs</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: The statuses are saved even after exiting the system</p>
+</li>
+<li>
+<p>Cons: Time and space complexity increases especially if there are many POs to manage</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4b-checkstatus-command"><a class="link" href="#4b-checkstatus-command">4b. "checkstatus" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>This command lists out all the POs and their current engagement statuses. The POs and their details are stored in an Arraylist as the assumption here is the system will be running continuously for the whole working time, or shift, for example.
+It also implements the following methods:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "checkstatus" command and stores all POs in a list</p>
+</li>
+<li>
+<p>extractEngagementInformation() - iterates through the ArrayList of POs and only store and return their ID and engagement statuses</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "checkstatus" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: User inputs password and unlocks the system.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: User executes "checkstatus".</p>
+</div>
+<div class="paragraph">
+<p>Step 3: Parser class identifies command as "checkstatus" and returns a new CheckPOStatusCommand object.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: Logic class calls the execute() method in the CheckPOStatusCommand object.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: execute() also calls for the extractEngagementInformation() method and stores the PO Ids and the engagement status in a list.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: A CommandResult object is created and displays the list to the user.</p>
+</div>
+<div class="paragraph">
+<p>Alternatives considered:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Similar to what was mentioned in "updatestatus" command section, use a text file for each PO and store their status</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easier to identify a PO, just look for the text file with their ID</p>
+</li>
+<li>
+<p>Cons: Space would be an issue especially when there are many POs to manage</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="autocorrect"><a class="link" href="#autocorrect">5. Autocorrection feature</a></h3>
 <div class="paragraph">
 <p><strong>Current Implementation</strong></p>
 </div>
@@ -1452,27 +1651,11 @@ HQP- Headquarters Personnel</p>
 </ul>
 </div>
 </li>
-<li>
-<p>*a. At any time, User chooses to cancel the delete action.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>*a1. System requests confirmation to cancel.</p>
-</li>
-<li>
-<p>*a2. User confirms the cancellation.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-check"><a class="link" href="#use-case-check">Use case: Check</a></h3>
+<h3 id="use-case-check-person"><a class="link" href="#use-case-check-person">Use case: Check person</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -1577,15 +1760,146 @@ HQP- Headquarters Personnel</p>
 </ul>
 </div>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-update-status-of-a-po"><a class="link" href="#use-case-update-status-of-a-po">Use case: Update status of a PO</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>*a. At any time, User chooses to cancel the delete action.</p>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User requests to update the engagement status of a PO (e.g "po1") to free</p>
+</li>
+<li>
+<p>System prompts User to specify the PO</p>
+</li>
+<li>
+<p>User enters the PO</p>
+</li>
+<li>
+<p>System shows the user that the PO&#8217;s status has been updated</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>*a1. System requests confirmation to cancel.</p>
+<p>3a. User enters an invalid password.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a1. System shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>*a2. User confirms the cancellation.</p>
+<p>5a. User enters Command in an invalid format.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System shows an error message</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>7a. User enters an invalid PO ID or a PO that does not exist.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>7a1. System shows an error message</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-check-status-of-all-pos"><a class="link" href="#use-case-check-status-of-all-pos">Use case: Check status of all POs</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User opens System.</p>
+</li>
+<li>
+<p>System prompts user to enter his password.</p>
+</li>
+<li>
+<p>User enters password.</p>
+</li>
+<li>
+<p>System prompts user to enter his command.</p>
+</li>
+<li>
+<p>User requests to see all POs and their current engagement status</p>
+</li>
+<li>
+<p>System shows the user a list of POs and each of their engagement status</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3a. User enters an invalid password.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a1. System shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5a. User enters Command in an invalid format.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>5a1. System shows an error message</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2240,4 +2554,4 @@ HQP- Headquarters Personnel</p>
 </dl>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 10:12:56 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 10:18:23 UTC</div></div></div></body></html>

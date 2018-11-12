@@ -1,0 +1,397 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Muhammad Harun - Project Portfolio</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="../images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link active" href="../index.html">AB-3</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level4">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">main</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="navitem"><a class="nav-link" href="https://github.com/CS2113-AY1819S1-F10-3/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Muhammad Harun - Project Portfolio</h1></div><div id="content"><div class="sect1">
+<h2 id="project-police-records-and-intelligence-system-prism"><a class="link" href="#project-police-records-and-intelligence-system-prism">PROJECT: Police Records and Intelligence System (PRISM)</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The PRISM is an adaptation of the already existing Address-Book 3 (AB3) program by SE EDU. It is a program targeted for Police Officers (PO) and Headquarters Personnel (HQP) of the Police Force. Both groups will have varying access and authorization levels to the different features of this system. POs would be able to read from the database after screening a civilian (known as a subject) and decide his next course of action based on the criminal status of the subject. HQPs would have the authority to conduct more thorough checks and remove people from the system if needed. This project was developed to enhance the crime handling capabilities of the Police Force</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Role</strong>: Developer</p>
+</li>
+<li>
+<p><strong>Responsibility</strong> : Documentation</p>
+</li>
+<li>
+<p><strong>Major enhancements</strong>: Morphed parts of the original code base to suit context of PRS. Further details below (Note: Database in the following points refers to text files, as the use of actual databases is prohibited according to CS2113T project requirements):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed and added new parameters to the ‘Person’ class such as: ‘NRIC’, ‘Postal Code’, ‘Date of Birth’, ‘Criminal Status’, ‘Past Offences’, etc</p>
+</li>
+<li>
+<p>Morphed existing commands such as ‘Add’ to handle the updated ‘Person’ class</p>
+</li>
+<li>
+<p>‘Find’ and ‘Delete’ commands now search the database using the ‘NRIC’ parameter instead of the ‘Name’ parameter</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In addition, ‘Find’ command also stores a timestamp with the corresponding NRIC, and which PO screened the subject, in a separate database</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Modified the parser and test cases for the abovementioned commands accordingly</p>
+</li>
+<li>
+<p>Justification:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>‘Person’ class in AB3 had parameters such as email and phone number, which is irrelevant for PRISM, hence new parameters such as NRIC and Date of Birth were added</p>
+</li>
+<li>
+<p>Finding and Deleting uses NRIC parameter as it is unique, some people may have the same name</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Highlights: NIL</p>
+</li>
+<li>
+<p>Credits: NIL</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: Added some new commands:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Check (only for HQP)</strong>: Lists down the timestamps during which a subject with the specified NRIC was screened using the ‘Find’ command</p>
+</li>
+<li>
+<p><strong>Check status of all POs (only for HQP)</strong>: Lists down all POs and their engagement status (whether they are currently attending a case or not)</p>
+</li>
+<li>
+<p><strong>Update status to free</strong>: Updates the status of the POs to free after finishing the current case</p>
+</li>
+<li>
+<p><strong>Justifications</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Important to store timestamps for when person was screened for investigative purposes, in which only HQP would have such authority</p>
+</li>
+<li>
+<p>HQPs needs to know engagement status for all POs so that they can dispatch a free PO</p>
+</li>
+<li>
+<p>PO’s status should be manually updated as there is no fixed duration for a case</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/functional/muhdharun.md">Functional code</a>] [<a href="https://github.com/CS2113-AY1819S1-F10-3/main/blob/master/collated/test/muhdharun.md">Test code</a>]</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Reformatted the User Guide (UG) to make it look neat and organized, like the one used in Address Book 4(AB4)</p>
+</li>
+<li>
+<p>Updated the UG to include new commands and update existing ones</p>
+</li>
+<li>
+<p>Added the implementations of the new commands added (such as Find and Check) to the Developer Guide</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PRs reviewed : <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/153">#153</a>, <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/152">#152</a>, <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/148">#148</a>, <a href="https://github.com/CS2113-AY1819S1-F10-3/main/pull/139">#139</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="adding-a-person-code-add-code-hqp-only"><a class="link" href="#adding-a-person-code-add-code-hqp-only">Adding a person: <code>add</code> (HQP only)</a></h3>
+<div class="paragraph">
+<p>Adds a criminal to the database.</p>
+</div>
+<div class="paragraph">
+<p>Format: 'add NAME n/NRIC d/YEAROFBIRTH p/POSTALCODE s/STATUS w/WANTEDFOR [o/PASTOFFENSES]'</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>add John Doe n/f1234567p d/1996 p/510246 s/xc w/none o/theft o/drugs"</p>
+</li>
+<li>
+<p>Displays a message stating the new person being added</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>If a person&#8217;s STATUS is "wanted", the WANTEDFOR parameter has to be filled</p>
+</li>
+<li>
+<p>No two persons can have the same NRICs, the other parameters such as NAME, POSTALCODE, etc, can be the same</p>
+</li>
+<li>
+<p>Date of birth here only refers to the year</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+A person can have 0 or more past offenses
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-a-person-by-nric-code-find-code-hqp-po"><a class="link" href="#find-a-person-by-nric-code-find-code-hqp-po">Find a person by NRIC : <code>find</code> (HQP &amp; PO)</a></h3>
+<div class="paragraph">
+<p>Finds a person in the Police Records by the specified NRIC</p>
+</div>
+<div class="paragraph">
+<p>Format: 'find NRIC'</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>find s1234567a</p>
+</li>
+<li>
+<p>Returns person with 's1234567a'</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>A timestamp and current ID is stored whenever this command is used</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="get-screening-history-of-a-person-code-check-code-hqp"><a class="link" href="#get-screening-history-of-a-person-code-check-code-hqp">Get screening history of a person: <code>check</code> (HQP)</a></h3>
+<div class="paragraph">
+<p>Displays all the times a person was screened in the form of timestamps (using 'find' command) - Only by HQP</p>
+</div>
+<div class="paragraph">
+<p>Format: 'check s1234567a'</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns an indexed list of timestamps for specified person, as well as corresponding PO ID nuber</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>check s1234567a</p>
+</li>
+<li>
+<p>Shows an indexed list of timestamps for when person with s1234567a was screened by any POs</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="get-status-of-pos-code-checkstatus-code-hqp-po"><a class="link" href="#get-status-of-pos-code-checkstatus-code-hqp-po">Get status of POs: <code>checkstatus</code> (HQP &amp; PO)</a></h3>
+<div class="paragraph">
+<p>Shows all POs and their current engagement statuses</p>
+</div>
+<div class="paragraph">
+<p>Format: 'checkstatus'</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="update-status-of-po-code-updatestatus-code-hqp-only"><a class="link" href="#update-status-of-po-code-updatestatus-code-hqp-only">Update status of PO: <code>updatestatus</code> (HQP only)</a></h3>
+<div class="paragraph">
+<p>Updates the PO so that it is not engaged anymore</p>
+</div>
+<div class="paragraph">
+<p>Format: 'updatestatus PO(ID)'</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>updatestatus po2</p>
+</li>
+<li>
+<p>po2 is now free for dispatch</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="2a-find-command-edited"><a class="link" href="#2a-find-command-edited">2a. "find" command (edited)</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>The new "find" command is revised from the existing "find" command in AB3. Instead of finding a person by name, it finds a person using his NRIC.
+It also implements the following operations:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>execute() - executes the "find" command itself and displays the result to the user.</p>
+</li>
+<li>
+<p>getPersonWithNric() - Searches the addressbook to retrieve the person with the specified NRIC.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following is an example usage scenario of the "find" command:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: The user input his password and unlocks the system.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user executes "find s1234567a" command where the first argument is the command word "find" and the second argument is the NRIC to be
+searched, which in this case is "s1234567a" (all letter are lower cased). The "find" command calls execute() which also calls getPersonWithNric() method.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: The getPersonWithNric() method searches the addressbook for the person with "s1234567a" if he exists and person is stored in a list.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: The person is found and is stored in a matchedPerson list variable. execute() returns a CommandResult using the matchedPerson list as its argument.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: The CommandResult object displays to the user the searched person and his details, all of which in string form.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2b-check-command"><a class="link" href="#2b-check-command">2b. "check" command</a></h3>
+<div class="paragraph">
+<p><strong>Current Implementation</strong></p>
+</div>
+<div class="paragraph">
+<p>Only a HQP may use this command. This command displays the timestamps of which a person with the specified NRIC was screened using the "find" command.
+The "check" command makes some use of the "find" command. Every time the "find" command successfully finds a person, a line in the format of:
+"NRIC timestamp" is printed in a text file called "screeningHistory.txt". The "check" command will read this file and retrieve the timestamps
+corresponding to the specified NRIC. Below is an example of its usage:</p>
+</div>
+<div class="paragraph">
+<p>Step 1: The user(a HQP) input his password and unlocks the system.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user executes "check s1234567a" where the first argument is the command word "check" and the second is the NRIC to be checked which in is "s1234567a".</p>
+</div>
+<div class="paragraph">
+<p>Step 3: The "check" command calls execute() which calls the getPersonWithNric() method. This method will read the screeningHistory.txt line by line, where each line
+is in the format of "NRIC timestamp", for example "s1234567a 18/10/2018-20:38:42". Each line is split into the NRIC and timestamp. If line[0] is the NRIC specified,
+the corresponding timestamp is stored in a list.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: The list from step 3 gets returned by execute() to create a CommandResult object which displays all the timestamps to the user.</p>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 10:18:23 UTC</div></div></div></body></html>
